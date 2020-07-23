@@ -45,6 +45,16 @@ export const useStyles = makeStyles((theme) => ({
     },
     button: {
       marginRight: 20,
-      textTransform: 'capitalize'
+      textTransform: 'capitalize',
+    },
+    dashboardBtn: {
+      marginRight: 20,
+      textTransform: 'capitalize',
+      background: '#621D58',
+      color: "#FFFFFF",
+    },
+    approvalBtn: {
+      textTransform: 'capitalize',
+      opacity: 0.3
     }
 }));

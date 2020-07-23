@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -10,7 +10,7 @@ import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import { useHistory } from "react-router-dom";
 import { cloneDeep } from 'lodash';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Avatar from '@material-ui/core/Avatar';
 
 import CardMedia from '@material-ui/core/CardMedia';
 
@@ -19,35 +19,35 @@ import AddLearningPath from '../../images/AddLearningPath.svg'
 import DashboardSelectedIcon from '../../components/CustomIcons/DashboardSelectedIcon';
 import LearingPathIcon from '../../components/CustomIcons/LearingPathIcon';
 import ApprovalsIcon from '../../components/CustomIcons/ApprovalsIcon';
+import LearningPath from '../LearningPath/index';
 
 import { validateUserEmail, verifyOtp } from '../../modules/authServices';
 
 import { useStyles } from './style';
 
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 export default function Dashboard() {
   const classes = useStyles();
   const history = useHistory();
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const closeHandler = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       <Grid
-      justify="space-between" // Add it here :)
-      container 
-      spacing={24}
+        justify="space-between" // Add it here :)
+        container
+        spacing={24}
       >
         <CardMedia
           className={classes.logo}
@@ -55,67 +55,76 @@ export default function Dashboard() {
           title="Contemplative Reptile"
         />
         <Grid
+          item xs={8}
+          className={classes.dashboardBtns}
+        >
+          <Button
+            variant="contained"
+            className={classes.button, classes.dashboardBtn}
+            startIcon={<DashboardSelectedIcon />}
+          >
+            Dashboard
+          </Button>
+          <Button
+            variant="contained"
+            color="default"
+            className={classes.button}
+            startIcon={<LearingPathIcon />}
+          >
+            Learning Path
+          </Button>
+          <Button
+            variant="contained"
+            color="default"
+            className={classes.button, classes.approvalBtn}
+            startIcon={<ApprovalsIcon />}
+          >
+            Approvals
+          </Button>
+        </Grid>
+        {/* <Grid
          item xs={8}
-         className={classes.dashboardBtns}
+         
         >
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-          startIcon={<DashboardSelectedIcon />}
-        >
-          Dashboard
-        </Button>
-        <Button
-          variant="contained"
-          color="default"
-          className={classes.button}
-          startIcon={<LearingPathIcon />}
-        >
-          Learning Path
-        </Button>
-        <Button
-          variant="contained"
-          color="default"
-          className={classes.button}
-          startIcon={<ApprovalsIcon />}
-        >
-          Approvals
-        </Button>
-      </Grid>  
+        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        </Grid>  */}
       </Grid>
-      
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-      <CardMedia
-          className={classes.media}
-          image={AddLearningPath}
-          title="Contemplative Reptile"
-        />
-        <Typography component="h1" variant="h5">
-          Welcome, Madhur Arya
+
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <CardMedia
+            className={classes.media}
+            image={AddLearningPath}
+            title="Contemplative Reptile"
+          />
+          <Typography component="h1" variant="h5">
+            Welcome, Madhur Arya
         </Typography>
-        <Typography component="h1" variant="subtitle2">
+          <Typography component="h1" variant="subtitle2">
             Please assign first learning path to your team
         </Typography>
-        
-        
-        
+
+
+
           <Button
             type="button"
             fullWidth
             variant="contained"
             className={classes.submit}
-            
+            onClick={handleClickOpen}
           >
             Create Learning Path
           </Button>
-        
-      </div>
-      
-    </Container>
+
+        </div>
+
+      </Container>
+      <LearningPath
+        open={open}
+        handleClose={closeHandler}
+      />
     </div>
-    
+
   );
 }
