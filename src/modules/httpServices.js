@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { constants } from '../modules';
+import { API_STATUS } from '../modules/constants';
 
 export const fetch = {
     get({ url, requestParams = {}, callbackHandler}) {
@@ -35,14 +35,14 @@ const outputHandler = ({ ins, callbackHandler }) => {
     ins.then((response) => {
 
         callbackHandler({
-            status: constants.SUCCESS,
+            status: API_STATUS.SUCCESS,
             message: '',
             payload: response.data
         });
 
     }).catch( () => {
         callbackHandler({
-            status: constants.FAILURE,
+            status: API_STATUS.FAILURE,
             message: 'Something went worng...',
             payload: {}
         });
