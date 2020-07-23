@@ -17,7 +17,8 @@ export const useStyles = makeStyles((theme) => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
       background: 'linear-gradient(180deg, #FFAB39 0%, #F07200 100%)',
-      color: "#FFFFFF"
+      color: "#FFFFFF",
+      textTransform: 'capitalize'
     },
     root: {
         maxWidth: 345,
@@ -39,11 +40,11 @@ export const useStyles = makeStyles((theme) => ({
     dashboardContent: {
         color: '#858585',
     },
-    DashboardBtn: {
-        background: '#621D58'
+    dashboardBtns: {
+      marginTop: 20
     },
-    DashboardSelected: {
-        height: 18,
-        width: 18
+    button: {
+      marginRight: 20,
+      textTransform: 'capitalize'
     }
 }));

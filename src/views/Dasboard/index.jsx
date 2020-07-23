@@ -16,6 +16,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 
 import XebiaLogo from '../../images/Logo.svg'
 import AddLearningPath from '../../images/AddLearningPath.svg'
+import DashboardSelectedIcon from '../../components/CustomIcons/DashboardSelectedIcon';
+import LearingPathIcon from '../../components/CustomIcons/LearingPathIcon';
+import ApprovalsIcon from '../../components/CustomIcons/ApprovalsIcon';
 
 import { validateUserEmail, verifyOtp } from '../../modules/authServices';
 
@@ -50,33 +53,40 @@ export default function Dashboard() {
           className={classes.logo}
           image={XebiaLogo}
           title="Contemplative Reptile"
-
         />
+        <Grid
+         item xs={8}
+         className={classes.dashboardBtns}
+        >
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          startIcon={<DashboardSelectedIcon />}
+        >
+          Dashboard
+        </Button>
+        <Button
+          variant="contained"
+          color="default"
+          className={classes.button}
+          startIcon={<LearingPathIcon />}
+        >
+          Learning Path
+        </Button>
+        <Button
+          variant="contained"
+          color="default"
+          className={classes.button}
+          startIcon={<ApprovalsIcon />}
+        >
+          Approvals
+        </Button>
+      </Grid>  
       </Grid>
       
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Button
-        variant="contained"
-        color="secondary"
-        className={classes.button}
-      >
-        Dashboard
-      </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        className={classes.button}
-      >
-        Dashboard
-      </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        className={classes.button}
-      >
-        Dashboard
-      </Button>
       <div className={classes.paper}>
       <CardMedia
           className={classes.media}
@@ -103,9 +113,7 @@ export default function Dashboard() {
           </Button>
         
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
+      
     </Container>
     </div>
     
