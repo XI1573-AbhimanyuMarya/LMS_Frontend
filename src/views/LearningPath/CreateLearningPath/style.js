@@ -8,7 +8,7 @@ export const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(2),
       marginRight: theme.spacing(2),
       [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-        width: 600,
+        width: '80%',
         marginLeft: 'auto',
         marginRight: 'auto',
       },
@@ -34,4 +34,7 @@ export const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(3),
       marginLeft: theme.spacing(1),
     },
+    breadcrumbs: {
+      marginLeft: 280
+    }
   }));
