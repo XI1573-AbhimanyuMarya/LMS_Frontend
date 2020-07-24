@@ -1,19 +1,10 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Alert from '@material-ui/lab/Alert';
-import { useHistory } from "react-router-dom";
-import { cloneDeep } from 'lodash';
-import Avatar from '@material-ui/core/Avatar';
-
 import CardMedia from '@material-ui/core/CardMedia';
-
 import XebiaLogo from '../../images/Logo.svg'
 import AddLearningPath from '../../images/AddLearningPath.svg'
 import DashboardSelectedIcon from '../../components/CustomIcons/DashboardSelectedIcon';
@@ -21,16 +12,10 @@ import LearingPathIcon from '../../components/CustomIcons/LearingPathIcon';
 import ApprovalsIcon from '../../components/CustomIcons/ApprovalsIcon';
 import LearningPath from '../LearningPath/index';
 
-import { validateUserEmail, verifyOtp } from '../../modules/authServices';
-
 import { useStyles } from './style';
-
-
-
 
 export default function Dashboard() {
   const classes = useStyles();
-  const history = useHistory();
 
   const [open, setOpen] = React.useState(false);
 
@@ -60,7 +45,7 @@ export default function Dashboard() {
         >
           <Button
             variant="contained"
-            className={classes.button, classes.dashboardBtn}
+            className={classes.dashboardBtn}
             startIcon={<DashboardSelectedIcon />}
           >
             Dashboard
@@ -76,7 +61,7 @@ export default function Dashboard() {
           <Button
             variant="contained"
             color="default"
-            className={classes.button, classes.approvalBtn}
+            className={classes.approvalBtn}
             startIcon={<ApprovalsIcon />}
           >
             Approvals

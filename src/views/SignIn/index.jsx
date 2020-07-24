@@ -7,9 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Alert from '@material-ui/lab/Alert';
 import { useHistory } from "react-router-dom";
-import { cloneDeep } from 'lodash';
+//import { cloneDeep } from 'lodash';
 
 import CardMedia from '@material-ui/core/CardMedia';
 
@@ -54,14 +53,13 @@ export default function SignIn() {
   }
 
   const redirectDashboardPage = () => {
-    const _state = cloneDeep( state );
     let path = `/dashboard`; 
     history.push(path);
   }
 
   const onFormSubmit = (e) => {
       e.preventDefault();
-      const {username, password, sendOtp, isValidEmail, isValidOtp} = state;
+      const {username, password, sendOtp} = state;
       setState(prevState => ({ ...prevState, isLoading: true, isValidEmail: username, isValidOtp: password  } ));
       if(username && sendOtp === false) {
           validateUserEmail(state, setState);
