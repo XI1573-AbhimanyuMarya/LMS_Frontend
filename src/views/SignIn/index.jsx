@@ -8,7 +8,6 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { useHistory } from "react-router-dom";
-//import { cloneDeep } from 'lodash';
 
 import CardMedia from '@material-ui/core/CardMedia';
 
