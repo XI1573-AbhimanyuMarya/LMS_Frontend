@@ -9,20 +9,36 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: 'auto',
         marginRight: 'auto',
       },
+      justifyContent: 'center',
     },
     stepper: {
       padding: theme.spacing(3, 0, 5),
     },
     buttons: {
       display: 'flex',
-      justifyContent: 'flex-end',
+      justifyContent: 'center',
     },
     button: {
       marginTop: theme.spacing(3),
       marginLeft: theme.spacing(1),
+      background: 'linear-gradient(180deg, #FFAB39 0%, #F07200 100%)',
+      color: "#FFFFFF",
+      textTransform: 'capitalize',
+      fontSize: 20,
+      width: '20%'
+    },
+    closeButton: {
+      marginTop: theme.spacing(3),
+      marginLeft: theme.spacing(1),
+      background: 'linear-gradient(180deg, #FFAB39 0%, #F07200 100%)',
+      color: "#FFFFFF",
+      textTransform: 'capitalize',
+      fontSize: 20,
+      width: '40%'
     },
     breadcrumbs: {
-      marginLeft: 280
+      marginLeft: 35,
+      marginTop: 10
     },
     mainContainer: {
       width: '100%',
@@ -31,4 +47,15 @@ export const useStyles = makeStyles((theme) => ({
       justifyContent: 'center',
       margin: 'auto'
     },
+    active: {
+      color: '#621D58 !important',
+    },
+    completed: {
+      color: '#621D58 !important',
+      zIndex: 1,
+      fontSize: 18,
+    },
+    assignedLabel: {
+      color: '#67B104'
+    }
   }));

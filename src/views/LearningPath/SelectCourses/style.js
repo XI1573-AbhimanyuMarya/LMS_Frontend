@@ -6,15 +6,19 @@ export const useStyles = makeStyles((theme) => ({
       margin: 20
     },
     courseField: {
-      width: '50%',
+      //width: '50%',
       marginLeft: 250,
       background: '#FFFFFF',
-      margin: theme.spacing(2),
+      margin: theme.spacing(1),
+    },
+    courseLabel: {
+      marginLeft: 130,
+      color: '#00000'
     },
     searchField: {
       width: '70%',
       marginLeft: 150,
       background: '#FFFFFF',
       margin: theme.spacing(2),
-    }
+    },
 }));
