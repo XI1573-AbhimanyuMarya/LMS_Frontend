@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
@@ -46,30 +47,23 @@ public class ServiceImpl implements CourseService {
 
 	public Category createCategory(CategoryDto categoryDto) {
 		Category category = categoryRepository.save(transformToModelBeforeSave(categoryDto));
-		List<CompentencyHead> compentencyHeads = compentencyHeadRepo.findAll();
+		/*List<CompentencyHead> compentencyHeads = compentencyHeadRepo.findAll();
 		for (CompentencyHead comp : compentencyHeads) {
 			comp.getId();
 			comp.getName();
 			comp = compentencyHeadRepo.save(comp);
 			category.setCompentencyHead(comp);
 
-		}
+		}*/
 
 		return category;
 	}
-
+	@Transactional
 	Category transformToModelBeforeSave(CategoryDto categoryDto) {
 		Category category = new Category();
 		BeanUtils.copyProperties(categoryDto, category);
 		category.setCreatedAt(new Date());
-		/*Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		if (principal instanceof UserDetails) {
-			String username = ((UserDetails) principal).getUsername();
-			category.setUsers(userRepository.findByUserName(username));
-		} else {
-			String username = principal.toString();
-		}*/
+		System.out.println(" competemcy "+category.getCompentencyHead().getName());
 		return category;
 	}
 

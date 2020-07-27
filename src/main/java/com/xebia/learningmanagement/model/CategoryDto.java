@@ -8,7 +8,7 @@ public class CategoryDto {
 	private Long categoryId;
 	private String code;
 	private String name;
-	private List<CompentencyHead> compentencyHead;
+	private CompentencyHead compentencyHead;
 
 	public String getCode() {
 		return code;
@@ -34,11 +34,11 @@ public class CategoryDto {
 		this.categoryId = categoryId;
 	}
 
-	public List<CompentencyHead> getCompentencyHead() {
+	public CompentencyHead getCompentencyHead() {
 		return compentencyHead;
 	}
 
-	public void setCompentencyHead(List<CompentencyHead> compentencyHead) {
+	public void setCompentencyHead(CompentencyHead compentencyHead) {
 		this.compentencyHead = compentencyHead;
 	}
 }

@@ -22,8 +22,8 @@ public class Category {
 	private Date createdAt;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "COMPENTENCYHEAD_ID")
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "compentency_head_id")
 	private CompentencyHead compentencyHead;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "USER_ID")
