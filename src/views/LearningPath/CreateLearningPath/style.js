@@ -1,8 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
-    appBar: {
-      position: 'relative',
-    },
     layout: {
       width: 'auto',
       marginLeft: theme.spacing(2),
@@ -11,16 +8,6 @@ export const useStyles = makeStyles((theme) => ({
         width: '80%',
         marginLeft: 'auto',
         marginRight: 'auto',
-      },
-    },
-    paper: {
-      marginTop: theme.spacing(3),
-      marginBottom: theme.spacing(3),
-      padding: theme.spacing(2),
-      [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-        marginTop: theme.spacing(6),
-        marginBottom: theme.spacing(6),
-        padding: theme.spacing(3),
       },
     },
     stepper: {
@@ -36,5 +23,12 @@ export const useStyles = makeStyles((theme) => ({
     },
     breadcrumbs: {
       marginLeft: 280
-    }
+    },
+    mainContainer: {
+      width: '100%',
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: 'auto'
+    },
   }));

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ItemsCarousel from 'react-items-carousel';
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
-import CourseCatalog from './CourseCatalog';
+import CourseCatalog from '../CourseCatalog';
 
 const Carosals = () => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);

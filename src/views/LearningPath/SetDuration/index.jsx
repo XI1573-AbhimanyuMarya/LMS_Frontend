@@ -1,8 +1,8 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Slider from '@material-ui/core/Slider';
-import Box from '@material-ui/core/Box';
 
 import { useStyles } from './style';
 
@@ -33,14 +33,15 @@ export default function Review() {
 
   return (
     <React.Fragment>
-      <Box width={1/3} className={classes.sliderBox}>
+      <Container component="main" maxWidth="xs" className = {classes.mainContainer}> 
+        <CssBaseline />
       <Typography variant="h6" gutterBottom>
         Select Learning Path Duration
       </Typography>
       
       
         <Slider
-        defaultValue={30}
+        defaultValue={3}
         getAriaValueText={valuetext}
         valueLabelDisplay="auto"
         step={3}
@@ -52,7 +53,7 @@ export default function Review() {
       
        
         
-      </Box>
+      </Container>
     </React.Fragment>
   );
 }

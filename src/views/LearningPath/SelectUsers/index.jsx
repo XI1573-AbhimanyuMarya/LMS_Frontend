@@ -8,25 +8,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import UserIMG from '../../../images/2.jpg';
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-  searchField: {
-    width: '70%',
-    marginLeft: 150,
-    background: '#FFFFFF',
-    margin: theme.spacing(2),
-  },
-  root: {
-    display: 'flex',
-    width: 250,
-  },
-  media: {
+import { useStyles } from './style';
 
-  },
-}));
-
-export default function PaymentForm() {
+export default function SelectUsers() {
   const classes = useStyles();
   return (
     <React.Fragment>

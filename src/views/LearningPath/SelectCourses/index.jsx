@@ -5,30 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
 
-import Carosals from './Carosals';
+import Carosals from './Carosals/index';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from './style';
 
-const useStyles = makeStyles((theme) => ({
-  catalogTitle: {
-    marginLeft: 40,
-    margin: 20
-  },
-  courseField: {
-    width: '50%',
-    marginLeft: 250,
-    background: '#FFFFFF',
-    margin: theme.spacing(2),
-  },
-  searchField: {
-    width: '70%',
-    marginLeft: 150,
-    background: '#FFFFFF',
-    margin: theme.spacing(2),
-  }
-}));
-
-export default function AddressForm() {
+export default function SelectCourses() {
   const classes = useStyles();
   return (
     <React.Fragment>
