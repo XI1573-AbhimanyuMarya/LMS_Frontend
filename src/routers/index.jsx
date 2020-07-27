@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
-import Toastr from '../utils/Toastr';
+import Toastr from '../components/Toastr';
 
 import SignIn from '../views/SignIn/index';
 import Dashboard from '../views/Dasboard/index';

@@ -1,12 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
-    listItem: {
-      padding: theme.spacing(1, 0),
+    sliderBox: {
+      marginLeft: 350
     },
-    total: {
-      fontWeight: 700,
-    },
-    title: {
-      marginTop: theme.spacing(2),
+    mainContainer: {
+      width: '100%',
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: 'auto'
     },
   }));

@@ -63,5 +63,13 @@ export const useStyles = makeStyles(theme => ({
   approvalBtn: {
     textTransform: 'capitalize',
     opacity: 0.3
+  },
+  dashboardIcon: {
+    height: 20,
+    width: 20
+  },
+  learningPathIcon: {
+    height: 25,
+    width: 20
   }
 }));

@@ -8,9 +8,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Avatar from '@material-ui/core/Avatar';
 import XebiaLogo from '../../images/Logo.svg'
 import AddLearningPath from '../../images/AddLearningPath.svg'
-import DashboardSelectedIcon from '../../images/CustomIcons/DashboardSelectedIcon';
-import LearingPathIcon from '../../images/CustomIcons/LearingPathIcon';
-import ApprovalsIcon from '../../images/CustomIcons/ApprovalsIcon';
+import DashboardSelected from '../../images/DashboardSelected.svg';
+import LearningPathImg from '../../images/LearningPath.svg';
+import Approvals from '../../images/Approvals.svg';
 import LearningPath from '../LearningPath/index';
 
 import { useStyles } from './style';
@@ -38,11 +38,15 @@ export default function Dashboard() {
             title="Contemplative Reptile"
           />
         </Grid>
-        <Grid container xs={6} justify="center" className={classes.dashboardBtns}>
+        <Grid container item xs={6} justify="center" className={classes.dashboardBtns}>
           <Button
             variant="contained"
             className={classes.dashboardBtn}
-            startIcon={<DashboardSelectedIcon />}
+            startIcon={<CardMedia
+              className={classes.dashboardIcon}
+              image={DashboardSelected}
+              title="Contemplative Reptile"
+            />}
           >
             Dashboard
           </Button>
@@ -50,7 +54,11 @@ export default function Dashboard() {
             variant="contained"
             color="default"
             className={classes.button}
-            startIcon={<LearingPathIcon />}
+            startIcon={<CardMedia
+              className={classes.learningPathIcon}
+              image={LearningPathImg}
+              title="Contemplative Reptile"
+            />}
           >
             Learning Path
           </Button>
@@ -58,7 +66,11 @@ export default function Dashboard() {
             variant="contained"
             color="default"
             className={classes.approvalBtn}
-            startIcon={<ApprovalsIcon />}
+            startIcon={<CardMedia
+              className={classes.dashboardIcon}
+              image={Approvals}
+              title="Contemplative Reptile"
+            />}
           >
             Approvals
           </Button>
@@ -68,7 +80,7 @@ export default function Dashboard() {
         </Grid>
       </Grid>
 
-      <Container component="main" maxWidth="xs"className = {classes.mainContainer}> 
+      <Container component="main" maxWidth="xs" className = {classes.mainContainer}> 
         <CssBaseline />
         <div className={classes.paper}>
           <CardMedia
