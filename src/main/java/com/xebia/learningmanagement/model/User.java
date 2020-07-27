@@ -9,30 +9,15 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	private String fullName;
+	private String designation;
+	private String empID;
+	private String location;
+	private String cOEType;
 	private String username;
 	private String password;
 	private boolean active;
 	private String roles;
-	/*@Temporal(TemporalType.TIMESTAMP)
-	private Date createdAt;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updatedAt;*/
-
-	/*public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}*/
 
 	public boolean isActive() {
 		return active;
@@ -74,4 +59,43 @@ public class User {
 		this.password = password;
 	}
 
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	public String getEmpID() {
+		return empID;
+	}
+
+	public void setEmpID(String empID) {
+		this.empID = empID;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getcOEType() {
+		return cOEType;
+	}
+
+	public void setcOEType(String cOEType) {
+		this.cOEType = cOEType;
+	}
 }

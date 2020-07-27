@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<com.xebia.learningmanagement.model.User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
 	User save(User user);
 
