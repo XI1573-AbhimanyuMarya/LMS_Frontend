@@ -11,7 +11,7 @@ const transition = React.forwardRef(function Transition(props, ref) {
 
 const LearningPath = (props) => {
     //const classes = useStyles();
-    const { openPathModel, handleClose } = props;
+    const { openPathModel, handleClose, handleClosePath } = props;
     return (
         <div>
             <Dialog fullScreen open={openPathModel} onClose={handleClose} TransitionComponent={transition}>
@@ -21,7 +21,10 @@ const LearningPath = (props) => {
                     </IconButton>
                 </Toolbar> */}
                 <List>
-                    <CreateLearningPath handleClose={handleClose} />
+                    <CreateLearningPath 
+                        handleClose={handleClose} 
+                        handleClosePath={handleClosePath}
+                    />
                 </List>
             </Dialog>
         </div>

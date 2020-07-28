@@ -70,7 +70,7 @@ const getStepContent = (step) => {
 }
 
 const CreateLearningPath = (props) => {
-    const { handleClose } = props;
+    const { handleClose, handleClosePath } = props;
     const classes = useStyles();
     const [activePathStep, setActivePathStep] = React.useState(0);
 
@@ -78,9 +78,9 @@ const CreateLearningPath = (props) => {
         setActivePathStep(activePathStep + 1);
     };
 
-    const handleBack = () => {
-        setActivePathStep(activePathStep - 1);
-    };
+    // const handleBack = () => {
+    //     setActivePathStep(activePathStep - 1);
+    // };
 
     return (
         <React.Fragment>
@@ -131,7 +131,7 @@ const CreateLearningPath = (props) => {
                                     <Button
                                         variant="contained"
                                         type="button"
-                                        onClick={handleClose}
+                                        onClick={handleClosePath}
                                         className={classes.closeButton}
                                     >
                                         Close

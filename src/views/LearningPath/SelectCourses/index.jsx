@@ -9,7 +9,7 @@ import Carosals from './Carosals/index';
 import { useStyles } from './style';
 
 const SelectCourses = (props) => {
-	const { coursesList, handleCourseClick } = props;
+	const { coursesList } = props;
 	const classes = useStyles();
 	return (
 		<React.Fragment>
@@ -23,7 +23,7 @@ const SelectCourses = (props) => {
 				<Typography variant="h6" className={classes.catalogTitle}>
 					Course Catalog
           		</Typography>
-				<Carosals coursesList={coursesList} handleCourseClick={handleCourseClick} />
+				<Carosals coursesList={coursesList} />
 			</Box>
 		</React.Fragment>
 	);
