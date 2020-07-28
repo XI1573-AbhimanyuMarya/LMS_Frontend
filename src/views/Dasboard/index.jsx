@@ -15,7 +15,9 @@ import Approvals from '../../images/Approvals.svg';
 import LearningPath from '../LearningPath/index';
 import { useStyles } from './style';
 
-const Dashboard = () => {
+import WithLoading from '../../hoc/WithLoading';
+
+const Dashboard = (props) => {
     const classes = useStyles();
     const [openPathModel, setPathModelOpen] = useState(false);
     const [openDiscardPopup, setDiscardPopup] = useState(false);
@@ -136,4 +138,4 @@ const Dashboard = () => {
     );
 }
 
-export default Dashboard;
+export default WithLoading(Dashboard);
