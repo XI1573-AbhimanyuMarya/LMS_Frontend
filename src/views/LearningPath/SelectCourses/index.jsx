@@ -5,31 +5,28 @@ import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-
 import Carosals from './Carosals/index';
-
 import { useStyles } from './style';
 
-export default function SelectCourses() {
-  const classes = useStyles();
-  return (
-    <React.Fragment>
-      
-        <TextField id="standard-search" label="Search Course" type="search" variant="outlined" className={classes.searchField} />
-        <Box bgcolor="#F1F3F7" p={3} >
-          <FormControl>
-            <InputLabel htmlFor="standard-search" className={classes.courseLabel}>Course Name*</InputLabel>
-            <TextField fullWidth id="standard-search" label="Backend Course" type="search" variant="outlined" className={classes.courseField} />
-          </FormControl>
-          
-          <Divider variant="middle" />
-          <Typography variant="h6" className={classes.catalogTitle}>
-            Course Catalog
-      </Typography>
-          <Carosals />
-
-        </Box>
-      
-    </React.Fragment>
-  );
+const SelectCourses = (props) => {
+	const { coursesList, handleCourseClick } = props;
+	const classes = useStyles();
+	return (
+		<React.Fragment>
+			<TextField id="standard-search" label="Search Course" type="search" variant="outlined" className={classes.searchField} />
+			<Box bgcolor="#F1F3F7" p={3} >
+				<FormControl>
+					<InputLabel htmlFor="standard-search" className={classes.courseLabel}>Course Name*</InputLabel>
+					<TextField fullWidth id="standard-search" label="Backend Course" type="search" variant="outlined" className={classes.courseField} />
+				</FormControl>
+				<Divider variant="middle" />
+				<Typography variant="h6" className={classes.catalogTitle}>
+					Course Catalog
+          		</Typography>
+				<Carosals coursesList={coursesList} handleCourseClick={handleCourseClick} />
+			</Box>
+		</React.Fragment>
+	);
 }
+
+export default SelectCourses;
