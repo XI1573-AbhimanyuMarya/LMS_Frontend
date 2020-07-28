@@ -6,34 +6,35 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-
 import { useStyles } from './style';
 
-export default function MediaCard() {
-  const classes = useStyles();
+const CourseCatalog = (props) => {
+	const { handleCourseClick, id, title } = props;
+	const classes = useStyles();
 
-  return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <Divider variant="middle" />
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
-  );
+	return (
+		<Card className={classes.root}>
+			<CardActionArea onClick={handleCourseClick}>
+				<CardContent>
+					<Button variant="outlined" color="primary" className={classes.courseType}>
+						Data Science
+        			</Button>
+					<Typography variant="body1" component="h5" className={classes.courseTitle}>
+						{title}
+					</Typography>
+					<Typography variant="body2" color="textSecondary" component="p" className={classes.courseDesc}>
+						Machine learning is the science of getting computers to act without being explicitly programmed. In the past dec…
+         			 </Typography>
+				</CardContent>
+				<Divider variant="middle" />
+				<CardActions>
+					<Typography variant="body1" component="h5" className={classes.courseLevel}>
+						Advanced
+          			</Typography>
+				</CardActions>
+			</CardActionArea>
+		</Card>
+	);
 }
+
+export default CourseCatalog;
