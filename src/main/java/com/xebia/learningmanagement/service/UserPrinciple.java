@@ -1,7 +1,7 @@
 /*
 package com.xebia.learningmanagement.service;
 
-import com.xebia.learningmanagement.model.User;
+import com.xebia.learningmanagement.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

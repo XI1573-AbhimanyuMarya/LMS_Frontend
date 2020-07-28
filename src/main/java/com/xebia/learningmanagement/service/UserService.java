@@ -1,6 +1,6 @@
 package com.xebia.learningmanagement.service;
 
-import com.xebia.learningmanagement.model.User;
+import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.UserDto;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

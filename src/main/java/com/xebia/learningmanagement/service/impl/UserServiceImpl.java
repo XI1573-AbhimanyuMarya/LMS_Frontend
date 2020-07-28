@@ -1,7 +1,7 @@
-package com.xebia.learningmanagement.service;
+package com.xebia.learningmanagement.service.impl;
 
 //import com.xebia.learningmanagement.model.GrantedAuthorityImpl;
-import com.xebia.learningmanagement.model.User;
+import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.UserDto;
 import com.xebia.learningmanagement.repository.UserRepository;
 import org.slf4j.Logger;
@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -49,7 +48,7 @@ public class UserServiceImpl implements UserDetailsService {
 
 @Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<com.xebia.learningmanagement.model.User> user = userRepository.findByUsername(username);
+		Optional<User> user = userRepository.findByUsername(username);
 		return user.map(MyUserDetails::new).get();
 	}
 /*@Override

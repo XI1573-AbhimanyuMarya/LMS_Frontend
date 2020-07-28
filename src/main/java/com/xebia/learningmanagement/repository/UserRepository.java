@@ -1,6 +1,6 @@
 package com.xebia.learningmanagement.repository;
 
-import com.xebia.learningmanagement.model.User;
+import com.xebia.learningmanagement.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	void deleteByUsername(String username);
 
-	Optional<com.xebia.learningmanagement.model.User> findByUsername(String username);
+	Optional<User> findByUsername(String username);
 
 }
 

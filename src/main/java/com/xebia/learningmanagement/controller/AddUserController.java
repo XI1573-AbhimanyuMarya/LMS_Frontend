@@ -3,7 +3,7 @@ package com.xebia.learningmanagement.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xebia.learningmanagement.model.EmployeeMetaData;
-import com.xebia.learningmanagement.model.User;
+import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,15 +22,16 @@ public class AddUserController {
     UserRepository userRepository;
 
     @PostMapping("/addNewUsers")
-    public void addNewUsers(){
-        int count =1;
-        for(int j=0;j<4;j++) {
-            String uri = "https://people.zoho.com/people/api/forms/P_EmployeeView/records?authtoken=f85d7b9916365d6cbd723b2fd8b6ba74&sIndex="+count;
+    public void addNewUsers() {
+        int count = 1;
+        for (int j = 0; j < 4; j++) {
+            String uri = "https://people.zoho.com/people/api/forms/P_EmployeeView/records?authtoken=f85d7b9916365d6cbd723b2fd8b6ba74&sIndex=" + count;
 
             List emp = restTemplate.getForObject(uri, List.class);
 
             ObjectMapper mapper = new ObjectMapper();
-            List<EmployeeMetaData> emp2 = mapper.convertValue(emp, new TypeReference<>() {});
+            List<EmployeeMetaData> emp2 = mapper.convertValue(emp, new TypeReference<>() {
+            });
 
             for (int i = 0; i < emp2.size(); i++) {
                 Optional<User> user2 = userRepository.findByUsername(emp2.get(i).getXebiaEmailID());
@@ -54,7 +55,7 @@ public class AddUserController {
                     userRepository.save(user);
                 }
             }
-            count = count+200;
+            count = count + 200;
         }
     }
 }
