@@ -10,7 +10,7 @@ const protectedRoute = (props) => {
         <Route 
           render={props => (
             getSession ?
-              <Component {...props} /> :
+              <Component {...props} isLoading={false}/> :
               <Redirect to='/login' />
           )} 
         />

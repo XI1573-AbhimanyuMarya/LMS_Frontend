@@ -45,7 +45,6 @@ export const useStyles = makeStyles((theme) => ({
 		height: '100%',
 		alignItems: 'center',
 		justifyContent: 'center',
-		margin: 'auto'
 	},
 	active: {
 		color: '#621D58 !important',
@@ -57,5 +56,23 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	assignedLabel: {
 		color: '#67B104'
+	},
+	learningImg: {
+		display: 'flex',
+		alignItems: 'center',
+		marginLeft: 150
+	},
+	media: {
+		height: 28,
+		width: 27
+	},
+	successContainer: {
+		width: '100%',
+		height: '100%',
+		alignItems: 'center',
+		justifyContent: 'center',
+		Display: "flex",
+		flexDirection: "column",
+		marginTop: '10%'
 	}
 }));

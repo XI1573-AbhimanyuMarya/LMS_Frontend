@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -12,6 +12,10 @@ import { useStyles } from './style';
 
 const SelectUsers = () => {
 	const classes = useStyles();
+
+	useEffect(() => {
+		console.log('SelectUsers')
+	}, []);
 	return (
 		<React.Fragment>
 			<Grid>

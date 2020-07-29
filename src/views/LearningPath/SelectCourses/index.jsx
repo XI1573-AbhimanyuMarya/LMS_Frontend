@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
@@ -9,8 +9,12 @@ import Carosals from './Carosals/index';
 import { useStyles } from './style';
 
 const SelectCourses = (props) => {
-	const { coursesList, handleCourseClick } = props;
 	const classes = useStyles();
+
+	useEffect(() => {
+		console.log('SelectCourses')
+	}, []);
+	const { coursesList } = props;
 	return (
 		<React.Fragment>
 			<TextField id="standard-search" label="Search Course" type="search" variant="outlined" className={classes.searchField} />
@@ -23,7 +27,7 @@ const SelectCourses = (props) => {
 				<Typography variant="h6" className={classes.catalogTitle}>
 					Course Catalog
           		</Typography>
-				<Carosals coursesList={coursesList} handleCourseClick={handleCourseClick} />
+				<Carosals coursesList={coursesList} />
 			</Box>
 		</React.Fragment>
 	);

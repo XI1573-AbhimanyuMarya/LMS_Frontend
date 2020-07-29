@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CardMedia from '@material-ui/core/CardMedia';
 import Avatar from '@material-ui/core/Avatar';
+import DiscardPopup from '../../components/DiscardPopup';
 import XebiaLogo from '../../images/Logo.svg'
 import AddLearningPath from '../../images/AddLearningPath.svg'
 import DashboardSelected from '../../images/DashboardSelected.svg';
@@ -14,17 +15,39 @@ import Approvals from '../../images/Approvals.svg';
 import LearningPath from '../LearningPath/index';
 import { useStyles } from './style';
 
-const Dashboard = () => {
+import WithLoading from '../../hoc/WithLoading';
+
+const Dashboard = (props) => {
     const classes = useStyles();
     const [openPathModel, setPathModelOpen] = useState(false);
-
+    const [openDiscardPopup, setDiscardPopup] = useState(false);
+    /**
+     * function to open learning path model
+     */
     const handleClickOpen = () => {
         setPathModelOpen(true);
     };
-
+    /**
+     * function to close learning path model
+     */
     const closeHandler = () => {
-        setPathModelOpen(false);
+        setDiscardPopup(true);
     };
+    /**
+     * function to direct close path model
+     */
+    const handleClosePathHandler = () => {
+        setPathModelOpen(false);
+    }
+    /**
+     * function to close discard popup
+     */
+    const discardHandler = (closeMainModel) => {
+        setDiscardPopup(false);
+        if(closeMainModel) {
+            setPathModelOpen(false);
+        }
+    }
 
     return (
         <>
@@ -105,9 +128,14 @@ const Dashboard = () => {
             <LearningPath
                 openPathModel={openPathModel}
                 handleClose={closeHandler}
+                handleClosePath={handleClosePathHandler}
+            />
+            <DiscardPopup 
+                openDiscardPopup={openDiscardPopup}
+                discardHandler={discardHandler}
             />
         </>
     );
 }
 
-export default Dashboard;
+export default WithLoading(Dashboard);

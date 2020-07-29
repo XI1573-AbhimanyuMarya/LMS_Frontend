@@ -8,6 +8,8 @@ export const useStyles = makeStyles((theme) => ({
 		height: '100%',
 		alignItems: 'center',
 		justifyContent: 'center',
-		margin: 'auto'
+		Display: "flex",
+		flexDirection: "column",
+		marginTop: '10%'
 	},
 }));
