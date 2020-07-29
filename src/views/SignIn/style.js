@@ -19,9 +19,6 @@ export const useStyles = makeStyles((theme) => ({
 		background: 'linear-gradient(180deg, #FFAB39 0%, #F07200 100%)',
 		color: "#FFFFFF"
 	},
-	root: {
-		maxWidth: 345,
-	},
 	media: {
 		height: 226,
 		width: 344

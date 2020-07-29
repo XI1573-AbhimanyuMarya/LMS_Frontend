@@ -56,7 +56,6 @@ const SignIn = () => {
       <Grid
         justify="space-between"
         container
-        spacing={24}
       >
         <CardMedia
           className={classes.logo}
