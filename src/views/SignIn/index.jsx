@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { useHistory } from "react-router-dom";
@@ -15,13 +15,11 @@ import Image from '../../images/Image.png';
 import { useStyles } from './style';
 import Actions from '../../store/actions';
 
-
-export default function SignIn() {
+const SignIn = () => {
+	const classes = useStyles();
+	const history = useHistory();
   const loginState = useSelector(state => state.loginState);
   const dispatch = useDispatch();
-  const classes = useStyles();
-  const history = useHistory();
-
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -137,3 +135,5 @@ export default function SignIn() {
     </div>
   );
 }
+
+export default SignIn;
