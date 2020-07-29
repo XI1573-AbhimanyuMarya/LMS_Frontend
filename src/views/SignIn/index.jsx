@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,30 +12,20 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Copyright from '../../components/Copyright';
 import XebiaLogo from '../../images/Logo.svg';
 import Image from '../../images/Image.png';
-
-import { validateUserEmail, verifyOtp } from '../../modules/authServices';
 import { useStyles } from './style';
+import Actions from '../../store/actions';
 
 
-export default function SignIn(props) {
-  const user = useSelector(state => state);
-  console.log(user)
+export default function SignIn() {
+  const loginState = useSelector(state => state.loginState);
+  const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
 
-  const [state, setState] = useState({
-    isLoading: false,
-    username: '',
-    password: '',
-    isValidEmail: true,
-    isValidOtp: true,
-    message: '',
-    sendOtp: false
-  })
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
-    setState(prevState => ({ ...prevState, [name]: value, isValidEmail: true, isValidOtp: true }));
+    dispatch(Actions.loginActions.getUserDetails(name, value));
   }
 
   const redirectDashboardPage = () => {
@@ -45,24 +35,24 @@ export default function SignIn(props) {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    const { username, password, sendOtp } = state;
-    setState(prevState => ({ ...prevState, isLoading: true, isValidEmail: username, isValidOtp: password }));
+    const { username, password, sendOtp } = loginState;
     if (username && sendOtp === false) {
-      validateUserEmail(state, setState);
+      dispatch(Actions.loginActions.validateUserEmail(username));
     } else if (password && sendOtp === true) {
-      verifyOtp(state, setState, redirectDashboardPage);
-    } else {
-      setState(prevState => ({ ...prevState, isLoading: false }));
+      dispatch(Actions.loginActions.velidateOtp(username, password));
     }
   }
 
-  const {
-    username,
-    password,
-    isValidOtp,
-    isLoading,
-    sendOtp,
-    isValidEmail } = state;
+  useEffect(() => {
+    const { login, message } = loginState;
+    if (login !== null && message === "Otp verified") {
+      localStorage.setItem("user", JSON.stringify(login));
+      redirectDashboardPage();
+    }
+  }, [loginState.login])
+
+  const { username, password, isValidOtp, isLoading, sendOtp, isValidEmail } = loginState;
+
   return (
     <div>
       <Grid
@@ -126,7 +116,6 @@ export default function SignIn(props) {
                   />
                   {isValidOtp ? null : <div className={classes.error}>Please Enter Valid OTP.</div>}
                 </>
-
             }
 
             <Button

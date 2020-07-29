@@ -1,4 +1,4 @@
-const API_HOST_PATH = 'https://learningmanagementxebia.herokuapp.com';
+const API_HOST_PATH = 'https://learningmanagementxeb.herokuapp.com';
 
 export const SERVICE_URLS = {
     LOGIN: `${API_HOST_PATH}/username`,
