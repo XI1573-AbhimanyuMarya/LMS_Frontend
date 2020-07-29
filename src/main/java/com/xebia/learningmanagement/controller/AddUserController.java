@@ -30,7 +30,7 @@ public class AddUserController {
             List emp = restTemplate.getForObject(uri, List.class);
 
             ObjectMapper mapper = new ObjectMapper();
-            List<EmployeeMetaData> emp2 = mapper.convertValue(emp, new TypeReference<>() {
+            List<EmployeeMetaData> emp2 = mapper.convertValue(emp, new TypeReference<List<EmployeeMetaData>>() {
             });
 
             for (int i = 0; i < emp2.size(); i++) {
