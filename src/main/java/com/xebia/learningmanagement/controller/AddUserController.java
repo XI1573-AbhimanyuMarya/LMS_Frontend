@@ -6,6 +6,7 @@ import com.xebia.learningmanagement.model.EmployeeMetaData;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin("*")
 public class AddUserController {
     @Autowired
     RestTemplate restTemplate;

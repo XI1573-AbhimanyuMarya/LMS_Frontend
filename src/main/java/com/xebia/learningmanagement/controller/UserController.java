@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping(name = "/apis")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
