@@ -24,6 +24,13 @@ export const learningPathReducer = (state = initialState, action) => {
                 courses: payload,
                 isLoading: false
             };
+        case actionTypes.GET_FILTERED_COURSES:
+            return {
+                ...state,
+                filteredCoursesList: payload.list,
+                isLoading: false
+            }; 
+
         default: return state;
     }
 }

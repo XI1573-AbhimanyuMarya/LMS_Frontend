@@ -18,19 +18,21 @@ const SelectCourses = () => {
 	useEffect(() => {
 		dispatch(Actions.learningPathActions.fetchAllCourses());
 	}, []);
-
-	const {courses} = learningPathState;
+	const { courses, filteredCoursesList } = learningPathState;
+	let filterCourses = [];
 	const changeHandler = (e) => {
-		const {name, value} = e.target;
-		const filterCourses = courses.filter(function (el) {
-			return el.name.includes(value) ||
-				   el.category.name.includes(value) ||
-				   el.competency.name.includes(value);
-			});
-		console.log('filterCourses', filterCourses)
-		console.log('courses', courses)	
+		const {value} = e.target;
+		const searchValue = value.toLowerCase();
+		if(courses.length > 0) {
+			filterCourses = courses.filter(function (el) {
+				return el.name.toLowerCase().includes(searchValue) ||
+						el.category.name.toLowerCase().includes(searchValue) ||
+						el.competency.name.toLowerCase().includes(searchValue);
+				});
+			dispatch(Actions.learningPathActions.getFilteredCourses(filterCourses));	
+		}
 	}
-	//const {courses} = learningPathState;
+	const coursesList = filteredCoursesList && filteredCoursesList.length > 0 ? filteredCoursesList : courses;
 	return (
 		<React.Fragment>
 			<TextField id="standard-search" label="Search Course" type="search" variant="outlined" className={classes.searchField} name="searchName" onChange={changeHandler}/>
@@ -43,7 +45,7 @@ const SelectCourses = () => {
 				<Typography variant="h6" className={classes.catalogTitle}>
 					Course Catalog
           		</Typography>
-				<Carosals coursesList={courses} />
+				<Carosals coursesList={coursesList} />
 			</Box>
 		</React.Fragment>
 	);
