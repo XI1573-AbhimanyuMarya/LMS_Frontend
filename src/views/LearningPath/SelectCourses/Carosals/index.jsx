@@ -21,8 +21,8 @@ const Carosals = (props) => {
         chevronWidth={chevronWidth}
       >
         {
-          coursesList().map((course, index) => {
-            return <CourseCatalog key={course.id}  title={course.title} />
+          coursesList.map((course) => {
+            return <CourseCatalog key={course.id}  course={course} />
           })
         }
       </ItemsCarousel>

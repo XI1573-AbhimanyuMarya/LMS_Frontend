@@ -9,7 +9,7 @@ import Box from '@material-ui/core/Box';
 import { useStyles } from './style';
 
 const CourseCatalog = (props) => {
-	const { id, title } = props;
+	const { course } = props;
 	const classes = useStyles();
 
 	return (
@@ -17,19 +17,19 @@ const CourseCatalog = (props) => {
 			<CardActionArea>
 				<CardContent>	
 					<Box component="span" className={classes.courseType}>
-						Data Science
+						{course.category.name}
 					</Box>
 					<Typography variant="body1" component="h5" className={classes.courseTitle}>
-						{title}
+						{course.name}
 					</Typography>
 					<Typography variant="body2" color="textSecondary" component="p" className={classes.courseDesc}>
-						Machine learning is the science of getting computers to act without being explicitly programmed. In the past dec…
-         			 </Typography>
+						{course.description}
+         			</Typography>
 				</CardContent>
 				<Divider variant="middle" />
 				<CardActions>
 					<Typography variant="body1" component="h5" className={classes.courseLevel}>
-						Advanced
+						{course.competency.name}
           		</Typography>
 				</CardActions>
 			</CardActionArea>
