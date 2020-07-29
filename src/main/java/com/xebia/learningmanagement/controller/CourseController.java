@@ -32,41 +32,4 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(allcourses);
     }
 
-    @PostMapping(value = "/createCourse")
-    public ResponseEntity<?> createCourse(@RequestBody Courses courses) {
-        courses = courseService.createCourse(courses);
-        if (courses != null) {
-            return new ResponseEntity<>(courses, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @GetMapping(value = "/getCourse/{name}")
-    public Courses getCourse(@PathVariable(name = "name") String name) {
-        return courseService.findByCourseName(name);
-
-    }
-
-    @PostMapping(value = "/createCategory")
-    public ResponseEntity<?> createCategory(@RequestBody CategoryDto categoryDto) {
-        Category category = courseService.createCategory(categoryDto);
-        if (category != null) {
-            return new ResponseEntity<>(category, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @GetMapping(value = "/getCategory/{id}")
-    public Category getCategory(@PathVariable(name = "id") Long id) {
-        return courseService.findByCategoryId(id);
-    }
-
-//	@GetMapping(value = "/getCategoryCode/{code}")
-//	public Category getCategory(@PathVariable(name = "code") String code) {
-//
-////		return courseService.findByCode(code);
-//	}
-
 }

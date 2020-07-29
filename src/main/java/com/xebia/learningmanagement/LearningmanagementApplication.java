@@ -17,6 +17,4 @@ public class LearningmanagementApplication {
 		SpringApplication.run(LearningmanagementApplication.class, args);
 	}
 
-
-
 }

@@ -28,7 +28,6 @@ import java.util.NoSuchElementException;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(name = "/apis")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -49,16 +48,6 @@ public class UserController {
 
     @Autowired
     AuthenticationManager authenticationManager;
-
-//    @PostMapping("/createUser")
-//    public ResponseEntity<?> createUser(@RequestBody UserDto users) {
-//        User user = userServiceImpl.createUser(users);
-//        if (user != null) {
-//            return new ResponseEntity<>(user, HttpStatus.CREATED);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
 
     @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
     @RequestMapping({"/superadmin"})
@@ -105,6 +94,7 @@ public class UserController {
             userResponse.setStatus("success");
             userResponse.setMessage("Otp verified");
             userResponse.setLogin(new Login(jwt));
+            userResponse.setUser(userRepository.findByUsername(tempUsername.getUsername()).get());
             return ResponseEntity.status(HttpStatus.OK).body(userResponse);
         } catch (BadCredentialsException e) {
             userResponse.setStatus("failure");

@@ -22,55 +22,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     CourseRepository courseRepository;
+
     @Autowired
     CategoryRepository categoryRepository;
-
-
-    public Courses createCourse(Courses courses) {
-        courses = courseRepository.save(courses);
-
-        return courses;
-    }
-
-    public Courses findByCourseName(String name) {
-
-        return courseRepository.findCourseByName(name);
-    }
-
-    public Category createCategory(CategoryDto categoryDto) {
-        Category category = categoryRepository.save(transformToModelBeforeSave(categoryDto));
-		/*List<CompentencyHead> compentencyHeads = compentencyHeadRepo.findAll();
-		for (CompentencyHead comp : compentencyHeads) {
-			comp.getId();
-			comp.getName();
-			comp = compentencyHeadRepo.save(comp);
-			category.setCompentencyHead(comp);
-
-		}*/
-
-        return category;
-    }
-
-    @Transactional
-    Category transformToModelBeforeSave(CategoryDto categoryDto) {
-        Category category = new Category();
-        BeanUtils.copyProperties(categoryDto, category);
-//		category.setCreatedAt(new Date());
-//		System.out.println(" competemcy "+category.getCompentencyHead().getName());
-        return category;
-    }
-
-
-    public Category findByCategoryId(Long id) {
-
-        return categoryRepository.findCategoryById(id);
-
-    }
-
-//	@Override
-//	public Category findByCode(String code) {
-//		return categoryRepository.findCategoryByCode(code);
-//	}
 
     @Override
     public Set<Courses> getCoursesByKeyword(String keyword) {

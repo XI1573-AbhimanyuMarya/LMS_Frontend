@@ -1,11 +1,13 @@
 package com.xebia.learningmanagement.model;
 
+import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.Login;
 
 public class UserResponse {
 	private String status;
 	private String message;
 	private Login login;
+	private User user;
 
 	public Login getLogin() {
 		return login;
@@ -29,5 +31,13 @@ public class UserResponse {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }
