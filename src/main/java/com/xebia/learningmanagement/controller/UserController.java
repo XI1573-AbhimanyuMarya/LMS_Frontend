@@ -23,6 +23,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -48,15 +49,15 @@ public class UserController {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    @PostMapping("/createUser")
-    public ResponseEntity<?> createUser(@RequestBody UserDto users) {
-        User user = userServiceImpl.createUser(users);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @PostMapping("/createUser")
+//    public ResponseEntity<?> createUser(@RequestBody UserDto users) {
+//        User user = userServiceImpl.createUser(users);
+//        if (user != null) {
+//            return new ResponseEntity<>(user, HttpStatus.CREATED);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
     @RequestMapping({"/superadmin"})
@@ -111,5 +112,10 @@ public class UserController {
         }
     }
 
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<User>> getAllUsers(){
+        List<User> allUsers = userRepository.findAll();
+        return ResponseEntity.ok().body(allUsers);
+    }
 
 }

@@ -18,4 +18,6 @@ public interface CourseService {
 	Category findByCategoryId(Long id);
 
 	Set<Courses> getCoursesByKeyword(String keyword);
+
+	List<Courses> getAllCourses();
 }

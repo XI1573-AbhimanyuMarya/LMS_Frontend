@@ -51,12 +51,5 @@ public class UserServiceImpl implements UserDetailsService {
 		Optional<User> user = userRepository.findByUsername(username);
 		return user.map(MyUserDetails::new).get();
 	}
-/*@Override
-public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	com.xebia.learningmanagement.entity.User user = userRepository.findByUserName(username);
-	if (user == null) {
-		throw new UsernameNotFoundException(username);
-	}
-	return new UserPrinciple(user);
-}*/
+
 }

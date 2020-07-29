@@ -25,6 +25,11 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(courses);
     }
 
+    @GetMapping("/getAllCourses")
+    public ResponseEntity<List<Courses>> getAllCourses(){
+        List<Courses> allcourses=courseService.getAllCourses();
+        return ResponseEntity.status(HttpStatus.OK).body(allcourses);
+    }
 
     @PostMapping(value = "/createCourse")
     public ResponseEntity<?> createCourse(@RequestBody Courses courses) {
