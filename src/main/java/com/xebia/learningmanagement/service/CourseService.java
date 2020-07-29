@@ -1,6 +1,11 @@
 package com.xebia.learningmanagement.service;
 
+import com.xebia.learningmanagement.entity.Category;
+import com.xebia.learningmanagement.entity.Courses;
 import com.xebia.learningmanagement.model.*;
+
+import java.util.List;
+import java.util.Set;
 
 public interface CourseService {
 
@@ -12,9 +17,7 @@ public interface CourseService {
 
 	Category findByCategoryId(Long id);
 
-	SubCategory createSubCategory(SubCategory subCategory);
+	Set<Courses> getCoursesByKeyword(String keyword);
 
-	SubCategory findBySubCategoryId(Long id);
-
-	Category findByCode(String code);
+	List<Courses> getAllCourses();
 }

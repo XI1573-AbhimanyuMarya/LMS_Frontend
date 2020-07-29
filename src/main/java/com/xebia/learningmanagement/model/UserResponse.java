@@ -1,4 +1,6 @@
-package com.xebia.learningmanagement.entity;
+package com.xebia.learningmanagement.model;
+
+import com.xebia.learningmanagement.model.Login;
 
 public class UserResponse {
 	private String status;

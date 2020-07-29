@@ -1,6 +1,6 @@
-package com.xebia.learningmanagement.service;
+package com.xebia.learningmanagement.service.impl;
 
-import com.xebia.learningmanagement.model.User;
+import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.util.EmailSend;
 import org.springframework.beans.factory.annotation.Autowired;

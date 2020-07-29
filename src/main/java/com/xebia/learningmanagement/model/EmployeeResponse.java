@@ -125,24 +125,24 @@ public class EmployeeResponse {
 		this.clientLocation = clientLocation;
 	}
 
-	public static List<EmployeeResponse> from(List<Employee> employees){
-		List<EmployeeResponse> employeeResponseList=new ArrayList<>();
-		for (Employee employee : employees) {
-			EmployeeResponse employeeResponse  = new EmployeeResponse();
-			employeeResponse.setEmployeeId(employee.getId());
-			employeeResponse.setName(employee.getName());
-			employeeResponse.setEmail(employee.getEmail());
-			employeeResponse.setContactNumber(employee.getContactNumber());
-			employeeResponse.setDepartmentName(employee.getDepartmentName());
-			employeeResponse.setBaseLocation(employee.getBaseLocation());
-			employeeResponse.setDesignation(employee.getDesignation());
-			employeeResponse.setCOEType(employee.getCOEType());
-			employeeResponse.setOwnerName(employee.getOwnerName());
-			employeeResponse.setSittingLocation(employee.getSittingLocation());
-			employeeResponse.setReportingTo(employee.getReportingTo());
-			employeeResponse.setClientLocation(employee.getClientLocation());
-			employeeResponseList.add(employeeResponse);
-		}
-		return employeeResponseList;
-	}
+//	public static List<EmployeeResponse> from(List<Employee> employees){
+//		List<EmployeeResponse> employeeResponseList=new ArrayList<>();
+//		for (Employee employee : employees) {
+//			EmployeeResponse employeeResponse  = new EmployeeResponse();
+//			employeeResponse.setEmployeeId(employee.getId());
+//			employeeResponse.setName(employee.getName());
+//			employeeResponse.setEmail(employee.getEmail());
+//			employeeResponse.setContactNumber(employee.getContactNumber());
+//			employeeResponse.setDepartmentName(employee.getDepartmentName());
+//			employeeResponse.setBaseLocation(employee.getBaseLocation());
+//			employeeResponse.setDesignation(employee.getDesignation());
+//			employeeResponse.setCOEType(employee.getCOEType());
+//			employeeResponse.setOwnerName(employee.getOwnerName());
+//			employeeResponse.setSittingLocation(employee.getSittingLocation());
+//			employeeResponse.setReportingTo(employee.getReportingTo());
+//			employeeResponse.setClientLocation(employee.getClientLocation());
+//			employeeResponseList.add(employeeResponse);
+//		}
+//		return employeeResponseList;
+//	}
 }

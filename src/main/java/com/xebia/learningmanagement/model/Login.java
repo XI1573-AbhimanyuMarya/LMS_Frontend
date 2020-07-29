@@ -1,4 +1,4 @@
-package com.xebia.learningmanagement.entity;
+package com.xebia.learningmanagement.model;
 
 public class Login {
 	private String jwt;
