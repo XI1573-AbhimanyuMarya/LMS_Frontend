@@ -15,6 +15,8 @@ import { withStyles } from '@material-ui/core/styles';
 import SelectCourses from '../SelectCourses';
 import SelectUsers from '../SelectUsers';
 import SetDuration from '../SetDuration';
+import CardMedia from '@material-ui/core/CardMedia';
+import AddLearningPath from '../../../images/AddLearningPath.svg';
 import { useStyles } from './style';
 
 const QontoConnector = withStyles({
@@ -88,9 +90,17 @@ const CreateLearningPath = (props) => {
             <main className={classes.layout}>
                 <Grid container item xs={12} justify="center" className={classes.breadcrumbs}>
                     <Container component="main" maxWidth="sm" className={classes.mainContainer}>
-                        <Typography component="h1" variant="h5" align="center">
-                            Create Learning Path
-                        </Typography>
+                        <div className={classes.learningImg}>
+                            <CardMedia
+                                className={classes.media}
+                                image={AddLearningPath}
+                                title="Contemplative Reptile"
+                            />
+                            <Typography component="h1" variant="h5" align="center">
+                            
+                                Create Learning Path
+                            </Typography>
+                        </div>
                         <Typography variant="subtitle2" align="center">
                             Please provide details below to add learning path
                         </Typography>
@@ -119,12 +129,12 @@ const CreateLearningPath = (props) => {
                 <React.Fragment>
                     {activePathStep === steps.length ? (
                         <React.Fragment>
-                            <Container component="main" maxWidth="xs" className={classes.mainContainer}>
+                            <Container component="main" maxWidth="xs" className={classes.successContainer}>
                                 <CssBaseline />
-                                <Typography variant="h5" gutterBottom className={classes.assignedLabel}>
+                                <Typography variant="h5" align="center" className={classes.assignedLabel}>
                                     Successfully Assigned.
                                 </Typography>
-                                <Typography variant="subtitle1">
+                                <Typography variant="subtitle1" align="center">
                                     An email has been sent to the employees
                                 </Typography>
                                 <div className={classes.buttons}>

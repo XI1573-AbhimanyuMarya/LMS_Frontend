@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Slider from '@material-ui/core/Slider';
+import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 import { useStyles } from './style';
 
@@ -76,9 +77,10 @@ const SetDuration = () => {
 
 	return (
 		<React.Fragment>
+			<Divider />
 			<Container component="main" maxWidth="xs" className={classes.mainContainer}>
 				<CssBaseline />
-				<Typography variant="h6" gutterBottom>
+				<Typography variant="h6" align="center">
 					Select Learning Path Duration
       			</Typography>
 				<PrettoSlider
