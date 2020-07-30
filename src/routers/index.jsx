@@ -7,7 +7,6 @@ import Dashboard from '../views/Dasboard/index';
 
 const Routers = () => {
     const loginState = useSelector(response => response.loginState);
-    console.log(loginState)
     return (
         <Router>
             {
