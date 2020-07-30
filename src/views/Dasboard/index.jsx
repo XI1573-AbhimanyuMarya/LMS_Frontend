@@ -21,27 +21,19 @@ const Dashboard = (props) => {
     const classes = useStyles();
     const [openPathModel, setPathModelOpen] = useState(false);
     const [openDiscardPopup, setDiscardPopup] = useState(false);
-    /**
-     * function to open learning path model
-     */
+    
     const handleClickOpen = () => {
         setPathModelOpen(true);
     };
-    /**
-     * function to close learning path model
-     */
+   
     const closeHandler = () => {
         setDiscardPopup(true);
     };
-    /**
-     * function to direct close path model
-     */
+    
     const handleClosePathHandler = () => {
         setPathModelOpen(false);
     }
-    /**
-     * function to close discard popup
-     */
+   
     const discardHandler = (closeMainModel) => {
         setDiscardPopup(false);
         if(closeMainModel) {

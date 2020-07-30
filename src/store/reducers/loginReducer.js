@@ -1,6 +1,6 @@
 import { actionTypes } from '../types';
 
-const initialState = {
+const defaultState = {
     isLoading: false,
     username: '',
     password: '',
@@ -8,8 +8,21 @@ const initialState = {
     isValidOtp: true,
     message: '',
     sendOtp: false,
-    login: null
+    login: {
+        jwt: '',
+        islogin: false
+    },
+    user: {
+
+    },
+    status: null
 }
+
+const userInfo = JSON.parse(localStorage.getItem('USER_INFO'));
+
+const initialState = userInfo ?
+    { ...defaultState, login: { ...userInfo.login }, user: { ...userInfo.user } }
+    : defaultState;
 
 export const loginReducer = (state = initialState, action) => {
     const { payload } = action;
@@ -54,14 +67,17 @@ export const loginReducer = (state = initialState, action) => {
                 isLoading: false,
                 message: payload.message,
                 isValidOtp: true,
-                login: payload.login
+                login: { ...payload.login },
+                user: { ...payload.user },
+                status: payload.status
             }
         case actionTypes.LOGIN_CALL_FAILURE:
             return {
                 ...state,
                 isLoading: false,
                 message: payload.message,
-                isValidOtp: false
+                isValidOtp: false,
+                status: payload.status
             }
 
         default: return state;
