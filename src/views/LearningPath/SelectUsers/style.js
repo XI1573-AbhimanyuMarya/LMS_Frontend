@@ -44,4 +44,7 @@ export const useStyles = makeStyles((theme) => ({
 		color: '#FFFFFFF',
 		backgroundColor: pink[500],
 	},
+	checkIcon: {
+		color: '#67B104'
+	}
 }));

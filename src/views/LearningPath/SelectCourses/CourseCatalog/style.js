@@ -35,4 +35,8 @@ export const useStyles = makeStyles(theme => ({
 		maxWidth: 345,
 		border: '2px solid #67B104'
 	},
+	checkIcon: {
+		color: '#67B104',
+		float: 'right'
+	}
 }));

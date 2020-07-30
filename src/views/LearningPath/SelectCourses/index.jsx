@@ -22,6 +22,7 @@ const SelectCourses = () => {
 	 */
 	useEffect(() => {
 		dispatch(Actions.learningPathActions.fetchAllCourses());
+		console.log('componentDidMount')
 	}, []);
 
 	/**

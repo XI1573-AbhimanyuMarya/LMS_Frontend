@@ -9,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Typography from '@material-ui/core/Typography';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { useStyles } from './style';
 import Actions from '../../../store/actions';
 import { MESSAGES } from '../../../modules/constants';
@@ -49,7 +50,6 @@ const SelectUsers = () => {
 	 */
 	let selectedUsers = [];
 	const onUserClickHandler = (userId) => {
-		console.log('userId', userId)
 		if(userId !== "") {
 			selectedUsers = users.map(function (el) {
 				if(el.id === userId) {
@@ -81,6 +81,7 @@ const SelectUsers = () => {
 			];
 			return (
 				<Box p={0.5} key={user.id}>
+					
 					<Card className={userClass}  onClick={() => onUserClickHandler(user.id)}>
 						<ListItem>
 							<ListItemAvatar>
@@ -88,6 +89,7 @@ const SelectUsers = () => {
 							</ListItemAvatar>
 							<ListItemText primary={user.fullName} />
 						</ListItem>
+						{user.selected && user.selected === true && <CheckCircleIcon className={classes.checkIcon}/>}
 					</Card>
 				</Box>
 			)	
