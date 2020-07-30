@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -7,7 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { useHistory } from "react-router-dom";
 import CardMedia from '@material-ui/core/CardMedia';
 import Copyright from '../../components/Copyright';
 import XebiaLogo from '../../images/Logo.svg';
@@ -16,19 +15,14 @@ import { useStyles } from './style';
 import Actions from '../../store/actions';
 
 const SignIn = () => {
-	const classes = useStyles();
-	const history = useHistory();
+  const classes = useStyles();
   const loginState = useSelector(state => state.loginState);
   const dispatch = useDispatch();
+  const { username, password, isValidOtp, isLoading, sendOtp, isValidEmail } = loginState;
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     dispatch(Actions.loginActions.getUserDetails(name, value));
-  }
-
-  const redirectDashboardPage = () => {
-    let path = `/dashboard`;
-    history.push(path);
   }
 
   const onFormSubmit = (e) => {
@@ -39,17 +33,10 @@ const SignIn = () => {
     } else if (password && sendOtp === true) {
       dispatch(Actions.loginActions.velidateOtp(username, password));
     }
-  }
-
-  useEffect(() => {
-    const { login, message } = loginState;
-    if (login !== null && message === "Otp verified") {
-      localStorage.setItem("user", JSON.stringify(login));
-      redirectDashboardPage();
+    else {
+      dispatch(Actions.loginActions.validateUserEmail(username));
     }
-  }, [loginState.login])
-
-  const { username, password, isValidOtp, isLoading, sendOtp, isValidEmail } = loginState;
+  }
 
   return (
     <div>
@@ -61,7 +48,6 @@ const SignIn = () => {
           className={classes.logo}
           image={XebiaLogo}
           title="Learning Module"
-
         />
       </Grid>
 
