@@ -9,16 +9,24 @@ import FormControl from '@material-ui/core/FormControl';
 import Carosals from './Carosals/index';
 import { useStyles } from './style';
 import Actions from '../../../store/actions';
+import CourseSkelton from '../../../components/Skelton/CourseSkelton';
 
 const SelectCourses = () => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
-  	const dispatch = useDispatch();
-
+	const { courses, filteredCoursesList, isLoading } = learningPathState;
+	  
+	/**
+	 * function to fetch all courses initial time
+	 */
 	useEffect(() => {
 		dispatch(Actions.learningPathActions.fetchAllCourses());
 	}, []);
-	const { courses, filteredCoursesList } = learningPathState;
+
+	/**
+	 * function to filter courses
+	 */
 	let filterCourses = [];
 	const changeHandler = (e) => {
 		const {value} = e.target;
@@ -32,7 +40,27 @@ const SelectCourses = () => {
 			dispatch(Actions.learningPathActions.getFilteredCourses(filterCourses));	
 		}
 	}
-	const coursesList = filteredCoursesList && filteredCoursesList.length > 0 ? filteredCoursesList : courses;
+	/**
+	 * function to select courses
+	 */
+	let selectedCourses = [];
+	const onCourseClickHandler = (courseId) => {
+		if(courseId !== "") {
+			selectedCourses = courses.map(function (el) {
+				if(el.id === courseId) {
+					!el.selected ? el.selected = true : el.selected = false;
+				}
+				return el;
+			});	
+			dispatch(Actions.learningPathActions.getSelectedCourses(selectedCourses));
+		}
+	}
+	
+	const coursesList = filteredCoursesList
+						? filteredCoursesList.length > 0
+							? filteredCoursesList
+							: ''
+						: courses;					
 	return (
 		<React.Fragment>
 			<TextField id="standard-search" label="Search Course" type="search" variant="outlined" className={classes.searchField} name="searchName" onChange={changeHandler}/>
@@ -45,7 +73,8 @@ const SelectCourses = () => {
 				<Typography variant="h6" className={classes.catalogTitle}>
 					Course Catalog
           		</Typography>
-				<Carosals coursesList={coursesList} />
+				{ isLoading && coursesList.length === 0 && <CourseSkelton /> }  
+				<Carosals coursesList={coursesList} handleCourseClick={(id) => onCourseClickHandler(id)}/>
 			</Box>
 		</React.Fragment>
 	);

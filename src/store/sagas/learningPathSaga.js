@@ -8,8 +8,13 @@ const fetchAllCourses = async () => {
     return await axios.get(SERVICE_URLS.FETCH_COURSES, { headers: authHeader()});
 }
 
+const fetchAllUsers = async () => {
+    return await axios.get(SERVICE_URLS.FETCH_USERS, { headers: authHeader()});
+}
+
 export function* learningPathSaga() {
-    yield takeLatest(actionTypes.FETCH_COURSES_REQUEST, fetchCourses)
+    yield takeLatest(actionTypes.FETCH_COURSES_REQUEST, fetchCourses);
+    yield takeLatest(actionTypes.FETCH_USERS_REQUEST, fetchUsers);
 }
 
 function* fetchCourses() {
@@ -21,5 +26,17 @@ function* fetchCourses() {
 
     } catch (error) {
         yield put({ type: actionTypes.FETCH_COURSES_FAILURE, error });
+    }
+}
+
+function* fetchUsers() {
+    try {
+        const response = yield call(fetchAllUsers);
+        const { data } = response;
+
+        yield put({ type: actionTypes.FETCH_USERS_SUCCESS, payload: data });
+
+    } catch (error) {
+        yield put({ type: actionTypes.FETCH_USERS_FAILURE, error });
     }
 }

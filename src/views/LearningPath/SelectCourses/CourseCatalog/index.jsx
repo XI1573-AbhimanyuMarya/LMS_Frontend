@@ -11,10 +11,11 @@ import { useStyles } from './style';
 const CourseCatalog = (props) => {
 	const { course } = props;
 	const classes = useStyles();
-
+	const { handleCourseClick } = props;
+	const courseClass = course.selected && course.selected === true ? classes.selected : classes.root; 
 	return (
-		<Card className={classes.root}>
-			<CardActionArea>
+		<Card className={courseClass}>
+			<CardActionArea onClick={() => handleCourseClick(course.id)}>
 				<CardContent>	
 					<Box component="span" className={classes.courseType}>
 						{course.category.name}

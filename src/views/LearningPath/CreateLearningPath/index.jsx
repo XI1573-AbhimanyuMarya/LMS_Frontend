@@ -80,9 +80,9 @@ const CreateLearningPath = (props) => {
         setActivePathStep(activePathStep + 1);
     };
 
-    // const handleBack = () => {
-    //     setActivePathStep(activePathStep - 1);
-    // };
+    const handleBack = () => {
+        setActivePathStep(activePathStep - 1);
+    };
 
     return (
         <React.Fragment>
@@ -153,11 +153,11 @@ const CreateLearningPath = (props) => {
                             <React.Fragment>
                                 {getStepContent(activePathStep)}
                                 <div className={classes.buttons}>
-                                    {/* {activePathStep !== 0 && (
+                                    {activePathStep !== 0 && (
                                     <Button onClick={handleBack} className={classes.button}>
                                     Back
                                     </Button>
-                                )} */}
+                                )}
                                     <Button
                                         variant="contained"
                                         type="button"
