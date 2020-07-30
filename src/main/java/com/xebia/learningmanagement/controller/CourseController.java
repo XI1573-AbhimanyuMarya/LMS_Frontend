@@ -2,6 +2,7 @@ package com.xebia.learningmanagement.controller;
 
 import com.xebia.learningmanagement.entity.Category;
 import com.xebia.learningmanagement.entity.Courses;
+import com.xebia.learningmanagement.entity.Duration;
 import com.xebia.learningmanagement.model.*;
 import com.xebia.learningmanagement.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;

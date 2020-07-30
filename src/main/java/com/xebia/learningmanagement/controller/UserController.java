@@ -93,7 +93,7 @@ public class UserController {
             final String jwt = jwtUtil.generateToken(userDetails);
             userResponse.setStatus("success");
             userResponse.setMessage("Otp verified");
-            userResponse.setLogin(new Login(jwt));
+            userResponse.setLogin(new Login(jwt,true));
             userResponse.setUser(userRepository.findByUsername(tempUsername.getUsername()).get());
             return ResponseEntity.status(HttpStatus.OK).body(userResponse);
         } catch (BadCredentialsException e) {

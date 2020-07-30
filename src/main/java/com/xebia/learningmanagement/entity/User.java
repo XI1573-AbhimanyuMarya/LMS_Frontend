@@ -2,6 +2,7 @@ package com.xebia.learningmanagement.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -18,6 +19,8 @@ public class User {
     private String password;
     private boolean active;
     private String roles;
+//    @ManyToMany
+//    private List<LearningPath> learningPaths;
 
     public boolean isActive() {
         return active;
