@@ -2,6 +2,7 @@ package com.xebia.learningmanagement.controller;
 
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.model.Path;
+import com.xebia.learningmanagement.model.PathPojo;
 import com.xebia.learningmanagement.service.LearningPathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,10 @@ public class LearningPathController {
     LearningPathService learningPathService;
 
     @PostMapping("/postPath")
-    public ResponseEntity<String> createLearningPath(@RequestBody Path path){
+    public ResponseEntity<String> createLearningPath(@RequestBody PathPojo pathpojo){
 
-        System.out.println(path);
+        System.out.println(pathpojo.getPathObj());
+        Path path = pathpojo.getPathObj();
         System.out.println("courses = "  + path.getCoursesId());
         System.out.println("duration = " + path.getDuration());
         System.out.println("madeBy = " + path.getMadeById());
