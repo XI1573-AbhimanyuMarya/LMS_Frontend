@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -20,6 +20,7 @@ const SelectUsers = () => {
 	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
 	const { users, filteredUsersList, isLoading } = learningPathState;
+	const [selectedUsersArr, setSelectedUsersArr] = useState([]);
 
 	/**
 	 * function to fetch all users initial time
@@ -51,13 +52,22 @@ const SelectUsers = () => {
 	let selectedUsers = [];
 	const onUserClickHandler = (userId) => {
 		if(userId !== "") {
+			const idArr = selectedUsersArr;
+			const index = idArr.indexOf(userId);
+			if(index > -1) {
+				idArr.splice(index, 1);
+			} else {
+				idArr.push(userId);
+			}
+			setSelectedUsersArr(idArr);
+
 			selectedUsers = users.map(function (el) {
 				if(el.id === userId) {
 					!el.selected ? el.selected = true : el.selected = false;
 				}
 				return el;
 			});	
-			dispatch(Actions.learningPathActions.getSelectedUsers(selectedUsers));
+			dispatch(Actions.learningPathActions.getSelectedUsers(selectedUsers, selectedUsersArr));
 		}
 	}
 

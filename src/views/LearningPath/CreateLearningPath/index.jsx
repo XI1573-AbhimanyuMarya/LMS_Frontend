@@ -42,26 +42,11 @@ const QontoConnector = withStyles({
     },
 })(StepConnector);
 
-const getCoursesList = () => {
-    const courses = [
-        { id: 1, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 2, title: 'Interaction Design Specialization', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 3, title: 'Python 3 Programming Specialization', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 4, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 5, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 6, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 7, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 8, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-    ];
-    return courses;
-}
-
 const steps = ['Courses', 'Assign Users', 'Set Duration'];
-
 const getStepContent = (step) => {
     switch (step) {
         case 0:
-            return <SelectCourses coursesList={getCoursesList} />;
+            return <SelectCourses/>;
         case 1:
             return <SelectUsers />;
         case 2:
@@ -80,10 +65,9 @@ const CreateLearningPath = (props) => {
         setActivePathStep(activePathStep + 1);
     };
 
-    const handleBack = () => {
-        setActivePathStep(activePathStep - 1);
-    };
-
+    // const handleBack = () => {
+    //     setActivePathStep(activePathStep - 1);
+    // };
     return (
         <React.Fragment>
             <CssBaseline />
@@ -153,11 +137,11 @@ const CreateLearningPath = (props) => {
                             <React.Fragment>
                                 {getStepContent(activePathStep)}
                                 <div className={classes.buttons}>
-                                    {activePathStep !== 0 && (
+                                    {/* {activePathStep !== 0 && (
                                     <Button onClick={handleBack} className={classes.button}>
                                     Back
                                     </Button>
-                                )}
+                                    )} */}
                                     <Button
                                         variant="contained"
                                         type="button"

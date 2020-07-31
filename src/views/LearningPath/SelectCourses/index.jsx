@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -16,13 +16,13 @@ const SelectCourses = () => {
 	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
 	const { courses, filteredCoursesList, isLoading } = learningPathState;
-	  
+	const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
+	
 	/**
 	 * function to fetch all courses initial time
 	 */
 	useEffect(() => {
 		dispatch(Actions.learningPathActions.fetchAllCourses());
-		console.log('componentDidMount')
 	}, []);
 
 	/**
@@ -47,13 +47,22 @@ const SelectCourses = () => {
 	let selectedCourses = [];
 	const onCourseClickHandler = (courseId) => {
 		if(courseId !== "") {
+			const idArr = selectedCoursesArr;
+			const index = idArr.indexOf(courseId);
+			if(index > -1) {
+				idArr.splice(index, 1);
+			} else {
+				idArr.push(courseId);
+			}
+			setSelectedCoursesArr(idArr);
+
 			selectedCourses = courses.map(function (el) {
 				if(el.id === courseId) {
 					!el.selected ? el.selected = true : el.selected = false;
 				}
 				return el;
 			});	
-			dispatch(Actions.learningPathActions.getSelectedCourses(selectedCourses));
+			dispatch(Actions.learningPathActions.getSelectedCourses(selectedCourses, selectedCoursesArr));
 		}
 	}
 	

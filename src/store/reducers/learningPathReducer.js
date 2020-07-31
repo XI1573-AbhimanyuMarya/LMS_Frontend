@@ -2,7 +2,9 @@ import { actionTypes } from '../types';
 
 const initialState = {
     courses: [],
+    courseIdArr: [],
     users: [],
+    userIdArr: [],
     isLoading: false,
 }
 
@@ -36,6 +38,7 @@ export const learningPathReducer = (state = initialState, action) => {
             return {
                 ...state,
                 courses: payload.list,
+                courseIdArr: payload.courseIdArr,
                 isLoading: false
             };     
         case actionTypes.FETCH_USERS_REQUEST:
@@ -65,6 +68,7 @@ export const learningPathReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: payload.list,
+                userIdArr: payload.userIdArr,
                 isLoading: false
             };    
         default: return state;
