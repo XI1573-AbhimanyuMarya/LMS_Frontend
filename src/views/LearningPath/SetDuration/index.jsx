@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -6,6 +7,7 @@ import Slider from '@material-ui/core/Slider';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 import { useStyles } from './style';
+import Actions from '../../../store/actions';
 
 const PrettoSlider = withStyles({
 	root: {
@@ -68,13 +70,15 @@ const marks = [
 	},
 ];
 
-const valuetext = (value) => {
-	return `${value}°C`;
-}
-
 const SetDuration = () => {
 	const classes = useStyles();
-
+	const dispatch = useDispatch();
+	const learningPathState = useSelector(state => state.learningPathState);
+	const onSliderHandler = (e, val) => {
+		if(val !== "") {
+			dispatch(Actions.learningPathActions.getSliderDuration(val))
+		}
+	}
 	return (
 		<React.Fragment>
 			<Divider />
@@ -85,13 +89,13 @@ const SetDuration = () => {
       			</Typography>
 				<PrettoSlider
 					defaultValue={3}
-					getAriaValueText={valuetext}
 					valueLabelDisplay="auto"
 					step={3}
 					min={3}
 					max={12}
 					aria-labelledby="discrete-slider-custom"
 					marks={marks}
+					onChange={ (e, val) => onSliderHandler(e, val) }
 				/>
 			</Container>
 		</React.Fragment>

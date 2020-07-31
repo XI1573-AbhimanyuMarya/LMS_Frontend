@@ -21,4 +21,7 @@ export const useStyles = makeStyles((theme) => ({
 		background: '#FFFFFF',
 		margin: theme.spacing(2),
 	},
+	error: {
+		color: '#ff0033',
+	}
 }));

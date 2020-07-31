@@ -3,6 +3,7 @@ import axios from 'axios';
 import { actionTypes } from '../types';
 import { SERVICE_URLS } from '../../modules/constants';
 import { authHeader } from '../../modules/authServices';
+import CreateLearningPath from "../../views/LearningPath/CreateLearningPath";
 
 const fetchAllCourses = async () => {
     return await axios.get(SERVICE_URLS.FETCH_COURSES, { headers: authHeader()});
@@ -12,9 +13,15 @@ const fetchAllUsers = async () => {
     return await axios.get(SERVICE_URLS.FETCH_USERS, { headers: authHeader()});
 }
 
+const createLearningPath = async ({pathObj}) => {
+    console.log('payload', pathObj)
+    return await axios.post(SERVICE_URLS.CREATE_LEARNING_PATH, { pathObj }, { headers: authHeader()});
+}
+
 export function* learningPathSaga() {
     yield takeLatest(actionTypes.FETCH_COURSES_REQUEST, fetchCourses);
     yield takeLatest(actionTypes.FETCH_USERS_REQUEST, fetchUsers);
+    yield takeLatest(actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST, createLearning);
 }
 
 function* fetchCourses() {
@@ -38,5 +45,17 @@ function* fetchUsers() {
 
     } catch (error) {
         yield put({ type: actionTypes.FETCH_USERS_FAILURE, error });
+    }
+}
+
+function* createLearning(action) {
+    try {
+        const response = yield call(createLearningPath, action.payload);
+        const { data } = response;
+
+        yield put({ type: actionTypes.CREATE_LEARNING_PATH_CALL_SUCCESS, payload: data });
+
+    } catch (error) {
+        yield put({ type: actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE, error });
     }
 }

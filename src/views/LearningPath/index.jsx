@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import List from '@material-ui/core/List';
 import Slide from '@material-ui/core/Slide';
@@ -11,10 +12,12 @@ const transition = React.forwardRef(function Transition(props, ref) {
 
 const LearningPath = (props) => {
     //const classes = useStyles();
-    const { openPathModel, handleClose, handleClosePath } = props;
+    const learningPathState = useSelector(state => state.learningPathState);
+    const { pathModelOpen } = learningPathState;
+    const { handleClose, handleClosePath } = props;
     return (
         <div>
-            <Dialog fullScreen open={openPathModel} onClose={handleClose} TransitionComponent={transition}>
+            <Dialog fullScreen open={pathModelOpen} onClose={handleClose} TransitionComponent={transition}>
                 {/* <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
                         <CloseIcon />

@@ -15,7 +15,7 @@ const SelectCourses = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
-	const { courses, filteredCoursesList, isLoading } = learningPathState;
+	const { courses, filteredCoursesList, isLoading, learningPathName } = learningPathState;
 	const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
 	
 	/**
@@ -32,7 +32,7 @@ const SelectCourses = () => {
 	const changeHandler = (e) => {
 		const {value} = e.target;
 		const searchValue = value.toLowerCase();
-		if(courses.length > 0) {
+		if(courses?.length > 0) {
 			filterCourses = courses.filter(function (el) {
 				return el.name.toLowerCase().includes(searchValue) ||
 						el.category.name.toLowerCase().includes(searchValue) ||
@@ -65,9 +65,16 @@ const SelectCourses = () => {
 			dispatch(Actions.learningPathActions.getSelectedCourses(selectedCourses, selectedCoursesArr));
 		}
 	}
+	/**
+	 * function to set learning path name
+	 */
+	const onChangeHandler = (e) => {
+		const pathName = e.target.value;
+		dispatch(Actions.learningPathActions.getLearningPathName(pathName));
+	}
 	
 	const coursesList = filteredCoursesList
-						? filteredCoursesList.length > 0
+						? filteredCoursesList?.length > 0
 							? filteredCoursesList
 							: ''
 						: courses;					
@@ -76,14 +83,14 @@ const SelectCourses = () => {
 			<TextField id="standard-search" label="Search Course" type="search" variant="outlined" className={classes.searchField} name="searchName" onChange={changeHandler}/>
 			<Box bgcolor="#F1F3F7" p={3} >
 				<FormControl>
-					<InputLabel htmlFor="standard-search" className={classes.courseLabel}>Course Name*</InputLabel>
-					<TextField fullWidth id="standard-search" label="Backend Course" type="search" variant="outlined" className={classes.courseField} />
+					<InputLabel htmlFor="standard-search" className={classes.courseLabel}>Course Name<Box component="span" className={classes.error}>*</Box></InputLabel>
+					<TextField error={learningPathName ? false: true} fullWidth id="standard-search" label="Backend Course" type="search" variant="outlined" className={classes.courseField} onChange={onChangeHandler}/>
 				</FormControl>
 				<Divider variant="middle" />
 				<Typography variant="h6" className={classes.catalogTitle}>
 					Course Catalog
           		</Typography>
-				{ isLoading && coursesList.length === 0 && <CourseSkelton /> }  
+				{ isLoading && coursesList?.length === 0 && <CourseSkelton /> }  
 				<Carosals coursesList={coursesList} handleCourseClick={(id) => onCourseClickHandler(id)}/>
 			</Box>
 		</React.Fragment>

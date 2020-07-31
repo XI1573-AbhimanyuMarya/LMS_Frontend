@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -14,38 +15,38 @@ import LearningPathImg from '../../images/LearningPath.svg';
 import Approvals from '../../images/Approvals.svg';
 import LearningPath from '../LearningPath/index';
 import { useStyles } from './style';
-
 import WithLoading from '../../hoc/WithLoading';
+import Actions from '../../store/actions';
 
-const Dashboard = (props) => {
+const Dashboard = () => {
     const classes = useStyles();
-    const [openPathModel, setPathModelOpen] = useState(false);
-    const [openDiscardPopup, setDiscardPopup] = useState(false);
+    const dispatch = useDispatch();
+    const learningPathState = useSelector(state => state.learningPathState);
     /**
      * function to open learning path model
      */
     const handleClickOpen = () => {
-        setPathModelOpen(true);
+        dispatch(Actions.learningPathActions.pathModelOpen(true));
     };
     /**
      * function to close learning path model
      */
     const closeHandler = () => {
-        setDiscardPopup(true);
+        dispatch(Actions.learningPathActions.discardModelOpen(true));
     };
     /**
      * function to direct close path model
      */
     const handleClosePathHandler = () => {
-        setPathModelOpen(false);
+        dispatch(Actions.learningPathActions.pathModelOpen(false));
     }
     /**
      * function to close discard popup
      */
     const discardHandler = (closeMainModel) => {
-        setDiscardPopup(false);
+        dispatch(Actions.learningPathActions.discardModelOpen(false));
         if(closeMainModel) {
-            setPathModelOpen(false);
+            dispatch(Actions.learningPathActions.pathModelOpen(false));
         }
     }
 
@@ -126,12 +127,10 @@ const Dashboard = (props) => {
                 </div>
             </Container>
             <LearningPath
-                openPathModel={openPathModel}
                 handleClose={closeHandler}
                 handleClosePath={handleClosePathHandler}
             />
             <DiscardPopup 
-                openDiscardPopup={openDiscardPopup}
                 discardHandler={discardHandler}
             />
         </>

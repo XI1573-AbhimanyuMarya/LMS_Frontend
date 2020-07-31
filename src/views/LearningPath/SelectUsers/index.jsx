@@ -36,7 +36,7 @@ const SelectUsers = () => {
 	const changeHandler = (e) => {
 		const {value} = e.target;
 		const searchValue = value.toLowerCase();
-		if(users.length > 0) {
+		if(users?.length > 0) {
 			filterUsers = users.filter(function (el) {
 				return el.fullName.toLowerCase().includes(searchValue) ||
 						el.username.toLowerCase().includes(searchValue) ||
@@ -72,10 +72,10 @@ const SelectUsers = () => {
 	}
 
 	const usersList = filteredUsersList
-						? filteredUsersList.length > 0
-							? filteredUsersList.slice(0, 16)
+						? filteredUsersList?.length > 0
+							? filteredUsersList?.slice(0, 16)
 							: ''
-						: users.slice(0, 16);
+						: users?.slice(0, 16);
 	let renderUsers	= "";				
 	if (usersList && Array.isArray(usersList)) {
 		renderUsers = usersList.map((user) => {
@@ -110,7 +110,7 @@ const SelectUsers = () => {
 			<Grid>
 				<TextField id="standard-search" label="Search Employee" type="search" variant="outlined" className={classes.searchField}  name="searchEmployee" onChange={changeHandler}/>
 				<Box bgcolor="#F1F3F7" display="flex" flexDirection="row" p={1} m={1} flexWrap="wrap" css={{ maxWidth: '100%' }}>
-				{isLoading && usersList.length === 0 && <UserSkelton />}
+				{isLoading && usersList?.length === 0 && <UserSkelton />}
 				{
 					renderUsers !== "" ? renderUsers
 					: 

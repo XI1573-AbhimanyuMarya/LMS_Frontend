@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Stepper from '@material-ui/core/Stepper';
@@ -18,6 +19,7 @@ import SetDuration from '../SetDuration';
 import CardMedia from '@material-ui/core/CardMedia';
 import AddLearningPath from '../../../images/AddLearningPath.svg';
 import { useStyles } from './style';
+import Actions from '../../../store/actions';
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -57,12 +59,29 @@ const getStepContent = (step) => {
 }
 
 const CreateLearningPath = (props) => {
-    const { handleClose, handleClosePath } = props;
     const classes = useStyles();
+    const dispatch = useDispatch();
+	const learningPathState = useSelector(state => state.learningPathState);
+    const { handleClose, handleClosePath } = props;
     const [activePathStep, setActivePathStep] = React.useState(0);
+    const { learningPathName, courseIdArr, userIdArr, learningPathDuration } = learningPathState;
 
     const handleNext = () => {
-        setActivePathStep(activePathStep + 1);
+        if(activePathStep === 0 && learningPathName !== "" && courseIdArr?.length > 0) {
+            setActivePathStep(activePathStep + 1);
+        } else if(activePathStep === 1 && userIdArr?.length > 0) {
+            setActivePathStep(activePathStep + 1);
+        } else if(activePathStep === steps?.length - 1) {
+            const pathObj = {
+                name: learningPathName,
+                madeById: 55,
+                madeForId: userIdArr,
+                coursesId: courseIdArr,
+                duration: learningPathDuration,
+            }
+            dispatch(Actions.learningPathActions.createLearningPath(pathObj));
+            setActivePathStep(activePathStep + 1);
+        }
     };
 
     // const handleBack = () => {
@@ -111,7 +130,7 @@ const CreateLearningPath = (props) => {
                     </Toolbar>
                 </Grid>
                 <React.Fragment>
-                    {activePathStep === steps.length ? (
+                    {activePathStep === steps?.length ? (
                         <React.Fragment>
                             <Container component="main" maxWidth="xs" className={classes.successContainer}>
                                 <CssBaseline />
@@ -148,7 +167,7 @@ const CreateLearningPath = (props) => {
                                         onClick={handleNext}
                                         className={classes.button}
                                     >
-                                        {activePathStep === steps.length - 1 ? 'Assign' : 'Next'}
+                                        {activePathStep === steps?.length - 1 ? 'Assign' : 'Next'}
                                     </Button>
                                 </div>
                             </React.Fragment>

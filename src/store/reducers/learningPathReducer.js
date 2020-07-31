@@ -1,11 +1,15 @@
 import { actionTypes } from '../types';
 
 const initialState = {
+    learningPathName: '',
     courses: [],
     courseIdArr: [],
     users: [],
     userIdArr: [],
+    learningPathDuration: 3,
     isLoading: false,
+    pathModelOpen: false,
+    discardModelOpen: false,
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -70,7 +74,64 @@ export const learningPathReducer = (state = initialState, action) => {
                 users: payload.list,
                 userIdArr: payload.userIdArr,
                 isLoading: false
-            };    
+            }; 
+        case actionTypes.GET_SLIDER_DURATION:
+            return {
+                ...state,
+                learningPathDuration: payload.val,
+                isLoading: false
+            }       
+        case actionTypes.GET_LEARNING_PATH_NAME:
+            return {
+                ...state,
+                learningPathName: payload.pathName,
+                isLoading: false
+            }
+        case actionTypes.PATH_MODEL_OPEN:
+            if(payload.val === true) {
+                return {
+                    ...state,
+                    pathModelOpen: payload.val,
+                    isLoading: false
+                } 
+            } else {
+                delete state.filteredCoursesList;
+                delete state.filteredUsersList;
+                return {
+                    ...state,
+                    pathModelOpen: payload.val,
+                    learningPathName: '',
+                    courses: [],
+                    users: [],
+                    courseIdArr: [],
+                    userIdArr: [],
+                    isLoading: false
+                }
+            }
+        case actionTypes.DISCARD_MODEL_OPEN:
+            return {
+                ...state,
+                discardModelOpen: payload.val,
+                isLoading: false
+            }   
+        case actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case actionTypes.CREATE_LEARNING_PATH_CALL_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                message: payload.message
+            }
+        case actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                message: payload.message
+            }      
+                
         default: return state;
     }
 }
