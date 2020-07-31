@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -73,7 +73,6 @@ const marks = [
 const SetDuration = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
-	const learningPathState = useSelector(state => state.learningPathState);
 	const onSliderHandler = (e, val) => {
 		if(val !== "") {
 			dispatch(Actions.learningPathActions.getSliderDuration(val))

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import List from '@material-ui/core/List';
 import Slide from '@material-ui/core/Slide';

@@ -61,10 +61,12 @@ const getStepContent = (step) => {
 const CreateLearningPath = (props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-	const learningPathState = useSelector(state => state.learningPathState);
+    const learningPathState = useSelector(state => state.learningPathState);
+    const loginState = useSelector(res => res.loginState);
     const { handleClose, handleClosePath } = props;
     const [activePathStep, setActivePathStep] = React.useState(0);
     const { learningPathName, courseIdArr, userIdArr, learningPathDuration } = learningPathState;
+    const { user } = loginState;
 
     const handleNext = () => {
         if(activePathStep === 0 && learningPathName !== "" && courseIdArr?.length > 0) {
@@ -74,7 +76,7 @@ const CreateLearningPath = (props) => {
         } else if(activePathStep === steps?.length - 1) {
             const pathObj = {
                 name: learningPathName,
-                madeById: 55,
+                madeById: user.id,
                 madeForId: userIdArr,
                 coursesId: courseIdArr,
                 duration: learningPathDuration,

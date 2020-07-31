@@ -3,7 +3,6 @@ import axios from 'axios';
 import { actionTypes } from '../types';
 import { SERVICE_URLS } from '../../modules/constants';
 import { authHeader } from '../../modules/authServices';
-import CreateLearningPath from "../../views/LearningPath/CreateLearningPath";
 
 const fetchAllCourses = async () => {
     return await axios.get(SERVICE_URLS.FETCH_COURSES, { headers: authHeader()});
@@ -14,7 +13,6 @@ const fetchAllUsers = async () => {
 }
 
 const createLearningPath = async ({pathObj}) => {
-    console.log('payload', pathObj)
     return await axios.post(SERVICE_URLS.CREATE_LEARNING_PATH, { pathObj }, { headers: authHeader()});
 }
 
