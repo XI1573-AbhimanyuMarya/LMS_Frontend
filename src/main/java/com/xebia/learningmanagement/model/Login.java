@@ -4,6 +4,9 @@ public class Login {
 	private String jwt;
 	private boolean islogin;
 
+	public Login() {
+	}
+
 	public Login(String jwt, boolean islogin) {
 		this.jwt = jwt;
 		this.islogin = islogin;

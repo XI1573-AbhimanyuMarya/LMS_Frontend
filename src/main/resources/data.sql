@@ -17,9 +17,11 @@
 --insert into courses (id,name,description,category_id,competency_id) values (305,'Full Backend','Full Fledged',203,104);
 --commit;
 
-insert into duration (id,name) values (401,'');
-insert into duration (id,name) values (402,'');
-insert into duration (id,name) values (403,'');
+insert into duration (id,name) values (9,'9 Month');
+insert into duration (id,name) values (3,'3 Month');
+insert into duration (id,name) values (6,'6 Month');
+insert into duration (id,name) values (12,'12 Month');
+commit;
 
 
 

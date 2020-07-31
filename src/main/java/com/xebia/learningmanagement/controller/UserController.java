@@ -83,6 +83,8 @@ public class UserController {
     @PostMapping("/password")
     public ResponseEntity<UserResponse> verifyPassword(@RequestBody Password password) throws Exception {
         UserResponse userResponse = new UserResponse();
+        Login login = new Login();
+
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -93,7 +95,9 @@ public class UserController {
             final String jwt = jwtUtil.generateToken(userDetails);
             userResponse.setStatus("success");
             userResponse.setMessage("Otp verified");
-            userResponse.setLogin(new Login(jwt,true));
+            login.setJwt(jwt);
+            login.setIslogin(true);
+            userResponse.setLogin(login);
             userResponse.setUser(userRepository.findByUsername(tempUsername.getUsername()).get());
             return ResponseEntity.status(HttpStatus.OK).body(userResponse);
         } catch (BadCredentialsException e) {

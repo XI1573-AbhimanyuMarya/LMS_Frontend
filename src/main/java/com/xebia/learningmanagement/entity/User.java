@@ -19,8 +19,8 @@ public class User {
     private String password;
     private boolean active;
     private String roles;
-//    @ManyToMany
-//    private List<LearningPath> learningPaths;
+    @OneToMany(mappedBy = "employee")
+    private List<LearningPathEmployees> learningPath;
 
     public boolean isActive() {
         return active;
@@ -100,5 +100,13 @@ public class User {
 
     public void setcOEType(String cOEType) {
         this.cOEType = cOEType;
+    }
+
+    public List<LearningPathEmployees> getLearningPath() {
+        return learningPath;
+    }
+
+    public void setLearningPathEmployees(List<LearningPathEmployees> learningPath) {
+        this.learningPath = learningPath;
     }
 }

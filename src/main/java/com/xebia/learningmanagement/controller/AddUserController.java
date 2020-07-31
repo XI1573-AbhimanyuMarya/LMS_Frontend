@@ -38,7 +38,6 @@ public class AddUserController {
             for (int i = 0; i < emp2.size(); i++) {
                 Optional<User> user2 = userRepository.findByUsername(emp2.get(i).getXebiaEmailID());
                 if (user2.isPresent()) {
-                    System.out.println(true);
                 } else {
                     User user = new User();
                     user.setUsername(emp2.get(i).getXebiaEmailID());
@@ -48,12 +47,9 @@ public class AddUserController {
                     user.setcOEType(emp2.get(i).getCOEType());
                     user.setLocation(emp2.get(i).getBaseLocation());
                     user.setActive(true);
+                    user.setPassword("lkjbswecbng@#(*^hf%CFGJ");
+                    user.setRoles("ROLE_EMPLOYEE");
 
-                    String designation = emp2.get(i).getDesignation();
-                    if (designation.equals("Consultant") || designation.equals("Trainee") || designation.equals("Junior Consultant") || designation.equals("Senior Consultant"))
-                        user.setRoles("ROLE_EMPLOYEE");
-                    else
-                        user.setRoles("ROLE_MANAGER");
                     userRepository.save(user);
                 }
             }
