@@ -80,6 +80,16 @@ export const loginReducer = (state = initialState, action) => {
                 status: payload.status
             }
 
+        case actionTypes.LOGOUT_USER_SUCCESS:
+            return {
+                ...defaultState
+            }
+
+        case actionTypes.LOGOUT_USER_ERROR:
+            return {
+                ...defaultState
+            }
+
         default: return state;
     }
 }

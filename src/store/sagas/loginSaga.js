@@ -17,9 +17,14 @@ const setUserData = (userData) => {
     localStorage.setItem("USER_INFO", JSON.stringify(userData))
 }
 
+const logout = () => {
+    localStorage.removeItem("USER_INFO");
+}
+
 export function* loginSaga() {
-    yield takeLatest(actionTypes.FETCH_OTP_REQUEST, fetchOtp)
+    yield takeLatest(actionTypes.FETCH_OTP_REQUEST, fetchOtp);
     yield takeLatest(actionTypes.LOGIN_CALL_REQUEST, login);
+    yield takeLatest(actionTypes.LOGOUT_USER_REQUEST, logoutUser);
 }
 
 function* fetchOtp(action) {
@@ -50,5 +55,14 @@ function* login(action) {
         const { response } = error;
         const { data } = response
         yield put({ type: actionTypes.LOGIN_CALL_FAILURE, payload: data });
+    }
+}
+
+function* logoutUser(action) {
+    try {
+        yield call(logout)
+        yield put({ type: actionTypes.LOGOUT_USER_SUCCESS })
+    } catch (error) {
+        yield put({ type: actionTypes.LOGOUT_USER_ERROR })
     }
 }
