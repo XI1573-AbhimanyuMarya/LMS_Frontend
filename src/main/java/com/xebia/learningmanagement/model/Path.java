@@ -1,8 +1,12 @@
 package com.xebia.learningmanagement.model;
 
+
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class Path {
+
+    @NotEmpty
     private String name;
     private Long madeById;
     private List<Long> madeForId;

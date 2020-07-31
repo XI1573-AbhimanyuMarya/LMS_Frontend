@@ -1,7 +1,9 @@
 package com.xebia.learningmanagement.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,6 +21,7 @@ public class User {
     private String password;
     private boolean active;
     private String roles;
+    @JsonIgnore
     @OneToMany(mappedBy = "employee")
     private List<LearningPathEmployees> learningPath;
 
@@ -102,10 +105,12 @@ public class User {
         this.cOEType = cOEType;
     }
 
+    @JsonIgnore
     public List<LearningPathEmployees> getLearningPath() {
         return learningPath;
     }
 
+    @JsonIgnore
     public void setLearningPathEmployees(List<LearningPathEmployees> learningPath) {
         this.learningPath = learningPath;
     }
