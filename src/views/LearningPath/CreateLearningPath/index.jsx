@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Stepper from '@material-ui/core/Stepper';
@@ -18,6 +19,7 @@ import SetDuration from '../SetDuration';
 import CardMedia from '@material-ui/core/CardMedia';
 import AddLearningPath from '../../../images/AddLearningPath.svg';
 import { useStyles } from './style';
+import Actions from '../../../store/actions';
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -42,26 +44,11 @@ const QontoConnector = withStyles({
     },
 })(StepConnector);
 
-const getCoursesList = () => {
-    const courses = [
-        { id: 1, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 2, title: 'Interaction Design Specialization', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 3, title: 'Python 3 Programming Specialization', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 4, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 5, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 6, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 7, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-        { id: 8, title: 'Machine Learning', Description: 'Learn how to design great user experiences. Design that delights users...' },
-    ];
-    return courses;
-}
-
 const steps = ['Courses', 'Assign Users', 'Set Duration'];
-
 const getStepContent = (step) => {
     switch (step) {
         case 0:
-            return <SelectCourses coursesList={getCoursesList} />;
+            return <SelectCourses/>;
         case 1:
             return <SelectUsers />;
         case 2:
@@ -72,18 +59,36 @@ const getStepContent = (step) => {
 }
 
 const CreateLearningPath = (props) => {
-    const { handleClose, handleClosePath } = props;
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const learningPathState = useSelector(state => state.learningPathState);
+    const loginState = useSelector(res => res.loginState);
+    const { handleClose, handleClosePath } = props;
     const [activePathStep, setActivePathStep] = React.useState(0);
+    const { learningPathName, courseIdArr, userIdArr, learningPathDuration } = learningPathState;
+    const { user } = loginState;
 
     const handleNext = () => {
-        setActivePathStep(activePathStep + 1);
+        if(activePathStep === 0 && learningPathName !== "" && courseIdArr?.length > 0) {
+            setActivePathStep(activePathStep + 1);
+        } else if(activePathStep === 1 && userIdArr?.length > 0) {
+            setActivePathStep(activePathStep + 1);
+        } else if(activePathStep === steps?.length - 1) {
+            const pathObj = {
+                name: learningPathName,
+                madeById: user.id,
+                madeForId: userIdArr,
+                coursesId: courseIdArr,
+                duration: learningPathDuration,
+            }
+            dispatch(Actions.learningPathActions.createLearningPath(pathObj));
+            setActivePathStep(activePathStep + 1);
+        }
     };
 
     // const handleBack = () => {
     //     setActivePathStep(activePathStep - 1);
     // };
-
     return (
         <React.Fragment>
             <CssBaseline />
@@ -127,7 +132,7 @@ const CreateLearningPath = (props) => {
                     </Toolbar>
                 </Grid>
                 <React.Fragment>
-                    {activePathStep === steps.length ? (
+                    {activePathStep === steps?.length ? (
                         <React.Fragment>
                             <Container component="main" maxWidth="xs" className={classes.successContainer}>
                                 <CssBaseline />
@@ -157,14 +162,14 @@ const CreateLearningPath = (props) => {
                                     <Button onClick={handleBack} className={classes.button}>
                                     Back
                                     </Button>
-                                )} */}
+                                    )} */}
                                     <Button
                                         variant="contained"
                                         type="button"
                                         onClick={handleNext}
                                         className={classes.button}
                                     >
-                                        {activePathStep === steps.length - 1 ? 'Assign' : 'Next'}
+                                        {activePathStep === steps?.length - 1 ? 'Assign' : 'Next'}
                                     </Button>
                                 </div>
                             </React.Fragment>

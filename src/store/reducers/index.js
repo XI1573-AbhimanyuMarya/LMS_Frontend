@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { courseReducer } from './courseReducer';
+import { learningPathReducer } from './learningPathReducer';
 import { loginReducer } from './loginReducer';
 
 export default combineReducers({
-    courseState: courseReducer,
+    learningPathState: learningPathReducer,
     loginState: loginReducer
 });
 

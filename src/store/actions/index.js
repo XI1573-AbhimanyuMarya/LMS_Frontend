@@ -1,7 +1,9 @@
 import loginActions from './loginActions';
+import learningPathActions from './learningPathActions';
 
 const Actions = {
-    loginActions
+    loginActions,
+    learningPathActions
 }
 
 export default Actions;

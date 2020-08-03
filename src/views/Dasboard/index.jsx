@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import getOr from 'lodash/fp/getOr';
 import Button from '@material-ui/core/Button';
@@ -15,35 +15,34 @@ import LearningPathImg from '../../images/LearningPath.svg';
 import Approvals from '../../images/Approvals.svg';
 import LearningPath from '../LearningPath/index';
 import { useStyles } from './style';
-
 import WithLoading from '../../hoc/WithLoading';
 import User from '../../components/User';
 import Actions from '../../store/actions';
 
 const Dashboard = () => {
     const classes = useStyles();
-    const loginState = useSelector(res => res.loginState);
     const dispatch = useDispatch();
+    const loginState = useSelector(res => res.loginState);
     const userName = getOr('User Name', 'user.fullName', loginState);
-    const [openPathModel, setPathModelOpen] = useState(false);
-    const [openDiscardPopup, setDiscardPopup] = useState(false);
-
+    /**
+     * function to open learning path model
+     */
     const handleClickOpen = () => {
-        setPathModelOpen(true);
+        dispatch(Actions.learningPathActions.pathModelOpen(true));
     };
 
     const closeHandler = () => {
-        setDiscardPopup(true);
+        dispatch(Actions.learningPathActions.discardModelOpen(true));
     };
 
     const handleClosePathHandler = () => {
-        setPathModelOpen(false);
+        dispatch(Actions.learningPathActions.pathModelOpen(false));
     }
 
     const discardHandler = (closeMainModel) => {
-        setDiscardPopup(false);
-        if (closeMainModel) {
-            setPathModelOpen(false);
+        dispatch(Actions.learningPathActions.discardModelOpen(false));
+        if(closeMainModel) {
+            dispatch(Actions.learningPathActions.pathModelOpen(false));
         }
     }
 
@@ -128,12 +127,10 @@ const Dashboard = () => {
                 </div>
             </Container>
             <LearningPath
-                openPathModel={openPathModel}
                 handleClose={closeHandler}
                 handleClosePath={handleClosePathHandler}
             />
-            <DiscardPopup
-                openDiscardPopup={openDiscardPopup}
+            <DiscardPopup 
                 discardHandler={discardHandler}
             />
         </>

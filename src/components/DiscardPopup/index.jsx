@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -31,7 +32,9 @@ const useStyles = makeStyles((theme) => ({
 
 const DiscardPopup = (props) => {
     const classes = useStyles();
-    const {openDiscardPopup, discardHandler} = props;
+    const learningPathState = useSelector(state => state.learningPathState);
+    const { discardModelOpen } = learningPathState;
+    const { discardHandler } = props;
     
     /**
      * function to cancel disacrd popup
@@ -50,7 +53,7 @@ const DiscardPopup = (props) => {
         <div>
             <Dialog
                 maxWidth='xs'
-                open={openDiscardPopup}
+                open={discardModelOpen}
                 onClose={handleClose}
                 aria-labelledby="responsive-dialog-title"
             >

@@ -6,31 +6,34 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { useStyles } from './style';
 
 const CourseCatalog = (props) => {
-	const { id, title } = props;
+	const { course } = props;
 	const classes = useStyles();
-
+	const { handleCourseClick } = props;
+	const courseClass = course.selected && course.selected === true ? classes.selected : classes.root;
 	return (
-		<Card className={classes.root}>
-			<CardActionArea>
-				<CardContent>	
+		<Card className={courseClass}>
+			<CardActionArea onClick={() => handleCourseClick(course.id)}>
+				{course.selected && course.selected === true && <CheckCircleIcon className={classes.checkIcon} />}
+				<CardContent>
 					<Box component="span" className={classes.courseType}>
-						Data Science
+						{course.category.name}
 					</Box>
 					<Typography variant="body1" component="h5" className={classes.courseTitle}>
-						{title}
+						{course.name}
 					</Typography>
 					<Typography variant="body2" color="textSecondary" component="p" className={classes.courseDesc}>
-						Machine learning is the science of getting computers to act without being explicitly programmed. In the past dec…
-         			 </Typography>
+						{course.description}
+					</Typography>
 				</CardContent>
 				<Divider variant="middle" />
 				<CardActions>
 					<Typography variant="body1" component="h5" className={classes.courseLevel}>
-						Advanced
-          		</Typography>
+						{course.competency.name}
+					</Typography>
 				</CardActions>
 			</CardActionArea>
 		</Card>

@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { deepOrange, deepPurple, green, yellow, blueGrey, pink } from '@material-ui/core/colors';
 
 export const useStyles = makeStyles((theme) => ({
 	searchField: {
@@ -7,11 +8,43 @@ export const useStyles = makeStyles((theme) => ({
 		background: '#FFFFFF',
 		margin: theme.spacing(2),
 	},
-	root: {
+	box: {
 		display: 'flex',
 		width: 250,
+		cursor: 'pointer',
+		border: '2px solid #A9A9A9'
 	},
-	media: {
-
+	selected: {
+		display: 'flex',
+		width: 250,
+		cursor: 'pointer',
+		border: '2px solid #67B104'
 	},
+	orangeAvtar: {
+		color: theme.palette.getContrastText(deepOrange[500]),
+		backgroundColor: deepOrange[500],
+	},
+	purpleAvtar: {
+		color: theme.palette.getContrastText(deepPurple[500]),
+		backgroundColor: deepPurple[500],
+	},
+	greenAvtar: {
+		color: '#FFFFFFF',
+		backgroundColor: green[500],
+	},
+	yellowAvtar: {
+		color: '#FFFFFFF',
+		backgroundColor: yellow[500],
+	},
+	blueGreyAvtar: {
+		color: '#FFFFFFF',
+		backgroundColor: blueGrey[500],
+	},
+	pinkAvtar: {
+		color: '#FFFFFFF',
+		backgroundColor: pink[500],
+	},
+	checkIcon: {
+		color: '#67B104'
+	}
 }));

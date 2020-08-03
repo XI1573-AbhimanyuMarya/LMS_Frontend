@@ -30,5 +30,13 @@ export const useStyles = makeStyles(theme => ({
 	courseDesc: {
 		fontSize: 12,
 		color: '#858585'
+	},
+	selected: {
+		maxWidth: 345,
+		border: '2px solid #67B104'
+	},
+	checkIcon: {
+		color: '#67B104',
+		float: 'right'
 	}
 }));
