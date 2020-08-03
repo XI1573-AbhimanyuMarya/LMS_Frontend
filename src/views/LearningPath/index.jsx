@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
-import List from '@material-ui/core/List';
 import Slide from '@material-ui/core/Slide';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 import CreateLearningPath from './CreateLearningPath';
 //import { useStyles } from './style';
 
@@ -18,17 +19,13 @@ const LearningPath = (props) => {
     return (
         <div>
             <Dialog fullScreen open={pathModelOpen} onClose={handleClose} TransitionComponent={transition}>
-                {/* <Toolbar>
-                    <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-                        <CloseIcon />
-                    </IconButton>
-                </Toolbar> */}
-                <List>
+                <CssBaseline />
+                <Container maxWidth="xl" disableGutters={true}>
                     <CreateLearningPath 
                         handleClose={handleClose} 
                         handleClosePath={handleClosePath}
                     />
-                </List>
+                </Container>
             </Dialog>
         </div>
     );
