@@ -22,7 +22,6 @@ public class LearningPathDto {
         @NotBlank
         private String name;
         private Long madeById;
-        @NotEmpty
         private List<Long> madeForId;
         @NotEmpty
         private List<Long> coursesId;
