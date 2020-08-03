@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CardMedia from '@material-ui/core/CardMedia';
 import DiscardPopup from '../../components/DiscardPopup';
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import XebiaLogo from '../../images/Logo.svg'
 import AddLearningPath from '../../images/AddLearningPath.svg'
 import DashboardSelected from '../../images/DashboardSelected.svg';
@@ -110,7 +111,7 @@ const Dashboard = () => {
                         image={AddLearningPath}
                         title="Contemplative Reptile"
                     />
-                    <Typography component="h1" variant="h5">
+                    <Typography component="h1" variant="h5" gutterBottom>
                         Welcome, {userName}
                     </Typography>
                     <Typography component="h1" variant="subtitle2">
@@ -122,6 +123,7 @@ const Dashboard = () => {
                         variant="contained"
                         className={classes.submit}
                         onClick={handleClickOpen}
+                        startIcon={<AddCircleOutlineOutlinedIcon style={{ fontSize: 40 }} />}
                     >
                         Create Learning Path
                     </Button>

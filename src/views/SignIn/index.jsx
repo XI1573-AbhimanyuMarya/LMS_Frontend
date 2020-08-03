@@ -108,6 +108,7 @@ const SignIn = () => {
               className={classes.submit}
               onClick={onFormSubmit}
               disabled={isLoading}
+              size="large"
             >
               {isLoading ? 'Loading...' : 'Login'}
             </Button>
