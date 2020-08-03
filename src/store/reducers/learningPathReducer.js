@@ -10,6 +10,7 @@ const initialState = {
     isLoading: false,
     pathModelOpen: false,
     discardModelOpen: false,
+    firstNextClicked: false,
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -130,7 +131,12 @@ export const learningPathReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 message: payload.message
-            }      
+            }  
+        case actionTypes.GET_FIRST_NEXT_CLICKED:
+            return {
+                ...state,
+                firstNextClicked: payload.val,
+            }        
                 
         default: return state;
     }

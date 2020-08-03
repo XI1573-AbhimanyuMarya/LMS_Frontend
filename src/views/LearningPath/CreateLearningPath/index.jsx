@@ -46,7 +46,7 @@ const CreateLearningPath = (props) => {
     const handleNext = () => {
         if(activePathStep === 0 && learningPathName !== "" && courseIdArr?.length > 0) {
             setActivePathStep(activePathStep + 1);
-        } else if(activePathStep === 1 && userIdArr?.length > 0) {
+        } else if(activePathStep === 1) {
             setActivePathStep(activePathStep + 1);
         } else if(activePathStep === steps?.length - 1) {
             const path = {
@@ -58,12 +58,14 @@ const CreateLearningPath = (props) => {
             }
             dispatch(Actions.learningPathActions.createLearningPath(path));
             setActivePathStep(activePathStep + 1);
+        } else if(activePathStep === 0) {
+            dispatch(Actions.learningPathActions.getFirstNextClicked(true));
         }
     };
 
-    // const handleBack = () => {
-    //     setActivePathStep(activePathStep - 1);
-    // };
+    const handleBack = () => {
+        setActivePathStep(activePathStep - 1);
+    };
     return (
         <React.Fragment>
             <Box component='div' className={classes.layout}>
@@ -134,11 +136,11 @@ const CreateLearningPath = (props) => {
                         <React.Fragment>
                             {getStepContent(activePathStep)}
                             <Box component='div' className={classes.buttons}>
-                                {/* {activePathStep !== 0 && (
+                                {activePathStep !== 0 && (
                                 <Button onClick={handleBack} className={classes.button}>
                                 Back
                                 </Button>
-                                )} */}
+                                )}
                                 <Button
                                     variant="contained"
                                     type="button"

@@ -11,12 +11,14 @@ import Actions from '../../../store/actions';
 import CourseSkelton from '../../../components/Skelton/CourseSkelton';
 import { Grid } from '@material-ui/core';
 
-const SelectCourses = () => {
+const SelectCourses = (props) => {
+	console.log(props)
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
-	const { courses, filteredCoursesList, isLoading, learningPathName } = learningPathState;
+	const { courses, filteredCoursesList, isLoading, learningPathName, firstNextClicked } = learningPathState;
 	const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
+	const [touch, setTouch] = useState(false);
 	
 	/**
 	 * function to fetch all courses initial time
@@ -70,6 +72,7 @@ const SelectCourses = () => {
 	 */
 	const onChangeHandler = (e) => {
 		const pathName = e.target.value;
+		setTouch(true);
 		dispatch(Actions.learningPathActions.getLearningPathName(pathName));
 	}
 	
@@ -89,7 +92,7 @@ const SelectCourses = () => {
 						<InputLabel htmlFor="standard-search" className={classes.courseLabel}>Learning Path Name<Box component="span" className={classes.error}>*</Box></InputLabel>
 					</Grid>	
 					<Grid item xs={6}>
-						<TextField error={learningPathName ? false: true} fullWidth id="standard-search" label="Learning Path Name" type="search" variant="outlined" onChange={onChangeHandler} className={classes.pathNameField}/>
+						<TextField error={(!learningPathName && touch) || (!learningPathName && firstNextClicked) ? true: false} fullWidth id="standard-search" label="Learning Path Name" type="search" variant="outlined" onChange={onChangeHandler} className={classes.pathNameField}/>
 					</Grid>	
 				</Grid>
 				<Divider variant="middle" />

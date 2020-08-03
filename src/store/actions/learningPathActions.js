@@ -10,7 +10,8 @@ const getSliderDuration = (val) => ({type: actionTypes.GET_SLIDER_DURATION, payl
 const getLearningPathName = (pathName) => ({type: actionTypes.GET_LEARNING_PATH_NAME, payload: {pathName}});
 const pathModelOpen = (val) => ({type: actionTypes.PATH_MODEL_OPEN, payload: {val}});
 const discardModelOpen = (val) => ({type: actionTypes.DISCARD_MODEL_OPEN, payload: {val}});
-const createLearningPath = (path) => ({type: actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST, payload: {path}})
+const createLearningPath = (path) => ({type: actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST, payload: {path}});
+const getFirstNextClicked = (val) => ({type: actionTypes.GET_FIRST_NEXT_CLICKED, payload: {val}});
 
 export default {
     fetchAllCourses,
@@ -24,4 +25,5 @@ export default {
     pathModelOpen,
     discardModelOpen,
     createLearningPath,
+    getFirstNextClicked,
 }

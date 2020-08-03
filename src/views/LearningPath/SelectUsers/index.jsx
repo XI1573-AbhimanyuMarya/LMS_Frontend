@@ -93,7 +93,7 @@ const SelectUsers = () => {
 					<Card className={userClass}  onClick={() => onUserClickHandler(user.id)}>
 						<ListItem>
 							<ListItemAvatar>
-								<Avatar className={classNameHolder[Math.floor(Math.random() * 6)]}>{name[0]?.charAt(0)+name[1]?.charAt(0)}</Avatar>
+								<Avatar className={classes.blueGreyAvtar}>{name[0]?.charAt(0)+name[1]?.charAt(0)}</Avatar>
 							</ListItemAvatar>
 							<ListItemText primary={user.fullName} />
 						</ListItem>
