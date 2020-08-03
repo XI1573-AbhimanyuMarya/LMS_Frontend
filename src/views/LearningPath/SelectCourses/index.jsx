@@ -5,11 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import Carosals from './Carosals/index';
 import { useStyles } from './style';
 import Actions from '../../../store/actions';
 import CourseSkelton from '../../../components/Skelton/CourseSkelton';
+import { Grid } from '@material-ui/core';
 
 const SelectCourses = () => {
 	const classes = useStyles();
@@ -80,18 +80,28 @@ const SelectCourses = () => {
 						: courses;					
 	return (
 		<React.Fragment>
-			<TextField id="standard-search" label="Search Course" type="search" variant="outlined" className={classes.searchField} name="searchName" onChange={changeHandler}/>
-			<Box bgcolor="#F1F3F7" p={3} >
-				<FormControl>
-					<InputLabel htmlFor="standard-search" className={classes.courseLabel}>Course Name<Box component="span" className={classes.error}>*</Box></InputLabel>
-					<TextField error={learningPathName ? false: true} fullWidth id="standard-search" label="Backend Course" type="search" variant="outlined" className={classes.courseField} onChange={onChangeHandler}/>
-				</FormControl>
+			<Box component='div' display="flex" justifyContent="center">
+				<TextField id="standard-search" label="Search Course" type="search" variant="outlined" className={classes.searchField} name="searchName" onChange={changeHandler}/>
+			</Box>
+			<Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" p={3}>
+				<Grid container className={classes.pathName}>
+					<Grid item xs={3}>
+						<InputLabel htmlFor="standard-search" className={classes.courseLabel}>Learning Path Name<Box component="span" className={classes.error}>*</Box></InputLabel>
+					</Grid>	
+					<Grid item xs={6}>
+						<TextField error={learningPathName ? false: true} fullWidth id="standard-search" label="Learning Path Name" type="search" variant="outlined" onChange={onChangeHandler} className={classes.pathNameField}/>
+					</Grid>	
+				</Grid>
 				<Divider variant="middle" />
-				<Typography variant="h6" className={classes.catalogTitle}>
-					Course Catalog
-          		</Typography>
-				{ isLoading && coursesList?.length === 0 && <CourseSkelton /> }  
-				<Carosals coursesList={coursesList} handleCourseClick={(id) => onCourseClickHandler(id)}/>
+				<Box alignItems="flex-start" py={2} pl={5}>
+					<Typography variant="h6">
+						Course Catalog
+					</Typography>
+				</Box>
+				<Box alignItems="center">
+					{ isLoading && coursesList?.length === 0 && <CourseSkelton /> }  
+					<Carosals coursesList={coursesList} handleCourseClick={(id) => onCourseClickHandler(id)}/>
+				</Box>
 			</Box>
 		</React.Fragment>
 	);

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -91,7 +90,6 @@ const SelectUsers = () => {
 			];
 			return (
 				<Box p={0.5} key={user.id}>
-					
 					<Card className={userClass}  onClick={() => onUserClickHandler(user.id)}>
 						<ListItem>
 							<ListItemAvatar>
@@ -107,9 +105,10 @@ const SelectUsers = () => {
 	}	
 	return (
 		<React.Fragment>
-			<Grid>
+			<Box component='div' display="flex" justifyContent="center">
 				<TextField id="standard-search" label="Search Employee" type="search" variant="outlined" className={classes.searchField}  name="searchEmployee" onChange={changeHandler}/>
-				<Box bgcolor="#F1F3F7" display="flex" flexDirection="row" p={1} m={1} flexWrap="wrap" css={{ maxWidth: '100%' }}>
+			</Box>
+			<Box className={classes.usersContainer} display="flex" flexDirection="row" flexWrap="wrap"  justifyContent="center" py={3}>
 				{isLoading && usersList?.length === 0 && <UserSkelton />}
 				{
 					renderUsers !== "" ? renderUsers
@@ -120,9 +119,7 @@ const SelectUsers = () => {
 						</Typography>
 					</div>
 				}
-					
-				</Box>
-			</Grid>
+			</Box>
 		</React.Fragment>
 	);
 }

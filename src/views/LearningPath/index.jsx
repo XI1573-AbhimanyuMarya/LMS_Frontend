@@ -5,14 +5,12 @@ import Slide from '@material-ui/core/Slide';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import CreateLearningPath from './CreateLearningPath';
-//import { useStyles } from './style';
 
 const transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const LearningPath = (props) => {
-    //const classes = useStyles();
     const learningPathState = useSelector(state => state.learningPathState);
     const { pathModelOpen } = learningPathState;
     const { handleClose, handleClosePath } = props;

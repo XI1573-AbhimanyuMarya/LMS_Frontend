@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -11,38 +10,14 @@ import { Grid } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import StepConnector from '@material-ui/core/StepConnector';
-import { withStyles } from '@material-ui/core/styles';
 import SelectCourses from '../SelectCourses';
 import SelectUsers from '../SelectUsers';
 import SetDuration from '../SetDuration';
 import CardMedia from '@material-ui/core/CardMedia';
+import Box from '@material-ui/core/Box';
 import AddLearningPath from '../../../images/AddLearningPath.svg';
-import { useStyles } from './style';
+import { useStyles, QontoConnector } from './style';
 import Actions from '../../../store/actions';
-
-const QontoConnector = withStyles({
-    alternativeLabel: {
-        top: 10,
-        left: 'calc(-50% + 16px)',
-        right: 'calc(50% + 16px)',
-    },
-    active: {
-        '& $line': {
-            borderColor: '#621D58',
-        },
-    },
-    completed: {
-        '& $line': {
-            borderColor: '#621D58',
-        },
-    },
-    line: {
-        borderColor: '#eaeaf0',
-        borderTopWidth: 3,
-        borderRadius: 1,
-    },
-})(StepConnector);
 
 const steps = ['Courses', 'Assign Users', 'Set Duration'];
 const getStepContent = (step) => {
@@ -74,14 +49,14 @@ const CreateLearningPath = (props) => {
         } else if(activePathStep === 1 && userIdArr?.length > 0) {
             setActivePathStep(activePathStep + 1);
         } else if(activePathStep === steps?.length - 1) {
-            const pathObj = {
+            const path = {
                 name: learningPathName,
                 madeById: user.id,
                 madeForId: userIdArr,
                 coursesId: courseIdArr,
                 duration: learningPathDuration,
             }
-            dispatch(Actions.learningPathActions.createLearningPath(pathObj));
+            dispatch(Actions.learningPathActions.createLearningPath(path));
             setActivePathStep(activePathStep + 1);
         }
     };
@@ -91,21 +66,21 @@ const CreateLearningPath = (props) => {
     // };
     return (
         <React.Fragment>
-            <CssBaseline />
-            <main className={classes.layout}>
-                <Grid container item xs={12} justify="center" className={classes.breadcrumbs}>
-                    <Container component="main" maxWidth="sm" className={classes.mainContainer}>
-                        <div className={classes.learningImg}>
+            <Box component='div' className={classes.layout}>
+                <Grid container className={classes.stepperContainer}>
+                    <Grid item xs={3}>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Box component='div' className={classes.learningImg} justifyContent="center">
                             <CardMedia
                                 className={classes.media}
                                 image={AddLearningPath}
                                 title="Contemplative Reptile"
                             />
                             <Typography component="h1" variant="h5" align="center">
-                            
                                 Create Learning Path
                             </Typography>
-                        </div>
+                        </Box>
                         <Typography variant="subtitle2" align="center">
                             Please provide details below to add learning path
                         </Typography>
@@ -124,25 +99,26 @@ const CreateLearningPath = (props) => {
                                 </Step>
                             ))}
                         </Stepper>
-                    </Container>
-                    <Toolbar>
-                        <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                    </Toolbar>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Toolbar className={classes.clrosButton}>
+                            <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
+                                <CloseIcon />
+                            </IconButton>
+                        </Toolbar>
+                    </Grid>
                 </Grid>
                 <React.Fragment>
                     {activePathStep === steps?.length ? (
                         <React.Fragment>
                             <Container component="main" maxWidth="xs" className={classes.successContainer}>
-                                <CssBaseline />
                                 <Typography variant="h5" align="center" className={classes.assignedLabel}>
                                     Successfully Assigned.
                                 </Typography>
                                 <Typography variant="subtitle1" align="center">
                                     An email has been sent to the employees
                                 </Typography>
-                                <div className={classes.buttons}>
+                                <Box component='div' className={classes.buttons}>
                                     <Button
                                         variant="contained"
                                         type="button"
@@ -151,31 +127,31 @@ const CreateLearningPath = (props) => {
                                     >
                                         Close
                                     </Button>
-                                </div>
+                                </Box>
                             </Container>
                         </React.Fragment>
                     ) : (
-                            <React.Fragment>
-                                {getStepContent(activePathStep)}
-                                <div className={classes.buttons}>
-                                    {/* {activePathStep !== 0 && (
-                                    <Button onClick={handleBack} className={classes.button}>
-                                    Back
-                                    </Button>
-                                    )} */}
-                                    <Button
-                                        variant="contained"
-                                        type="button"
-                                        onClick={handleNext}
-                                        className={classes.button}
-                                    >
-                                        {activePathStep === steps?.length - 1 ? 'Assign' : 'Next'}
-                                    </Button>
-                                </div>
-                            </React.Fragment>
+                        <React.Fragment>
+                            {getStepContent(activePathStep)}
+                            <Box component='div' className={classes.buttons}>
+                                {/* {activePathStep !== 0 && (
+                                <Button onClick={handleBack} className={classes.button}>
+                                Back
+                                </Button>
+                                )} */}
+                                <Button
+                                    variant="contained"
+                                    type="button"
+                                    onClick={handleNext}
+                                    className={classes.button}
+                                >
+                                    {activePathStep === steps?.length - 1 ? 'Assign' : 'Next'}
+                                </Button>
+                            </Box>
+                        </React.Fragment>
                         )}
                 </React.Fragment>
-            </main>
+            </Box>
         </React.Fragment>
     );
 }

@@ -12,8 +12,8 @@ const fetchAllUsers = async () => {
     return await axios.get(SERVICE_URLS.FETCH_USERS, { headers: authHeader()});
 }
 
-const createLearningPath = async ({pathObj}) => {
-    return await axios.post(SERVICE_URLS.CREATE_LEARNING_PATH, { pathObj }, { headers: authHeader()});
+const createLearningPath = async ({path}) => {
+    return await axios.post(SERVICE_URLS.CREATE_LEARNING_PATH, { path }, { headers: authHeader()});
 }
 
 export function* learningPathSaga() {
