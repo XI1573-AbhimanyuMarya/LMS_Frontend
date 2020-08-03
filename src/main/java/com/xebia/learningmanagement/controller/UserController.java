@@ -2,7 +2,7 @@ package com.xebia.learningmanagement.controller;
 
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.Login;
-import com.xebia.learningmanagement.model.UserResponse;
+import com.xebia.learningmanagement.model.LoginResponse;
 import com.xebia.learningmanagement.model.*;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.impl.EmailService;
@@ -23,7 +23,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -63,27 +62,27 @@ public class UserController {
     }
 
     @PostMapping("/username")
-    public ResponseEntity<UserResponse> verifyUsername(@RequestBody Username username) throws Exception {
-        UserResponse userResponse = new UserResponse();
+    public ResponseEntity<LoginResponse> verifyUsername(@RequestBody Username username) throws Exception {
+        LoginResponse loginResponse = new LoginResponse();
         try {
             userServiceImpl.loadUserByUsername(username.getUsername());
             emailService.sendEmail(username.getUsername());
             UserDetails userDetails = userServiceImpl.loadUserByUsername(username.getUsername());
             tempUsername.setUsername(username.getUsername());
-            userResponse.setMessage("user verified and mail send");
-            userResponse.setStatus("success");
-            return ResponseEntity.status(HttpStatus.OK).body(userResponse);
+            loginResponse.setMessage("user verified and mail send");
+            loginResponse.setStatus("success");
+            return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
         } catch (NoSuchElementException e) {
-            userResponse.setMessage("invalid user");
-            userResponse.setStatus("failure");
+            loginResponse.setMessage("invalid user");
+            loginResponse.setStatus("failure");
 //            throw new Exception("Incorrect username",e);
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(userResponse);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(loginResponse);
         }
     }
 
     @PostMapping("/password")
-    public ResponseEntity<UserResponse> verifyPassword(@RequestBody Password password) throws Exception {
-        UserResponse userResponse = new UserResponse();
+    public ResponseEntity<LoginResponse> verifyPassword(@RequestBody Password password) throws Exception {
+        LoginResponse loginResponse = new LoginResponse();
         Login login = new Login();
 
         try {
@@ -94,17 +93,17 @@ public class UserController {
                     .loadUserByUsername(tempUsername.getUsername());
 
             final String jwt = jwtUtil.generateToken(userDetails);
-            userResponse.setStatus("success");
-            userResponse.setMessage("Otp verified");
+            loginResponse.setStatus("success");
+            loginResponse.setMessage("Otp verified");
             login.setJwt(jwt);
             login.setIslogin(true);
-            userResponse.setLogin(login);
-            userResponse.setUser(userRepository.findByUsername(tempUsername.getUsername()).get());
-            return ResponseEntity.status(HttpStatus.OK).body(userResponse);
+            loginResponse.setLogin(login);
+            loginResponse.setUser(userRepository.findByUsername(tempUsername.getUsername()).get());
+            return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
         } catch (BadCredentialsException e) {
-            userResponse.setStatus("failure");
-            userResponse.setMessage("Invalid OTP");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
+            loginResponse.setStatus("failure");
+            loginResponse.setMessage("Invalid OTP");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginResponse);
         }
     }
 

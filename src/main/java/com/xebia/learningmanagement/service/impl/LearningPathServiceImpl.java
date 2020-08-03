@@ -4,7 +4,8 @@ import com.xebia.learningmanagement.entity.Duration;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.entity.User;
-import com.xebia.learningmanagement.model.Path;
+import com.xebia.learningmanagement.exception.LearningPathException;
+import com.xebia.learningmanagement.model.LearningPathDto;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,19 @@ public class LearningPathServiceImpl implements LearningPathService {
     LearningPathEmployeesRepository learningPathEmployeesRepository;
 
     @Override
-    public void createLearningPath(Path path) {
+    public void createLearningPath(LearningPathDto.Path path) {
         LearningPath learningPath = new LearningPath();
+
+        Optional<Duration> duration = durationRepository.findById(path.getDuration());
+        if(!duration.isPresent()){
+            throw new LearningPathException(String.format("duration not available"));
+        }
+
+        Optional<User> madeBy =userRepository.findById(path.getMadeById());
+        if(!madeBy.isPresent()){
+            throw new LearningPathException(String.format("made by user not available"));
+        }
+
         learningPath.setDuration(durationRepository.findById(path.getDuration()).get());
         learningPath.setMadeBy(userRepository.findById(path.getMadeById()).get());
         learningPath.setName(path.getName());
@@ -48,4 +60,5 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathEmployeesRepository.save(learningPathEmployees);
         }
     }
+
 }

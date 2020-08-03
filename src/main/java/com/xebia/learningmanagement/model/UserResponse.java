@@ -1,43 +1,45 @@
 package com.xebia.learningmanagement.model;
 
-import com.xebia.learningmanagement.entity.User;
-import com.xebia.learningmanagement.model.Login;
+import java.util.List;
 
 public class UserResponse {
-	private String status;
-	private String message;
-	private Login login;
-	private User user;
+    private String status;
+    private String message;
+    private Payload payload;
 
-	public Login getLogin() {
-		return login;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setLogin(Login login) {
-		this.login = login;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public Payload getPayload() {
+        return payload;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setPayload(Payload payload) {
+        this.payload = payload;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public class Payload {
+        private List<?> objectList;
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+        public List<?> getObjectList() {
+            return objectList;
+        }
+
+        public void setObjectList(List<?> objectList) {
+            this.objectList = objectList;
+        }
+    }
 }
