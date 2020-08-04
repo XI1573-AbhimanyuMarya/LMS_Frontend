@@ -9,10 +9,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Typography from '@material-ui/core/Typography';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import { useStyles } from './style';
-import Actions from '../../../store/actions';
-import { MESSAGES } from '../../../modules/constants';
 import UserSkelton from '../../../components/Skelton/UserSkelton';
+import Actions from '../../../store/actions';
+import { MESSAGES, LEARNING_PATH_LABELS } from '../../../modules/constants';
+import { useStyles } from './style';
 
 const SelectUsers = () => {
 	const classes = useStyles();
@@ -20,7 +20,6 @@ const SelectUsers = () => {
 	const learningPathState = useSelector(state => state.learningPathState);
 	const { users, filteredUsersList, isLoading, userIdArr } = learningPathState;
 	const [selectedUsersArr, setSelectedUsersArr] = useState([]);
-
 	/**
 	 * function to fetch all users initial time
 	 */
@@ -84,16 +83,12 @@ const SelectUsers = () => {
 		renderUsers = usersList.map((user) => {
 			const userClass = user.selected && user.selected === true ? classes.selected : classes.box;
 			const name = user.fullName.split("  ");
-			const classNameHolder = [
-				classes.orangeAvtar,
-				classes.purpleAvtar, 
-				classes.greenAvtar,
-				classes.yellowAvtar,
-				classes.blueGreyAvtar,
-				classes.pinkAvtar,
-			];
 			return (
-				<Box p={0.5} key={user.id}>
+				
+				<Box 
+				p={0.5} 
+				key={user.id}
+				>
 					<Card className={userClass}  onClick={() => onUserClickHandler(user.id)}>
 						<ListItem>
 							<ListItemAvatar>
@@ -104,13 +99,14 @@ const SelectUsers = () => {
 						{user.selected && user.selected === true && <CheckCircleIcon className={classes.checkIcon}/>}
 					</Card>
 				</Box>
+				
 			)	
 		})
 	}	
 	return (
 		<React.Fragment>
 			<Box component='div' display="flex" justifyContent="center">
-				<TextField id="standard-search" label="Search Employee" type="search" variant="outlined" className={classes.searchField}  name="searchEmployee" onChange={changeHandler}/>
+				<TextField id="standard-search" label={LEARNING_PATH_LABELS.SEARCH_EMPLOYEE} type="search" variant="outlined" className={classes.searchField}  name="searchEmployee" onChange={changeHandler}/>
 			</Box>
 			<Box className={classes.usersContainer} display="flex" flexDirection="row" flexWrap="wrap"  justifyContent="center" py={3}>
 				{isLoading && usersList?.length === 0 && <UserSkelton />}

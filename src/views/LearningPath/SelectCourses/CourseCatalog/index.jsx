@@ -20,19 +20,19 @@ const CourseCatalog = (props) => {
 				{course.selected && course.selected === true && <CheckCircleIcon className={classes.checkIcon} />}
 				<CardContent>
 					<Box component="span" className={classes.courseType}>
-						{course.category.name}
+						{course?.category?.name}
 					</Box>
 					<Typography variant="body1" component="h5" className={classes.courseTitle}>
-						{course.name}
+						{course?.name}
 					</Typography>
 					<Typography variant="body2" color="textSecondary" component="p" className={classes.courseDesc}>
-						{course.description}
+						{course?.description}
 					</Typography>
 				</CardContent>
 				<Divider variant="middle" />
 				<CardActions>
 					<Typography variant="body1" component="h5" className={classes.courseLevel}>
-						{course.competency.name}
+						{course?.competency?.name}
 					</Typography>
 				</CardActions>
 			</CardActionArea>

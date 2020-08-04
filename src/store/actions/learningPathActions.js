@@ -12,6 +12,7 @@ const pathModelOpen = (val) => ({type: actionTypes.PATH_MODEL_OPEN, payload: {va
 const discardModelOpen = (val) => ({type: actionTypes.DISCARD_MODEL_OPEN, payload: {val}});
 const createLearningPath = (path) => ({type: actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST, payload: {path}});
 const getFirstNextClicked = (val) => ({type: actionTypes.GET_FIRST_NEXT_CLICKED, payload: {val}});
+const getActivePathStep = (step) => ({type: actionTypes.GET_ACTIVE_PATH_STEP, payload: {step}});
 
 export default {
     fetchAllCourses,
@@ -26,4 +27,5 @@ export default {
     discardModelOpen,
     createLearningPath,
     getFirstNextClicked,
+    getActivePathStep,
 }

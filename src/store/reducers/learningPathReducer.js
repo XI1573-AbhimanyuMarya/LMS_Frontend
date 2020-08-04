@@ -11,6 +11,7 @@ const initialState = {
     pathModelOpen: false,
     discardModelOpen: false,
     firstNextClicked: false,
+    activePathStep: '',
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -106,7 +107,9 @@ export const learningPathReducer = (state = initialState, action) => {
                     users: [],
                     courseIdArr: [],
                     userIdArr: [],
-                    isLoading: false
+                    isLoading: false,
+                    activePathStep: '',
+                    firstNextClicked: false
                 }
             }
         case actionTypes.DISCARD_MODEL_OPEN:
@@ -124,19 +127,26 @@ export const learningPathReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                message: payload.message
+                message: payload.message,
+                status: payload.status
             }
         case actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                message: payload.message
+                message: payload.message,
+                status: payload.status
             }  
         case actionTypes.GET_FIRST_NEXT_CLICKED:
             return {
                 ...state,
                 firstNextClicked: payload.val,
-            }        
+            }
+        case actionTypes.GET_ACTIVE_PATH_STEP:
+            return {
+                ...state,
+                activePathStep: payload.step,
+            }            
                 
         default: return state;
     }

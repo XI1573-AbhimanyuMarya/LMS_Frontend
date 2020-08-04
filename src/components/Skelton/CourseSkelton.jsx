@@ -7,7 +7,7 @@ const renderList = [1,2,3,4].map((item) => {
         <Box pl={4} key={item}>
             <Skeleton width="20%"  />
             <Skeleton width="40%" />	
-            <Skeleton variant="rect" width={210} height={118} />
+            <Skeleton variant="rect" width={210} height={110} />
         </Box>
     )
 })

@@ -15,4 +15,48 @@ export const API_STATUS = {
 
 export const MESSAGES = {
     NO_DATA_FOUND: 'No results found...',
+    UNKNOWN_STEP: 'Unknown step',
+    PLEASE_SELECT_ATLEAST_ONE_COURSE: 'Please select atleat one course',
 };
+
+export const LEARNING_PATH_LABELS = {
+    CREATE_LEARNING_PATH : 'Create Learning Path',
+    LEARNING_PATH_DETAILS : 'Please provide details below to add learning path',
+    LEARNING_PATH_CREATED_AND_ASSIGNED : 'Learning path has created & assigned successfully',
+    LEARNING_PATH_CREATED : 'Learning path has created sucessfully',
+    EMAIL_SENT_TO_EMPLOYEE : 'An email has been sent to the employees',
+    SEARCH_COURSE : 'Search Course',
+    LEARNING_PATH_NAME : 'Learning Path Name',
+    COURSE_CATALOG : 'Course Catalog',
+    SEARCH_EMPLOYEE: 'Search Employee',
+    SELECT_LEARNING_PATH_DURATION : 'Select Learning Path Duration',
+};
+
+export const BUTTONS = {
+    CLOSE: 'Close',
+    BACK: 'Back',
+    ASSIGN: 'Assign',
+    SUBMIT: 'Submit',
+    NEXT: 'Next',
+};
+
+export const STEPS = ['Courses', 'Assign Users', 'Set Duration'];
+
+export const MARKS = [
+	{
+		value: 3,
+		label: '3 Months',
+	},
+	{
+		value: 6,
+		label: '6 Months',
+	},
+	{
+		value: 9,
+		label: '9 Months',
+	},
+	{
+		value: 12,
+		label: '12 Months',
+	},
+];

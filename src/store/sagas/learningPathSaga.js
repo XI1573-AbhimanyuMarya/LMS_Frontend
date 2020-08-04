@@ -50,10 +50,11 @@ function* createLearning(action) {
     try {
         const response = yield call(createLearningPath, action.payload);
         const { data } = response;
-
         yield put({ type: actionTypes.CREATE_LEARNING_PATH_CALL_SUCCESS, payload: data });
 
     } catch (error) {
-        yield put({ type: actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE, error });
+        const { response } = error;
+        const { data } = response
+        yield put({ type: actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE, payload: data });
     }
 }

@@ -5,11 +5,12 @@ import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
 import InputLabel from '@material-ui/core/InputLabel';
+import { Grid } from '@material-ui/core';
 import Carosals from './Carosals/index';
-import { useStyles } from './style';
 import Actions from '../../../store/actions';
 import CourseSkelton from '../../../components/Skelton/CourseSkelton';
-import { Grid } from '@material-ui/core';
+import { useStyles } from './style';
+import { LEARNING_PATH_LABELS } from '../../../modules/constants';
 
 const SelectCourses = () => {
 	const classes = useStyles();
@@ -87,17 +88,17 @@ const SelectCourses = () => {
 	return (
 		<React.Fragment>
 			<Box component='div' display="flex" justifyContent="center">
-				<TextField id="standard-search" label="Search Course" type="search" variant="outlined" className={classes.searchField} name="searchName" onChange={changeHandler}/>
+				<TextField id="standard-search" label={LEARNING_PATH_LABELS.SEARCH_COURSE} type="search" variant="outlined" className={classes.searchField} name="searchName" onChange={changeHandler}/>
 			</Box>
 			<Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" p={3}>
 				<Grid container className={classes.pathName}>
 					<Grid item xs={3}>
-						<InputLabel htmlFor="standard-search" className={classes.courseLabel}>Learning Path Name<Box component="span" className={classes.error}>*</Box></InputLabel>
+						<InputLabel htmlFor="standard-search" className={classes.courseLabel}>{LEARNING_PATH_LABELS.LEARNING_PATH_NAME}<Box component="span" className={classes.error}>*</Box></InputLabel>
 					</Grid>	
 					<Grid item xs={6}>
 						<TextField error={(!learningPathName && touch) || (!learningPathName && firstNextClicked) ? true: false} 
 						fullWidth id="standard-search" 
-						label="Learning Path Name" 
+						label={LEARNING_PATH_LABELS.LEARNING_PATH_NAME} 
 						type="search" 
 						variant="outlined" 
 						onChange={onChangeHandler} 
@@ -109,7 +110,7 @@ const SelectCourses = () => {
 				<Divider variant="middle" />
 				<Box alignItems="flex-start" py={2} pl={5}>
 					<Typography variant="h6">
-						Course Catalog
+						{LEARNING_PATH_LABELS.COURSE_CATALOG}
 					</Typography>
 				</Box>
 				<Box alignItems="center">
