@@ -11,8 +11,7 @@ import Actions from '../../../store/actions';
 import CourseSkelton from '../../../components/Skelton/CourseSkelton';
 import { Grid } from '@material-ui/core';
 
-const SelectCourses = (props) => {
-	console.log(props)
+const SelectCourses = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
