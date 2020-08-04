@@ -80,7 +80,7 @@ const CreateLearningPath = (props) => {
                                 title="Contemplative Reptile"
                             />
                             <Typography component="h1" variant="h5" align="center">
-                                Create Learning Path
+                                { learningPathName && activePathStep !== 0 ? learningPathName : 'Create Learning Path' }
                             </Typography>
                         </Box>
                         <Typography variant="subtitle2" align="center">
@@ -115,7 +115,7 @@ const CreateLearningPath = (props) => {
                         <React.Fragment>
                             <Container component="main" maxWidth="xs" className={classes.successContainer}>
                                 <Typography variant="h5" align="center" className={classes.assignedLabel}>
-                                    Successfully Assigned.
+                                    { userIdArr?.length > 0 ? 'Learning path has created & assigned successfully' : 'Learning path has created sucessfully' }.
                                 </Typography>
                                 <Typography variant="subtitle1" align="center">
                                     An email has been sent to the employees
@@ -147,7 +147,11 @@ const CreateLearningPath = (props) => {
                                     onClick={handleNext}
                                     className={classes.button}
                                 >
-                                    {activePathStep === steps?.length - 1 ? 'Assign' : 'Next'}
+                                    {activePathStep === steps?.length - 1 
+                                    ? userIdArr?.length > 0 
+                                        ? 'Assign'
+                                        : 'Submit' 
+                                    : 'Next'}
                                 </Button>
                             </Box>
                         </React.Fragment>

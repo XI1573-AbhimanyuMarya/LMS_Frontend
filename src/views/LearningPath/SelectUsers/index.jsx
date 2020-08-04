@@ -18,14 +18,18 @@ const SelectUsers = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
-	const { users, filteredUsersList, isLoading } = learningPathState;
+	const { users, filteredUsersList, isLoading, userIdArr } = learningPathState;
 	const [selectedUsersArr, setSelectedUsersArr] = useState([]);
 
 	/**
 	 * function to fetch all users initial time
 	 */
 	useEffect(() => {
-		dispatch(Actions.learningPathActions.fetchAllUsers());	
+		if(userIdArr?.length === 0) {
+			dispatch(Actions.learningPathActions.fetchAllUsers());
+		} else {
+			setSelectedUsersArr(userIdArr);
+		}		
 	}, []);
 
 	/**

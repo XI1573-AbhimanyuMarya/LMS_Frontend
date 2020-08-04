@@ -15,7 +15,7 @@ const SelectCourses = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
-	const { courses, filteredCoursesList, isLoading, learningPathName, firstNextClicked } = learningPathState;
+	const { courses, filteredCoursesList, isLoading, learningPathName, firstNextClicked, courseIdArr } = learningPathState;
 	const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
 	const [touch, setTouch] = useState(false);
 	
@@ -23,7 +23,11 @@ const SelectCourses = () => {
 	 * function to fetch all courses initial time
 	 */
 	useEffect(() => {
-		dispatch(Actions.learningPathActions.fetchAllCourses());
+		if(courseIdArr?.length === 0) {
+			dispatch(Actions.learningPathActions.fetchAllCourses());
+		} else {
+			setSelectedCoursesArr(courseIdArr)
+		}
 	}, []);
 
 	/**
@@ -91,7 +95,15 @@ const SelectCourses = () => {
 						<InputLabel htmlFor="standard-search" className={classes.courseLabel}>Learning Path Name<Box component="span" className={classes.error}>*</Box></InputLabel>
 					</Grid>	
 					<Grid item xs={6}>
-						<TextField error={(!learningPathName && touch) || (!learningPathName && firstNextClicked) ? true: false} fullWidth id="standard-search" label="Learning Path Name" type="search" variant="outlined" onChange={onChangeHandler} className={classes.pathNameField}/>
+						<TextField error={(!learningPathName && touch) || (!learningPathName && firstNextClicked) ? true: false} 
+						fullWidth id="standard-search" 
+						label="Learning Path Name" 
+						type="search" 
+						variant="outlined" 
+						onChange={onChangeHandler} 
+						className={classes.pathNameField}
+						value={learningPathName ? learningPathName : ''}
+						/>
 					</Grid>	
 				</Grid>
 				<Divider variant="middle" />
