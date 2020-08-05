@@ -1,55 +1,39 @@
 package com.xebia.learningmanagement.service.impl;
 
-//import com.xebia.learningmanagement.model.GrantedAuthorityImpl;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.UserDto;
 import com.xebia.learningmanagement.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
+import com.xebia.learningmanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-		import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
-@Transactional
-public class UserServiceImpl implements UserDetailsService {
-	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+public class UserServiceImpl implements UserService {
+    @Autowired
+    UserRepository userRepository;
 
+    @Override
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDto> userDtos = new ArrayList<>();
+        for (int i = 0; i <users.size() ; i++) {
+            UserDto userDto = new UserDto();
 
-	@Autowired
-	UserRepository userRepository;
+            userDto.setcOEType(users.get(i).getcOEType());
+            userDto.setDesignation(users.get(i).getDesignation());
+            userDto.setEmpID(users.get(i).getEmpID());
+            userDto.setLocation(users.get(i).getLocation());
+            userDto.setFullName(users.get(i).getFullName());
+            userDto.setRoles(users.get(i).getRoles());
+            userDto.setId(users.get(i).getId());
+            userDto.setUsername(users.get(i).getUsername());
 
-	/*@Autowired
-	PasswordEncoder encoder;
+            userDtos.add(userDto);
+        }
 
-	@Autowired
-	Authentication authentication;*/
-
-
-	public User createUser(UserDto userDto) {
-		User user = userRepository.save(transformToModelBeforeSave(userDto));
-
-		return userRepository.save(user);
-
-	}
-
-	User transformToModelBeforeSave(UserDto userDto) {
-		User users = new User();
-		BeanUtils.copyProperties(userDto, users);
-		//users.setCreatedAt(new Date());
-		return users;
-	}
-
-@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<User> user = userRepository.findByUsername(username);
-		return user.map(MyUserDetails::new).get();
-	}
-
+        return userDtos;
+    }
 }

@@ -2,20 +2,14 @@ package com.xebia.learningmanagement.model;
 
 public class UserDto {
 
-	private int id;
+	private long id;
 	private String username;
-	private String password;
-	private boolean active;
 	private String roles;
-
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+	private String fullName;
+	private String designation;
+	private String empID;
+	private String location;
+	private String cOEType;
 
 	public String getRoles() {
 		return roles;
@@ -25,11 +19,11 @@ public class UserDto {
 		this.roles = roles;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -41,12 +35,43 @@ public class UserDto {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getFullName() {
+		return fullName;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	public String getEmpID() {
+		return empID;
+	}
+
+	public void setEmpID(String empID) {
+		this.empID = empID;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getcOEType() {
+		return cOEType;
+	}
+
+	public void setcOEType(String cOEType) {
+		this.cOEType = cOEType;
+	}
 }

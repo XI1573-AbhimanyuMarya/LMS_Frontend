@@ -1,7 +1,7 @@
 package com.xebia.learningmanagement.config;
 
 import com.xebia.learningmanagement.filter.JwtRequestFilter;
-import com.xebia.learningmanagement.service.impl.UserServiceImpl;
+import com.xebia.learningmanagement.service.impl.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserServiceImpl userService;
+    private MyUserDetailsService userService;
 
     @Autowired
     DataSource dataSource;

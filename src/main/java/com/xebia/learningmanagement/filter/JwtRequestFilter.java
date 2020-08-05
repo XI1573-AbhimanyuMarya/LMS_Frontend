@@ -1,7 +1,7 @@
 package com.xebia.learningmanagement.filter;
 
 
-import com.xebia.learningmanagement.service.impl.UserServiceImpl;
+import com.xebia.learningmanagement.service.impl.MyUserDetailsService;
 import com.xebia.learningmanagement.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +20,7 @@ import java.io.IOException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
-    private UserServiceImpl myUserDetailsService;
+    private MyUserDetailsService myUserDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;

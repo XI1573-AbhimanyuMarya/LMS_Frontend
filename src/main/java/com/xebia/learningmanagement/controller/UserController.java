@@ -1,12 +1,12 @@
 package com.xebia.learningmanagement.controller;
 
-import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.Login;
 import com.xebia.learningmanagement.model.LoginResponse;
 import com.xebia.learningmanagement.model.*;
 import com.xebia.learningmanagement.repository.UserRepository;
+import com.xebia.learningmanagement.service.UserService;
 import com.xebia.learningmanagement.service.impl.EmailService;
-import com.xebia.learningmanagement.service.impl.UserServiceImpl;
+import com.xebia.learningmanagement.service.impl.MyUserDetailsService;
 import com.xebia.learningmanagement.util.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +29,13 @@ import java.util.NoSuchElementException;
 @RestController
 @CrossOrigin("*")
 public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
 
     @Autowired
-    UserServiceImpl userServiceImpl;
+    MyUserDetailsService myUserDetailsService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     UserRepository userRepository;
@@ -65,9 +68,9 @@ public class UserController {
     public ResponseEntity<LoginResponse> verifyUsername(@RequestBody Username username) throws Exception {
         LoginResponse loginResponse = new LoginResponse();
         try {
-            userServiceImpl.loadUserByUsername(username.getUsername());
+            myUserDetailsService.loadUserByUsername(username.getUsername());
             emailService.sendEmail(username.getUsername());
-            UserDetails userDetails = userServiceImpl.loadUserByUsername(username.getUsername());
+            UserDetails userDetails = myUserDetailsService.loadUserByUsername(username.getUsername());
             tempUsername.setUsername(username.getUsername());
             loginResponse.setMessage("user verified and mail send");
             loginResponse.setStatus("success");
@@ -89,7 +92,7 @@ public class UserController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             tempUsername.getUsername(), password.getPassword()));
-            final UserDetails userDetails = userServiceImpl
+            final UserDetails userDetails = myUserDetailsService
                     .loadUserByUsername(tempUsername.getUsername());
 
             final String jwt = jwtUtil.generateToken(userDetails);
@@ -108,8 +111,8 @@ public class UserController {
     }
 
     @GetMapping("/getAllUsers")
-    public ResponseEntity<List<User>> getAllUsers(){
-        List<User> allUsers = userRepository.findAll();
+    public ResponseEntity<List<UserDto>> getAllUsers(){
+        List<UserDto> allUsers = userService.getAllUsers();
         return ResponseEntity.ok().body(allUsers);
     }
 
