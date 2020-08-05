@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Stepper from '@material-ui/core/Stepper';
@@ -12,6 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import CardMedia from '@material-ui/core/CardMedia';
 import Box from '@material-ui/core/Box';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
 import SelectCourses from '../SelectCourses';
 import SelectUsers from '../SelectUsers';
 import SetDuration from '../SetDuration';
@@ -20,7 +22,7 @@ import { useStyles, QontoConnector } from './style';
 import Actions from '../../../store/actions';
 import { STEPS, MESSAGES, LEARNING_PATH_LABELS, BUTTONS } from '../../../modules/constants';
 import WithLoading from '../../../hoc/WithLoading';
-import { error } from '../../../utils/notifications';
+import { error, clear } from '../../../utils/notifications';
 
 const steps = STEPS;
 const getStepContent = (step) => {
@@ -42,13 +44,17 @@ const CreateLearningPath = (props) => {
     const learningPathState = useSelector(state => state.learningPathState);
     const loginState = useSelector(res => res.loginState);
     const { handleClose, handleClosePath } = props;
-    const [activePathStep, setActivePathStep] = React.useState(0);
-    const { learningPathName, courseIdArr, userIdArr, learningPathDuration } = learningPathState;
+    const [activePathStep, setActivePathStep] = useState(0);
+    const { learningPathName, courseIdArr, userIdArr, learningPathDuration, status, message } = learningPathState;
     const { user } = loginState;
 
     const handleNext = () => {
         if(activePathStep === 0 && learningPathName !== "" && courseIdArr?.length > 0) {
             setActivePathStep(activePathStep + 1);
+        } else if(activePathStep === 0 && learningPathName !== "" && courseIdArr?.length === 0) {
+            error(MESSAGES.PLEASE_SELECT_ATLEAST_ONE_COURSE)
+        } else if(activePathStep === 0) {
+            dispatch(Actions.learningPathActions.getFirstNextClicked(true));
         } else if(activePathStep === 1) {
             setActivePathStep(activePathStep + 1);
         } else if(activePathStep === steps?.length - 1) {
@@ -60,18 +66,44 @@ const CreateLearningPath = (props) => {
                 duration: learningPathDuration,
             }
             dispatch(Actions.learningPathActions.createLearningPath(path));
-            setActivePathStep(activePathStep + 1);
-        } else if(activePathStep === 0 && courseIdArr?.length === 0 && learningPathName !== "") {
-            error(MESSAGES.PLEASE_SELECT_ATLEAST_ONE_COURSE)
-        } else if(activePathStep === 0) {
-            dispatch(Actions.learningPathActions.getFirstNextClicked(true));
-        }
+            setTimeout(() => {
+                setActivePathStep(activePathStep + 1);
+            }, 1000);
+        } 
         dispatch(Actions.learningPathActions.getActivePathStep(activePathStep));
     };
 
     const handleBack = () => {
         setActivePathStep(activePathStep - 1);
     };
+
+    const renderFinalPage = status && status === 'success'
+                        ? userIdArr?.length > 0
+                            ? <>
+                                <CheckCircleIcon className={classes.checkIcon}/>
+                                <Typography variant="h5" align="center" className={classes.assignedLabel}>
+                                    {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED_AND_ASSIGNED}
+                                </Typography>
+                                <Typography variant="subtitle1" align="center">
+                                    {LEARNING_PATH_LABELS.EMAIL_SENT_TO_EMPLOYEE}
+                                </Typography>
+                            </>
+                            : <>
+                                <CheckCircleIcon className={classes.checkIcon}/>
+                                <Typography variant="h5" align="center" className={classes.assignedLabel}>
+                                    {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED}
+                                </Typography>
+                            </>
+                        : <>
+                            <ErrorIcon className={classes.errorIcon}/>
+                            <Typography variant="h5" align="center" className={classes.errorLabel}>
+                                {LEARNING_PATH_LABELS.SOMETHING_WENT_WRONG}
+                            </Typography>
+                            <Typography variant="subtitle1" align="center">
+                                {LEARNING_PATH_LABELS.CLICK_OVER_CLOSE_BUTTON}
+                            </Typography>
+                        </>;  
+
     return (
         <React.Fragment>
             <Box component='div' className={classes.layout}>
@@ -120,22 +152,18 @@ const CreateLearningPath = (props) => {
                     {activePathStep === steps?.length ? (
                         <React.Fragment>
                             <Container component="main" maxWidth="xs" className={classes.successContainer}>
-                                <Typography variant="h5" align="center" className={classes.assignedLabel}>
-                                    { userIdArr?.length > 0 ? LEARNING_PATH_LABELS.LEARNING_PATH_CREATED_AND_ASSIGNED : LEARNING_PATH_LABELS.LEARNING_PATH_CREATED }
-                                </Typography>
-                                <Typography variant="subtitle1" align="center">
-                                    {LEARNING_PATH_LABELS.EMAIL_SENT_TO_EMPLOYEE}
-                                </Typography>
-                                <Box component='div' className={classes.buttons}>
-                                    <Button
-                                        variant="contained"
-                                        type="button"
-                                        onClick={handleClosePath}
-                                        className={classes.closeButton}
-                                    >
-                                        {BUTTONS.CLOSE}
-                                    </Button>
-                                </Box>
+                                
+                                { renderFinalPage }
+                                
+                                <Button
+                                    variant="contained"
+                                    type="button"
+                                    onClick={handleClosePath}
+                                    className={classes.closeButton}
+                                >
+                                    {BUTTONS.CLOSE}
+                                </Button>
+                                
                             </Container>
                         </React.Fragment>
                     ) : (

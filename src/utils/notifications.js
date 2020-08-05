@@ -10,7 +10,7 @@ export const success = (message = null) => {
         animationIn: ["animated", "fadeIn"],
         animationOut: ["animated", "fadeOut"],
         dismiss: {
-          duration: 5000,
+          duration: 3000,
           onScreen: true
         }
     });
@@ -26,8 +26,12 @@ export const error = (message = null) => {
         animationIn: ["animated", "fadeIn"],
         animationOut: ["animated", "fadeOut"],
         dismiss: {
-          duration: 5000,
+          duration: 3000,
           onScreen: true
         }
     });
+}
+
+export const clear = () => {
+  return store.removeNotification();
 }

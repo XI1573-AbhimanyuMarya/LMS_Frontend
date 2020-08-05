@@ -30,6 +30,8 @@ export const LEARNING_PATH_LABELS = {
     COURSE_CATALOG : 'Course Catalog',
     SEARCH_EMPLOYEE: 'Search Employee',
     SELECT_LEARNING_PATH_DURATION : 'Select Learning Path Duration',
+    SOMETHING_WENT_WRONG : 'Something went wrong!',
+    CLICK_OVER_CLOSE_BUTTON: 'Click over close button to create this again'
 };
 
 export const BUTTONS = {

@@ -52,6 +52,9 @@ export const useStyles = makeStyles((theme) => ({
 	assignedLabel: {
 		color: '#67B104'
 	},
+	errorLabel: {
+		color: '#E03A3E'
+	},
 	learningImg: {
 		display: 'flex',
 		alignItems: 'center',
@@ -66,12 +69,22 @@ export const useStyles = makeStyles((theme) => ({
 		height: '100%',
 		alignItems: 'center',
 		justifyContent: 'center',
-		Display: "flex",
+		display: "flex",
 		flexDirection: "column",
 		marginTop: '10%'
 	},
 	clrosButton: {
 		float: 'right'
+	},
+	errorIcon: {
+		color: '#E03A3E',
+		width: '50vw',
+  		height: '10vh',
+	},
+	checkIcon: {
+		color: '#63AB04',
+		width: '50vw',
+  		height: '10vh',
 	}
 }));
 

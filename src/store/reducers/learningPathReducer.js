@@ -6,7 +6,7 @@ const initialState = {
     courseIdArr: [],
     users: [],
     userIdArr: [],
-    learningPathDuration: 3,
+    learningPathDuration: 0,
     isLoading: false,
     pathModelOpen: false,
     discardModelOpen: false,
