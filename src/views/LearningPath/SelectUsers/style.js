@@ -49,5 +49,5 @@ export const useStyles = makeStyles((theme) => ({
 	usersContainer: {
 		background: '#F1F3F7',
 		borderRadius: "0.5%"
-	}
+	},
 }));

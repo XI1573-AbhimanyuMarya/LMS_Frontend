@@ -14,6 +14,8 @@ import Actions from '../../../store/actions';
 import { MESSAGES, LEARNING_PATH_LABELS } from '../../../modules/constants';
 import { useStyles } from './style';
 
+import Popover from '../../../components/Popover';
+
 const SelectUsers = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -73,6 +75,27 @@ const SelectUsers = () => {
 		}
 	}
 
+	const [popoverState, setPopoverState] = useState({
+		openedPopoverId: false,
+      	anchorEl: null,
+	})
+
+	const handlePopoverOpen = (event, popoverId) => {
+		const element = event.target;
+		setPopoverState(prevState => ({
+			...prevState,
+			openedPopoverId: popoverId,
+			anchorEl: element,
+		}));
+	}
+	const handlePopoverClose = () => {
+		setPopoverState(prevState => ({
+			...prevState,
+			openedPopoverId: null,
+			anchorEl: null,
+		}));
+	}
+
 	const usersList = filteredUsersList
 						? filteredUsersList?.length > 0
 							? filteredUsersList?.slice(0, 16)
@@ -89,15 +112,18 @@ const SelectUsers = () => {
 				p={0.5} 
 				key={user.id}
 				>
-					<Card className={userClass}  onClick={() => onUserClickHandler(user.id)}>
+					<Card className={userClass}  onClick={() => onUserClickHandler(user.id)} onMouseEnter={(e) => handlePopoverOpen(e, user.id)}
+                onMouseLeave={handlePopoverClose}>
 						<ListItem>
 							<ListItemAvatar>
 								<Avatar className={classes.blueGreyAvtar}>{name[0]?.charAt(0)+name[1]?.charAt(0)}</Avatar>
 							</ListItemAvatar>
-							<ListItemText primary={user.fullName} />
+							<ListItemText primary={user.fullName}  secondary={user.designation}/>
+							
 						</ListItem>
 						{user.selected && user.selected === true && <CheckCircleIcon className={classes.checkIcon}/>}
 					</Card>
+					<Popover user={user} popoverState={popoverState} />		
 				</Box>
 				
 			)	
