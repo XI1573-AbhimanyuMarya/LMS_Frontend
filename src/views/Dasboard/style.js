@@ -31,7 +31,9 @@ export const useStyles = makeStyles(theme => ({
 		margin: theme.spacing(3, 0, 2),
 		background: 'linear-gradient(180deg, #FFAB39 0%, #F07200 100%)',
 		color: "#FFFFFF",
-		textTransform: 'capitalize'
+		textTransform: 'capitalize',
+		lineHeight: '2.4',
+		fontSize: '1.2em'
 	},
 
 	media: {
@@ -59,6 +61,18 @@ export const useStyles = makeStyles(theme => ({
 		textTransform: 'capitalize',
 		background: '#621D58',
 		color: "#FFFFFF",
+		'&:after': {
+			content: '',
+			position: 'absolute',
+			top: "100%",
+			left: 'calc(50% - 10px)',
+			background: '#88b7d5',
+			width: '20px',
+			height: '20px',
+			
+			/* The points are: (left top: x y, right top: x y, center bottom: x y) */
+			clipPath: 'polygon(0 0, 100% 0, 50% 100%)'
+		  }
 	},
 	approvalBtn: {
 		textTransform: 'capitalize',
@@ -71,5 +85,6 @@ export const useStyles = makeStyles(theme => ({
 	learningPathIcon: {
 		height: 25,
 		width: 20
-	}
+	},
+	
 }));
