@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Stepper from '@material-ui/core/Stepper';
@@ -22,7 +23,7 @@ import { useStyles, QontoConnector } from './style';
 import Actions from '../../../store/actions';
 import { STEPS, MESSAGES, LEARNING_PATH_LABELS, BUTTONS } from '../../../modules/constants';
 import WithLoading from '../../../hoc/WithLoading';
-import { error, clear } from '../../../utils/notifications';
+import { error } from '../../../utils/notifications';
 
 const steps = STEPS;
 const getStepContent = (step) => {
@@ -45,7 +46,7 @@ const CreateLearningPath = (props) => {
     const loginState = useSelector(res => res.loginState);
     const { handleClose, handleClosePath } = props;
     const [activePathStep, setActivePathStep] = useState(0);
-    const { learningPathName, courseIdArr, userIdArr, learningPathDuration, status, message } = learningPathState;
+    const { learningPathName, courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
     const { user } = loginState;
 
     const handleNext = () => {
@@ -195,5 +196,10 @@ const CreateLearningPath = (props) => {
         </React.Fragment>
     );
 }
+
+CreateLearningPath.propTypes = {
+    handleClose: PropTypes.func.isRequired,
+    handleClosePath: PropTypes.func.isRequired,
+};
 
 export default WithLoading(CreateLearningPath);

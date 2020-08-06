@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -56,5 +57,9 @@ const DiscardPopup = (props) => {
         </div>
     );
 }
+
+DiscardPopup.propTypes = {
+    discardHandler: PropTypes.func.isRequired,
+};
 
 export default DiscardPopup;

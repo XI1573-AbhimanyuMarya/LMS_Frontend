@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -10,9 +11,8 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { useStyles } from './style';
 
 const CourseCatalog = (props) => {
-	const { course } = props;
 	const classes = useStyles();
-	const { handleCourseClick } = props;
+	const { course, handleCourseClick } = props;
 	const courseClass = course.selected && course.selected === true ? classes.selected : classes.root;
 	return (
 		<Card className={courseClass}>
@@ -39,5 +39,10 @@ const CourseCatalog = (props) => {
 		</Card>
 	);
 }
+
+CourseCatalog.propTypes = {
+    course: PropTypes.object.isRequired,
+    handleCourseClick: PropTypes.func.isRequired,
+};
 
 export default CourseCatalog;

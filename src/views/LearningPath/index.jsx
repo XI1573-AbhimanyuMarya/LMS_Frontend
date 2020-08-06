@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
@@ -32,5 +33,10 @@ const LearningPath = (props) => {
         </div>
     );
 }
+
+LearningPath.propTypes = {
+    handleClose: PropTypes.func.isRequired,
+    handleClosePath: PropTypes.func.isRequired,
+};
 
 export default LearningPath;

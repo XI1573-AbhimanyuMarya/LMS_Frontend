@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import ItemsCarousel from 'react-items-carousel';
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
@@ -46,6 +47,11 @@ const Carosals = (props) => {
 			}
 		</React.Fragment>
 	);
+};
+
+Carosals.propTypes = {
+    coursesList: PropTypes.array.isRequired,
+    handleCourseClick: PropTypes.func.isRequired,
 };
 
 export default Carosals;
