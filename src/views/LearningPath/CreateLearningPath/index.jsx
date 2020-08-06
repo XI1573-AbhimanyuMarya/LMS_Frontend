@@ -127,7 +127,7 @@ const CreateLearningPath = (props) => {
                         </Typography>
                         <Stepper activeStep={activePathStep} connector={<QontoConnector />}>
                             {steps.map((label) => (
-                                <Step key={label} className={classes.step}>
+                                <Step key={label}>
                                     <StepLabel
                                         StepIconProps={{
                                             classes: {
