@@ -1,4 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import StepConnector from '@material-ui/core/StepConnector';
+
 export const useStyles = makeStyles((theme) => ({
 	layout: {
 		width: 'auto',
@@ -36,15 +38,8 @@ export const useStyles = makeStyles((theme) => ({
 		fontSize: 20,
 		width: '40%'
 	},
-	breadcrumbs: {
-		marginLeft: 35,
+	stepperContainer: {
 		marginTop: 10
-	},
-	mainContainer: {
-		width: '100%',
-		height: '100%',
-		alignItems: 'center',
-		justifyContent: 'center',
 	},
 	active: {
 		color: '#621D58 !important',
@@ -57,10 +52,13 @@ export const useStyles = makeStyles((theme) => ({
 	assignedLabel: {
 		color: '#67B104'
 	},
+	errorLabel: {
+		color: '#E03A3E'
+	},
 	learningImg: {
 		display: 'flex',
 		alignItems: 'center',
-		marginLeft: 150
+		//marginLeft: 150
 	},
 	media: {
 		height: 28,
@@ -71,8 +69,44 @@ export const useStyles = makeStyles((theme) => ({
 		height: '100%',
 		alignItems: 'center',
 		justifyContent: 'center',
-		Display: "flex",
+		display: "flex",
 		flexDirection: "column",
 		marginTop: '10%'
+	},
+	clrosButton: {
+		float: 'right'
+	},
+	errorIcon: {
+		color: '#E03A3E',
+		width: '50vw',
+  		height: '10vh',
+	},
+	checkIcon: {
+		color: '#63AB04',
+		width: '50vw',
+  		height: '10vh',
 	}
 }));
+
+export const QontoConnector = withStyles({
+    alternativeLabel: {
+        top: 10,
+        left: 'calc(-50% + 16px)',
+        right: 'calc(50% + 16px)',
+    },
+    active: {
+        '& $line': {
+            borderColor: '#621D58',
+        },
+    },
+    completed: {
+        '& $line': {
+            borderColor: '#621D58',
+        },
+    },
+    line: {
+        borderColor: '#eaeaf0',
+        borderTopWidth: 3,
+        borderRadius: 1,
+    },
+})(StepConnector);

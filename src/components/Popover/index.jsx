@@ -1,53 +1,46 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { useStyles } from './style';
 
-const useStyles = makeStyles((theme) => ({
-  typography: {
-    padding: theme.spacing(2),
-  },
-}));
+const MouseOverPopover = (props) => {
+	const classes = useStyles();
+	const { user, popoverState } = props;
+	const { openedPopoverId, anchorEl } = popoverState;
 
-const SimplePopover = () => {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
-
-  return (
-    <div>
-      <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
-        Open Popover
-      </Button>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >
-        <Typography className={classes.typography}>The content of the Popover.</Typography>
-      </Popover>
-    </div>
-  );
+	return (
+		<div>
+			<Popover
+				className={classes.popover}
+				classes={{
+					paper: classes.paper,
+				}}
+				open={openedPopoverId === user.id}
+				anchorEl={anchorEl}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'center',
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'center',
+				}}
+			>
+				<Typography variant="body1" component="h5">
+					{user.empID}, {user.cOEType}
+				</Typography>
+				<Typography variant="body2" color="textSecondary" component="p">
+					{user.username}
+				</Typography>
+			</Popover>
+		</div>
+	);
 }
 
-export default SimplePopover;
+MouseOverPopover.propTypes = {
+	user: PropTypes.object.isRequired,
+	popoverState: PropTypes.object.isRequired
+};
+
+export default MouseOverPopover;

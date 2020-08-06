@@ -4,7 +4,6 @@ import { deepOrange, deepPurple, green, yellow, blueGrey, pink } from '@material
 export const useStyles = makeStyles((theme) => ({
 	searchField: {
 		width: '70%',
-		marginLeft: 150,
 		background: '#FFFFFF',
 		margin: theme.spacing(2),
 	},
@@ -46,5 +45,9 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	checkIcon: {
 		color: '#67B104'
-	}
+	},
+	usersContainer: {
+		background: '#F1F3F7',
+		borderRadius: "0.5%"
+	},
 }));

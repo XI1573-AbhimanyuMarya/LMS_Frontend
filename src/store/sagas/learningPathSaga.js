@@ -12,8 +12,8 @@ const fetchAllUsers = async () => {
     return await axios.get(SERVICE_URLS.FETCH_USERS, { headers: authHeader()});
 }
 
-const createLearningPath = async ({pathObj}) => {
-    return await axios.post(SERVICE_URLS.CREATE_LEARNING_PATH, { pathObj }, { headers: authHeader()});
+const createLearningPath = async ({path}) => {
+    return await axios.post(SERVICE_URLS.CREATE_LEARNING_PATH, { path }, { headers: authHeader()});
 }
 
 export function* learningPathSaga() {
@@ -50,10 +50,11 @@ function* createLearning(action) {
     try {
         const response = yield call(createLearningPath, action.payload);
         const { data } = response;
-
         yield put({ type: actionTypes.CREATE_LEARNING_PATH_CALL_SUCCESS, payload: data });
 
     } catch (error) {
-        yield put({ type: actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE, error });
+        const { response } = error;
+        const { data } = response
+        yield put({ type: actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE, payload: data });
     }
 }

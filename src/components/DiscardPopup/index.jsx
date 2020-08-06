@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,28 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-    discardButton: {
-        background: 'linear-gradient(180deg, #FFAB39 0%, #F07200 100%)',
-		color: "#FFFFFF",
-        textTransform: 'capitalize',
-        fontSize: 15,
-        fontWeight: 500,
-    },
-    cancelButton: {
-        textTransform: 'capitalize',
-        border: '2px solid #858585',
-        color: '#858585',
-        fontSize: 15,
-        fontWeight: 500,
-    },
-    dailogTitle: {
-        color: '#621D58',
-    }
-}));    
-
+import { useStyles } from './style';   
 
 const DiscardPopup = (props) => {
     const classes = useStyles();
@@ -77,5 +57,9 @@ const DiscardPopup = (props) => {
         </div>
     );
 }
+
+DiscardPopup.propTypes = {
+    discardHandler: PropTypes.func.isRequired,
+};
 
 export default DiscardPopup;

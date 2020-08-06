@@ -3,10 +3,12 @@ import Loader from '../components/Loader';
 
 function WithLoading(WrappedComponent) {
     return (props) => {
-        const {isLoading} = props;
+        const { pathStore } = props;
+        const isLoading = pathStore?.isLoading;
+        const activePathStep = pathStore?.activePathStep;
         return (
             <React.Fragment>
-                { isLoading && <Loader isLoading/>}
+                { isLoading && activePathStep && <Loader isLoading/>}
                 <WrappedComponent {...props}/>
             </React.Fragment>
         )

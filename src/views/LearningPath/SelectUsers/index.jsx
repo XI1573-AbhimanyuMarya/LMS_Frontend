@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -10,23 +9,28 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Typography from '@material-ui/core/Typography';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import { useStyles } from './style';
-import Actions from '../../../store/actions';
-import { MESSAGES } from '../../../modules/constants';
 import UserSkelton from '../../../components/Skelton/UserSkelton';
+import Actions from '../../../store/actions';
+import { MESSAGES, LEARNING_PATH_LABELS } from '../../../modules/constants';
+import { useStyles } from './style';
+
+import Popover from '../../../components/Popover';
 
 const SelectUsers = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
-	const { users, filteredUsersList, isLoading } = learningPathState;
+	const { users, filteredUsersList, isLoading, userIdArr } = learningPathState;
 	const [selectedUsersArr, setSelectedUsersArr] = useState([]);
-
 	/**
 	 * function to fetch all users initial time
 	 */
 	useEffect(() => {
-		dispatch(Actions.learningPathActions.fetchAllUsers());	
+		if(userIdArr?.length === 0) {
+			dispatch(Actions.learningPathActions.fetchAllUsers());
+		} else {
+			setSelectedUsersArr(userIdArr);
+		}		
 	}, []);
 
 	/**
@@ -71,6 +75,27 @@ const SelectUsers = () => {
 		}
 	}
 
+	const [popoverState, setPopoverState] = useState({
+		openedPopoverId: false,
+      	anchorEl: null,
+	})
+
+	const handlePopoverOpen = (event, popoverId) => {
+		const element = event.target;
+		setPopoverState(prevState => ({
+			...prevState,
+			openedPopoverId: popoverId,
+			anchorEl: element,
+		}));
+	}
+	const handlePopoverClose = () => {
+		setPopoverState(prevState => ({
+			...prevState,
+			openedPopoverId: null,
+			anchorEl: null,
+		}));
+	}
+
 	const usersList = filteredUsersList
 						? filteredUsersList?.length > 0
 							? filteredUsersList?.slice(0, 16)
@@ -81,35 +106,35 @@ const SelectUsers = () => {
 		renderUsers = usersList.map((user) => {
 			const userClass = user.selected && user.selected === true ? classes.selected : classes.box;
 			const name = user.fullName.split("  ");
-			const classNameHolder = [
-				classes.orangeAvtar,
-				classes.purpleAvtar, 
-				classes.greenAvtar,
-				classes.yellowAvtar,
-				classes.blueGreyAvtar,
-				classes.pinkAvtar,
-			];
 			return (
-				<Box p={0.5} key={user.id}>
-					
-					<Card className={userClass}  onClick={() => onUserClickHandler(user.id)}>
+				
+				<Box 
+				p={0.5} 
+				key={user.id}
+				>
+					<Card className={userClass}  onClick={() => onUserClickHandler(user.id)} onMouseEnter={(e) => handlePopoverOpen(e, user.id)}
+                onMouseLeave={handlePopoverClose}>
 						<ListItem>
 							<ListItemAvatar>
-								<Avatar className={classNameHolder[Math.floor(Math.random() * 6)]}>{name[0]?.charAt(0)+name[1]?.charAt(0)}</Avatar>
+								<Avatar className={classes.blueGreyAvtar}>{name[0]?.charAt(0)+name[1]?.charAt(0)}</Avatar>
 							</ListItemAvatar>
-							<ListItemText primary={user.fullName} />
+							<ListItemText primary={user.fullName}  secondary={user.designation}/>
+							
 						</ListItem>
 						{user.selected && user.selected === true && <CheckCircleIcon className={classes.checkIcon}/>}
 					</Card>
+					<Popover user={user} popoverState={popoverState} />		
 				</Box>
+				
 			)	
 		})
 	}	
 	return (
 		<React.Fragment>
-			<Grid>
-				<TextField id="standard-search" label="Search Employee" type="search" variant="outlined" className={classes.searchField}  name="searchEmployee" onChange={changeHandler}/>
-				<Box bgcolor="#F1F3F7" display="flex" flexDirection="row" p={1} m={1} flexWrap="wrap" css={{ maxWidth: '100%' }}>
+			<Box component='div' display="flex" justifyContent="center">
+				<TextField id="standard-search" label={LEARNING_PATH_LABELS.SEARCH_EMPLOYEE} type="search" variant="outlined" className={classes.searchField}  name="searchEmployee" onChange={changeHandler}/>
+			</Box>
+			<Box className={classes.usersContainer} display="flex" flexDirection="row" flexWrap="wrap"  justifyContent="center" py={3}>
 				{isLoading && usersList?.length === 0 && <UserSkelton />}
 				{
 					renderUsers !== "" ? renderUsers
@@ -120,9 +145,7 @@ const SelectUsers = () => {
 						</Typography>
 					</div>
 				}
-					
-				</Box>
-			</Grid>
+			</Box>
 		</React.Fragment>
 	);
 }

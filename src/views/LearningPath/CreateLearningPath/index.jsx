@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -11,40 +11,21 @@ import { Grid } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import StepConnector from '@material-ui/core/StepConnector';
-import { withStyles } from '@material-ui/core/styles';
+import CardMedia from '@material-ui/core/CardMedia';
+import Box from '@material-ui/core/Box';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
 import SelectCourses from '../SelectCourses';
 import SelectUsers from '../SelectUsers';
 import SetDuration from '../SetDuration';
-import CardMedia from '@material-ui/core/CardMedia';
 import AddLearningPath from '../../../images/AddLearningPath.svg';
-import { useStyles } from './style';
+import { useStyles, QontoConnector } from './style';
 import Actions from '../../../store/actions';
+import { STEPS, MESSAGES, LEARNING_PATH_LABELS, BUTTONS } from '../../../modules/constants';
+import WithLoading from '../../../hoc/WithLoading';
+import { error } from '../../../utils/notifications';
 
-const QontoConnector = withStyles({
-    alternativeLabel: {
-        top: 10,
-        left: 'calc(-50% + 16px)',
-        right: 'calc(50% + 16px)',
-    },
-    active: {
-        '& $line': {
-            borderColor: '#621D58',
-        },
-    },
-    completed: {
-        '& $line': {
-            borderColor: '#621D58',
-        },
-    },
-    line: {
-        borderColor: '#eaeaf0',
-        borderTopWidth: 3,
-        borderRadius: 1,
-    },
-})(StepConnector);
-
-const steps = ['Courses', 'Assign Users', 'Set Duration'];
+const steps = STEPS;
 const getStepContent = (step) => {
     switch (step) {
         case 0:
@@ -54,7 +35,7 @@ const getStepContent = (step) => {
         case 2:
             return <SetDuration />;
         default:
-            throw new Error('Unknown step');
+            throw new Error(MESSAGES.UNKNOWN_STEP);
     }
 }
 
@@ -64,54 +45,89 @@ const CreateLearningPath = (props) => {
     const learningPathState = useSelector(state => state.learningPathState);
     const loginState = useSelector(res => res.loginState);
     const { handleClose, handleClosePath } = props;
-    const [activePathStep, setActivePathStep] = React.useState(0);
-    const { learningPathName, courseIdArr, userIdArr, learningPathDuration } = learningPathState;
+    const [activePathStep, setActivePathStep] = useState(0);
+    const { learningPathName, courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
     const { user } = loginState;
 
     const handleNext = () => {
         if(activePathStep === 0 && learningPathName !== "" && courseIdArr?.length > 0) {
             setActivePathStep(activePathStep + 1);
-        } else if(activePathStep === 1 && userIdArr?.length > 0) {
+        } else if(activePathStep === 0 && learningPathName !== "" && courseIdArr?.length === 0) {
+            error(MESSAGES.PLEASE_SELECT_ATLEAST_ONE_COURSE)
+        } else if(activePathStep === 0) {
+            dispatch(Actions.learningPathActions.getFirstNextClicked(true));
+        } else if(activePathStep === 1) {
             setActivePathStep(activePathStep + 1);
         } else if(activePathStep === steps?.length - 1) {
-            const pathObj = {
+            const path = {
                 name: learningPathName,
                 madeById: user.id,
                 madeForId: userIdArr,
                 coursesId: courseIdArr,
                 duration: learningPathDuration,
             }
-            dispatch(Actions.learningPathActions.createLearningPath(pathObj));
-            setActivePathStep(activePathStep + 1);
-        }
+            dispatch(Actions.learningPathActions.createLearningPath(path));
+            setTimeout(() => {
+                setActivePathStep(activePathStep + 1);
+            }, 1000);
+        } 
+        dispatch(Actions.learningPathActions.getActivePathStep(activePathStep));
     };
 
-    // const handleBack = () => {
-    //     setActivePathStep(activePathStep - 1);
-    // };
+    const handleBack = () => {
+        setActivePathStep(activePathStep - 1);
+    };
+
+    const renderFinalPage = status && status === 'success'
+                        ? userIdArr?.length > 0
+                            ? <>
+                                <CheckCircleIcon className={classes.checkIcon}/>
+                                <Typography variant="h5" align="center" className={classes.assignedLabel}>
+                                    {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED_AND_ASSIGNED}
+                                </Typography>
+                                <Typography variant="subtitle1" align="center">
+                                    {LEARNING_PATH_LABELS.EMAIL_SENT_TO_EMPLOYEE}
+                                </Typography>
+                            </>
+                            : <>
+                                <CheckCircleIcon className={classes.checkIcon}/>
+                                <Typography variant="h5" align="center" className={classes.assignedLabel}>
+                                    {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED}
+                                </Typography>
+                            </>
+                        : <>
+                            <ErrorIcon className={classes.errorIcon}/>
+                            <Typography variant="h5" align="center" className={classes.errorLabel}>
+                                {LEARNING_PATH_LABELS.SOMETHING_WENT_WRONG}
+                            </Typography>
+                            <Typography variant="subtitle1" align="center">
+                                {LEARNING_PATH_LABELS.CLICK_OVER_CLOSE_BUTTON}
+                            </Typography>
+                        </>;  
+
     return (
         <React.Fragment>
-            <CssBaseline />
-            <main className={classes.layout}>
-                <Grid container item xs={12} justify="center" className={classes.breadcrumbs}>
-                    <Container component="main" maxWidth="sm" className={classes.mainContainer}>
-                        <div className={classes.learningImg}>
+            <Box component='div' className={classes.layout}>
+                <Grid container className={classes.stepperContainer}>
+                    <Grid item xs={3}>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Box component='div' className={classes.learningImg} justifyContent="center">
                             <CardMedia
                                 className={classes.media}
                                 image={AddLearningPath}
-                                title="Contemplative Reptile"
+                                title={LEARNING_PATH_LABELS.CREATE_LEARNING_PATH}
                             />
                             <Typography component="h1" variant="h5" align="center">
-                            
-                                Create Learning Path
+                                { learningPathName && activePathStep !== 0 ? learningPathName : LEARNING_PATH_LABELS.CREATE_LEARNING_PATH }
                             </Typography>
-                        </div>
+                        </Box>
                         <Typography variant="subtitle2" align="center">
-                            Please provide details below to add learning path
+                            {LEARNING_PATH_LABELS.LEARNING_PATH_DETAILS}
                         </Typography>
                         <Stepper activeStep={activePathStep} connector={<QontoConnector />}>
                             {steps.map((label) => (
-                                <Step key={label} className={classes.step}>
+                                <Step key={label}>
                                     <StepLabel
                                         StepIconProps={{
                                             classes: {
@@ -124,60 +140,66 @@ const CreateLearningPath = (props) => {
                                 </Step>
                             ))}
                         </Stepper>
-                    </Container>
-                    <Toolbar>
-                        <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                    </Toolbar>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Toolbar className={classes.clrosButton}>
+                            <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
+                                <CloseIcon />
+                            </IconButton>
+                        </Toolbar>
+                    </Grid>
                 </Grid>
                 <React.Fragment>
                     {activePathStep === steps?.length ? (
                         <React.Fragment>
                             <Container component="main" maxWidth="xs" className={classes.successContainer}>
-                                <CssBaseline />
-                                <Typography variant="h5" align="center" className={classes.assignedLabel}>
-                                    Successfully Assigned.
-                                </Typography>
-                                <Typography variant="subtitle1" align="center">
-                                    An email has been sent to the employees
-                                </Typography>
-                                <div className={classes.buttons}>
-                                    <Button
-                                        variant="contained"
-                                        type="button"
-                                        onClick={handleClosePath}
-                                        className={classes.closeButton}
-                                    >
-                                        Close
-                                    </Button>
-                                </div>
+                                
+                                { renderFinalPage }
+                                
+                                <Button
+                                    variant="contained"
+                                    type="button"
+                                    onClick={handleClosePath}
+                                    className={classes.closeButton}
+                                >
+                                    {BUTTONS.CLOSE}
+                                </Button>
+                                
                             </Container>
                         </React.Fragment>
                     ) : (
-                            <React.Fragment>
-                                {getStepContent(activePathStep)}
-                                <div className={classes.buttons}>
-                                    {/* {activePathStep !== 0 && (
-                                    <Button onClick={handleBack} className={classes.button}>
-                                    Back
-                                    </Button>
-                                    )} */}
-                                    <Button
-                                        variant="contained"
-                                        type="button"
-                                        onClick={handleNext}
-                                        className={classes.button}
-                                    >
-                                        {activePathStep === steps?.length - 1 ? 'Assign' : 'Next'}
-                                    </Button>
-                                </div>
-                            </React.Fragment>
+                        <React.Fragment>
+                            {getStepContent(activePathStep)}
+                            <Box component='div' className={classes.buttons}>
+                                {activePathStep !== 0 && (
+                                <Button onClick={handleBack} className={classes.button}>
+                                    {BUTTONS.BACK}
+                                </Button>
+                                )}
+                                <Button
+                                    variant="contained"
+                                    type="button"
+                                    onClick={handleNext}
+                                    className={classes.button}
+                                >
+                                    {activePathStep === steps?.length - 1 
+                                    ? userIdArr?.length > 0 
+                                        ? BUTTONS.ASSIGN
+                                        : BUTTONS.SUBMIT 
+                                    : BUTTONS.NEXT}
+                                </Button>
+                            </Box>
+                        </React.Fragment>
                         )}
                 </React.Fragment>
-            </main>
+            </Box>
         </React.Fragment>
     );
 }
 
-export default CreateLearningPath;
+CreateLearningPath.propTypes = {
+    handleClose: PropTypes.func.isRequired,
+    handleClosePath: PropTypes.func.isRequired,
+};
+
+export default WithLoading(CreateLearningPath);
