@@ -78,7 +78,6 @@ public class UserController {
         } catch (NoSuchElementException e) {
             loginResponse.setMessage("invalid user");
             loginResponse.setStatus("failure");
-//            throw new Exception("Incorrect username",e);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(loginResponse);
         }
     }

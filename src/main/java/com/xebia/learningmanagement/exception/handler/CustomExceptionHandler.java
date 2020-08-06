@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({LearningPathException.class})
-    public ResponseEntity<UserResponse> handleIdNotFoundException(LearningPathException e){
+    public ResponseEntity<UserResponse> handleIdNotFoundException(LearningPathException e) {
         UserResponse userResponse = new UserResponse();
         userResponse.setStatus("failure");
         userResponse.setMessage(e.getMessage());
@@ -24,10 +24,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                        HttpHeaders headers, HttpStatus status, WebRequest request){
+                                                                  HttpHeaders headers, HttpStatus status, WebRequest request) {
         UserResponse userResponse = new UserResponse();
         userResponse.setStatus("failure");
         userResponse.setMessage("validation failed");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
     }
+
 }

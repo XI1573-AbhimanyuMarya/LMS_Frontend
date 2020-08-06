@@ -1,55 +1,74 @@
 package com.xebia.learningmanagement.util;
 
+import com.xebia.learningmanagement.exception.LearningPathException;
+import io.jsonwebtoken.ExpiredJwtException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+
 import java.util.function.Function;
+
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class JwtUtil {
-	private String SECRET_KEY = "secret";
+    Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-	public String extractUsername(String token){
-		return extractClaim(token, Claims::getSubject);
-	}
+    private String SECRET_KEY = "secret";
 
-	public Date extractExpiration(String token){
-		return extractClaim(token, Claims::getExpiration);
-	}
+    public String extractUsername(String token) {
+        logger.info("inside extractUsername");
+        return extractClaim(token, Claims::getSubject);
+    }
 
-	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
-		final Claims claims = extractAllClaims(token);
-		return claimsResolver.apply(claims);
-	}
+    public Date extractExpiration(String token) {
+        logger.info("inside extractExpiration");
+        return extractClaim(token, Claims::getExpiration);
+    }
 
-	private Claims extractAllClaims(String token){
-		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-	}
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        logger.info("extractClaim");
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
 
-	private Boolean isTokenExpired(String token){
-		return extractExpiration(token).before(new Date());
-	}
+    private Claims extractAllClaims(String token) throws LearningPathException {
+        logger.info("extractAllClaims");
+//        throw new LearningPathException(String.format("exception"));
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+    }
 
-	public String generateToken(UserDetails userDetails){
-		Map<String, Object> claims = new HashMap<>();
-		return createToken(claims, userDetails.getUsername());
-	}
+    private Boolean isTokenExpired(String token) {
+        logger.info("inside jwt isTokenExpired method");
+        return extractExpiration(token).before(new Date());
+    }
 
-	private String createToken(Map<String,Object> claims, String subject){
-		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-				.signWith(SignatureAlgorithm.HS256,SECRET_KEY).compact();
-	}
+    public String generateToken(UserDetails userDetails) {
+        logger.info("inside generateToken");
+        Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, userDetails.getUsername());
+    }
 
-	public Boolean validateToken(String token, UserDetails userDetails){
-		final String username = extractUsername(token);
-		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-	}
+    private String createToken(Map<String, Object> claims, String subject) {
+        logger.info("inside createToken");
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+//                .setExpiration(new Date(System.currentTimeMillis() + 1000))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+    }
+
+    public Boolean validateToken(String token, UserDetails userDetails) {
+        logger.info("inside validateToken");
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
 }

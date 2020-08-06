@@ -1,7 +1,12 @@
 package com.xebia.learningmanagement.config;
 
+import com.xebia.learningmanagement.exception.CustomAuthenticationEntryPoint;
+import com.xebia.learningmanagement.exception.handler.CustomAccessDeniedHandler;
+import com.xebia.learningmanagement.exception.handler.CustomAuthenticationEntryPointHandler;
 import com.xebia.learningmanagement.filter.JwtRequestFilter;
 import com.xebia.learningmanagement.service.impl.MyUserDetailsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
@@ -17,6 +22,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -25,6 +32,8 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
+    Logger logger = LoggerFactory.getLogger(SecurityConfigurer.class);
+
     @Autowired
     private MyUserDetailsService userService;
 
@@ -48,9 +57,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     }
 
     protected void configure(HttpSecurity http) throws Exception {
+        logger.info("inside security config");
         http.csrf().disable()
                 .cors().and()
-                .authorizeRequests().antMatchers("/v2/api-docs",
+                .authorizeRequests()
+                .antMatchers("/v2/api-docs",
                 "/configuration/ui",
                 "/swagger-resources/**",
                 "/configuration/security",
@@ -60,10 +71,23 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addNewUsers").permitAll()
                 .antMatchers("/username").permitAll()
                 .antMatchers("/password").permitAll().antMatchers("/api").permitAll()
-                .anyRequest().authenticated()
-                .and().sessionManagement()
+                .anyRequest().authenticated().and()
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint())
+                .accessDeniedHandler(accessDeniedHandler()).and()
+                .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint(){
+        return new CustomAuthenticationEntryPointHandler();
     }
 
     @Bean

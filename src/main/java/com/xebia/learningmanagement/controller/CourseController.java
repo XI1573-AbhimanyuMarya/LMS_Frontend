@@ -5,6 +5,8 @@ import com.xebia.learningmanagement.entity.Courses;
 import com.xebia.learningmanagement.entity.Duration;
 import com.xebia.learningmanagement.model.*;
 import com.xebia.learningmanagement.service.CourseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import java.util.Set;
 @RequestMapping("/api")
 public class CourseController {
 
+    Logger logger = LoggerFactory.getLogger(CourseController.class);
+
     @Autowired
     CourseService courseService;
 
@@ -28,8 +32,9 @@ public class CourseController {
     }
 
     @GetMapping("/getAllCourses")
-    public ResponseEntity<List<Courses>> getAllCourses(){
-        List<Courses> allcourses=courseService.getAllCourses();
+    public ResponseEntity<List<Courses>> getAllCourses() {
+        logger.info("inside getAllCourses Controller");
+        List<Courses> allcourses = courseService.getAllCourses();
         return ResponseEntity.status(HttpStatus.OK).body(allcourses);
     }
 
