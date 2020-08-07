@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CardMedia from '@material-ui/core/CardMedia';
 import DiscardPopup from '../../components/DiscardPopup';
+import Box from '@material-ui/core/Box';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import XebiaLogo from '../../images/Logo.svg'
 import AddLearningPath from '../../images/AddLearningPath.svg'
@@ -42,7 +43,7 @@ const Dashboard = () => {
 
     const discardHandler = (closeMainModel) => {
         dispatch(Actions.learningPathActions.discardModelOpen(false));
-        if(closeMainModel) {
+        if (closeMainModel) {
             dispatch(Actions.learningPathActions.pathModelOpen(false));
         }
     }
@@ -58,45 +59,53 @@ const Dashboard = () => {
                     <CardMedia
                         className={classes.logo}
                         image={XebiaLogo}
-                        title="Contemplative Reptile"
+                        title="Xebia"
                     />
                 </Grid>
                 <Grid container item xs={6} justify="center" className={classes.dashboardBtns}>
-                    <Button
-                        variant="contained"
-                        className={classes.dashboardBtn}
-                        startIcon={<CardMedia
-                            className={classes.dashboardIcon}
-                            image={DashboardSelected}
-                            title="Contemplative Reptile"
-                        />}
-                    >
-                        Dashboard
+                    <Box display="flex" flexDirection="row">
+                        <Box height="25%" className = {classes.boxButtons}>
+                            <Button
+                                variant="contained"
+                                className={classes.dashboardBtn}
+                                startIcon={<CardMedia
+                                    className={classes.dashboardIcon}
+                                    image={DashboardSelected}
+                                    title="Dashboard"
+                                />}
+                            >
+                                Dashboard
                     </Button>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        className={classes.button}
-                        startIcon={<CardMedia
-                            className={classes.learningPathIcon}
-                            image={LearningPathImg}
-                            title="Contemplative Reptile"
-                        />}
-                    >
-                        Learning Path
+                        </Box>
+                        <Box height="25%">
+                            <Button
+                                variant="contained"
+                                color="default"
+                                className={classes.button}
+                                startIcon={<CardMedia
+                                    className={classes.learningPathIcon}
+                                    image={LearningPathImg}
+                                    title="Contemplative Reptile"
+                                />}
+                            >
+                                Learning Path
                     </Button>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        className={classes.approvalBtn}
-                        startIcon={<CardMedia
-                            className={classes.dashboardIcon}
-                            image={Approvals}
-                            title="Contemplative Reptile"
-                        />}
-                    >
-                        Approvals
+                        </Box>
+                        <Box height="25%">
+                            <Button
+                                variant="contained"
+                                color="default"
+                                disabled={true}
+                                startIcon={<CardMedia
+                                    className={classes.dashboardIcon}
+                                    image={Approvals}
+                                    title="Contemplative Reptile"
+                                />}
+                            >
+                                Approvals
                     </Button>
+                        </Box>
+                    </Box>
                 </Grid>
                 <Grid container item xs={3} justify="center" alignItems="center">
                     <User userData={loginState.user} logout={logoutUser} />
@@ -132,7 +141,7 @@ const Dashboard = () => {
                 handleClose={closeHandler}
                 handleClosePath={handleClosePathHandler}
             />
-            <DiscardPopup 
+            <DiscardPopup
                 discardHandler={discardHandler}
             />
         </>
