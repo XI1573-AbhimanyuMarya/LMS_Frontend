@@ -33,5 +33,9 @@ export const useStyles = makeStyles((theme) => ({
 	error: {
 		color: '#ff0033',
 		textAlign: 'center',
+	},
+	heading: {
+		marginBottom: '0.85em',
+		fontSize: '1.7rem'
 	}
 }));

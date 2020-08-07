@@ -54,7 +54,7 @@ const SignIn = () => {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
+          <Typography className={classes.heading} component="h1" variant="h5" gutterBottom>
             Learning Management System
         </Typography>
           <CardMedia
