@@ -50,7 +50,10 @@ const Carosals = (props) => {
 };
 
 Carosals.propTypes = {
-    coursesList: PropTypes.array.isRequired,
+    coursesList: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.array
+	]),
     handleCourseClick: PropTypes.func.isRequired,
 };
 
