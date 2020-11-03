@@ -58,7 +58,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         logger.info("inside security config");
-        http.csrf().disable()
+        http
+                .csrf().disable()
                 .cors().and()
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs",
