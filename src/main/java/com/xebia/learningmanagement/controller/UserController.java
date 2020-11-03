@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@RestController
 @CrossOrigin("*")
+@RestController
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
 
