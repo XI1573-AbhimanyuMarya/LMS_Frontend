@@ -1,4 +1,4 @@
-package com.xebia.learningmanagement.model;
+package com.xebia.learningmanagement.response;
 
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.Login;

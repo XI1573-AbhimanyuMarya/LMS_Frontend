@@ -1,9 +1,7 @@
 package com.xebia.learningmanagement.entity;
 
 
-import javax.persistence.Entity;
 import javax.persistence.*;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "Courses")

@@ -1,7 +1,7 @@
 package com.xebia.learningmanagement.exception.handler;
 
 import com.xebia.learningmanagement.exception.LearningPathException;
-import com.xebia.learningmanagement.model.UserResponse;
+import com.xebia.learningmanagement.response.UserResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

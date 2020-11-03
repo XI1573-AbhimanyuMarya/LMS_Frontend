@@ -19,13 +19,15 @@ public class EmailSend {
 	public static void sendMailUsingTLS(SimpleMailMessage email) {
 //        String host = "outlook.office365.com";
 		String host = "smtp.gmail.com";
-		String username = "testxebianew@gmail.com";
-		String password = "qwerty12@";
+//		String username = "testxebianew@gmail.com";
+		String username = "xebiaassessmenttool@gmail.com";
+//		String password = "qwerty12@";
+		String password = "Xebia@123";
 		Properties properties = new Properties();
 		properties.put("mail.smtp.host", host);
 		properties.put("mail.smtp.auth", "true");
 		properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.port", "587");// 587
+		properties.put("mail.smtp.port", "587");
 		sendMail(properties, username, password, email);
 	}
 

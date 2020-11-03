@@ -1,9 +1,6 @@
-package com.xebia.learningmanagement.controller;
+package com.xebia.learningmanagement.api;
 
-import com.xebia.learningmanagement.entity.Category;
 import com.xebia.learningmanagement.entity.Courses;
-import com.xebia.learningmanagement.entity.Duration;
-import com.xebia.learningmanagement.model.*;
 import com.xebia.learningmanagement.service.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
-package com.xebia.learningmanagement.controller;
+package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.model.Login;
-import com.xebia.learningmanagement.model.LoginResponse;
+import com.xebia.learningmanagement.response.LoginResponse;
 import com.xebia.learningmanagement.model.*;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.UserService;
@@ -28,8 +28,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @CrossOrigin("*")
-public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
+public class LoginController {
 
     @Autowired
     MyUserDetailsService myUserDetailsService;
@@ -65,13 +64,14 @@ public class UserController {
     }
 
     @PostMapping("/username")
-    public ResponseEntity<LoginResponse> verifyUsername(@RequestBody Username username) throws Exception {
+    public ResponseEntity<LoginResponse> verifyUsername(@RequestBody Username userEmail) throws Exception {
         LoginResponse loginResponse = new LoginResponse();
         try {
-            myUserDetailsService.loadUserByUsername(username.getUsername());
-            emailService.sendEmail(username.getUsername());
-            UserDetails userDetails = myUserDetailsService.loadUserByUsername(username.getUsername());
-            tempUsername.setUsername(username.getUsername());
+            String username = userEmail.getUsername();
+            myUserDetailsService.loadUserByUsername(userEmail.getUsername());
+            emailService.sendEmail(userEmail.getUsername());
+            UserDetails userDetails = myUserDetailsService.loadUserByUsername(userEmail.getUsername());
+            tempUsername.setUsername(userEmail.getUsername());
             loginResponse.setMessage("user verified and mail send");
             loginResponse.setStatus("success");
             return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
@@ -107,12 +107,6 @@ public class UserController {
             loginResponse.setMessage("Invalid OTP");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginResponse);
         }
-    }
-
-    @GetMapping("/getAllUsers")
-    public ResponseEntity<List<UserDto>> getAllUsers(){
-        List<UserDto> allUsers = userService.getAllUsers();
-        return ResponseEntity.ok().body(allUsers);
     }
 
 }
