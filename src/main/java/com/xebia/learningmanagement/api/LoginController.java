@@ -27,10 +27,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@RestController
 @CrossOrigin("*")
+<<<<<<< HEAD:src/main/java/com/xebia/learningmanagement/api/LoginController.java
 @Slf4j
 public class LoginController {
+=======
+@RestController
+public class UserController {
+    private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
+>>>>>>> master:src/main/java/com/xebia/learningmanagement/controller/UserController.java
 
     @Autowired
     MyUserDetailsService myUserDetailsService;

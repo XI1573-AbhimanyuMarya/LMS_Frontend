@@ -71,6 +71,9 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathEmployees.setPercentCompleted(0);
             learningPathEmployeesRepository.save(learningPathEmployees);
         }
+
+
+
     }
 
 }
