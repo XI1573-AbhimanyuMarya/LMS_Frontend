@@ -74,7 +74,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .addFilterBefore(corsFilter, CORSFilter.class)
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+        //        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs",
                 "/configuration/ui",
