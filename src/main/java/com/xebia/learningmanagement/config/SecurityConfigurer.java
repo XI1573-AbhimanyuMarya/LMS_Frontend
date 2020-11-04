@@ -67,8 +67,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         logger.info("inside security config");
         http
                 .csrf().disable()
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
+     //           .cors()
+    //            .and()
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs",
                 "/configuration/ui",
