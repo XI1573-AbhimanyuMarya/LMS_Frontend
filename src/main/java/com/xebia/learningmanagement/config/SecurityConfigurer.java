@@ -71,8 +71,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         logger.info("inside security config");
         http
                 .csrf().disable()
-     //           .cors()
-    //            .and()
+                .cors()
+                .and()
+                .addFilterBefore(corsFilter, CORSFilter.class)
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs",
                 "/configuration/ui",
@@ -84,23 +86,22 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addNewUsers").permitAll()
                 .antMatchers("/username").permitAll()
                 .antMatchers("/password").permitAll().antMatchers("/api").permitAll()
-                .anyRequest().authenticated().and()
-                .addFilterBefore(corsFilter, CORSFilter.class)
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .anyRequest().authenticated().and().addFilter(jwtRequestFilter)
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint())
                 .accessDeniedHandler(accessDeniedHandler()).and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-       // http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        http.cors().configurationSource(request -> {
-            CorsConfiguration corsConfiguration = new CorsConfiguration();
-            corsConfiguration.applyPermitDefaultValues();
-            corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(),
-                    HttpMethod.POST.name(), HttpMethod.PUT.name()));
-            return corsConfiguration;
-        });
+//        http    .addFilterBefore(corsFilter, CORSFilter.class)
+//                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+////        http.cors().configurationSource(request -> {
+//            CorsConfiguration corsConfiguration = new CorsConfiguration();
+//            corsConfiguration.applyPermitDefaultValues();
+//            corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(),
+//                    HttpMethod.POST.name(), HttpMethod.PUT.name()));
+//            return corsConfiguration;
+//        });
 
     }
 
