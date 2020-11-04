@@ -8,6 +8,7 @@ import com.xebia.learningmanagement.service.UserService;
 import com.xebia.learningmanagement.service.impl.EmailService;
 import com.xebia.learningmanagement.service.impl.MyUserDetailsService;
 import com.xebia.learningmanagement.util.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @CrossOrigin("*")
+@Slf4j
 public class LoginController {
 
     @Autowired
@@ -95,6 +97,7 @@ public class LoginController {
                     .loadUserByUsername(tempUsername.getUsername());
 
             final String jwt = jwtUtil.generateToken(userDetails);
+            log.info("Token: "+ jwt);
             loginResponse.setStatus("success");
             loginResponse.setMessage("Otp verified");
             login.setJwt(jwt);
