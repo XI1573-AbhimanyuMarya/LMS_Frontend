@@ -30,7 +30,7 @@ import java.util.NoSuchElementException;
 @CrossOrigin("*")
 @Slf4j
 @RestController
-public class UserController {
+public class LoginController {
 
     @Autowired
     MyUserDetailsService myUserDetailsService;
