@@ -54,6 +54,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    CORSFilter corsFilter;
+
     @Bean
     @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public Authentication getAuthentication() {
@@ -81,14 +84,14 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addNewUsers").permitAll()
                 .antMatchers("/username").permitAll()
                 .antMatchers("/password").permitAll().antMatchers("/api").permitAll()
-                .anyRequest().authenticated().and()
+                .anyRequest().authenticated().and().addFilter(jwtRequestFilter).addFilter(corsFilter)
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint())
                 .accessDeniedHandler(accessDeniedHandler()).and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+       // http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         http.cors().configurationSource(request -> {
             CorsConfiguration corsConfiguration = new CorsConfiguration();
             corsConfiguration.applyPermitDefaultValues();
