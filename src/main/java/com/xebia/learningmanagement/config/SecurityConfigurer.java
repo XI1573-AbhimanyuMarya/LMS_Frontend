@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.cors.CorsConfiguration;
@@ -67,8 +68,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         logger.info("inside security config");
         http
                 .csrf().disable()
-                .cors()
-                .and()
+          //      .cors()
+          //      .and()
+                .addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class)
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs",
                 "/configuration/ui",
@@ -86,7 +89,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(accessDeniedHandler()).and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+       // http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     CorsConfigurationSource corsConfigurationSource() {
