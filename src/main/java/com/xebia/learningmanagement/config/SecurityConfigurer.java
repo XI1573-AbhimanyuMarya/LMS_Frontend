@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -54,9 +53,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @Autowired
-    CORSFilter corsFilter;
-
     @Bean
     @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public Authentication getAuthentication() {
@@ -73,8 +69,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors()
                 .and()
-        //        .addFilterBefore(corsFilter, CORSFilter.class)
-        //        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs",
                 "/configuration/ui",
@@ -86,23 +80,13 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addNewUsers").permitAll()
                 .antMatchers("/username").permitAll()
                 .antMatchers("/password").permitAll().antMatchers("/api").permitAll()
-                .anyRequest().authenticated().and().addFilter(jwtRequestFilter)
+                .anyRequest().authenticated().and()
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint())
                 .accessDeniedHandler(accessDeniedHandler()).and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-//        http    .addFilterBefore(corsFilter, CORSFilter.class)
-http               .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-////        http.cors().configurationSource(request -> {
-//            CorsConfiguration corsConfiguration = new CorsConfiguration();
-//            corsConfiguration.applyPermitDefaultValues();
-//            corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(),
-//                    HttpMethod.POST.name(), HttpMethod.PUT.name()));
-//            return corsConfiguration;
-//        });
-
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     CorsConfigurationSource corsConfigurationSource() {
