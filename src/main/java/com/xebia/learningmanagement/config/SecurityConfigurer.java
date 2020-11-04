@@ -73,7 +73,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors()
                 .and()
-                .addFilterBefore(corsFilter, CORSFilter.class)
+        //        .addFilterBefore(corsFilter, CORSFilter.class)
         //        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs",
@@ -94,7 +94,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 //        http    .addFilterBefore(corsFilter, CORSFilter.class)
-//                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+http               .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 ////        http.cors().configurationSource(request -> {
 //            CorsConfiguration corsConfiguration = new CorsConfiguration();
 //            corsConfiguration.applyPermitDefaultValues();
