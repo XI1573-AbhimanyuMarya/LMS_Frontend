@@ -1,7 +1,7 @@
-package com.xebia.learningmanagement.controller;
+package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.model.LearningPathDto;
-import com.xebia.learningmanagement.model.UserResponse;
+import com.xebia.learningmanagement.response.UserResponse;
 import com.xebia.learningmanagement.service.LearningPathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,13 +1,14 @@
-package com.xebia.learningmanagement.controller;
+package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.model.Login;
-import com.xebia.learningmanagement.model.LoginResponse;
+import com.xebia.learningmanagement.response.LoginResponse;
 import com.xebia.learningmanagement.model.*;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.UserService;
 import com.xebia.learningmanagement.service.impl.EmailService;
 import com.xebia.learningmanagement.service.impl.MyUserDetailsService;
 import com.xebia.learningmanagement.util.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @CrossOrigin("*")
+<<<<<<< HEAD:src/main/java/com/xebia/learningmanagement/api/LoginController.java
+@Slf4j
+public class LoginController {
+=======
 @RestController
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
+>>>>>>> master:src/main/java/com/xebia/learningmanagement/controller/UserController.java
 
     @Autowired
     MyUserDetailsService myUserDetailsService;
@@ -65,13 +71,14 @@ public class UserController {
     }
 
     @PostMapping("/username")
-    public ResponseEntity<LoginResponse> verifyUsername(@RequestBody Username username) throws Exception {
+    public ResponseEntity<LoginResponse> verifyUsername(@RequestBody Username userEmail) throws Exception {
         LoginResponse loginResponse = new LoginResponse();
         try {
-            myUserDetailsService.loadUserByUsername(username.getUsername());
-            emailService.sendEmail(username.getUsername());
-            UserDetails userDetails = myUserDetailsService.loadUserByUsername(username.getUsername());
-            tempUsername.setUsername(username.getUsername());
+            String username = userEmail.getUsername();
+            myUserDetailsService.loadUserByUsername(userEmail.getUsername());
+            emailService.sendEmail(userEmail.getUsername());
+            UserDetails userDetails = myUserDetailsService.loadUserByUsername(userEmail.getUsername());
+            tempUsername.setUsername(userEmail.getUsername());
             loginResponse.setMessage("user verified and mail send");
             loginResponse.setStatus("success");
             return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
@@ -95,6 +102,7 @@ public class UserController {
                     .loadUserByUsername(tempUsername.getUsername());
 
             final String jwt = jwtUtil.generateToken(userDetails);
+            log.info("Token: "+ jwt);
             loginResponse.setStatus("success");
             loginResponse.setMessage("Otp verified");
             login.setJwt(jwt);
@@ -107,12 +115,6 @@ public class UserController {
             loginResponse.setMessage("Invalid OTP");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginResponse);
         }
-    }
-
-    @GetMapping("/getAllUsers")
-    public ResponseEntity<List<UserDto>> getAllUsers(){
-        List<UserDto> allUsers = userService.getAllUsers();
-        return ResponseEntity.ok().body(allUsers);
     }
 
 }

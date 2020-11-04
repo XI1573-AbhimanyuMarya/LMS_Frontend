@@ -11,5 +11,6 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
 	Category findCategoryById(Long id);
 
 	@Query("FROM Category WHERE UPPER(name) LIKE UPPER(?1)")
+//	@Query("Select * FROM category WHERE UPPER(name) LIKE UPPER('%?1%') ")
 	Category findCategoryByName(String name);
 }
