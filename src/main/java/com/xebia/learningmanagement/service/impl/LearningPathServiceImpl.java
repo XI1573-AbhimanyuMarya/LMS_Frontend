@@ -5,10 +5,14 @@ import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.model.LearningPathDto;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
+import com.xebia.learningmanagement.util.EmailSend;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -30,7 +34,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     LearningPathEmployeesRepository learningPathEmployeesRepository;
 
     @Override
-    public void createLearningPath(LearningPathDto.Path path) {
+    public void createLearningPath(LearningPathDto.Path path) throws ChangeSetPersister.NotFoundException {
         LearningPath learningPath = new LearningPath();
 
         Optional<Duration> duration = durationRepository.findById(path.getDuration());
@@ -70,6 +74,22 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathEmployees.setEmployee(user);
             learningPathEmployees.setPercentCompleted(0);
             learningPathEmployeesRepository.save(learningPathEmployees);
+
+
+            //TODO : Send Email to concerned User
+
+            User madeByUser = userRepository.findById(path.getMadeById()).orElseThrow(() -> new ChangeSetPersister.NotFoundException());
+            String madeByUserFullName = madeByUser.getFullName();
+
+            //List of courses made for Employee
+            List<Courses> coursesListById = courseRepository.findAllById(path.getCoursesId());
+            Map<String,String> courseCategoryMap= new HashMap<>();
+            coursesListById.forEach(course -> {
+                courseCategoryMap.put(course.getName(), course.getCategory().getName());
+            });
+
+            EmailSend.setEmail(user.getUsername(),"LMS PORTAL","You have been assigned below mentioned Courses by " + madeByUserFullName + " \n "+ courseCategoryMap);
+
         }
 
 
