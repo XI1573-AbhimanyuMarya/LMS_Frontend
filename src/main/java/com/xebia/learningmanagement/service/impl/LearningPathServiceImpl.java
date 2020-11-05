@@ -7,15 +7,15 @@ import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import static org.springframework.data.crossstore.ChangeSetPersister.*;
+import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 @Service
 public class LearningPathServiceImpl implements LearningPathService {
@@ -40,25 +40,25 @@ public class LearningPathServiceImpl implements LearningPathService {
         LearningPath learningPath = new LearningPath();
 
         Optional<Duration> duration = durationRepository.findById(path.getDuration());
-        if(!duration.isPresent()){
+        if (!duration.isPresent()) {
             throw new LearningPathException(String.format("duration not available"));
         }
 
         Optional<User> madeBy = userRepository.findById(path.getMadeById());
-        if(!madeBy.isPresent()){
+        if (!madeBy.isPresent()) {
             throw new LearningPathException(String.format("made by user not available"));
         }
 
-        for (int i = 0; i <path.getCoursesId().size() ; i++) {
+        for (int i = 0; i < path.getCoursesId().size(); i++) {
             Optional<Courses> courses = courseRepository.findById(path.getCoursesId().get(i));
-            if(!courses.isPresent()){
+            if (!courses.isPresent()) {
                 throw new LearningPathException(String.format("given course not found by id"));
             }
         }
 
-        for (int i = 0; i <path.getMadeForId().size() ; i++) {
+        for (int i = 0; i < path.getMadeForId().size(); i++) {
             Optional<User> user = userRepository.findById(path.getMadeForId().get(i));
-            if(!user.isPresent()){
+            if (!user.isPresent()) {
                 throw new LearningPathException(String.format("given user not found by id"));
             }
         }
@@ -69,7 +69,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
         learningPathRepository.save(learningPath);
 
-        for (Long id:path.getMadeForId()){
+        for (Long id : path.getMadeForId()) {
             User user = userRepository.findById(id).get();
             LearningPathEmployees learningPathEmployees = new LearningPathEmployees();
             learningPathEmployees.setLearningPath(learningPath);
@@ -85,15 +85,19 @@ public class LearningPathServiceImpl implements LearningPathService {
 
             //List of courses made for Employee
             List<Courses> coursesListById = courseRepository.findAllById(path.getCoursesId());
-            Map<String,String> courseCategoryMap= new HashMap<>();
+            List<String> stringList = coursesListById.stream().map(Courses::getName).map(String::toUpperCase).collect(Collectors.toList());
+
+            Map<String, String> courseCategoryMap = new HashMap<>();
             coursesListById.forEach(course -> {
                 courseCategoryMap.put(course.getName(), course.getCategory().getName());
             });
 
-            EmailSend.setEmail(user.getUsername(),"LMS PORTAL","You have been assigned below mentioned Courses by " + madeByUserFullName + " \n "+ courseCategoryMap);
+            EmailSend.setEmail(user.getUsername(), "LMS PORTAL",
+                    "You have been assigned below mentioned Courses by " + madeByUserFullName + " \n " + stringList +
+                            "\n Timeline for Completion of the course is : " + path.getDuration() + "Months"
+            );
 
         }
-
 
 
     }
