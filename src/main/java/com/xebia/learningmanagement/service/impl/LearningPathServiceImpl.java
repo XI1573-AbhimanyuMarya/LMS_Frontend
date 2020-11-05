@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.springframework.data.crossstore.ChangeSetPersister.*;
+
 @Service
 public class LearningPathServiceImpl implements LearningPathService {
 
@@ -34,7 +36,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     LearningPathEmployeesRepository learningPathEmployeesRepository;
 
     @Override
-    public void createLearningPath(LearningPathDto.Path path) throws ChangeSetPersister.NotFoundException {
+    public void createLearningPath(LearningPathDto.Path path) throws NotFoundException {
         LearningPath learningPath = new LearningPath();
 
         Optional<Duration> duration = durationRepository.findById(path.getDuration());
@@ -78,7 +80,7 @@ public class LearningPathServiceImpl implements LearningPathService {
 
             //TODO : Send Email to concerned User
 
-            User madeByUser = userRepository.findById(path.getMadeById()).orElseThrow(() -> new ChangeSetPersister.NotFoundException());
+            User madeByUser = userRepository.findById(path.getMadeById()).orElseThrow(() -> new NotFoundException());
             String madeByUserFullName = madeByUser.getFullName();
 
             //List of courses made for Employee
