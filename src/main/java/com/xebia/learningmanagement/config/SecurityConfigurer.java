@@ -74,8 +74,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         logger.info("inside security config");
         http
                 .csrf().disable()
-          //      .cors()
-          //      .and()
+                .cors()
+                .and()
                 .addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class)
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
