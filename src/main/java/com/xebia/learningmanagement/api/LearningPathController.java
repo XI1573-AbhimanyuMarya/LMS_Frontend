@@ -20,7 +20,7 @@ public class LearningPathController {
     LearningPathService learningPathService;
 
     @PostMapping("/learningPath")
-    public ResponseEntity<UserResponse> createLearningPath(@RequestBody @Valid LearningPathDto pathRequest) throws NotFoundException {
+    public ResponseEntity<UserResponse> createLearningPath(@RequestBody @Valid LearningPathDto pathRequest) throws Exception {
         UserResponse userResponse = new UserResponse();
         LearningPathDto.Path path = pathRequest.getPath();
         learningPathService.createLearningPath(path);
