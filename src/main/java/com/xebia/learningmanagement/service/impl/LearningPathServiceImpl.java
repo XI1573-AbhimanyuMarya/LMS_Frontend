@@ -35,8 +35,11 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Autowired
     LearningPathEmployeesRepository learningPathEmployeesRepository;
 
+    @Autowired
+    EmailSend emailSend;
+
     @Override
-    public void createLearningPath(LearningPathDto.Path path) throws NotFoundException {
+    public void createLearningPath(LearningPathDto.Path path) throws Exception {
         LearningPath learningPath = new LearningPath();
 
         Optional<Duration> duration = durationRepository.findById(path.getDuration());
@@ -86,20 +89,38 @@ public class LearningPathServiceImpl implements LearningPathService {
             //List of courses made for Employee
             List<Courses> coursesListById = courseRepository.findAllById(path.getCoursesId());
             List<String> stringList = coursesListById.stream().map(Courses::getName).map(String::toUpperCase).collect(Collectors.toList());
-
+            // Courses mapped to their Category
             Map<String, String> courseCategoryMap = new HashMap<>();
             coursesListById.forEach(course -> {
                 courseCategoryMap.put(course.getName(), course.getCategory().getName());
             });
-
-            EmailSend.setEmail(user.getUsername(), "LMS PORTAL",
+            //todo Send Email without template
+           /* EmailSend.setEmail(user.getUsername(), "LMS PORTAL",
                     "You have been assigned below mentioned Courses by " + madeByUserFullName + " \n " + stringList +
                             "\n Timeline for Completion of the course is : " + path.getDuration() + "Months"
-            );
+            );*/
+
+            //todo Set Email Properties
+            setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList);
 
         }
 
 
     }
+
+    private void setMailPropertiesAndSendEmail(User user, LearningPathDto.Path path, String madeByUserFullName, List<String> stringList) throws Exception {
+
+        Map<String, String> model = new HashMap<>();
+        String appendedCourses = stringList.stream().collect(Collectors.joining(", \n"));
+
+        model.put("Email", user.getUsername());
+        model.put("madeFor", user.getFullName());
+        model.put("madeBy", madeByUserFullName);
+        model.put("timeline", String.valueOf(path.getDuration()));
+        model.put("assignedCourse", appendedCourses);
+
+        emailSend.sendEmailMethod(model);
+    }
+
 
 }
