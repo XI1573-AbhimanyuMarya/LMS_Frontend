@@ -1,0 +1,1 @@
+Course details for Learning Management System
