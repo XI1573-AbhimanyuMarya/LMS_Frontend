@@ -1,6 +1,6 @@
 <html>
 <p>Hi ${madeFor},</p>
-<p>You have been assigned a Learning path by: ${madeBy} </p>
+<p>You have been assigned a Learning path <q>${learningPathName}</q> by: ${madeBy} </p>
 <p> Please refer to the Course details below: <br>
  <u> COURSES: </u>  ${assignedCourse} <br>
 </p>
