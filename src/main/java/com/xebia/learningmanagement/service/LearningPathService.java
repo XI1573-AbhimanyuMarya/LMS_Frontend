@@ -6,5 +6,5 @@ import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundExc
 
 public interface LearningPathService {
 
-    void createLearningPath(LearningPathDto.Path path) throws NotFoundException;
+    void createLearningPath(LearningPathDto.Path path) throws Exception;
 }
