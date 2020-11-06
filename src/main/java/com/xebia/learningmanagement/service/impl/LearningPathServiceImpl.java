@@ -84,7 +84,7 @@ public class LearningPathServiceImpl implements LearningPathService {
             //TODO : Send Email to concerned User
 
             User madeByUser = userRepository.findById(path.getMadeById()).orElseThrow(() -> new NotFoundException());
-            String madeByUserFullName = madeByUser.getFullName();
+            String madeByUserFullName = madeByUser.getFullName().concat(" : "+madeByUser.getEmpID());
 
             //List of courses made for Employee
             List<Courses> coursesListById = courseRepository.findAllById(path.getCoursesId());
@@ -112,7 +112,7 @@ public class LearningPathServiceImpl implements LearningPathService {
 
         Map<String, String> model = new HashMap<>();
         String appendedCourses = stringList.stream().collect(Collectors.joining(", \n"));
-
+        model.put("learningPathName",path.getName());
         model.put("Email", user.getUsername());
         model.put("madeFor", user.getFullName());
         model.put("madeBy", madeByUserFullName);
