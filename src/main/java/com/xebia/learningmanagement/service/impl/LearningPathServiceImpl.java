@@ -65,12 +65,12 @@ public class LearningPathServiceImpl implements LearningPathService {
                 throw new LearningPathException(String.format("given user not found by id"));
             }
         }
-
+        // Set Learning path
         learningPath.setDuration(durationRepository.findById(path.getDuration()).get());
         learningPath.setMadeBy(userRepository.findById(path.getMadeById()).get());
         learningPath.setName(path.getName());
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
-        learningPathRepository.save(learningPath);
+
 
         for (Long id : path.getMadeForId()) {
             User user = userRepository.findById(id).get();
@@ -78,13 +78,10 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathEmployees.setLearningPath(learningPath);
             learningPathEmployees.setEmployee(user);
             learningPathEmployees.setPercentCompleted(0);
-            learningPathEmployeesRepository.save(learningPathEmployees);
-
 
             //TODO : Send Email to concerned User
-
             User madeByUser = userRepository.findById(path.getMadeById()).orElseThrow(() -> new NotFoundException());
-            String madeByUserFullName = madeByUser.getFullName().concat(" : "+madeByUser.getEmpID());
+            String madeByUserFullName = madeByUser.getFullName().concat(" : " + madeByUser.getEmpID());
 
             //List of courses made for Employee
             List<Courses> coursesListById = courseRepository.findAllById(path.getCoursesId());
@@ -101,10 +98,18 @@ public class LearningPathServiceImpl implements LearningPathService {
             );*/
 
             //todo Set Email Properties
-            setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList);
+            try {
+                setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList);
+
+            } catch (Exception e) {
+                throw new Exception("Unable to send Email & Save data");
+            }
+            //Save Learning path for Employee after the Email Mail has been sent
+            learningPathEmployeesRepository.save(learningPathEmployees);
 
         }
-
+//        Save learning Path After the mail & mapping between Learning path : Employee has been saved
+        learningPathRepository.save(learningPath);
 
     }
 
@@ -112,7 +117,7 @@ public class LearningPathServiceImpl implements LearningPathService {
 
         Map<String, String> model = new HashMap<>();
         String appendedCourses = stringList.stream().collect(Collectors.joining(", \n"));
-        model.put("learningPathName",path.getName());
+        model.put("learningPathName", path.getName());
         model.put("Email", user.getUsername());
         model.put("madeFor", user.getFullName());
         model.put("madeBy", madeByUserFullName);
