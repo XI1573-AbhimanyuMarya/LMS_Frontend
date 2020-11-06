@@ -101,11 +101,11 @@ public class EmailSend {
             message.setFrom(new InternetAddress(emailFrom));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(modelContent.get("Email")));
-            message.setSubject(getTemplateValue("subject.ftl", modelContent));
+            message.setSubject(getTemplateValue("CourseAssignEmail-subject.ftl", modelContent));
             message.setSentDate(new Date());
             MimeMultipart multipart = new MimeMultipart("related");
             BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(getTemplateValue("body.ftl", modelContent),
+            messageBodyPart.setContent(getTemplateValue("CourseAssignEmail-body.ftl", modelContent),
                     "text/html");
             multipart.addBodyPart(messageBodyPart);
             message.setContent(multipart);
