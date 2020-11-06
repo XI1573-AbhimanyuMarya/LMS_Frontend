@@ -119,7 +119,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         model.put("timeline", String.valueOf(path.getDuration()));
         model.put("assignedCourse", appendedCourses);
 
-        emailSend.sendEmailMethod(model);
+        emailSend.sendEmailMethodUsingTemplate(model);
     }
 
 

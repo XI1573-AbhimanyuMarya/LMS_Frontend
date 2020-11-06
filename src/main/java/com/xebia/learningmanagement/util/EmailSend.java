@@ -15,7 +15,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.io.File;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
@@ -94,7 +93,7 @@ public class EmailSend {
         });
     }
 
-    public void sendEmailMethod(Map<String, String> modelContent) throws Exception {
+    public void sendEmailMethodUsingTemplate(Map<String, String> modelContent) throws Exception {
         log.info("In user creation sendMailUsingMime method..");
 
         try {
