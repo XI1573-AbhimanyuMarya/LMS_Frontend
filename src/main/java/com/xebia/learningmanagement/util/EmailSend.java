@@ -122,10 +122,9 @@ public class EmailSend {
 
     private String getTemplateValue(String template, Map<String, String> properties) throws Exception {
         log.info("Getting template: " + template);
-        freemarkerConfig.setDirectoryForTemplateLoading(new File("C:/Java Projects/Learning Management System/Learning/src/main/resources/templates"));
+//        freemarkerConfig.setDirectoryForTemplateLoading(new File("C:/Java Projects/Learning Management System/Learning/src/main/resources/templates"));
+//        freemarkerConfig.setClassForTemplateLoading(this.getClass(), "templates/");
         Template template1 = freemarkerConfig.getTemplate(template);
-
-        Template t = freemarkerConfig.getTemplate(template);
         return FreeMarkerTemplateUtils.processTemplateIntoString(template1, properties);
     }
 }
