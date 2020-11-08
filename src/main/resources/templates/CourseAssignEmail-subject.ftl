@@ -1,1 +1,1 @@
-Course details for Learning Management System
+Learning Path details for Learning Management System
