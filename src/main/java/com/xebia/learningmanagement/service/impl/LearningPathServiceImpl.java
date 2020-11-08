@@ -71,6 +71,15 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setName(path.getName());
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
 
+        getTemplatePlaceholderValuesAndSaveData(path, learningPath);
+
+//        Save learning Path After the mail & mapping between Learning path : Employee has been saved
+        learningPathRepository.save(learningPath);
+
+    }
+
+    private void getTemplatePlaceholderValuesAndSaveData(LearningPathDto.Path path, LearningPath learningPath) throws Exception {
+
 
         for (Long id : path.getMadeForId()) {
             User user = userRepository.findById(id).get();
@@ -86,11 +95,7 @@ public class LearningPathServiceImpl implements LearningPathService {
             //List of courses made for Employee
             List<Courses> coursesListById = courseRepository.findAllById(path.getCoursesId());
             List<String> stringList = coursesListById.stream().map(Courses::getName).map(String::toUpperCase).collect(Collectors.toList());
-            // Courses mapped to their Category
-            Map<String, String> courseCategoryMap = new HashMap<>();
-            coursesListById.forEach(course -> {
-                courseCategoryMap.put(course.getName(), course.getCategory().getName());
-            });
+
             //todo Send Email without template
            /* EmailSend.setEmail(user.getUsername(), "LMS PORTAL",
                     "You have been assigned below mentioned Courses by " + madeByUserFullName + " \n " + stringList +
@@ -108,10 +113,9 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathEmployeesRepository.save(learningPathEmployees);
 
         }
-//        Save learning Path After the mail & mapping between Learning path : Employee has been saved
-        learningPathRepository.save(learningPath);
 
     }
+
 
     private void setMailPropertiesAndSendEmail(User user, LearningPathDto.Path path, String madeByUserFullName, List<String> stringList) throws Exception {
 
