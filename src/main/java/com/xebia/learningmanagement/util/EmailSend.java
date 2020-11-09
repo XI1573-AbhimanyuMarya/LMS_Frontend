@@ -93,7 +93,7 @@ public class EmailSend {
         });
     }
 
-    public void sendEmailMethodUsingTemplate(Map<String, String> modelContent) throws Exception {
+    public void sendEmailMethodUsingTemplate(String value, Map<String, String> modelContent) throws Exception {
         log.info("In user creation sendMailUsingMime method..");
 
         try {
@@ -101,11 +101,11 @@ public class EmailSend {
             message.setFrom(new InternetAddress(emailFrom));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(modelContent.get("Email")));
-            message.setSubject(getTemplateValue("CourseAssignEmail-subject.ftl", modelContent));
+            message.setSubject(getTemplateValue(value + "-subject.ftl", modelContent));
             message.setSentDate(new Date());
             MimeMultipart multipart = new MimeMultipart("related");
             BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(getTemplateValue("CourseAssignEmail-body.ftl", modelContent),
+            messageBodyPart.setContent(getTemplateValue(value + "-body.ftl", modelContent),
                     "text/html");
             multipart.addBodyPart(messageBodyPart);
             message.setContent(multipart);
