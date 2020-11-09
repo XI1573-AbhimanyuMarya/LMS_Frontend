@@ -10,7 +10,7 @@ public class LearningPathEmployees {
     private int percentCompleted;
     @ManyToOne
     private User employee;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private LearningPath learningPath;
 
     public long getId() {
