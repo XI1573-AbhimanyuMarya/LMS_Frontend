@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -53,10 +54,14 @@ public class UserServiceImpl implements UserService {
         return userDtos;
     }
 //    @Scheduled(fixedDelay = 5000)
+//    @PostConstruct
     public void addNewUsers() {
         int count = 1;
+        if(!roleRepository.findByRoleName("ROLE_ADMIN").isPresent())
         roleRepository.save(new Role("ROLE_ADMIN"));
+        if(!roleRepository.findByRoleName("ROLE_MANAGER").isPresent())
         roleRepository.save(new Role("ROLE_MANAGER"));
+        if(!roleRepository.findByRoleName("ROLE_EMPLOYEE").isPresent())
         roleRepository.save(new Role("ROLE_EMPLOYEE"));
 
         final Role MANAGER_ROLE = roleRepository.findByRoleName("ROLE_MANAGER").get();
@@ -86,9 +91,7 @@ public class UserServiceImpl implements UserService {
                     user.setLocation(employeeMetaData.getBaseLocation());
                     user.setActive(true);
                     user.setPassword("lkjbswecbng@#(*^hf%CFGJ");
-                    HashSet<Role> role = new HashSet<>();
-                    role.add(getRole(MANAGER_ROLE, EMPLOYEE_ROLE, employeeMetaData));
-                    user.setRoles(role);
+                    user.getRoles().add(getRole(MANAGER_ROLE, EMPLOYEE_ROLE, employeeMetaData));
                     userRepository.save(user);
                 }
             }
