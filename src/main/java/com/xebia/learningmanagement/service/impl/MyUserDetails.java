@@ -25,10 +25,12 @@ public class MyUserDetails implements UserDetails {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
 		this.active = user.isActive();
-		this.authorities = Arrays.stream(user.getRoles().split(","))
-				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList());
-		System.out.println(authorities);
+		this.authorities = user.getRoles().stream().map(role->new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
+
+//		this.authorities = Arrays.stream(user.getRoles().split(","))
+//				.map(SimpleGrantedAuthority::new)
+//				.collect(Collectors.toList());
+//		System.out.println(authorities);
 		logger.info("inside MyUserDetails");
 	}
 	@Override

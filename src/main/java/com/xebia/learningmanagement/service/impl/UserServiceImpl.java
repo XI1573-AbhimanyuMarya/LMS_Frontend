@@ -2,9 +2,11 @@ package com.xebia.learningmanagement.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xebia.learningmanagement.entity.Role;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.EmployeeMetaData;
 import com.xebia.learningmanagement.model.UserDto;
+import com.xebia.learningmanagement.repository.RoleRepository;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +23,10 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
     @Autowired
     RestTemplate restTemplate;
 
@@ -32,16 +39,14 @@ public class UserServiceImpl implements UserService {
         List<UserDto> userDtos = new ArrayList<>();
         for (int i = 0; i < users.size(); i++) {
             UserDto userDto = new UserDto();
-
-            userDto.setcOEType(users.get(i).getcOEType());
+            userDto.setcOEType(users.get(i).getCOEType());
             userDto.setDesignation(users.get(i).getDesignation());
             userDto.setEmpID(users.get(i).getEmpID());
             userDto.setLocation(users.get(i).getLocation());
             userDto.setFullName(users.get(i).getFullName());
-            userDto.setRoles(users.get(i).getRoles());
+            userDto.setRoles(users.get(i).getRoles().stream().findFirst().get().getRoleName());
             userDto.setId(users.get(i).getId());
             userDto.setUsername(users.get(i).getUsername());
-
             userDtos.add(userDto);
         }
 
@@ -50,8 +55,15 @@ public class UserServiceImpl implements UserService {
 //    @Scheduled(fixedDelay = 5000)
     public void addNewUsers() {
         int count = 1;
+        roleRepository.save(new Role("ROLE_ADMIN"));
+        roleRepository.save(new Role("ROLE_MANAGER"));
+        roleRepository.save(new Role("ROLE_EMPLOYEE"));
+
+        final Role MANAGER_ROLE = roleRepository.findByRoleName("ROLE_MANAGER").get();
+        final Role EMPLOYEE_ROLE = roleRepository.findByRoleName("ROLE_EMPLOYEE").get();
         for (int j = 0; j < 4; j++) {
-            String uri = "https://people.zoho.com/people/api/forms/P_EmployeeView/records?authtoken=f85d7b9916365d6cbd723b2fd8b6ba74&sIndex=" + count;
+
+            String uri = "https://people.zoho.com/people/api/forms/P_EmployeeView/records?authtoken=3ab0a1722b48eb4d9db8c69649e73fec&sIndex=" + count;
 
             List emp = restTemplate.getForObject(uri, List.class);
 
@@ -59,26 +71,33 @@ public class UserServiceImpl implements UserService {
             List<EmployeeMetaData> emp2 = mapper.convertValue(emp, new TypeReference<List<EmployeeMetaData>>() {
             });
 
+
             for (int i = 0; i < emp2.size(); i++) {
-                Optional<User> user2 = userRepository.findByUsername(emp2.get(i).getXebiaEmailID());
+                EmployeeMetaData employeeMetaData = emp2.get(i);
+                Optional<User> user2 = userRepository.findByUsername(employeeMetaData.getXebiaEmailID());
                 if (user2.isPresent()) {
                 } else {
                     User user = new User();
-                    user.setUsername(emp2.get(i).getXebiaEmailID());
-                    user.setFullName(emp2.get(i).getFullName());
-                    user.setDesignation(emp2.get(i).getDesignation()); //auth token, builder pattern, forms set in application properties
-                    user.setEmpID(emp2.get(i).getEmployeeID());
-                    user.setcOEType(emp2.get(i).getCOEType());
-                    user.setLocation(emp2.get(i).getBaseLocation());
+                    user.setUsername(employeeMetaData.getXebiaEmailID());
+                    user.setFullName(employeeMetaData.getFullName());
+                    user.setDesignation(employeeMetaData.getDesignation()); //auth token, builder pattern, forms set in application properties
+                    user.setEmpID(employeeMetaData.getEmployeeID());
+                    user.setCOEType(employeeMetaData.getCOEType());
+                    user.setLocation(employeeMetaData.getBaseLocation());
                     user.setActive(true);
                     user.setPassword("lkjbswecbng@#(*^hf%CFGJ");
-                    user.setRoles("ROLE_EMPLOYEE");
-
+                    HashSet<Role> role = new HashSet<>();
+                    role.add(getRole(MANAGER_ROLE, EMPLOYEE_ROLE, employeeMetaData));
+                    user.setRoles(role);
                     userRepository.save(user);
                 }
             }
             count = count + 200;
         }
+    }
+
+    private Role getRole(Role MANAGER_ROLE, Role EMPLOYEE_ROLE, EmployeeMetaData employeeMetaData) {
+        return employeeMetaData.getDesignation().toLowerCase().contains("manager") ? MANAGER_ROLE : EMPLOYEE_ROLE;
     }
 
 
