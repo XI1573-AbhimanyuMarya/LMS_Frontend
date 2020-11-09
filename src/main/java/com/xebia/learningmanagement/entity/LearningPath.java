@@ -11,7 +11,7 @@ public class LearningPath {
     private String name;
     @ManyToOne
     private User madeBy;
-    @OneToMany(mappedBy = "learningPath")
+    @OneToMany(mappedBy = "learningPath", orphanRemoval = true)
     private List<LearningPathEmployees> madeFor;
     @ManyToMany
     private List<Courses> courses;
