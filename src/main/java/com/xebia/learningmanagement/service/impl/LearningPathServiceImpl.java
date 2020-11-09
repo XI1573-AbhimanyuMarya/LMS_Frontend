@@ -1,6 +1,7 @@
 package com.xebia.learningmanagement.service.impl;
 
 import com.xebia.learningmanagement.entity.*;
+import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.model.LearningPathDto;
 import com.xebia.learningmanagement.repository.*;
@@ -74,7 +75,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         getTemplatePlaceholderValuesAndSaveData(path, learningPath);
 
 //        Save learning Path After the mail & mapping between Learning path : Employee has been saved
-        learningPathRepository.save(learningPath);
+//        learningPathRepository.save(learningPath);
 
     }
 
@@ -128,7 +129,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         model.put("timeline", String.valueOf(path.getDuration()));
         model.put("assignedCourse", appendedCourses);
 
-        emailSend.sendEmailMethodUsingTemplate(model);
+        emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_ASSIGN.getValue(), model);
     }
 
 
