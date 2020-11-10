@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 
 import SignIn from '../views/SignIn/index';
 import Dashboard from '../views/Dasboard/index';
+import CourseCatalog from '../views/learnig/LearningSelectCourses';
 
 const Routers = () => {
     const loginState = useSelector(response => response.loginState);
@@ -28,6 +29,11 @@ const Routers = () => {
                         <Route
                             path='/dashboard'
                             component={Dashboard}
+                        />
+                        <Route
+                            path='/learningpath'
+                            exact={true}
+                            component={CourseCatalog}
                         />
                         <Redirect to='/dashboard' />
                     </Switch>)
