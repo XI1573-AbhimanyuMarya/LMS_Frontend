@@ -20,6 +20,7 @@ import { useStyles } from './style';
 import WithLoading from '../../hoc/WithLoading';
 import User from '../../components/User';
 import Actions from '../../store/actions';
+import { Link, withRouter } from 'react-router-dom'
 
 const Dashboard = () => {
     const classes = useStyles();
@@ -78,6 +79,7 @@ const Dashboard = () => {
                     </Button>
                         </Box>
                         <Box height="25%">
+                        <Link to="/learningpath">
                             <Button
                                 variant="contained"
                                 color="default"
@@ -88,8 +90,10 @@ const Dashboard = () => {
                                     title="Contemplative Reptile"
                                 />}
                             >
-                                Learning Path
+                                
+                              My Learning Path
                     </Button>
+                    </Link>
                         </Box>
                         <Box height="25%">
                             <Button

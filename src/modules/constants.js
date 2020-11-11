@@ -1,4 +1,6 @@
-const API_HOST_PATH = 'https://learningmanagementxeb.herokuapp.com';
+const API_HOST_PATH = process.env.REACT_APP_BASE_API_URL;
+// const API_HOST_PATH = 'http://localhost:8085';
+//'https://learningmanagementxeb.herokuapp.com';
 
 export const SERVICE_URLS = {
     LOGIN: `${API_HOST_PATH}/username`,
@@ -28,6 +30,8 @@ export const LEARNING_PATH_LABELS = {
     SEARCH_COURSE : 'Search Course',
     LEARNING_PATH_NAME : 'Learning Path Name',
     COURSE_CATALOG : 'Course Catalog',
+    COURSE_CATALOG1 : 'Learning Path Completed',
+    COURSE_CATALOG2: 'My Learning Path',
     SEARCH_EMPLOYEE: 'Search Employee',
     SELECT_LEARNING_PATH_DURATION : 'Select Learning Path Duration',
     SOMETHING_WENT_WRONG : 'Something went wrong!',
