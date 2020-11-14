@@ -2,6 +2,7 @@ package com.xebia.learningmanagement.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class LearningPath {
@@ -64,5 +65,22 @@ public class LearningPath {
 
     public void setDuration(Duration duration) {
         this.duration = duration;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LearningPath)) return false;
+        LearningPath that = (LearningPath) o;
+        return Objects.equals(getName(), that.getName()) &&
+                getMadeBy().equals(that.getMadeBy()) &&
+                Objects.equals(getMadeFor(), that.getMadeFor()) &&
+                Objects.equals(getCourses(), that.getCourses()) &&
+                Objects.equals(getDuration(), that.getDuration());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getMadeBy(), getMadeFor(), getCourses(), getDuration());
     }
 }
