@@ -3,7 +3,9 @@ package com.xebia.learningmanagement.service.impl;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.LearningPathException;
+import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.model.LearningPathDto;
+import com.xebia.learningmanagement.model.ManagerUsernameDto;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
@@ -38,6 +40,7 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     @Autowired
     EmailSend emailSend;
+
 
     @Override
     public void createLearningPath(LearningPathDto.Path path) throws Exception {
@@ -133,4 +136,10 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
 
+    @Override
+    public void getAllAssignedLearningPath(ManagerUsernameDto managerUsernameDto) {
+        User user = userRepository.findByUsername(managerUsernameDto.getUsername()).orElseThrow(()-> new UsernameNotFoundException("Username does not exist"));
+        List<LearningPath> learningPathList = learningPathRepository.findAll().stream().filter(a -> a.getMadeBy().equals(user)).collect(Collectors.toList());
+
+    }
 }
