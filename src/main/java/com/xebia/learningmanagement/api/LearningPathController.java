@@ -4,6 +4,7 @@ import com.xebia.learningmanagement.dtos.LearningPathDto;
 import com.xebia.learningmanagement.dtos.ListOfLearningPathAssignedDto;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
+import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.service.LearningPathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,11 +32,19 @@ public class LearningPathController {
     }
 
     @GetMapping("/getAssignedLearningPaths")
-    public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerEmailRequest managerEmail) {
+    public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerEmailRequest managerEmail) throws LearningPathException {
+        UserResponse userResponse =new UserResponse();
+        try {
+            if (managerEmail!=null && !"".equals(managerEmail)){
+                ListOfLearningPathAssignedDto allAssignedLearningPath = learningPathService.getAllAssignedLearningPath(managerEmail);
+                return new ResponseEntity(allAssignedLearningPath, HttpStatus.OK);
+            }
+        }catch (LearningPathException e){
+            userResponse.setStatus("failure");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
+        }
 
-        ListOfLearningPathAssignedDto allAssignedLearningPath = learningPathService.getAllAssignedLearningPath(managerEmail);
-        return new ResponseEntity(allAssignedLearningPath, HttpStatus.OK);
-
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }
