@@ -140,7 +140,7 @@ public class LearningPathServiceImpl implements LearningPathService {
 
 
     @Override
-    public ListOfLearningPathAssignedDto getAllAssignedLearningPath(ManagerEmailRequest managerEmail) {
+    public ListOfLearningPathAssignedDto getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException {
         ModelMapper modelMapper = new ModelMapper();
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
         List<LearningPath> learningPathList = learningPathRepository.findAll().stream().filter(a -> a.getMadeBy().equals(user)).collect(Collectors.toList());
