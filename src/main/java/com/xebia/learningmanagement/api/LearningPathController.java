@@ -1,14 +1,18 @@
 package com.xebia.learningmanagement.api;
 
+import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.model.LearningPathDto;
+import com.xebia.learningmanagement.model.LearningPathListListDto;
 import com.xebia.learningmanagement.model.ManagerUsernameDto;
 import com.xebia.learningmanagement.response.UserResponse;
 import com.xebia.learningmanagement.service.LearningPathService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -29,9 +33,10 @@ public class LearningPathController {
     }
 
     @GetMapping("/getAllAssignedLearningPath")
-    public void getAllAssignedLearningPath(@RequestBody ManagerUsernameDto managerUsername) {
+    public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerUsernameDto managerUsername) {
 
-        learningPathService.getAllAssignedLearningPath(managerUsername);
+        LearningPathListListDto allAssignedLearningPath = learningPathService.getAllAssignedLearningPath(managerUsername);
+        return new ResponseEntity(allAssignedLearningPath, HttpStatus.OK);
 
     }
 
