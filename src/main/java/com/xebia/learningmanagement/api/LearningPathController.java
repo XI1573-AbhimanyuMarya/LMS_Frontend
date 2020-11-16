@@ -31,6 +31,12 @@ public class LearningPathController {
         return ResponseEntity.ok(userResponse);
     }
 
+    /***
+     *
+     * @param managerEmail
+     * @return
+     * @throws LearningPathException
+     */
     @GetMapping("/getAssignedLearningPaths")
     public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerEmailRequest managerEmail) throws LearningPathException {
         UserResponse userResponse =new UserResponse();
