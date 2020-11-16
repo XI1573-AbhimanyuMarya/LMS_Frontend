@@ -1,6 +1,6 @@
 package com.xebia.learningmanagement.api;
 
-import com.xebia.learningmanagement.model.UserDto;
+import com.xebia.learningmanagement.dtos.UserDto;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
-package com.xebia.learningmanagement.model;
+package com.xebia.learningmanagement.dtos;
 
+import com.xebia.learningmanagement.dtos.EmployeeDto;
 import lombok.Getter;
 import lombok.Setter;
 

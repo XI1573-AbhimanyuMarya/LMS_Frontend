@@ -1,7 +1,7 @@
 package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.model.Login;
-import com.xebia.learningmanagement.response.LoginResponse;
+import com.xebia.learningmanagement.dtos.response.LoginResponse;
 import com.xebia.learningmanagement.model.*;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.UserService;
@@ -9,8 +9,6 @@ import com.xebia.learningmanagement.service.impl.EmailService;
 import com.xebia.learningmanagement.service.impl.MyUserDetailsService;
 import com.xebia.learningmanagement.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +22,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @CrossOrigin("*")

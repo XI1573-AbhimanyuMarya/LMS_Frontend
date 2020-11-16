@@ -1,4 +1,4 @@
-package com.xebia.learningmanagement.response;
+package com.xebia.learningmanagement.dtos.response;
 
 public class AuthenticationResponse {
 

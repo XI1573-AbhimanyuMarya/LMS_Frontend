@@ -1,4 +1,4 @@
-package com.xebia.learningmanagement.model;
+package com.xebia.learningmanagement.dtos;
 
 public class RoleDto {
 

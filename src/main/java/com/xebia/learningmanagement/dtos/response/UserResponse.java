@@ -1,6 +1,5 @@
-package com.xebia.learningmanagement.response;
+package com.xebia.learningmanagement.dtos.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
