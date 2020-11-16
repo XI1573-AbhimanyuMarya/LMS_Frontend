@@ -1,9 +1,9 @@
 package com.xebia.learningmanagement.api;
 
-import com.xebia.learningmanagement.model.LearningPathDto;
-import com.xebia.learningmanagement.model.ListOfLearningPathAssignedDto;
-import com.xebia.learningmanagement.model.ManagerUsernameDto;
-import com.xebia.learningmanagement.response.UserResponse;
+import com.xebia.learningmanagement.dtos.LearningPathDto;
+import com.xebia.learningmanagement.dtos.ListOfLearningPathAssignedDto;
+import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
+import com.xebia.learningmanagement.dtos.response.UserResponse;
 import com.xebia.learningmanagement.service.LearningPathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,10 +30,10 @@ public class LearningPathController {
         return ResponseEntity.ok(userResponse);
     }
 
-    @GetMapping("/getAllAssignedLearningPath")
-    public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerUsernameDto managerUsername) {
+    @GetMapping("/getAssignedLearningPaths")
+    public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerEmailRequest managerEmail) {
 
-        ListOfLearningPathAssignedDto allAssignedLearningPath = learningPathService.getAllAssignedLearningPath(managerUsername);
+        ListOfLearningPathAssignedDto allAssignedLearningPath = learningPathService.getAllAssignedLearningPath(managerEmail);
         return new ResponseEntity(allAssignedLearningPath, HttpStatus.OK);
 
     }
