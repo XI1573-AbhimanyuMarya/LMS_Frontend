@@ -5,19 +5,19 @@ import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.model.LearningPathDto;
-import com.xebia.learningmanagement.model.LearningPathListListDto;
+import com.xebia.learningmanagement.model.LearningPathListDto;
+import com.xebia.learningmanagement.model.ListOfLearningPathAssignedDto;
 import com.xebia.learningmanagement.model.ManagerUsernameDto;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
+import org.modelmapper.config.Configuration;
+import org.modelmapper.convention.NamingConventions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -42,9 +42,6 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     @Autowired
     protected EmailSend emailSend;
-
-    @Autowired
-    protected ModelMapper modelMapper;
 
 
 
@@ -143,12 +140,10 @@ public class LearningPathServiceImpl implements LearningPathService {
 
 
     @Override
-    public LearningPathListListDto getAllAssignedLearningPath(ManagerUsernameDto managerUsernameDto) {
+    public ListOfLearningPathAssignedDto getAllAssignedLearningPath(ManagerUsernameDto managerUsernameDto) {
+        ModelMapper modelMapper=new ModelMapper();
         User user = userRepository.findByUsername(managerUsernameDto.getUsername()).orElseThrow(()-> new UsernameNotFoundException("Username does not exist"));
         List<LearningPath> learningPathList = learningPathRepository.findAll().stream().filter(a -> a.getMadeBy().equals(user)).collect(Collectors.toList());
-        LearningPathListListDto pathListListDto = modelMapper.map(learningPathList, LearningPathListListDto.class);
-
-
-        return pathListListDto;
+         return new ListOfLearningPathAssignedDto(learningPathList.stream().map(a->modelMapper.map(a,LearningPathListDto.class)).collect(Collectors.toList()));
     }
 }
