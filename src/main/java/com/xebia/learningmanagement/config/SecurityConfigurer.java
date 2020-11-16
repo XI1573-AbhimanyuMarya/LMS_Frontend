@@ -1,6 +1,5 @@
 package com.xebia.learningmanagement.config;
 
-import com.xebia.learningmanagement.exception.CustomAuthenticationEntryPoint;
 import com.xebia.learningmanagement.exception.handler.CustomAccessDeniedHandler;
 import com.xebia.learningmanagement.exception.handler.CustomAuthenticationEntryPointHandler;
 import com.xebia.learningmanagement.filter.JwtRequestFilter;
@@ -133,4 +132,5 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
+
 }
