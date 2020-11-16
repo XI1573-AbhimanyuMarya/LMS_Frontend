@@ -5,12 +5,15 @@ import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.model.LearningPathDto;
+import com.xebia.learningmanagement.model.LearningPathListDto;
+import com.xebia.learningmanagement.model.LearningPathListListDto;
 import com.xebia.learningmanagement.model.ManagerUsernameDto;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.modelmapper.ModelMapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,22 +27,26 @@ import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundExc
 public class LearningPathServiceImpl implements LearningPathService {
 
     @Autowired
-    LearningPathRepository learningPathRepository;
+    protected LearningPathRepository learningPathRepository;
 
     @Autowired
-    DurationRepository durationRepository;
+    protected DurationRepository durationRepository;
 
     @Autowired
-    UserRepository userRepository;
+    protected UserRepository userRepository;
 
     @Autowired
-    CourseRepository courseRepository;
+    protected CourseRepository courseRepository;
 
     @Autowired
-    LearningPathEmployeesRepository learningPathEmployeesRepository;
+    protected LearningPathEmployeesRepository learningPathEmployeesRepository;
 
     @Autowired
-    EmailSend emailSend;
+    protected EmailSend emailSend;
+
+    @Autowired
+    protected ModelMapper modelMapper;
+
 
 
     @Override
@@ -137,9 +144,12 @@ public class LearningPathServiceImpl implements LearningPathService {
 
 
     @Override
-    public void getAllAssignedLearningPath(ManagerUsernameDto managerUsernameDto) {
+    public List<LearningPath> getAllAssignedLearningPath(ManagerUsernameDto managerUsernameDto) {
         User user = userRepository.findByUsername(managerUsernameDto.getUsername()).orElseThrow(()-> new UsernameNotFoundException("Username does not exist"));
         List<LearningPath> learningPathList = learningPathRepository.findAll().stream().filter(a -> a.getMadeBy().equals(user)).collect(Collectors.toList());
+        LearningPathListListDto pathListListDto = modelMapper.map(learningPathList, LearningPathListListDto.class);
 
+
+        return learningPathList;
     }
 }
