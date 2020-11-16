@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xebia.learningmanagement.entity.Role;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.EmployeeMetaData;
-import com.xebia.learningmanagement.model.UserDto;
+import com.xebia.learningmanagement.dtos.UserDto;
 import com.xebia.learningmanagement.repository.RoleRepository;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.UserService;
