@@ -1,9 +1,15 @@
 package com.xebia.learningmanagement.entity;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "Courses")
 public class Courses {
     @Id
@@ -18,43 +24,20 @@ public class Courses {
     @ManyToOne
     private Competency competency;
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Courses)) return false;
+        Courses courses = (Courses) o;
+        return Objects.equals(getId(), courses.getId()) &&
+                getName().equals(courses.getName()) &&
+                Objects.equals(getDescription(), courses.getDescription()) &&
+                getCategory().equals(courses.getCategory()) &&
+                Objects.equals(getCompetency(), courses.getCompetency());
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Competency getCompetency() {
-        return competency;
-    }
-
-    public void setCompetency(Competency competency) {
-        this.competency = competency;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getDescription(), getCategory(), getCompetency());
     }
 }

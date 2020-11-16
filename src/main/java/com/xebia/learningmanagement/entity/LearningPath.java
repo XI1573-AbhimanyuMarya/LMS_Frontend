@@ -1,10 +1,15 @@
 package com.xebia.learningmanagement.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
 public class LearningPath {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,54 +23,6 @@ public class LearningPath {
     private List<Courses> courses;
     @ManyToOne
     private Duration duration;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public User getMadeBy() {
-        return madeBy;
-    }
-
-    public void setMadeBy(User madeBy) {
-        this.madeBy = madeBy;
-    }
-
-    public List<LearningPathEmployees> getMadeFor() {
-        return madeFor;
-    }
-
-    public void setMadeFor(List<LearningPathEmployees> madeFor) {
-        this.madeFor = madeFor;
-    }
-
-    public List<Courses> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Courses> courses) {
-        this.courses = courses;
-    }
-
-    public Duration getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Duration duration) {
-        this.duration = duration;
-    }
 
     @Override
     public boolean equals(Object o) {
