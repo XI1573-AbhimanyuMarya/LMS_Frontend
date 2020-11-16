@@ -5,7 +5,6 @@ import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.model.LearningPathDto;
-import com.xebia.learningmanagement.model.LearningPathListDto;
 import com.xebia.learningmanagement.model.LearningPathListListDto;
 import com.xebia.learningmanagement.model.ManagerUsernameDto;
 import com.xebia.learningmanagement.repository.*;
@@ -144,12 +143,12 @@ public class LearningPathServiceImpl implements LearningPathService {
 
 
     @Override
-    public List<LearningPath> getAllAssignedLearningPath(ManagerUsernameDto managerUsernameDto) {
+    public LearningPathListListDto getAllAssignedLearningPath(ManagerUsernameDto managerUsernameDto) {
         User user = userRepository.findByUsername(managerUsernameDto.getUsername()).orElseThrow(()-> new UsernameNotFoundException("Username does not exist"));
         List<LearningPath> learningPathList = learningPathRepository.findAll().stream().filter(a -> a.getMadeBy().equals(user)).collect(Collectors.toList());
         LearningPathListListDto pathListListDto = modelMapper.map(learningPathList, LearningPathListListDto.class);
 
 
-        return learningPathList;
+        return pathListListDto;
     }
 }
