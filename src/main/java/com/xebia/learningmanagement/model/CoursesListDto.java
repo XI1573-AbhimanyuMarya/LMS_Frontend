@@ -1,12 +1,12 @@
 package com.xebia.learningmanagement.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class CoursesListDto {
-    private List<CoursesDto> coursesDtos;
+    public CoursesDto courses;
 }
