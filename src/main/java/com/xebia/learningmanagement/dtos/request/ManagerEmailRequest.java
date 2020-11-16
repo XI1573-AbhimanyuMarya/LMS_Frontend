@@ -1,4 +1,4 @@
-package com.xebia.learningmanagement.model;
+package com.xebia.learningmanagement.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ManagerUsernameDto {
+public class ManagerEmailRequest {
 
-    public String username;
+    public String managerEmail;
 }
