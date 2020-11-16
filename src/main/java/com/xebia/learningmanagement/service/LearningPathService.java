@@ -1,11 +1,11 @@
 package com.xebia.learningmanagement.service;
 
-import com.xebia.learningmanagement.model.LearningPathDto;
-import com.xebia.learningmanagement.model.ListOfLearningPathAssignedDto;
-import com.xebia.learningmanagement.model.ManagerUsernameDto;
+import com.xebia.learningmanagement.dtos.LearningPathDto;
+import com.xebia.learningmanagement.dtos.ListOfLearningPathAssignedDto;
+import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 
 public interface LearningPathService {
 
     void createLearningPath(LearningPathDto.Path path) throws Exception;
-    ListOfLearningPathAssignedDto getAllAssignedLearningPath(ManagerUsernameDto managerUsernameDto);
+    ListOfLearningPathAssignedDto getAllAssignedLearningPath(ManagerEmailRequest managerEmail);
 }
