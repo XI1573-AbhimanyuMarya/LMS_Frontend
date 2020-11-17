@@ -40,17 +40,21 @@ public class LearningPathController {
     @GetMapping("/getAssignedLearningPaths")
     public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerEmailRequest managerEmail) throws LearningPathException {
         UserResponse userResponse =new UserResponse();
+        ListOfLearningPathAssignedDto allAssignedLearningPath;
         try {
-            if (managerEmail!=null && !"".equals(managerEmail)){
-                ListOfLearningPathAssignedDto allAssignedLearningPath = learningPathService.getAllAssignedLearningPath(managerEmail);
-                return new ResponseEntity(allAssignedLearningPath, HttpStatus.OK);
+            if (managerEmail!=null && !"".equalsIgnoreCase(managerEmail.getManagerEmail())){
+                allAssignedLearningPath = learningPathService.getAllAssignedLearningPath(managerEmail);
+            }else {
+                throw new LearningPathException("Wrong Format for Managers Email");
             }
         }catch (LearningPathException e){
             userResponse.setStatus("failure");
+            userResponse.setMessage(e.getLocalizedMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(allAssignedLearningPath, HttpStatus.OK);
+
     }
 
 }
