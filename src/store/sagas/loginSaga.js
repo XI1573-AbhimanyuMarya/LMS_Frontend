@@ -43,12 +43,15 @@ function* fetchOtp(action) {
 
 function* login(action) {
     try {
+        console.log(action);
         const response = yield call(verifyOtp, action.payload);
         const { data } = response;
 
         yield put({ type: actionTypes.LOGIN_CALL_SUCCESS, payload: data });
         if (getOr(null, 'login.islogin', data)) {
+            const {history} = action.payload;
             yield call(setUserData, data)
+            history.push('/')
         }
 
     } catch (error) {

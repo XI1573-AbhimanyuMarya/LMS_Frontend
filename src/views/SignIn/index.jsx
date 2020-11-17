@@ -14,10 +14,11 @@ import Image from '../../images/Image.png';
 import { useStyles } from './style';
 import Actions from '../../store/actions';
 
-const SignIn = () => {
+const SignIn = (props) => {
   const classes = useStyles();
   const loginState = useSelector(state => state.loginState);
   const dispatch = useDispatch();
+  const { history } = props;
   const { username, password, isValidOtp, isLoading, sendOtp, isValidEmail } = loginState;
 
   const onChangeHandler = (e) => {
@@ -31,7 +32,7 @@ const SignIn = () => {
     if (username && sendOtp === false) {
       dispatch(Actions.loginActions.validateUserEmail(username));
     } else if (password && sendOtp === true) {
-      dispatch(Actions.loginActions.velidateOtp(username, password));
+      dispatch(Actions.loginActions.velidateOtp(username, password, history));
     }
     else {
       dispatch(Actions.loginActions.validateUserEmail(username));
