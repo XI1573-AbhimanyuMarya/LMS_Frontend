@@ -6,6 +6,7 @@ import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import Typography from '@material-ui/core/Typography';
 import CourseCatalog from '../CourseCatalog';
 import { MESSAGES } from '../../../../modules/constants';
+import CourseCard from '../../../../components/CourseCard';
 
 const Carosals = (props) => {
 	const { coursesList, handleCourseClick } = props;
@@ -14,7 +15,8 @@ const Carosals = (props) => {
 	let renderCarousel = "";
 	if (coursesList && Array.isArray(coursesList)) {
 		const renderCourses = coursesList.map((course) => {
-			return <CourseCatalog key={course.id} course={course} handleCourseClick={handleCourseClick} />
+			// return <CourseCatalog key={course.id} course={course} handleCourseClick={handleCourseClick} />
+			return <CourseCard key={course.id} course={course} onButtonClick={handleCourseClick} />
 		});
 
 		renderCarousel = <div style={{ padding: `0 ${chevronWidth}px` }}>
