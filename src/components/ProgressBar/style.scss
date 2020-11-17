@@ -1,0 +1,18 @@
+.meter {
+    height: 18px;
+    position: relative;
+    background: #e8e8e8;
+    border-radius: 10px;
+    box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.meter>span {
+    height: 100%;
+    border-radius: 10px;
+    // background-color: #67b104; 
+    position: relative;
+    overflow: hidden;
+    text-align: end;
+    padding-left: 2px;
+}
+
