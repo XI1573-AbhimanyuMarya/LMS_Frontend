@@ -1,7 +1,4 @@
-package com.xebia.learningmanagement.response;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.xebia.learningmanagement.dtos.response;
 
 public class EmployeeResponse {
 

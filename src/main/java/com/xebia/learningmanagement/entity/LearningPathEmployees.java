@@ -1,8 +1,14 @@
 package com.xebia.learningmanagement.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
 public class LearningPathEmployees {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,35 +19,19 @@ public class LearningPathEmployees {
     @ManyToOne(cascade = CascadeType.ALL)
     private LearningPath learningPath;
 
-    public long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LearningPathEmployees)) return false;
+        LearningPathEmployees that = (LearningPathEmployees) o;
+        return getId() == that.getId() &&
+                getPercentCompleted() == that.getPercentCompleted() &&
+                getEmployee().equals(that.getEmployee()) &&
+                getLearningPath().equals(that.getLearningPath());
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public int getPercentCompleted() {
-        return percentCompleted;
-    }
-
-    public void setPercentCompleted(int percentCompleted) {
-        this.percentCompleted = percentCompleted;
-    }
-
-    public User getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(User employee) {
-        this.employee = employee;
-    }
-
-    public LearningPath getLearningPath() {
-        return learningPath;
-    }
-
-    public void setLearningPath(LearningPath learningPath) {
-        this.learningPath = learningPath;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getPercentCompleted(), getEmployee(), getLearningPath());
     }
 }

@@ -1,10 +1,19 @@
 package com.xebia.learningmanagement.service;
 
-import com.xebia.learningmanagement.model.LearningPathDto;
-
-import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import com.xebia.learningmanagement.dtos.LearningPathDto;
+import com.xebia.learningmanagement.dtos.ListOfLearningPathAssignedDto;
+import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
+import com.xebia.learningmanagement.exception.LearningPathException;
 
 public interface LearningPathService {
 
     void createLearningPath(LearningPathDto.Path path) throws Exception;
+
+    /***
+     *
+     * @param managerEmail
+     * @return
+     * @throws LearningPathException
+     */
+    ListOfLearningPathAssignedDto getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException;
 }

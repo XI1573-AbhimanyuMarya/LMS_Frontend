@@ -1,6 +1,6 @@
 package com.xebia.learningmanagement.service;
 
-import com.xebia.learningmanagement.model.UserDto;
+import com.xebia.learningmanagement.dtos.UserDto;
 
 import java.util.List;
 
