@@ -1,11 +1,16 @@
 package com.xebia.learningmanagement.service.impl;
 
+import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
+import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.exception.LearningPathException;
-import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
+import com.xebia.learningmanagement.exception.UsernameNotFoundException;
+import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.EmployeeLearningPathService;
+import com.xebia.learningmanagement.util.EmailSend;
 import com.xebia.learningmanagement.util.ErrorBank;
 import com.xebia.learningmanagement.util.MessageBank;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +18,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathService {
     @Autowired
     LearningPathEmployeesRepository learningPathEmployeesRepository;
+
+    @Autowired
+    protected LearningPathRepository learningPathRepository;
+
+    @Autowired
+    protected DurationRepository durationRepository;
+
+    @Autowired
+    protected UserRepository userRepository;
+
+    @Autowired
+    protected CourseRepository courseRepository;
+
+    @Autowired
+    protected EmailSend emailSend;
+
 
     /***
      *
@@ -51,4 +73,16 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
             throw new LearningPathException(l.getLocalizedMessage());
         }
     }
+
+    @Override
+    public void getMyAssignedLearningPaths(EmployeeEmailRequest employeeEmail) throws LearningPathException {
+        ModelMapper modelMapper =new ModelMapper();
+        User user = userRepository.findByUsername(employeeEmail.getEmployeeEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
+        List<LearningPathEmployees> learningPathEmployees = learningPathEmployeesRepository.findAll().stream().filter(a -> a.getEmployee().equals(user)).collect(Collectors.toList());
+
+    }
+
+
+
+
 }
