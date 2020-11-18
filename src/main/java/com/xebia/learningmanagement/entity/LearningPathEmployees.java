@@ -8,9 +8,9 @@ public class LearningPathEmployees {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private int percentCompleted;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private User employee;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private LearningPath learningPath;
 
     public long getId() {
