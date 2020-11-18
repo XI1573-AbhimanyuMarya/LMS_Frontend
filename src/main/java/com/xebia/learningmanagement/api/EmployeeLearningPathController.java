@@ -48,12 +48,13 @@ public class EmployeeLearningPathController {
     }
 
     /***
-     *
+     * Get mapping Does not support Request Body so changing the mapping to @PostMapping
+     * https://stackoverflow.com/questions/978061/http-get-with-request-body/983458#983458
      * @param employeeEmail
      * @return
      * @throws LearningPathException
      */
-    @GetMapping("/myLearningPath")
+    @PostMapping("/myLearningPath")
     public ResponseEntity getMyLearningPath(@RequestBody EmployeeEmailRequest employeeEmail) throws LearningPathException {
         UserResponse userResponse = new UserResponse();
         List<EmployeeLearningPathStatisticsDto> employeeLearningPathStatistics;
