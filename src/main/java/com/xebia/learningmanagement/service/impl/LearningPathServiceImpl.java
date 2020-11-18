@@ -1,14 +1,15 @@
 package com.xebia.learningmanagement.service.impl;
 
+import com.xebia.learningmanagement.dtos.LearningPathDto;
+import com.xebia.learningmanagement.dtos.LearningPathListDto;
+import com.xebia.learningmanagement.dtos.ListOfLearningPathAssignedDto;
+import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
+import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
-import com.xebia.learningmanagement.dtos.LearningPathDto;
-import com.xebia.learningmanagement.dtos.LearningPathListDto;
-import com.xebia.learningmanagement.dtos.ListOfLearningPathAssignedDto;
 import com.xebia.learningmanagement.repository.*;
-import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
 import org.modelmapper.ModelMapper;
@@ -151,4 +152,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         List<LearningPath> learningPathList = learningPathRepository.findAll().stream().filter(a -> a.getMadeBy().equals(user)).collect(Collectors.toList());
         return new ListOfLearningPathAssignedDto(learningPathList.stream().map(a -> modelMapper.map(a, LearningPathListDto.class)).collect(Collectors.toList()));
     }
+
+
+
 }
