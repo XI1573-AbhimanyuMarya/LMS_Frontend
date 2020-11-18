@@ -1,5 +1,6 @@
 package com.xebia.learningmanagement.service.impl;
 
+import com.google.common.base.CharMatcher;
 import com.xebia.learningmanagement.dtos.LearningPathDto;
 import com.xebia.learningmanagement.dtos.LearningPathManagerDto;
 import com.xebia.learningmanagement.dtos.ListOfLearningPathsAssignedByManagerDto;
@@ -15,6 +16,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +80,9 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setMadeBy(userRepository.findById(path.getMadeById()).get());
         learningPath.setName(path.getName());
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
-
+        learningPath.setStartDate(LocalDate.now());
+        Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0','9').retainFrom(learningPath.getDuration().getName()));
+        learningPath.setEndDate(LocalDate.now().plusMonths(lpDuration));
         getTemplatePlaceholderValuesAndSaveData(path, learningPath);
 
 //        Save learning Path After the mail & mapping between Learning path : Employee has been saved
