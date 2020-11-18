@@ -33,6 +33,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     LearningPathServiceImpl serviceimpl;
     @Autowired
     EmailSend emailSend;
+
     /***
      *
      * @param data
@@ -40,7 +41,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
      */
     @Override
     public void deleteLearningPath(Map data) throws LearningPathException {
-        Map<String,String> emailcontent=new HashMap<>();
+        Map<String, String> emailcontent = new HashMap<>();
         List<String> employeeLearningpathids = null;
         LearningPathEmployees learningpathemployees = null;
         try {
@@ -50,9 +51,9 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
                     String id = String.valueOf(employeeLearningpathids.get(i));
                     learningpathemployees = learningPathEmployeesRepository.findById(Long.valueOf(id)).orElse(null);
                     if (learningpathemployees != null) {
-                        emailcontent= setMailProperties(learningpathemployees);
+                        emailcontent = setMailProperties(learningpathemployees);
                         learningPathEmployeesRepository.deleteById(learningpathemployees.getId());
-                        emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_DISCARD.getValue(),emailcontent);
+                        emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_DISCARD.getValue(), emailcontent);
                     } else {
                         throw new LearningPathException(MessageBank.NO_DATA_FOUND);
                     }
@@ -82,21 +83,20 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     }
 
 
-
     /***
      *
      * @param learningpathemployees
      * @return
      */
     public Map setMailProperties(LearningPathEmployees learningpathemployees) {
-        Map<String,String> emailcontent=new HashMap<>();
-        List<Courses> courselist=null;
-        StringBuilder courses=new StringBuilder();
+        Map<String, String> emailcontent = new HashMap<>();
+        List<Courses> courselist = null;
+        StringBuilder courses = new StringBuilder();
         try {
-            courselist=  learningpathemployees.getLearningPath().getCourses();
-            if(courselist!=null){
-                for(int i=0;i<courselist.size();i++){
-                    Courses course=courselist.get(i);
+            courselist = learningpathemployees.getLearningPath().getCourses();
+            if (courselist != null) {
+                for (int i = 0; i < courselist.size(); i++) {
+                    Courses course = courselist.get(i);
                     courses.append(course.getDescription().toString());
                 }
             }
@@ -104,9 +104,9 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
             emailcontent.put("learningPathName", learningpathemployees.getLearningPath().getName());
             emailcontent.put("madeFor", learningpathemployees.getEmployee().getFullName());
             emailcontent.put("assignedCourse", courses.toString());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return  emailcontent;
+        return emailcontent;
     }
 }
