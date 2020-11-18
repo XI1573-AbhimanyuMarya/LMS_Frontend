@@ -1,9 +1,13 @@
 package com.xebia.learningmanagement.entity;
 
+import freemarker.template.utility.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,6 +27,12 @@ public class LearningPath {
     private List<Courses> courses;
     @ManyToOne
     private Duration duration;
+
+    @Column(name = "start_Date")
+    private LocalDate startDate;
+
+    @Column(name = "end_Date")
+    private LocalDate endDate;
 
     @Override
     public boolean equals(Object o) {
