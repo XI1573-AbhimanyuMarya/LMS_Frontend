@@ -1,7 +1,7 @@
 package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.dtos.LearningPathDto;
-import com.xebia.learningmanagement.dtos.ListOfLearningPathAssignedDto;
+import com.xebia.learningmanagement.dtos.ListOfLearningPathsAssignedByManagerDto;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
 import com.xebia.learningmanagement.exception.LearningPathException;
@@ -32,22 +32,23 @@ public class LearningPathController {
     }
 
     /***
-     *
+     * Get mapping Does not support Request Body so changing the mapping to @PostMapping
+     * https://stackoverflow.com/questions/978061/http-get-with-request-body/983458#983458
      * @param managerEmail
      * @return
      * @throws LearningPathException
      */
-    @GetMapping("/getAssignedLearningPaths")
+    @PostMapping("/getAssignedLearningPaths")
     public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerEmailRequest managerEmail) throws LearningPathException {
-        UserResponse userResponse =new UserResponse();
-        ListOfLearningPathAssignedDto allAssignedLearningPath;
+        UserResponse userResponse = new UserResponse();
+        ListOfLearningPathsAssignedByManagerDto allAssignedLearningPath;
         try {
-            if (managerEmail!=null && !"".equalsIgnoreCase(managerEmail.getManagerEmail())){
+            if (managerEmail != null && !"".equalsIgnoreCase(managerEmail.getManagerEmail())) {
                 allAssignedLearningPath = learningPathService.getAllAssignedLearningPath(managerEmail);
-            }else {
+            } else {
                 throw new LearningPathException("Wrong Format for Managers Email");
             }
-        }catch (LearningPathException e){
+        } catch (LearningPathException e) {
             userResponse.setStatus("failure");
             userResponse.setMessage(e.getLocalizedMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
@@ -56,5 +57,6 @@ public class LearningPathController {
         return new ResponseEntity(allAssignedLearningPath, HttpStatus.OK);
 
     }
+
 
 }

@@ -1,14 +1,14 @@
 package com.xebia.learningmanagement.service.impl;
 
+import com.xebia.learningmanagement.dtos.LearningPathDto;
+import com.xebia.learningmanagement.dtos.LearningPathManagerDto;
+import com.xebia.learningmanagement.dtos.ListOfLearningPathsAssignedByManagerDto;
+import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
-import com.xebia.learningmanagement.dtos.LearningPathDto;
-import com.xebia.learningmanagement.dtos.LearningPathListDto;
-import com.xebia.learningmanagement.dtos.ListOfLearningPathAssignedDto;
 import com.xebia.learningmanagement.repository.*;
-import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
 import org.modelmapper.ModelMapper;
@@ -145,10 +145,10 @@ public class LearningPathServiceImpl implements LearningPathService {
      * @throws LearningPathException
      */
     @Override
-    public ListOfLearningPathAssignedDto getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException {
+    public ListOfLearningPathsAssignedByManagerDto getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException {
         ModelMapper modelMapper = new ModelMapper();
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
         List<LearningPath> learningPathList = learningPathRepository.findAll().stream().filter(a -> a.getMadeBy().equals(user)).collect(Collectors.toList());
-        return new ListOfLearningPathAssignedDto(learningPathList.stream().map(a -> modelMapper.map(a, LearningPathListDto.class)).collect(Collectors.toList()));
+        return new ListOfLearningPathsAssignedByManagerDto(learningPathList.stream().map(a -> modelMapper.map(a, LearningPathManagerDto.class)).collect(Collectors.toList()));
     }
 }
