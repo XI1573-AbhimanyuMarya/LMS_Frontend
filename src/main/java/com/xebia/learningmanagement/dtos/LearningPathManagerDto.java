@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LearningPathListDto {
+public class LearningPathManagerDto {
 
     private Long id;
     private String name;

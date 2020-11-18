@@ -9,6 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ListOfLearningPathAssignedDto {
-    private List<LearningPathListDto> assignedLearningPaths;
+public class ListOfLearningPathsAssignedByManagerDto {
+    private List<LearningPathManagerDto> assignedLearningPaths;
 }

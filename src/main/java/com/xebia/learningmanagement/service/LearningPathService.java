@@ -1,7 +1,7 @@
 package com.xebia.learningmanagement.service;
 
 import com.xebia.learningmanagement.dtos.LearningPathDto;
-import com.xebia.learningmanagement.dtos.ListOfLearningPathAssignedDto;
+import com.xebia.learningmanagement.dtos.ListOfLearningPathsAssignedByManagerDto;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.exception.LearningPathException;
 
@@ -15,5 +15,5 @@ public interface LearningPathService {
      * @return
      * @throws LearningPathException
      */
-    ListOfLearningPathAssignedDto getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException;
+    ListOfLearningPathsAssignedByManagerDto getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException;
 }
