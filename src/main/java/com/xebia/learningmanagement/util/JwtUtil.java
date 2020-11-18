@@ -1,22 +1,18 @@
 package com.xebia.learningmanagement.util;
 
 import com.xebia.learningmanagement.exception.LearningPathException;
-import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-
 import java.util.function.Function;
-
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Service;
 
 
 @Service
