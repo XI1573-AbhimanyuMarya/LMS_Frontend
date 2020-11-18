@@ -1,8 +1,10 @@
 package com.xebia.learningmanagement.api;
 
+import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.exception.LearningPathException;
-import com.xebia.learningmanagement.response.UserResponse;
+import com.xebia.learningmanagement.dtos.response.UserResponse;
 import com.xebia.learningmanagement.service.EmployeeLearningPathService;
+import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.ErrorBank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,9 @@ import java.util.Map;
 public class EmployeeLearningPathController {
     @Autowired
     EmployeeLearningPathService employeelearningservice;
+
+    @Autowired
+    protected LearningPathService learningPathService;
 
     /***
      *
@@ -42,4 +47,14 @@ public class EmployeeLearningPathController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
         }
     }
+
+    @GetMapping("/myLearningPath")
+    public void getMyLearningPath(@RequestBody EmployeeEmailRequest employeeEmail) {
+        employeelearningservice.getMyAssignedLearningPaths(employeeEmail);
+    }
+
+
+
+
+
 }
