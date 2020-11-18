@@ -3,15 +3,11 @@ package com.xebia.learningmanagement.service.impl;
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.entity.Courses;
-import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
-import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
-import com.xebia.learningmanagement.dtos.LearningPathDto;
-import com.xebia.learningmanagement.dtos.UserDto;
 import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.EmployeeLearningPathService;
@@ -22,9 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -56,7 +50,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
                     String id = String.valueOf(employeeLearningpathids.get(i));
                     learningpathemployees = learningPathEmployeesRepository.findById(Long.valueOf(id)).orElse(null);
                     if (learningpathemployees != null) {
-                        emailcontent= emalcontent(learningpathemployees);
+                        emailcontent= setMailProperties(learningpathemployees);
                         learningPathEmployeesRepository.deleteById(learningpathemployees.getId());
                         emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_DISCARD.getValue(),emailcontent);
                     } else {
@@ -94,7 +88,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
      * @param learningpathemployees
      * @return
      */
-    public Map emalcontent(LearningPathEmployees learningpathemployees) {
+    public Map setMailProperties(LearningPathEmployees learningpathemployees) {
         Map<String,String> emailcontent=new HashMap<>();
         List<Courses> courselist=null;
         StringBuilder courses=new StringBuilder();
