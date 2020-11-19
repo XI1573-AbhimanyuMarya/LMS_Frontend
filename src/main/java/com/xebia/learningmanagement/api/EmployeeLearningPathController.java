@@ -2,7 +2,9 @@ package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
+import com.xebia.learningmanagement.dtos.request.EmployeeLearningRateRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
+import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.service.EmployeeLearningPathService;
 import com.xebia.learningmanagement.util.ErrorBank;
@@ -74,4 +76,27 @@ public class EmployeeLearningPathController {
         return new ResponseEntity(employeeLearningPathStatistics, HttpStatus.OK);
 
     }
+
+    @PutMapping("/myLearningRate")
+    public ResponseEntity updateLearningPathProgress(@RequestBody EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException {
+        UserResponse userResponse = new UserResponse();
+        EmployeeLearningPathStatisticsDto employee;
+        try {
+            if (employeeLearningRateRequest.getPercentCompleted() != null
+                    && employeeLearningRateRequest.getLearningPathEmployeeId() != null) {
+                employee = employeelearningservice.updateLearningPathProgress(employeeLearningRateRequest);
+            } else {
+                throw new LearningPathException("Wrong Format for Employee Learning Rate Request");
+            }
+
+        } catch (LearningPathException e) {
+            userResponse.setStatus("failure");
+            userResponse.setMessage(e.getLocalizedMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
+        }
+
+        return new ResponseEntity(employee, HttpStatus.ACCEPTED);
+    }
+
+
 }
