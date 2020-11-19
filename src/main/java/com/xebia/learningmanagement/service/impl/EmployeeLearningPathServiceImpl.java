@@ -2,6 +2,7 @@ package com.xebia.learningmanagement.service.impl;
 
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
+import com.xebia.learningmanagement.dtos.request.EmployeeLearningRateRequest;
 import com.xebia.learningmanagement.entity.Courses;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.entity.User;
@@ -81,6 +82,19 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         List<EmployeeLearningPathStatisticsDto> employeeLearningPathStatistics = learningPathEmployees.stream().map(a -> modelMapper.map(a, EmployeeLearningPathStatisticsDto.class)).collect(Collectors.toList());
         return employeeLearningPathStatistics;
     }
+
+    @Override
+    public EmployeeLearningPathStatisticsDto updateLearningPathProgress(EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException {
+        ModelMapper modelMapper = new ModelMapper();
+        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById((long) 1625).orElseThrow(() -> new UsernameNotFoundException(""));
+        learningPathEmployees.setPercentCompleted(employeeLearningRateRequest.getPercentCompleted());
+        LearningPathEmployees updatedLearningPathEmployee = learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
+        return modelMapper.map(updatedLearningPathEmployee,EmployeeLearningPathStatisticsDto.class);
+    }
+
+
+
+
 
 
     /***
