@@ -81,9 +81,9 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setMadeBy(userRepository.findById(path.getMadeById()).get());
         learningPath.setName(path.getName());
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
-        learningPath.setStartDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        learningPath.setStartDate(LocalDate.now());
         Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0','9').retainFrom(learningPath.getDuration().getName()));
-        learningPath.setEndDate(LocalDate.now().plusMonths(lpDuration).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        learningPath.setEndDate(LocalDate.now().plusMonths(lpDuration));
         getTemplatePlaceholderValuesAndSaveData(path, learningPath);
 
 //        Save learning Path After the mail & mapping between Learning path : Employee has been saved
