@@ -29,10 +29,10 @@ public class LearningPath {
     private Duration duration;
 
     @Column(name = "start_Date")
-    private LocalDate startDate;
+    private String startDate;
 
     @Column(name = "end_Date")
-    private LocalDate endDate;
+    private String endDate;
 
     @Override
     public boolean equals(Object o) {

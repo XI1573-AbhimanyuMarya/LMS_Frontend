@@ -15,7 +15,7 @@ public class LearningPathEmployeeDto {
     private EmployeeDto madeBy;
     private List<CoursesListDto> courses;
     private DurationDto duration;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String startDate;
+    private String endDate;
 
 }
