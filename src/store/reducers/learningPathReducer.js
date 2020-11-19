@@ -12,6 +12,8 @@ const initialState = {
     discardModelOpen: false,
     firstNextClicked: false,
     activePathStep: '',
+    errorMessage: '',
+    mycourses: []
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -46,7 +48,7 @@ export const learningPathReducer = (state = initialState, action) => {
                 courses: payload.list,
                 courseIdArr: payload.courseIdArr,
                 isLoading: false
-            };     
+            };
         case actionTypes.FETCH_USERS_REQUEST:
             return {
                 ...state,
@@ -63,7 +65,7 @@ export const learningPathReducer = (state = initialState, action) => {
                 ...state,
                 users: payload,
                 isLoading: false
-            };    
+            };
         case actionTypes.GET_FILTERED_USERS:
             return {
                 ...state,
@@ -76,13 +78,13 @@ export const learningPathReducer = (state = initialState, action) => {
                 users: payload.list,
                 userIdArr: payload.userIdArr,
                 isLoading: false
-            }; 
+            };
         case actionTypes.GET_SLIDER_DURATION:
             return {
                 ...state,
                 learningPathDuration: payload.val,
                 isLoading: false
-            }       
+            }
         case actionTypes.GET_LEARNING_PATH_NAME:
             return {
                 ...state,
@@ -90,12 +92,12 @@ export const learningPathReducer = (state = initialState, action) => {
                 isLoading: false
             }
         case actionTypes.PATH_MODEL_OPEN:
-            if(payload.val === true) {
+            if (payload.val === true) {
                 return {
                     ...state,
                     pathModelOpen: payload.val,
                     isLoading: false
-                } 
+                }
             } else {
                 delete state.filteredCoursesList;
                 delete state.filteredUsersList;
@@ -117,7 +119,7 @@ export const learningPathReducer = (state = initialState, action) => {
                 ...state,
                 discardModelOpen: payload.val,
                 isLoading: false
-            }   
+            }
         case actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST:
             return {
                 ...state,
@@ -136,7 +138,7 @@ export const learningPathReducer = (state = initialState, action) => {
                 isLoading: false,
                 message: payload.message,
                 status: payload.status
-            }  
+            }
         case actionTypes.GET_FIRST_NEXT_CLICKED:
             return {
                 ...state,
@@ -146,8 +148,49 @@ export const learningPathReducer = (state = initialState, action) => {
             return {
                 ...state,
                 activePathStep: payload.step,
-            }            
-                
+            }
+
+        case actionTypes.GET_ASSIGNED_LEARNING_PATH_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                errorMessage: ''
+            };
+        case actionTypes.GET_ASSIGNED_LEARNING_PATH_SUCCESS:
+            return {
+                ...state,
+                courses: payload,
+                isLoading: false,
+                errorMessage: ''
+            };
+        case actionTypes.GET_ASSIGNED_LEARNING_PATH_FAILURE:
+            return {
+                ...state,
+                courses: [],
+                isLoading: false,
+                errorMessage: payload.error
+            };
+
+        case actionTypes.GET_MY_LEARNING_PATH_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                errorMessage: ''
+            };
+        case actionTypes.GET_MY_LEARNING_PATH_SUCCESS:
+            return {
+                ...state,
+                mycourses: payload,
+                isLoading: false,
+                errorMessage: ''
+            };
+        case actionTypes.GET_MY_LEARNING_PATH_FAILURE:
+            return {
+                ...state,
+                mycourses: [],
+                isLoading: false,
+                errorMessage: payload.error
+            };
         default: return state;
     }
 }

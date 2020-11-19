@@ -8,6 +8,8 @@ export const SERVICE_URLS = {
     FETCH_COURSES: `${API_HOST_PATH}/api/getAllCourses`,
     FETCH_USERS: `${API_HOST_PATH}/getAllUsers`,
     CREATE_LEARNING_PATH: `${API_HOST_PATH}/api/learningPath`,
+    ASSIGNED_PATH: `${API_HOST_PATH}/api/getAssignedLearningPaths`,
+    MY_PATH: `${API_HOST_PATH}/employeelearning/myLearningPath`,
 }
 
 export const API_STATUS = {
@@ -22,20 +24,21 @@ export const MESSAGES = {
 };
 
 export const LEARNING_PATH_LABELS = {
-    CREATE_LEARNING_PATH : 'Create Learning Path',
-    LEARNING_PATH_DETAILS : 'Please provide details below to add learning path',
-    LEARNING_PATH_CREATED_AND_ASSIGNED : 'Learning path has created & assigned successfully',
-    LEARNING_PATH_CREATED : 'Learning path has created sucessfully',
-    EMAIL_SENT_TO_EMPLOYEE : 'An email has been sent to the employees',
-    SEARCH_COURSE : 'Search Course',
-    LEARNING_PATH_NAME : 'Learning Path Name',
-    COURSE_CATALOG : 'Course Catalog',
-    COURSE_CATALOG1 : 'Learning Path Completed',
+    CREATE_LEARNING_PATH: 'Create Learning Path',
+    LEARNING_PATH_DETAILS: 'Please provide details below to add learning path',
+    LEARNING_PATH_CREATED_AND_ASSIGNED: 'Learning path has created & assigned successfully',
+    LEARNING_PATH_CREATED: 'Learning path has created sucessfully',
+    EMAIL_SENT_TO_EMPLOYEE: 'An email has been sent to the employees',
+    SEARCH_COURSE: 'Search Course',
+    LEARNING_PATH_NAME: 'Learning Path Name',
+    COURSE_CATALOG: 'Course Catalog',
+    COURSE_CATALOG1: 'Learning Path Completed',
+    LEARNING_PATH_COMPLETED: 'Learning Path Completed',
     COURSE_CATALOG2: 'My Learning Path',
-    CHART_CATALOG: 'Popular Courses',
+    MY_LEARNING_PATH: 'My Learning Path',
     SEARCH_EMPLOYEE: 'Search Employee',
-    SELECT_LEARNING_PATH_DURATION : 'Select Learning Path Duration',
-    SOMETHING_WENT_WRONG : 'Something went wrong!',
+    SELECT_LEARNING_PATH_DURATION: 'Select Learning Path Duration',
+    SOMETHING_WENT_WRONG: 'Something went wrong!',
     CLICK_OVER_CLOSE_BUTTON: 'Click over close button to create this again'
 };
 
@@ -50,20 +53,20 @@ export const BUTTONS = {
 export const STEPS = ['Courses', 'Assign Users', 'Set Duration'];
 
 export const MARKS = [
-	{
-		value: 3,
-		label: '3 Months',
-	},
-	{
-		value: 6,
-		label: '6 Months',
-	},
-	{
-		value: 9,
-		label: '9 Months',
-	},
-	{
-		value: 12,
-		label: '12 Months',
-	},
+    {
+        value: 3,
+        label: '3 Months',
+    },
+    {
+        value: 6,
+        label: '6 Months',
+    },
+    {
+        value: 9,
+        label: '9 Months',
+    },
+    {
+        value: 12,
+        label: '12 Months',
+    },
 ];

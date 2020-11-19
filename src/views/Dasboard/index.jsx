@@ -54,86 +54,7 @@ const Dashboard = () => {
     }
 
     return (
-        <>
-            <Grid className={classes.gridRoot} container >
-                <Grid item xs={3}>
-                    <CardMedia
-                        className={classes.logo}
-                        image={XebiaLogo}
-                        title="Xebia"
-                    />
-                </Grid>
-                <Grid container item xs={6} justify="center" className={classes.dashboardBtns}>
-                    <Box display="flex" flexDirection="row">
-                        <Box height="25%" className = {classes.boxButtons}>
-                        <Link to="/dashboard">
-                            <Button
-                                variant="contained"
-                                className={classes.dashboardBtn}
-                                startIcon={<CardMedia
-                                    className={classes.dashboardIcon}
-                                    image={DashboardSelected}
-                                    title="Dashboard"
-                                />}
-                            >
-                                Dashboard
-                    </Button>
-                    </Link>
-                        </Box>
-                        <Box height="25%">
-                        <Link to="/learningpath">
-                            <Button
-                                variant="contained"
-                                color="default"
-                                className={classes.button}
-                                startIcon={<CardMedia
-                                    className={classes.learningPathIcon}
-                                    image={LearningPathImg}
-                                    title="Contemplative Reptile"
-                                />}
-                            >
-                                
-                              My Learning Path
-                    </Button>
-                    </Link>
-                        </Box>
-                        <Box height="25%">
-                        <Link to="/chart">
-                            <Button
-                                variant="contained"
-                                color="default"
-                                className={classes.button}
-                                startIcon={<CardMedia
-                                    className={classes.learningPathIcon}
-                                    image={LearningPathImg}
-                                    title="Contemplative Reptile"
-                                />}
-                            >
-                                
-                              Chart
-                    </Button>
-                    </Link>
-                        </Box>
-                        <Box height="25%">
-                            <Button
-                                variant="contained"
-                                color="default"
-                                disabled={true}
-                                startIcon={<CardMedia
-                                    className={classes.dashboardIcon}
-                                    image={Approvals}
-                                    title="Contemplative Reptile"
-                                />}
-                            >
-                                Approvals
-                    </Button>
-                        </Box>
-                    </Box>
-                </Grid>
-                <Grid container item xs={3} justify="center" alignItems="center">
-                    <User userData={loginState.user} logout={logoutUser} />
-                </Grid>
-            </Grid>
+        <Box component="div">
             <Container component="main" maxWidth="xs" className={classes.mainContainer}>
                 <CssBaseline />
                 <div className={classes.paper}>
@@ -167,7 +88,7 @@ const Dashboard = () => {
             <DiscardPopup
                 discardHandler={discardHandler}
             />
-        </>
+        </Box>
     );
 }
 
