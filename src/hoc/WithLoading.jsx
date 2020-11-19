@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from '../components/Loader';
+import Navbar from '../components/Navbar';
 
 function WithLoading(WrappedComponent) {
     return (props) => {
@@ -8,8 +9,10 @@ function WithLoading(WrappedComponent) {
         const activePathStep = pathStore?.activePathStep;
         return (
             <React.Fragment>
-                { isLoading && activePathStep && <Loader isLoading/>}
-                <WrappedComponent {...props}/>
+                <Navbar>
+                    {isLoading && activePathStep && <Loader isLoading />}
+                    <WrappedComponent {...props} />
+                </Navbar>
             </React.Fragment>
         )
     }
