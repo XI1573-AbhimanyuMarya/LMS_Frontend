@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,9 +81,9 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setMadeBy(userRepository.findById(path.getMadeById()).get());
         learningPath.setName(path.getName());
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
-        learningPath.setStartDate(LocalDate.now());
+        learningPath.setStartDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0','9').retainFrom(learningPath.getDuration().getName()));
-        learningPath.setEndDate(LocalDate.now().plusMonths(lpDuration));
+        learningPath.setEndDate(LocalDate.now().plusMonths(lpDuration).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         getTemplatePlaceholderValuesAndSaveData(path, learningPath);
 
 //        Save learning Path After the mail & mapping between Learning path : Employee has been saved
