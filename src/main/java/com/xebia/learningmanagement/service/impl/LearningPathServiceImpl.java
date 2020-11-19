@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +80,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setName(path.getName());
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
         learningPath.setStartDate(LocalDate.now());
-        Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0','9').retainFrom(learningPath.getDuration().getName()));
+        Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(learningPath.getDuration().getName()));
         learningPath.setEndDate(LocalDate.now().plusMonths(lpDuration));
         getTemplatePlaceholderValuesAndSaveData(path, learningPath);
 
@@ -109,15 +107,12 @@ public class LearningPathServiceImpl implements LearningPathService {
             List<Courses> coursesListById = courseRepository.findAllById(path.getCoursesId());
             List<String> stringList = coursesListById.stream().map(Courses::getName).map(String::toUpperCase).collect(Collectors.toList());
 
-            //todo Send Email without template
-           /* EmailSend.setEmail(user.getUsername(), "LMS PORTAL",
-                    "You have been assigned below mentioned Courses by " + madeByUserFullName + " \n " + stringList +
-                            "\n Timeline for Completion of the course is : " + path.getDuration() + "Months"
-            );*/
+            LocalDate startDate = learningPath.getStartDate();
+            LocalDate endDate = learningPath.getEndDate();
 
             //todo Set Email Properties
             try {
-                setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList);
+                setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList, startDate, endDate);
 
             } catch (Exception e) {
                 throw new Exception("Unable to send Email & Save data");
@@ -130,7 +125,12 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
 
-    private void setMailPropertiesAndSendEmail(User user, LearningPathDto.Path path, String madeByUserFullName, List<String> stringList) throws Exception {
+    private void setMailPropertiesAndSendEmail(User user,
+                                               LearningPathDto.Path path,
+                                               String madeByUserFullName,
+                                               List<String> stringList,
+                                               LocalDate startDate,
+                                               LocalDate endDate) throws Exception {
 
         Map<String, String> model = new HashMap<>();
         String appendedCourses = stringList.stream().collect(Collectors.joining(", \n"));
@@ -140,6 +140,8 @@ public class LearningPathServiceImpl implements LearningPathService {
         model.put("madeBy", madeByUserFullName);
         model.put("timeline", String.valueOf(path.getDuration()));
         model.put("assignedCourse", appendedCourses);
+        model.put("startDate", startDate.toString());
+        model.put("endDate", endDate.toString());
 
         emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_ASSIGN.getValue(), model);
     }
