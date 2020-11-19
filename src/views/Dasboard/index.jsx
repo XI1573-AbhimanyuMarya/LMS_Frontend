@@ -66,6 +66,7 @@ const Dashboard = () => {
                 <Grid container item xs={6} justify="center" className={classes.dashboardBtns}>
                     <Box display="flex" flexDirection="row">
                         <Box height="25%" className = {classes.boxButtons}>
+                        <Link to="/dashboard">
                             <Button
                                 variant="contained"
                                 className={classes.dashboardBtn}
@@ -77,6 +78,7 @@ const Dashboard = () => {
                             >
                                 Dashboard
                     </Button>
+                    </Link>
                         </Box>
                         <Box height="25%">
                         <Link to="/learningpath">
@@ -92,6 +94,23 @@ const Dashboard = () => {
                             >
                                 
                               My Learning Path
+                    </Button>
+                    </Link>
+                        </Box>
+                        <Box height="25%">
+                        <Link to="/chart">
+                            <Button
+                                variant="contained"
+                                color="default"
+                                className={classes.button}
+                                startIcon={<CardMedia
+                                    className={classes.learningPathIcon}
+                                    image={LearningPathImg}
+                                    title="Contemplative Reptile"
+                                />}
+                            >
+                                
+                              Chart
                     </Button>
                     </Link>
                         </Box>
