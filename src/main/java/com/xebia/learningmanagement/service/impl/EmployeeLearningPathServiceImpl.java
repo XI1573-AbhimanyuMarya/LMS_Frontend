@@ -89,12 +89,8 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById((long) 1625).orElseThrow(() -> new UsernameNotFoundException(""));
         learningPathEmployees.setPercentCompleted(employeeLearningRateRequest.getPercentCompleted());
         LearningPathEmployees updatedLearningPathEmployee = learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
-        return modelMapper.map(updatedLearningPathEmployee,EmployeeLearningPathStatisticsDto.class);
+        return modelMapper.map(updatedLearningPathEmployee, EmployeeLearningPathStatisticsDto.class);
     }
-
-
-
-
 
 
     /***

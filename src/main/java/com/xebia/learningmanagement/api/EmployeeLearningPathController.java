@@ -4,7 +4,6 @@ import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeLearningRateRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
-import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.service.EmployeeLearningPathService;
 import com.xebia.learningmanagement.util.ErrorBank;
