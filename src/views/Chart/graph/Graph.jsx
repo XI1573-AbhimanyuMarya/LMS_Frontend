@@ -51,14 +51,13 @@ export default class App extends React.Component {
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        // labelString: 'Month'
                     }
                 }],
                 yAxes: [{
                     stacked: false,
                     scaleLabel: {
                         display: true,
-                        // labelString: 'Value'
+
                     },
                     ticks: {
                         min: 0,
