@@ -29,10 +29,13 @@ public class LearningPath {
     private Duration duration;
 
     @Column(name = "start_Date")
-    private String startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_Date")
-    private String endDate;
+    private LocalDate endDate;
+
+    @Column(name = "isExpired")
+    private Boolean isLearningPathExpired = Boolean.FALSE;;
 
     @Override
     public boolean equals(Object o) {
