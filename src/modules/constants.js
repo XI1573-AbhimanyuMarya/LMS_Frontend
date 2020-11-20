@@ -1,5 +1,4 @@
 const API_HOST_PATH = process.env.REACT_APP_BASE_API_URL;
-// const API_HOST_PATH = 'http://localhost:8085';
 //'https://learningmanagementxeb.herokuapp.com';
 
 export const SERVICE_URLS = {
