@@ -7,6 +7,7 @@ import com.xebia.learningmanagement.entity.Courses;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.enums.EmailType;
+import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
@@ -86,7 +87,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     @Override
     public EmployeeLearningPathStatisticsDto updateLearningPathProgress(EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException {
         ModelMapper modelMapper = new ModelMapper();
-        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById((long) 1625).orElseThrow(() -> new UsernameNotFoundException(""));
+        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById((long) employeeLearningRateRequest.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("LearningPath Employee Id not found"));
         learningPathEmployees.setPercentCompleted(employeeLearningRateRequest.getPercentCompleted());
         LearningPathEmployees updatedLearningPathEmployee = learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
         return modelMapper.map(updatedLearningPathEmployee, EmployeeLearningPathStatisticsDto.class);
