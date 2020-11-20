@@ -17,7 +17,6 @@ const Carosals = (props) => {
 	
 	if (coursesList && Array.isArray(coursesList)) {
 		const renderCourses = coursesList.map((course) => {
-			// return <CourseCatalog key={course.id} course={course} handleCourseClick={handleCourseClick} />
 			return <CourseCard key={course.id} course={course} onButtonClick={handleCourseClick} />
 		});
 

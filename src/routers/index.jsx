@@ -5,13 +5,10 @@ import ProtectedRoute from '../hoc/ProtectedRoute';
 import SignIn from '../views/SignIn/index';
 import Dashboard from '../views/Dasboard/index';
 import CourseCatalog from '../views/learnig/LearningSelectCourses';
-<<<<<<< HEAD
-import Chart from '../views/Chart';
+// import Chart from '../views/Chart';
 import Assigned from '../views/Assignedlearningpath'
-=======
 import NoCourse from '../views/LearningPath/NoCourse';
 
->>>>>>> 278825eba1fc3fa34dc05a9e6bcd9a35826a0475
 
 const Routers = () => {
   return (

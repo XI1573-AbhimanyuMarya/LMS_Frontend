@@ -20,8 +20,9 @@ import XebiaLogo from '../../images/Logo.svg'
 import User from '../../components/User';
 import { Link, withRouter } from 'react-router-dom'
 import Scrollbars from 'react-custom-scrollbars';
+import WithLoading from '../../hoc/WithLoading';
 
-const SelectCourses = () => {
+const AssignedLearningPath = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
@@ -86,4 +87,5 @@ const SelectCourses = () => {
   );
 }
 
-export default SelectCourses;
+export default AssignedLearningPath;
+// export default WithLoading(AssignedLearningPath);
