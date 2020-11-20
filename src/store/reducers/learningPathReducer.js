@@ -13,7 +13,8 @@ const initialState = {
     firstNextClicked: false,
     activePathStep: '',
     errorMessage: '',
-    mycourses: []
+    mycourses: [],
+    assignedCources:[]
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -159,14 +160,14 @@ export const learningPathReducer = (state = initialState, action) => {
         case actionTypes.GET_ASSIGNED_LEARNING_PATH_SUCCESS:
             return {
                 ...state,
-                courses: payload,
+                assignedCources: payload,
                 isLoading: false,
                 errorMessage: ''
             };
         case actionTypes.GET_ASSIGNED_LEARNING_PATH_FAILURE:
             return {
                 ...state,
-                courses: [],
+                assignedCources: [],
                 isLoading: false,
                 errorMessage: payload.error
             };
