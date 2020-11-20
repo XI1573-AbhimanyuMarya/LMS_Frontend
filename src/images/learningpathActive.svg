@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 24 30">
     <g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <g stroke="#A8ADC2" stroke-width="1.25">
+        <g stroke="#621D58" stroke-width="1.25">
             <g>
                 <g>
                     <path d="M22 20.483H3.86c-2.13 0-3.86 1.684-3.86 3.759C0 26.318 1.73 28 3.86 28H22V0H2.316C.76 0 .032 1.123 0 2.63v21.612M4 24L22 24M5 20L5 0" transform="translate(-42 -372) translate(0 -43) translate(43 416)"/>
