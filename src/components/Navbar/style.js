@@ -13,6 +13,7 @@ export const useStyles = makeStyles((theme) => ({
     appBar: {
         width: `calc(100% - ${drawerWidth})`,
         marginLeft: drawerWidth,
+        backgroundColor: "#ffffff"
     },
     drawer: {
         width: drawerWidth,
@@ -25,8 +26,7 @@ export const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
-        padding: theme.spacing(3),
+        padding: theme.spacing(2),
     },
     title: {
         display: 'block',
@@ -43,32 +43,42 @@ export const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
     },
     notification: {
-        width: 35, 
-        height: 24, 
+        width: 35,
+        height: 24,
         color: "#999999"
     },
-    navIcons:{
+    navIcons: {
         width: 25,
         height: 25,
         objectFit: "contain",
     },
-    MuiListItemIcon:{
+    MuiListItemIcon: {
         minWidth: 28
     },
-    userIcon:{
+    userIcon: {
         marginTop: theme.spacing(2),
         width: theme.spacing(10),
         height: theme.spacing(10),
     },
-    name:{
+    name: {
         marginTop: theme.spacing(2)
     },
-    designation:{
+    designation: {
         // margin: theme.spacing(2),
         color: "#a1a1a1"
     },
-    navLinks:{
-        marginTop: theme.spacing(2)
-        
+    navLinks: {
+        marginTop: theme.spacing(5),
+        "& a": {
+            textDecoration: "none",
+            color: "#a1a1a1"
+        }
+    },
+    main: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexGrow: 1
     },
 }));

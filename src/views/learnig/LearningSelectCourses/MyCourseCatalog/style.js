@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme => ({
 	root: {
 		maxWidth: 345,
-		border: '3px solid #67b104'
+		border: '3px solid #67b104',
+		borderRadius: 8
 	},
 	courseType: {
 		textTransform: 'capitalize',
@@ -33,7 +34,8 @@ export const useStyles = makeStyles(theme => ({
 	},
 	selected: {
 		maxWidth: 345,
-		border: '2px solid #67B104'
+		border: '2px solid #67B104',
+		borderRadius: 4
 	},
 	checkIcon: {
 		color: '#67B104',

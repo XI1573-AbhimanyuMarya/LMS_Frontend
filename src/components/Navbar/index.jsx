@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import CardMedia from "@material-ui/core/CardMedia";
 import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
@@ -17,47 +18,55 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 
 import XebiaLogo from "../../images/Logo.svg";
 import DashboardIcon from '../../images/dashboard.svg';
 import LearningPath from '../../images/LearningPath.svg';
+import Logout from '../../images/Logout.svg';
 import AddLearningPath from '../../images/AddLearningPath.svg';
 import Approvals from '../../images/Approvals.svg';
 import { useStyles } from "./style";
-
+import Actions from "../../store/actions";
 import userIcon from '../../images/Profile.jpg'
+import Copyright from '../Copyright'
 
 const Navbar = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loginState = useSelector((res) => res.loginState);
-  const {user} = loginState
-  let title = 'dashboard'
-  let notification = 1
-  let notifLabel = `show ${notification} new notifications"`
+  const { user } = loginState;
+  let title = 'dashboard';
+  let notification = 1;
+  let notifLabel = `show ${notification} new notifications"`;
   let extracontent;
   const navLinks = [
     {
       name: "Dashboard",
-      iconPath: DashboardIcon
+      iconPath: DashboardIcon,
+      to: "dashboard"
     },
     {
       name: "My Learning Path",
-      iconPath: LearningPath
+      iconPath: LearningPath,
+      to: "learningpath"
     },
     {
       name: "Assign Learning Path",
-      iconPath: AddLearningPath
+      iconPath: AddLearningPath,
+      to: "/assigned"
     },
     {
       name: "Approvals",
-      iconPath: Approvals
+      iconPath: Approvals,
+      to: ""
     },
     {
       name: "Manage assigned learning",
-      iconPath: DashboardIcon
+      iconPath: DashboardIcon,
+      to: ""
     },
-  ]
+  ];
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -108,25 +117,39 @@ const Navbar = (props) => {
 
         <List className={classes.navLinks}>
           {navLinks.map(item => (
-            <ListItem button key={item.name}>
-              <ListItemIcon className={classes.MuiListItemIcon}>
-                <Icon >
-                  <img src={item.iconPath} className={classes.navIcons} />
-                </Icon>
-              </ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItem>
+            <Link to={item.to} key={item.name}>
+              < ListItem button >
+                <ListItemIcon className={classes.MuiListItemIcon}>
+                  <Icon >
+                    <img src={item.iconPath} className={classes.navIcons} />
+                  </Icon>
+                </ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItem>
+            </Link>
           ))}
-
         </List>
-      </Drawer>
+        <div className={classes.grow} />
+        < ListItem button onClick={() => dispatch(Actions.loginActions.logout())} className={classes.navLinks}>
+          <ListItemIcon className={classes.MuiListItemIcon}>
+            <Icon >
+              <img src={Logout} className={classes.navIcons} />
+            </Icon>
+          </ListItemIcon>
+          <ListItemText primary="logout"  />
+        </ListItem>
+
+      </Drawer >
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Paper style={{ minHeight: "88vh" }} elevation={3}>
+        <Paper style={{ minHeight: "86vh" }} elevation={3} className={classes.main}>
           {props.children}
+          <Box pt={4}>
+            <Copyright />
+          </Box>
         </Paper>
       </main>
-    </div>
+    </div >
   );
 }
 
