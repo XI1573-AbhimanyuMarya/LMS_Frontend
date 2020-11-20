@@ -12,7 +12,8 @@ import java.util.Objects;
 public class LearningPathEmployees {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Column(name = "id")
+    private long learningPathEmployeesId;
     private int percentCompleted;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private User employee;
@@ -24,7 +25,7 @@ public class LearningPathEmployees {
         if (this == o) return true;
         if (!(o instanceof LearningPathEmployees)) return false;
         LearningPathEmployees that = (LearningPathEmployees) o;
-        return getId() == that.getId() &&
+        return getLearningPathEmployeesId() == that.getLearningPathEmployeesId() &&
                 getPercentCompleted() == that.getPercentCompleted() &&
                 getEmployee().equals(that.getEmployee()) &&
                 getLearningPath().equals(that.getLearningPath());
@@ -32,6 +33,6 @@ public class LearningPathEmployees {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getPercentCompleted(), getEmployee(), getLearningPath());
+        return Objects.hash(getLearningPathEmployeesId(), getPercentCompleted(), getEmployee(), getLearningPath());
     }
 }

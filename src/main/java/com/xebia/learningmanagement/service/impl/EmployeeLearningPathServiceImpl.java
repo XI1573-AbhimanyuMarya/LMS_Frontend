@@ -53,7 +53,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
                     learningpathemployees = learningPathEmployeesRepository.findById(Long.valueOf(id)).orElse(null);
                     if (learningpathemployees != null) {
                         emailcontent = setMailProperties(learningpathemployees);
-                        learningPathEmployeesRepository.deleteById(learningpathemployees.getId());
+                        learningPathEmployeesRepository.deleteById(learningpathemployees.getLearningPathEmployeesId());
                         emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_DISCARD.getValue(), emailcontent);
                     } else {
                         throw new LearningPathException(MessageBank.NO_DATA_FOUND);
