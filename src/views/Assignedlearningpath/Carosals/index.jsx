@@ -11,7 +11,7 @@ import CourseCard from '../CourseCatalog/index';
 const Carosals = (props) => {
 	const { coursesList, handleCourseClick } = props;
 	const [activeItemIndex, setActiveItemIndex] = useState(0);
-	const chevronWidth = 40;
+	const chevronWidth = 10;
 	let renderCarousel = "";
 
 	
@@ -25,7 +25,7 @@ const Carosals = (props) => {
 				requestToChangeActive={setActiveItemIndex}
 				activeItemIndex={activeItemIndex}
 				numberOfCards={4}
-				gutter={20}
+				gutter={10}
 				leftChevron={<ArrowBackIosOutlinedIcon />}
 				rightChevron={<ArrowForwardIosOutlinedIcon />}
 				outsideChevron

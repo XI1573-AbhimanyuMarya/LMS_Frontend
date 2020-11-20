@@ -23,7 +23,7 @@ import Box from '@material-ui/core/Box';
 import XebiaLogo from "../../images/Logo.svg";
 import DashboardIcon from '../../images/dashboard.svg';
 import DashboardActive from '../../images/dashboardActive.svg';
-import LearningPath from '../../images/learningpath.svg'
+import LearningPath from '../../images/LearningPath.svg'
 import LearningPathActive from '../../images/learningpathActive.svg';
 import Logout from '../../images/Logout.svg';
 import AddLearningPath from '../../images/AddLearningPath.svg';
@@ -64,27 +64,36 @@ const Navbar = (props) => {
     {
       name: "Assign Learning Path",
       iconPath: AddLearningPath,
-      to: "/assigned",
+      to: "assigned",
       isActive: currentPath === "/assigned",
-      canAccess: user.designation !== "Consultant"
+      canAccess: true
+      // canAccess: user.designation !== "Consultant"
     },
     {
       name: "Approvals",
       iconPath: Approvals,
       to: "approvals",
       isActive: currentPath === "/approvals",
-      canAccess: user.designation !== "Consultant"
+      canAccess: true
+      // canAccess: user.designation !== "Consultant"
     },
     {
       name: "Manage assigned learning",
       iconPath: DashboardIcon,
       to: "manage",
       isActive: currentPath === "/manage",
-      // canAccess: user.designation !== "Consultant"
-      canAccess: true
+      canAccess: user.designation !== "Consultant"
+      // canAccess: true
     },
   ];
-
+  let head ;
+  head = navLinks.filter(link => `/${link.to}` === currentPath)
+  if (head !== undefined){
+    head = head[0]
+  }else{
+    head = { name: "Dashboard" }
+  }
+  console.log(head, currentPath);
   useEffect(() => {
     setPath(location.pathname)
 
@@ -100,7 +109,7 @@ const Navbar = (props) => {
             title="Dashboard"
           />
           <Typography className={classes.title} variant="h6" noWrap >
-            {title}
+            { head?.name}
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>

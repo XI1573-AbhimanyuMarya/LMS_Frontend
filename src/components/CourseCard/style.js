@@ -12,7 +12,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   header: {
     margin: "10px 0px",
-    marginLeft: "-15px"
+    marginLeft: "-15px",
+    flexWrap: "wrap"
   },
   compatency: {
     textAlign: "center",

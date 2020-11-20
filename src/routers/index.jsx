@@ -17,9 +17,9 @@ const Routers = () => {
         <Route path='/login' exact component={SignIn} />
         <ProtectedRoute exact path="/dashboard" component={Dashboard} />
         <ProtectedRoute exact path="/learningpath" component={CourseCatalog} />
-        <ProtectedRoute exact path="/assigned" component={NoCourse} />
-        <ProtectedRoute exact path="/" component={Dashboard} />
-        <ProtectedRoute exact path="/assignedlearningpath" component={Assigned} />
+        <ProtectedRoute exact path="/assigned" component={Assigned} />
+        <ProtectedRoute exact path="/manage" component={Dashboard} />
+        <ProtectedRoute exact path="/approvals" component={Dashboard} />
       </Switch>
     </Router>
   )

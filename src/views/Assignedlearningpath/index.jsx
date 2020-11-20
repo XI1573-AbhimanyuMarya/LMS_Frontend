@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
-import InputLabel from '@material-ui/core/InputLabel';
-import { Grid } from '@material-ui/core';
+// import Carosals from '../LearningPath/SelectCourses/Carosals';
 import Carosals from './Carosals/index';
-// import Carosals1 from './MyCarosals/index';
 import Actions from '../../store/actions';
 import CourseSkelton from '../../components/Skelton/CourseSkelton';
-// import CourseSkelton1 from '../../../components/Skelton/MyCourseSkelton';
 import { useStyles } from './style';
-import { LEARNING_PATH_LABELS } from '../../modules/constants';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import CardMedia from '@material-ui/core/CardMedia';
-import XebiaLogo from '../../images/Logo.svg'
-import User from '../../components/User';
-import { Link, withRouter } from 'react-router-dom'
-import Scrollbars from 'react-custom-scrollbars';
+
 import WithLoading from '../../hoc/WithLoading';
 
 const AssignedLearningPath = () => {
@@ -30,8 +18,12 @@ const AssignedLearningPath = () => {
   const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
   const [touch, setTouch] = useState(false);
   const loginState = useSelector(res => res.loginState);
+  const { assignedCources } = learningPathState;
 
 
+  const onCourseClickHandler = (courseId) => {
+    console.log(courseId);
+  }
   const logoutUser = () => {
     dispatch(Actions.loginActions.logout());
   }
@@ -40,6 +32,7 @@ const AssignedLearningPath = () => {
    */
   useEffect(() => {
     if (courseIdArr?.length === 0) {
+      // dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username));
       dispatch(Actions.learningPathActions.fetchAllCourses());
     } else {
       setSelectedCoursesArr(courseIdArr)
@@ -53,6 +46,7 @@ const AssignedLearningPath = () => {
   let finalset = Array.from(set1)
   let finaldata = []
 
+
   for (var i = 0; i < finalset.length; i++) {
     var result = headings.filter(item => item.category.name == finalset[i]).map((name) => { return name })
     finaldata.push({
@@ -63,24 +57,25 @@ const AssignedLearningPath = () => {
 
   return (
     <div>
-        <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" p={3} style={{position:"unset !important"}}>
-          {finaldata.map(item => {
-            var Item = (
-              <>
-                <Box alignItems="flex-start" py={2} pl={5}>
-                  <Typography variant="h6" style={{ color: "#621d58" }}>
-                    {item.name}
-                  </Typography>
-                </Box>
-                <Box alignItems="center">
-                  {isLoading && item?.length === 0 && <CourseSkelton />}
-                  <Carosals coursesList={item.courses} />
-                </Box>
-              </>
-            )
-            return Item
-          })}
-        </Box>
+      <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" p={3} style={{ position: "unset !important" }}>
+        {finaldata.map(item => {
+          var Item = (
+            <>
+              <Box alignItems="flex-start" py={2} pl={5}>
+                <Typography variant="h6" style={{ color: "#621d58" }}>
+                  {item.name}
+                </Typography>
+              </Box>
+              <Box alignItems="center">
+                {isLoading && item?.length === 0 && <CourseSkelton />}
+                <Carosals coursesList={item.courses}x />
+                {/* <Carosals coursesList={item.courses} handleCourseClick={(id) => onCourseClickHandler(id)} /> */}
+              </Box>
+            </>
+          )
+          return Item
+        })}
+      </Box>
     </div>
   );
 }
