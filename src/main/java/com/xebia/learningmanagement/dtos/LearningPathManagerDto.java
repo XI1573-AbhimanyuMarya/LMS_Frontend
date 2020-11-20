@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class LearningPathManagerDto {
 
-    private Long id;
+    private Long learningPathId;
     private String name;
     private List<MadeForEmployeeDto> madeFor;
     private List<CoursesListDto> courses;

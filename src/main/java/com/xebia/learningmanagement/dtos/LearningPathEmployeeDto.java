@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 public class LearningPathEmployeeDto {
 
-    private Long id;
+    private Long learningPathId;
     private String name;
     private EmployeeDto madeBy;
     private List<CoursesListDto> courses;
