@@ -1,5 +1,6 @@
 const API_HOST_PATH = process.env.REACT_APP_BASE_API_URL;
 //'https://learningmanagementxeb.herokuapp.com';
+// const API_HOST_PATH =  'https://xebia-lms.herokuapp.com'
 
 export const SERVICE_URLS = {
     LOGIN: `${API_HOST_PATH}/username`,
@@ -33,7 +34,10 @@ export const LEARNING_PATH_LABELS = {
     COURSE_CATALOG: 'Course Catalog',
     COURSE_CATALOG1: 'Learning Path Completed',
     LEARNING_PATH_COMPLETED: 'Learning Path Completed',
-    COURSE_CATALOG2: 'My Learning Path',
+    COURSE_CAT: 'Data Science',
+    COURSE_CAT1: 'Cloud Services',
+    COURSE_CAT2: 'Develompent',
+    COURSE_CAT3: 'Design (UX UI)',
     MY_LEARNING_PATH: 'My Learning Path',
     SEARCH_EMPLOYEE: 'Search Employee',
     SELECT_LEARNING_PATH_DURATION: 'Select Learning Path Duration',
