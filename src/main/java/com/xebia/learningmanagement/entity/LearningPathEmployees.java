@@ -2,8 +2,10 @@ package com.xebia.learningmanagement.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +16,8 @@ public class LearningPathEmployees {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long learningPathEmployeesId;
+    @NotNull
+    @Range(min = 0, max = 100)
     private int percentCompleted;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private User employee;
