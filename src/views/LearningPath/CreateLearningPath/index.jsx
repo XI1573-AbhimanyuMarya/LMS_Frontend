@@ -118,7 +118,7 @@ const CreateLearningPath = (props) => {
                                 image={AddLearningPath}
                                 title={LEARNING_PATH_LABELS.CREATE_LEARNING_PATH}
                             />
-                            <Typography component="h1" variant="h5" align="center">
+                            <Typography component="h3" variant="h6" align="center">
                                 { learningPathName && activePathStep !== 0 ? learningPathName : LEARNING_PATH_LABELS.CREATE_LEARNING_PATH }
                             </Typography>
                         </Box>

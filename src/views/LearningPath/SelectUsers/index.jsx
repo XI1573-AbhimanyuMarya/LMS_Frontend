@@ -132,7 +132,15 @@ const SelectUsers = () => {
 	return (
 		<React.Fragment>
 			<Box component='div' display="flex" justifyContent="center">
-				<TextField id="standard-search" label={LEARNING_PATH_LABELS.SEARCH_EMPLOYEE} type="search" variant="outlined" className={classes.searchField}  name="searchEmployee" onChange={changeHandler}/>
+				<TextField 
+					id="standard-search" 
+					label={LEARNING_PATH_LABELS.SEARCH_EMPLOYEE} 
+					type="search" 
+					variant="outlined" 
+					className={classes.searchField}  
+					name="searchEmployee" 
+					size="small"
+					onChange={changeHandler}/>
 			</Box>
 			<Box className={classes.usersContainer} display="flex" flexDirection="row" flexWrap="wrap"  justifyContent="center" py={3}>
 				{isLoading && usersList?.length === 0 && <UserSkelton />}

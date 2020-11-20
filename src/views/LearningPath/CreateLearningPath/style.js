@@ -3,14 +3,7 @@ import StepConnector from '@material-ui/core/StepConnector';
 
 export const useStyles = makeStyles((theme) => ({
 	layout: {
-		width: 'auto',
-		marginLeft: theme.spacing(2),
-		marginRight: theme.spacing(2),
-		[theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-			width: '80%',
-			marginLeft: 'auto',
-			marginRight: 'auto',
-		},
+		width: '76vw',
 		justifyContent: 'center',
 	},
 	stepper: {

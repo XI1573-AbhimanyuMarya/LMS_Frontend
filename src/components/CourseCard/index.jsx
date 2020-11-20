@@ -13,20 +13,19 @@ import ProgressBar from '../ProgressBar';
 
 const CourseCard = (props) => {
   const classes = useStyles();
-  const { course, onButtonClick } = props;
+  const { course, onButtonClick, showButton } = props;
   course.progress = '';
   let btnlabel = "Let's begin"
-  if (course.progress) {
+  if (course?.progress) {
     btnlabel = "Explore"
   }
-
-
+  
   let darkBar = 0;
-  if (course.competency.name === "Beginner") {
+  if (course?.competency?.name === "Beginner") {
     darkBar = 1;
-  } else if (course.competency.name === "Intermediate") {
+  } else if (course?.competency?.name === "Intermediate") {
     darkBar = 2
-  } else if (course.competency.name === "Expert") {
+  } else if (course?.competency?.name === "Expert") {
     darkBar = 3
   }
 
@@ -47,7 +46,7 @@ const CourseCard = (props) => {
             </Grid>
             <Grid item xs>
               <Typography component="span" className={classes.courseLevel}>
-                {course.competency.name}
+                {course?.competency?.name}
               </Typography>
             </Grid>
           </Grid>
@@ -77,9 +76,13 @@ const CourseCard = (props) => {
         </Grid>
 
       </CardContent>
-      <CardActions className={classes.action}>
-        <Button size="large" className={classes.btn} onClick={onButtonClick}>{btnlabel}</Button>
-      </CardActions>
+      {
+        showButton ?
+          <CardActions className={classes.action}>
+            <Button size="large" className={classes.btn} onClick={onButtonClick}>{btnlabel}</Button>
+          </CardActions>
+          : ''
+      }
     </Card>
   );
 }
