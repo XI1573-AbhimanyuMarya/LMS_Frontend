@@ -25,7 +25,7 @@ const DataCard = (props) => {
     </Paper>
   )
 }
-const SelectCourses = () => {
+const DashboardDetail = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
@@ -55,7 +55,7 @@ const SelectCourses = () => {
       : ''
     : courses;
   return (
-    <React.Fragment>
+    <div>
       <div style={{ display: "flex", height: "20%" }}>
         <Paper className={classes.rectangle1} style={{ display: "flex", flexDirection: "column" }}>
           <Typography style={{ color: "#000000", marginLeft: "10px", marginTop: "10px" }}>
@@ -105,8 +105,8 @@ const SelectCourses = () => {
           <Carosals1 coursesList={coursesList1} />
         </Box>
       </Box>
-    </React.Fragment>
+    </div>
   );
 }
 
-export default SelectCourses;
+export default DashboardDetail;

@@ -39,7 +39,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Line height="40px" 
+        <Line height="60px" 
           data={state}
           options={{
               responsive:true,

@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 
-import AddLearningPath from '../../../images/LearningPath.svg'
+import AddLearningPath from '../../../images/learningpath.svg'
 import { Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 

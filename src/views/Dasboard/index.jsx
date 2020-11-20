@@ -19,7 +19,7 @@ import LearningPath from '../LearningPath/index';
 import { useStyles } from './style';
 import WithLoading from '../../hoc/WithLoading';
 import Actions from '../../store/actions';
-
+import DashboardDetail from '../Chart'
 
 
 const Dashboard = () => {
@@ -35,7 +35,6 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username))
   }, [])
-  console.log(assignedCources, loginState);
   /**
    * function to open learning path model
    */
@@ -96,9 +95,7 @@ const Dashboard = () => {
     <>
       {
         showDashboard ?
-          <Typography variant="caption" >
-            dashboard is coming soon
-          </Typography >
+          <DashboardDetail />
           :
           renderWelcome
       }
