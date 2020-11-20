@@ -62,9 +62,8 @@ const AssignedLearningPath = () => {
   }
 
   return (
-    <React.Fragment>
-      <Scrollbars>
-        <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" p={3} >
+    <div>
+        <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" p={3} style={{position:"unset !important"}}>
           {finaldata.map(item => {
             var Item = (
               <>
@@ -82,10 +81,8 @@ const AssignedLearningPath = () => {
             return Item
           })}
         </Box>
-      </Scrollbars>
-    </React.Fragment>
+    </div>
   );
 }
 
-export default AssignedLearningPath;
-// export default WithLoading(AssignedLearningPath);
+export default WithLoading(AssignedLearningPath);
