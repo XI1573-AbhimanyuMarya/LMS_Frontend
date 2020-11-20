@@ -19,6 +19,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import XebiaLogo from '../../images/Logo.svg'
 import User from '../../components/User';
 import { Link, withRouter } from 'react-router-dom'
+import Scrollbars from 'react-custom-scrollbars';
 
 const SelectCourses = () => {
 	const classes = useStyles();
@@ -61,7 +62,7 @@ const SelectCourses = () => {
 									
 	return (
 		<React.Fragment>
-
+			<Scrollbars>
 			  <Grid className={classes.gridRoot} container style={{display:"flex", justifyContent:"space-between", marginTop:"20px"}}>
                 <Grid item xs={3}>
                     <CardMedia
@@ -123,6 +124,7 @@ const SelectCourses = () => {
 					<Carosals1 coursesList={coursesList1}/>
 				</Box>
 			</Box>
+			</Scrollbars>
 		</React.Fragment>
 	);
 }

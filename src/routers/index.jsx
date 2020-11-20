@@ -6,6 +6,7 @@ import SignIn from '../views/SignIn/index';
 import Dashboard from '../views/Dasboard/index';
 import CourseCatalog from '../views/learnig/LearningSelectCourses';
 import Chart from '../views/Chart';
+import Assigned from '../views/Assignedlearningpath'
 
 const Routers = () => {
   return (
@@ -16,6 +17,7 @@ const Routers = () => {
         <ProtectedRoute exact path="/learningpath" component={CourseCatalog} />
         <ProtectedRoute exact path="/chart" component={Chart} />
         <ProtectedRoute exact path="/" component={Dashboard} />
+        <ProtectedRoute exact path="/assignedlearningpath" component={Assigned} />
       </Switch>
     </Router>
   )
