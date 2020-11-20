@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class EmployeeLearningPathStatisticsDto {
 
-    private Long id;
+    private Long learningPathEmployeesId;
     private int percentCompleted;
     private LearningPathEmployeeDto learningPath;
 }
