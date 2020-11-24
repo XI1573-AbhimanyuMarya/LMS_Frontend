@@ -93,7 +93,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: "10px 0px",
     color: "#000000",
     [theme.breakpoints.up('md')]: {
-      fontSize: "13px",
+      fontSize: "11px",
     padding: "10px 0px",
     color: "#000000",
     },
@@ -106,13 +106,25 @@ export const useStyles = makeStyles((theme) => ({
   courseDesc: {
     fontSize: 12,
     padding: "10px 0px",
-    color: '#858585'
+    color: '#858585',
+    [theme.breakpoints.up('md')]: {
+      fontSize: "10px",
+    },
+    [theme.breakpoints.up('lg')]: {
+      fontSize: "12px",
+    },
   },
   displayNone: {
     display: "none"
   },
   action:{
-    marginTop: "auto"
+    marginTop: "auto",
+    [theme.breakpoints.up('md')]: {
+      marginTop:"-36px"
+    },
+    [theme.breakpoints.up('lg')]: {
+      marginTop:"-4px"
+    }
   },
   btn: {
     borderRadius: "8px",
@@ -123,6 +135,29 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     textAlign: "center",
     color: "#f07402",
-    marginTop: "auto"
+    marginTop: "auto",
+    [theme.breakpoints.up('md')]: {
+      borderRadius: "8px",
+    border: "solid 1px #f07301",
+    backgroundColor: "white",
+    width: "100%",
+    height:"70%",
+    fontSize: "13px",
+    fontWeight: 500,
+    textAlign: "center",
+    color: "#f07402",
+    // marginTop: "auto",
+    },
+    [theme.breakpoints.up('lg')]: {
+      borderRadius: "8px",
+    border: "solid 1px #f07301",
+    backgroundColor: "white",
+    width: "100%",
+    fontSize: "16px",
+    fontWeight: 500,
+    textAlign: "center",
+    color: "#f07402",
+    marginTop: "auto",
+    },
   },
 }));

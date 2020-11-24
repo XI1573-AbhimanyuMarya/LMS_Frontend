@@ -13,12 +13,40 @@ export const useStyles = makeStyles(theme => ({
 		borderRadius: 15,
 		padding: 3,
 		color: '#4a90e2',
-		border: '1px solid #B2C8E4',
+    border: '1px solid #B2C8E4',
+    [theme.breakpoints.up('md')]: {
+      textTransform: 'capitalize',
+      fontSize: 10,
+      fontWeight: 400,
+      borderRadius: 15,
+      padding: 3,
+      color: '#4a90e2',
+      border: '1px solid #B2C8E4',
+    },
+    [theme.breakpoints.up('lg')]: {
+      textTransform: 'capitalize',
+      fontSize: 12,
+      fontWeight: 400,
+      borderRadius: 15,
+      padding: 3,
+      color: '#4a90e2',
+      border: '1px solid #B2C8E4',
+    },
 	},
 	courseLevel: {
 		fontSize: 15,
 		fontWeight: 600,
-		color: '#858585'
+    color: '#858585',
+    [theme.breakpoints.up('md')]: {
+      fontSize: 13,
+		fontWeight: 600,
+    color: '#858585',
+    },
+    [theme.breakpoints.up('lg')]: {
+      fontSize: 15,
+		fontWeight: 600,
+    color: '#858585',
+    },
 	},
 	courseTitle: {
 		fontSize: 15,
@@ -26,11 +54,34 @@ export const useStyles = makeStyles(theme => ({
 		color: '#000000',
 		marginTop: 10,
 		marginBottom: 10,
-		//margin: theme.spacing(1),
-	},
+    //margin: theme.spacing(1),
+    [theme.breakpoints.up('md')]: {
+      fontSize: 10,
+      fontWeight: 600,
+      color: '#000000',
+      marginTop: 5,
+      marginBottom: 5,
+    },
+    [theme.breakpoints.up('lg')]: {
+      fontSize: 15,
+		fontWeight: 600,
+		color: '#000000',
+		marginTop: 10,
+		marginBottom: 10,
+  },
+},
 	courseDesc: {
 		fontSize: 12,
-		color: '#858585'
+    color: '#858585',
+    [theme.breakpoints.up('md')]: {
+      fontSize: 10,
+    color: '#858585',
+    },
+    [theme.breakpoints.up('lg')]: {
+      fontSize: 12,
+      color: '#858585',
+  },
+    
 	},
 	selected: {
 		maxWidth: 345,
@@ -57,6 +108,28 @@ export const useStyles = makeStyles(theme => ({
 		lineheight: 'normal',
 		letterspacing: 'normal',
 		textalign: 'center',
-		color: '#ffffff'
+    color: '#ffffff',
+    [theme.breakpoints.up('md')]: {
+      background:"#67b104",
+      height:"25px",
+      display:"flex",
+		justifyContent:"center",
+		alignItems:"center",
+		// width: '90px',
+		// height: '19px',
+		fontfamily: 'Roboto',
+		fontsize: '12px',
+		fontweight: '500',
+		fontstretch: 'normal',
+		fontstyle: 'normal',
+		lineheight: 'normal',
+		letterspacing: 'normal',
+		textalign: 'center',
+    color: '#ffffff',
+    },
+    [theme.breakpoints.up('lg')]: {
+      height:"40px",
+    },
+    
 	}
 }));
