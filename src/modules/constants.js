@@ -38,6 +38,7 @@ export const LEARNING_PATH_LABELS = {
     COURSE_CAT1: 'Cloud Services',
     COURSE_CAT2: 'Develompent',
     COURSE_CAT3: 'Design (UX UI)',
+    CHART_CATALOG: 'Popular Learning Paths',
     MY_LEARNING_PATH: 'My Learning Path',
     SEARCH_EMPLOYEE: 'Search Employee',
     SELECT_LEARNING_PATH_DURATION: 'Select Learning Path Duration',

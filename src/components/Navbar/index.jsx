@@ -173,9 +173,9 @@ const Navbar = (props) => {
         </ListItem>
 
       </Drawer >
-      <main className={classes.content}>
+      <main className={classes.content} style={{backgroundColor:"#f1f3f7"}}>
         <div className={classes.toolbar} />
-        <Paper style={{ minHeight: "86vh" }} elevation={3} className={classes.main}>
+        <Paper style={{ minHeight: "86vh", backgroundColor:"#f1f3f7", boxShadow:"none"}} className={classes.main}>
           {props.children}
           <Box pt={4}>
             <Copyright />

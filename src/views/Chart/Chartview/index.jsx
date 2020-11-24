@@ -7,8 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import CourseCatalog from '../ChartViewCatalog';
 import { MESSAGES } from '../../../modules/constants';
 import CourseCard from '../../../components/CourseCard';
+import { useStyles } from './style';
 
 const Carosals1 = (props) => {
+  const classes = useStyles();
   const { coursesList, handleCourseClick } = props;
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const chevronWidth = 40;
@@ -19,15 +21,16 @@ const Carosals1 = (props) => {
       return <CourseCard key={course.id} course={course} onButtonClick={handleCourseClick} />
     });
 
-    renderCarousel = <div style={{ padding: `0 ${chevronWidth}px` }}>
-      <ItemsCarousel
+    renderCarousel = <div >
+      <ItemsCarousel 
         requestToChangeActive={setActiveItemIndex}
         activeItemIndex={activeItemIndex}
         numberOfCards={4}
         gutter={20}
-        leftChevron={<ArrowBackIosOutlinedIcon />}
-        rightChevron={<ArrowForwardIosOutlinedIcon />}
+        leftChevron={<ArrowBackIosOutlinedIcon className={classes.left}/>}
+        rightChevron={<ArrowForwardIosOutlinedIcon className={classes.right} />}
         outsideChevron
+        alwaysShowChevrons={true}
         chevronWidth={chevronWidth}
       >
         {
