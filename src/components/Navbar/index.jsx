@@ -32,6 +32,7 @@ import { useStyles } from "./style";
 import Actions from "../../store/actions";
 import userIcon from '../../images/Profile.jpg'
 import Copyright from '../Copyright'
+import TopNav from '../TopNav';
 
 const Navbar = (props) => {
   const classes = useStyles();
@@ -40,9 +41,6 @@ const Navbar = (props) => {
   const [path, setPath] = useState('/')
   const loginState = useSelector((res) => res.loginState);
   const { user } = loginState;
-  let title = 'dashboard';
-  let notification = 1;
-  let notifLabel = `show ${notification} new notifications"`;
   let extracontent, currentPath;
   currentPath = path
 
@@ -74,8 +72,8 @@ const Navbar = (props) => {
       iconPath: Approvals,
       to: "approvals",
       isActive: currentPath === "/approvals",
-      canAccess: true
-      // canAccess: user.designation !== "Consultant"
+      // canAccess: true
+      canAccess: user.designation !== "Consultant"
     },
     {
       name: "Manage assigned learning",
@@ -86,14 +84,6 @@ const Navbar = (props) => {
       // canAccess: true
     },
   ];
-  let head ;
-  head = navLinks.filter(link => `/${link.to}` === currentPath)
-  if (head !== undefined){
-    head = head[0]
-  }else{
-    head = { name: "Dashboard" }
-  }
-  console.log(head, currentPath);
   useEffect(() => {
     setPath(location.pathname)
 
@@ -101,33 +91,7 @@ const Navbar = (props) => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar} color="transparent">
-        <Toolbar>
-          <CardMedia
-            className={classes.imgXebia}
-            image={XebiaLogo}
-            title="Dashboard"
-          />
-          <Typography className={classes.title} variant="h6" noWrap >
-            { head?.name}
-          </Typography>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            {extracontent ? extracontent : ''}
-            <IconButton aria-label={notifLabel} color="inherit">
-              <Badge
-                badgeContent={notification}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                color="secondary">
-                <NotificationsOutlinedIcon className={classes.notification} />
-              </Badge>
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
+
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -148,7 +112,8 @@ const Navbar = (props) => {
 
         <List className={classes.navList}>
           {navLinks.map(item => (
-            <div className={[classes.navLinks, item.isActive ? classes.active : '', item.canAccess ? '' : classes.disableLink].join(' ')}>
+            <div key={item.to}
+            className={[classes.navLinks, item.isActive ? classes.active : '', item.canAccess ? '' : classes.disableLink].join(' ')}>
               <Link to={item.to} key={item.name} >
                 < ListItem button >
                   <ListItemIcon className={classes.MuiListItemIcon}>
@@ -156,7 +121,7 @@ const Navbar = (props) => {
                       <img src={item.iconPath} className={classes.navIcons} />
                     </Icon>
                   </ListItemIcon>
-                  <ListItemText primary={item.name} />
+                  <ListItemText primary={item.name} className={classes.linkItem}/>
                 </ListItem>
               </Link>
             </div>
@@ -171,17 +136,11 @@ const Navbar = (props) => {
           </ListItemIcon>
           <ListItemText primary="logout" />
         </ListItem>
-
       </Drawer >
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Paper style={{ minHeight: "86vh" }} elevation={3} className={classes.main}>
-          {props.children}
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Paper>
-      </main>
+      {props.children}
+      <div className="copyright">
+        <Copyright />
+      </div>
     </div >
   );
 }

@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { DRAWER_WIDTH } from '../../modules/constants';
 
-
-const drawerWidth = "18%";
+const drawerWidth = DRAWER_WIDTH;
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,36 +24,19 @@ export const useStyles = makeStyles((theme) => ({
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(2),
-  },
-  title: {
-    display: 'block',
-  },
-  sectionDesktop: {
-    display: 'none',
+  navIcons: {
+    width: 20,
+    objectFit: "contain",
     [theme.breakpoints.up('md')]: {
-      display: 'flex',
+      width: 22,
+    },
+    [theme.breakpoints.up('xl')]: {
+      width: 25,
     },
   },
-  imgXebia: {
-    width: 90,
-    height: 25,
-    marginRight: theme.spacing(2),
-  },
-  notification: {
-    width: 35,
-    height: 24,
-    color: "#999999"
-  },
-  navIcons: {
-    width: 25,
-    height: 25,
-    objectFit: "contain",
-  },
   MuiListItemIcon: {
-    minWidth: 28
+    minWidth: 28,
+    margin: '0px 7px 0px 0px',
   },
   userIcon: {
     marginTop: theme.spacing(2),
@@ -75,14 +58,18 @@ export const useStyles = makeStyles((theme) => ({
     "& a": {
       textDecoration: "none",
       color: "#a8adc2"
-    }
+    },
   },
-  main: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexGrow: 1
+  linkItem: {
+    "& span ": {
+      fontSize: 12,
+      [theme.breakpoints.up('md')]: {
+        fontSize: 14,
+      },
+      [theme.breakpoints.up('xl')]: {
+        fontSize: 16,
+      },
+    }
   },
   disableLink: {
     pointerEvents: 'none'
@@ -92,5 +79,5 @@ export const useStyles = makeStyles((theme) => ({
     "& a": {
       color: "#621d58"
     }
-  },
+  }
 }));

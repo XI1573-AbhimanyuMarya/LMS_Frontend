@@ -20,7 +20,7 @@ const Routers = () => {
         <ProtectedRoute exact path="/assigned" component={Assigned} />
         <ProtectedRoute exact path="/manage" component={Dashboard} />
         <ProtectedRoute exact path="/approvals" component={Dashboard} />
-      </Switch>
+        <ProtectedRoute exact path="/" component={Dashboard} />      </Switch>
     </Router>
   )
 }

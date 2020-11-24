@@ -20,6 +20,8 @@ import { useStyles } from './style';
 import WithLoading from '../../hoc/WithLoading';
 import Actions from '../../store/actions';
 import DashboardDetail from '../Chart'
+import TopNav from '../../components/TopNav';
+
 
 
 const Dashboard = () => {
@@ -28,7 +30,7 @@ const Dashboard = () => {
   const loginState = useSelector(res => res.loginState);
   const learningPathState = useSelector(state => state.learningPathState);
   const userName = getOr('User Name', 'user.fullName', loginState);
-  const { assignedCources } = learningPathState;
+  const { assignedCources, pathModelOpen } = learningPathState;
 
   const showDashboard = !assignedCources.length
 
@@ -39,6 +41,7 @@ const Dashboard = () => {
    * function to open learning path model
    */
   const handleClickOpen = () => {
+    console.log('cli');
     dispatch(Actions.learningPathActions.pathModelOpen(true));
   };
 
@@ -56,6 +59,21 @@ const Dashboard = () => {
       dispatch(Actions.learningPathActions.pathModelOpen(false));
     }
   }
+
+  const modalBtn = (
+    <Button
+      type="button"
+      fullWidth
+      variant="contained"
+      className={classes.navSubmit}
+      onClick={handleClickOpen}
+      startIcon={<AddCircleOutlineOutlinedIcon style={{ fontSize: 20 }} />}
+    >
+      Create Learning Path
+    </Button>
+  );
+
+
   const renderWelcome = (<Box component="div" m="auto">
     <Container component="main" maxWidth="xs" className={classes.mainContainer}>
       <CssBaseline />
@@ -92,14 +110,22 @@ const Dashboard = () => {
     />
   </Box>)
   return (
-    <>
-      {
-        showDashboard ?
-          <DashboardDetail />
-          :
-          renderWelcome
-      }
-    </>
+    <div>
+      <TopNav>
+        {showDashboard ? modalBtn : ''}
+      </TopNav>
+      <main className="main-content">
+        <div className={classes.toolbar} />
+        <div className="container">
+          {
+            showDashboard && !pathModelOpen ?
+              <DashboardDetail />
+              :
+              renderWelcome
+          }
+        </div>
+      </main>
+    </div>
   );
 }
 
