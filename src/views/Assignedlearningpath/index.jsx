@@ -61,14 +61,14 @@ const AssignedLearningPath = () => {
         {finaldata.map(item => {
           var Item = (
             <>
-              <Box alignItems="flex-start" py={2} pl={5}>
-                <Typography variant="h6" style={{ color: "#621d58" }}>
+              <Box alignItems="flex-start" py={2} >
+                <Typography variant="h6" style={{ color: "#621d58", fontSize:"16px", padding:"0" }}>
                   {item.name}
                 </Typography>
               </Box>
               <Box alignItems="center">
                 {isLoading && item?.length === 0 && <CourseSkelton />}
-                <Carosals coursesList={item.courses}x />
+                <Carosals coursesList={item.courses} />
                 {/* <Carosals coursesList={item.courses} handleCourseClick={(id) => onCourseClickHandler(id)} /> */}
               </Box>
             </>

@@ -35,7 +35,7 @@ const CourseCard = (props) => {
       <CardContent>
         <Grid container spacing={2} alignContent="space-between" className={classes.header}>
           <Grid item xs style={{margin:"-15px 0 0 10px"}}>
-		  <Typography variant="body1" component="h6" className={classes.courseTitle} style={{fontSize:"20px"}}>
+		  <Typography variant="body1" component="h6" className={classes.courseTitle} >
             {course.name}
           </Typography>
           </Grid>

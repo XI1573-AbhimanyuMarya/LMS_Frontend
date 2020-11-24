@@ -78,11 +78,11 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   main: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexGrow: 1
+    // display: "flex",
+    // flexDirection: "column",
+    // justifyContent: "space-between",
+    // alignItems: "center",
+    // flexGrow: 1
   },
   disableLink: {
     pointerEvents: 'none'

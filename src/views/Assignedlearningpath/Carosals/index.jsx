@@ -20,7 +20,7 @@ const Carosals = (props) => {
 			return <CourseCard key={course.id} course={course} onButtonClick={handleCourseClick} />
 		});
 
-		renderCarousel = <div style={{ padding: `0 ${chevronWidth}px` }}>
+		renderCarousel = <div style={{ padding: `0` }}>
 			<ItemsCarousel
 				requestToChangeActive={setActiveItemIndex}
 				activeItemIndex={activeItemIndex}
