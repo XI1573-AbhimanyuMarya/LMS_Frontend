@@ -6,6 +6,9 @@ html, body {
     background-size: 100vw 94vh;
     background-repeat: no-repeat;
     overflow: hidden;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 #root {

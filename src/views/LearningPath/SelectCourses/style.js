@@ -7,19 +7,20 @@ export const useStyles = makeStyles((theme) => ({
 	courseLabel: {
 		color: '#00000',
 		float: 'right',
-		padding: '20px'
+		padding: '10px'
 	},
 	searchField: {
 		width: '70%',
 		background: '#FFFFFF',
-		margin: theme.spacing(2),
+		// margin: theme.spacing(2),
 	},
 	error: {
 		color: '#ff0033',
 	},
 	catalogContainer: {
 		background: '#F1F3F7',
-		borderRadius: "0.5%"
+		borderRadius: "0.5%",
+		padding: theme.spacing(1)
 	},
 	pathNameField: {
 		background: '#FFFFFF',

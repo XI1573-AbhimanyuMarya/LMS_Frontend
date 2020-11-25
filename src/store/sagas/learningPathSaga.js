@@ -69,7 +69,6 @@ function* getAssignedLearningPaths(action) {
     try {
         const response = yield call(fetchPath, action.payload);
         const { data } = response;
-        console.log(data);
         yield put({ type: actionTypes.GET_ASSIGNED_LEARNING_PATH_SUCCESS, payload: data });
 
     } catch (error) {

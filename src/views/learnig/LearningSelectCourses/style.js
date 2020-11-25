@@ -4,6 +4,10 @@ export const useStyles = makeStyles((theme) => ({
 	pathName: {
 		margin: theme.spacing(2),
 	},
+	headerText: {
+		color: "#621d58",
+		fontSize: 16
+	},
 	courseLabel: {
 		color: '#00000',
 		float: 'right',
@@ -18,8 +22,8 @@ export const useStyles = makeStyles((theme) => ({
 		color: '#ff0033',
 	},
 	catalogContainer: {
-		background: '#F1F3F7',
-		borderRadius: "0.5%"
+		borderRadius: "0.5%",
+		width: "80vw"
 	},
 	pathNameField: {
 		background: '#FFFFFF',

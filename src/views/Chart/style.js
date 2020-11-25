@@ -1,0 +1,68 @@
+import { makeStyles } from '@material-ui/core/styles';
+
+export const useStyles = makeStyles((theme) => ({
+  pathName: {
+    margin: theme.spacing(2),
+  },
+  courseLabel: {
+    color: '#00000',
+    float: 'right',
+    padding: '20px'
+  },
+  searchField: {
+    width: '70%',
+    background: '#FFFFFF',
+    margin: theme.spacing(2),
+  },
+  error: {
+    color: '#ff0033',
+  },
+  catalogContainer: {
+    background: '#F1F3F7',
+    borderRadius: "0.5%",
+    width: "77vw",
+    margin: "auto"
+  },
+  pathNameField: {
+    background: '#FFFFFF',
+  },
+  logo: {
+    height: 30,
+    width: 91.5,
+    marginLeft: 50
+  },
+  rectangle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 'auto',
+    minWidth: '24%',
+    minHeight: theme.spacing(10),
+    // padding: '42px 59px 42px 69px',
+    borderradius: '8px',
+    boxShadow: `2px 6px 16px 0 rgba(98, 29, 88, 0.08)`,
+    backgroundcolor: '#ffffff',
+    fontSize: "50px",
+  },
+  rectangle1: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    flexDirection: "column",
+    margin: 'auto',
+    minWidth: '24%',
+    // minHeight: theme.spacing(10),
+    borderradius: '8px',
+    boxShadow: `2px 6px 16px 0 rgba(98, 29, 88, 0.08)`,
+    backgroundcolor: '#ffffff',
+    fontSize: "24px",
+  },
+  text: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardValue: {
+    fontSize: 28
+  },
+}));

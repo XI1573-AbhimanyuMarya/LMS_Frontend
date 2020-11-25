@@ -15,8 +15,11 @@ const Carosals = (props) => {
 	let renderCarousel = "";
 	if (coursesList && Array.isArray(coursesList)) {
 		const renderCourses = coursesList.map((course) => {
+			return course.learningPath.courses.map(item => (
+				<CourseCard key={item.courses.id} course={item.courses} onButtonClick={handleCourseClick} showButton={true} />
+				))
 			// return <CourseCatalog key={course.id} course={course} handleCourseClick={handleCourseClick} />
-			return <CourseCard key={course.id} course={course} onButtonClick={handleCourseClick} />
+
 		});
 
 		renderCarousel = <div style={{ padding: `0 ${chevronWidth}px` }}>
@@ -40,23 +43,23 @@ const Carosals = (props) => {
 		<React.Fragment>
 			{
 				renderCarousel !== "" ? renderCarousel
-				: 
-				<div>
-					<Typography variant="h6" align="center">
-						{MESSAGES.NO_DATA_FOUND}
-					</Typography>
-				</div>
+					:
+					<div>
+						<Typography variant="h6" align="center">
+							{MESSAGES.NO_DATA_FOUND}
+						</Typography>
+					</div>
 			}
 		</React.Fragment>
 	);
 };
 
 Carosals.propTypes = {
-    coursesList: PropTypes.oneOfType([
+	coursesList: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.array
 	]),
-    // handleCourseClick: PropTypes.func.isRequired,
+	// handleCourseClick: PropTypes.func.isRequired,
 };
 
 export default Carosals;

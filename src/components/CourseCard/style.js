@@ -4,10 +4,10 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     height: "100%",
-    borderRadius: "8px",
     backgroundColor: "#ffffff",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    borderRadius: 4
 
   },
   header: {
@@ -32,7 +32,7 @@ export const useStyles = makeStyles((theme) => ({
     color: '#858585'
   },
   courseTitle: {
-    fontSize: "22px",
+    fontSize: "16px",
     padding: "10px 0px",
     color: "#000000"
   },
