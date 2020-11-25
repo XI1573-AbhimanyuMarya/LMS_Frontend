@@ -25,21 +25,22 @@ body {
   width: 100%;
 }
 
-.copyright {
-  position: fixed;
-  bottom: 0;
-  text-align: center;
-  padding-bottom: 10px;
-  width: 100%
-}
-
 .main-content {
   width: 100%;
   min-height: 100vh;
+  background-color: #f7f8fc;
 
   .container {
-    width: calc((100vw - #{$sidebar-width}) - 60px);
-    margin: 0px 8px;
+    width: calc((100vw - #{$sidebar-width}) - 16px);
+    margin: 16px 8px 0px 8px;
+  }
+
+  .copyright {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    padding-bottom: 10px;
+    width: 100%
   }
 }
 

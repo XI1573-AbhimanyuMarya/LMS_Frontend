@@ -69,7 +69,7 @@ export const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.up('xl')]: {
         fontSize: 16,
       },
-    }
+    },
   },
   disableLink: {
     pointerEvents: 'none'

@@ -21,6 +21,7 @@ import WithLoading from '../../hoc/WithLoading';
 import Actions from '../../store/actions';
 import DashboardDetail from '../Chart'
 import TopNav from '../../components/TopNav';
+import Copyright from '../../components/Copyright';
 
 
 
@@ -123,6 +124,9 @@ const Dashboard = () => {
               :
               renderWelcome
           }
+        </div>
+        <div className="copyright">
+          <Copyright />
         </div>
       </main>
     </div>

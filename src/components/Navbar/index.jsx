@@ -138,9 +138,6 @@ const Navbar = (props) => {
         </ListItem>
       </Drawer >
       {props.children}
-      <div className="copyright">
-        <Copyright />
-      </div>
     </div >
   );
 }

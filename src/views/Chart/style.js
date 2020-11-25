@@ -20,8 +20,8 @@ export const useStyles = makeStyles((theme) => ({
   catalogContainer: {
     background: '#F1F3F7',
     borderRadius: "0.5%",
-    width: "77vw",
-    margin: "auto"
+    width: "100%",
+    // margin: "auto"
   },
   pathNameField: {
     background: '#FFFFFF',
@@ -35,7 +35,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 'auto',
+    // margin: 'auto',
     minWidth: '24%',
     minHeight: theme.spacing(10),
     // padding: '42px 59px 42px 69px',
@@ -65,4 +65,7 @@ export const useStyles = makeStyles((theme) => ({
   cardValue: {
     fontSize: 28
   },
+  graph:{
+    
+  }
 }));

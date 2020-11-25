@@ -2,8 +2,8 @@ import React from 'react';
 import {Line} from 'react-chartjs-2';
 
 const state = {
-  labels: ['January', 'February', 'March',
-           'April', 'May', 'june', 'july', 'August', 'Septeber', 'October', 'November','December'],
+  labels: ['Jan', '', '',
+           'April', '', '', 'july', '', '', 'October', '','Dec'],
   datasets: [
     {
       label: 'A',
@@ -38,8 +38,8 @@ const state = {
 export default class App extends React.Component {
   render() {
     return (
-      <div>
-        <Line height="60px" 
+      <div style={{height:"100%"}}>
+        <Line height="60px"
           data={state}
           options={{
               responsive:true,

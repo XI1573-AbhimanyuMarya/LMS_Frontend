@@ -30,7 +30,7 @@ const CourseCard = (props) => {
   }
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} >
       <CardContent>
         <Grid container spacing={2} alignContent="space-between" className={classes.header}>
           <Grid item xs >
@@ -40,7 +40,7 @@ const CourseCard = (props) => {
           </Grid>
           <Grid item container xs className={classes.compatency} >
             <Grid item xs>
-              <Box >
+              <Box className={classes.bar}>
                 <BarIcon darkBar={darkBar} />
               </Box >
             </Grid>

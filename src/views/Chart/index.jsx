@@ -56,10 +56,11 @@ const DashboardDetail = () => {
     : courses;
   return (
     <div>
+      <div style={{backgroundColor:"white", borderRadius:"8px"}}>
       <div style={{ display: "flex", height: "20%" }}>
         <Paper className={classes.rectangle1} style={{ display: "flex", flexDirection: "column" }}>
           <Typography style={{ color: "#000000", marginLeft: "10px", marginTop: "10px" }}>
-            Assigned Course
+            Assigned Learning Path
 						</Typography>
 						888
 					</Paper>
@@ -91,16 +92,17 @@ const DashboardDetail = () => {
 						</Typography>
         </Paper>
       </div>
-      <Box marginRight="10px" mt={2}>
+      <Box marginRight="10px" mt={2} className={classes.graph}>
         <Graph></Graph>
       </Box>
+      </div>
       <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center">
-        <Box alignItems="flex-start" py={2} pl={5}>
-          <Typography variant="h6" style={{ color: "#621d58" }}>
+        <Box alignItems="flex-start" py={2}>
+          <Typography variant="h6" style={{ color: "#621d58", fontSize:"18px" }}>
             {LEARNING_PATH_LABELS.CHART_CATALOG}
           </Typography>
         </Box>
-        <Box alignItems="center">
+        <Box alignItems="center" >
           {isLoading && coursesList1?.length === 0 && <CourseSkelton1 />}
           <Carosals1 coursesList={coursesList1} />
         </Box>
