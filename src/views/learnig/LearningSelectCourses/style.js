@@ -32,5 +32,14 @@ export const useStyles = makeStyles((theme) => ({
 		height: 30,
 		width: 91.5,
 		marginLeft: 50
-	},
+  },
+  toolbar: theme.mixins.toolbar,
+  mainContainer: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 'auto'
+  },  
 }));

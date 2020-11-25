@@ -14,6 +14,8 @@ import CourseSkelton1 from '../../../components/Skelton/MyCourseSkelton';
 import { useStyles } from './style';
 import { LEARNING_PATH_LABELS } from '../../../modules/constants';
 import WithLoading from '../../../hoc/WithLoading';
+import TopNav from '../../../components/TopNav';
+import Copyright from '../../../components/Copyright';
 
 const SelectCourses = () => {
   const classes = useStyles();
@@ -61,6 +63,11 @@ const SelectCourses = () => {
 
   return (
     <React.Fragment>
+       <TopNav>
+      </TopNav>
+      <main className="main-content">
+        <div className={classes.toolbar} />
+        <div className="container">
       <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center">
         <Box alignItems="flex-start" py={2} pl={5}>
           <Typography variant="h6" className={classes.headerText}>
@@ -81,6 +88,11 @@ const SelectCourses = () => {
           <Carosals coursesList={inprogress} />
         </Box>
       </Box>
+      <div className="copyright">
+            <Copyright />
+          </div>
+        </div>
+      </main>
     </React.Fragment>
   );
 }

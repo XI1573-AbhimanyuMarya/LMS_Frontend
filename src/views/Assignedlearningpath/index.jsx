@@ -7,8 +7,13 @@ import Carosals from './Carosals/index';
 import Actions from '../../store/actions';
 import CourseSkelton from '../../components/Skelton/CourseSkelton';
 import { useStyles } from './style';
-
+import TopNav from '../../components/TopNav';
+import Copyright from '../../components/Copyright';
 import WithLoading from '../../hoc/WithLoading';
+import { Button } from '@material-ui/core';
+import DiscardPopup from '../../components/DiscardPopup';
+import AddLearningPath from '../../images/AddLearningPath.svg'
+import LearningPath from '../Assignedlearningpath/LearningPath/index';
 
 const AssignedLearningPath = () => {
   const classes = useStyles();
@@ -20,12 +25,35 @@ const AssignedLearningPath = () => {
   const loginState = useSelector(res => res.loginState);
   const { assignedCources } = learningPathState;
 
+  useEffect(() => {
+    dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username))
+  }, [])
 
   const onCourseClickHandler = (courseId) => {
     console.log(courseId);
   }
   const logoutUser = () => {
     dispatch(Actions.loginActions.logout());
+  }
+
+  const handleClickOpen = () => {
+    console.log('cli');
+    dispatch(Actions.learningPathActions.pathModelOpen(true));
+  };
+
+  const closeHandler = () => {
+    dispatch(Actions.learningPathActions.discardModelOpen(true));
+  };
+
+  const handleClosePathHandler = () => {
+    dispatch(Actions.learningPathActions.pathModelOpen(false));
+  }
+
+  const discardHandler = (closeMainModel) => {
+    dispatch(Actions.learningPathActions.discardModelOpen(false));
+    if (closeMainModel) {
+      dispatch(Actions.learningPathActions.pathModelOpen(false));
+    }
   }
   /**
    * function to fetch all courses initial time
@@ -57,25 +85,42 @@ const AssignedLearningPath = () => {
 
   return (
     <div>
-      <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" p={3} style={{ position: "unset !important" }}>
-        {finaldata.map(item => {
-          var Item = (
-            <>
-              <Box alignItems="flex-start" py={2} >
-                <Typography variant="h6" style={{ color: "#621d58", fontSize:"16px", padding:"0" }}>
-                  {item.name}
-                </Typography>
-              </Box>
-              <Box alignItems="center">
-                {isLoading && item?.length === 0 && <CourseSkelton />}
-                <Carosals coursesList={item.courses} />
-                {/* <Carosals coursesList={item.courses} handleCourseClick={(id) => onCourseClickHandler(id)} /> */}
-              </Box>
-            </>
-          )
-          return Item
-        })}
-      </Box>
+      <TopNav>
+      </TopNav>
+      <main className="main-content">
+        <div className={classes.toolbar} />
+        <div className="container">
+          <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" p={3} style={{ position: "unset !important" }}>
+            {finaldata.map(item => {
+              var Item = (
+                <>
+                  <Box alignItems="flex-start" py={2} >
+                    <Typography variant="h6" style={{ color: "#621d58", fontSize: "16px", padding: "0" }}>
+                      <Button onClick={handleClickOpen}>{item.name}</Button>
+                    </Typography>
+                    <LearningPath
+                      handleClose={closeHandler}
+                      handleClosePath={handleClosePathHandler}
+                    />
+                    <DiscardPopup
+                      discardHandler={discardHandler}
+                    />
+                  </Box>
+                  <Box alignItems="center">
+                    {isLoading && item?.length === 0 && <CourseSkelton />}
+                    <Carosals coursesList={item.courses} />
+                    {/* <Carosals coursesList={item.courses} handleCourseClick={(id) => onCourseClickHandler(id)} /> */}
+                  </Box>
+                </>
+              )
+              return Item
+            })}
+          </Box>
+          <div className="copyright">
+            <Copyright />
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
