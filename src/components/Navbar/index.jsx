@@ -1,42 +1,42 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import CardMedia from "@material-ui/core/CardMedia";
 import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
 import Badge from "@material-ui/core/Badge";
 import IconButton from "@material-ui/core/IconButton";
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Icon from '@material-ui/core/Icon';
-import Avatar from '@material-ui/core/Avatar';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Icon from "@material-ui/core/Icon";
+import Avatar from "@material-ui/core/Avatar";
+import Paper from "@material-ui/core/Paper";
+import Box from "@material-ui/core/Box";
 
 import XebiaLogo from "../../images/Logo.svg";
-import DashboardIcon from '../../images/dashboard.svg';
-import LearningPath from '../../images/LearningPath.svg';
-import Logout from '../../images/Logout.svg';
-import AddLearningPath from '../../images/AddLearningPath.svg';
-import Approvals from '../../images/Approvals.svg';
+import DashboardIcon from "../../images/dashboard.svg";
+import LearningPath from "../../images/LearningPath.svg";
+import Logout from "../../images/Logout.svg";
+import AddLearningPath from "../../images/AddLearningPath.svg";
+import Approvals from "../../images/Approvals.svg";
 import { useStyles } from "./style";
 import Actions from "../../store/actions";
-import userIcon from '../../images/Profile.jpg'
-import Copyright from '../Copyright'
+import userIcon from "../../images/Profile.jpg";
+import Copyright from "../Copyright";
 
 const Navbar = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loginState = useSelector((res) => res.loginState);
   const { user } = loginState;
-  let title = 'dashboard';
+  let title = "dashboard";
   let notification = 1;
   let notifLabel = `show ${notification} new notifications"`;
   let extracontent;
@@ -44,27 +44,27 @@ const Navbar = (props) => {
     {
       name: "Dashboard",
       iconPath: DashboardIcon,
-      to: "dashboard"
+      to: "dashboard",
     },
     {
       name: "My Learning Path",
       iconPath: LearningPath,
-      to: "learningpath"
+      to: "learningpath",
     },
     {
       name: "Assign Learning Path",
       iconPath: AddLearningPath,
-      to: "/assigned"
+      to: "/assigned",
     },
     {
       name: "Approvals",
       iconPath: Approvals,
-      to: ""
+      to: "",
     },
     {
       name: "Manage assigned learning",
       iconPath: DashboardIcon,
-      to: ""
+      to: "",
     },
   ];
   return (
@@ -77,20 +77,21 @@ const Navbar = (props) => {
             image={XebiaLogo}
             title="Dashboard"
           />
-          <Typography className={classes.title} variant="h6" noWrap >
+          <Typography className={classes.title} variant="h6" noWrap>
             {title}
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {extracontent ? extracontent : ''}
+            {extracontent ? extracontent : ""}
             <IconButton aria-label={notifLabel} color="inherit">
               <Badge
                 badgeContent={notification}
                 anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
+                  vertical: "top",
+                  horizontal: "left",
                 }}
-                color="secondary">
+                color="secondary"
+              >
                 <NotificationsOutlinedIcon className={classes.notification} />
               </Badge>
             </IconButton>
@@ -105,7 +106,15 @@ const Navbar = (props) => {
         }}
         anchor="left"
       >
-        <div className={classes.toolbar} style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+        <div
+          className={classes.toolbar}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
           <Avatar alt="user" src={userIcon} className={classes.userIcon} />
           <Typography variant="subtitle2" className={classes.name}>
             {user.fullName}
@@ -116,11 +125,11 @@ const Navbar = (props) => {
         </div>
 
         <List className={classes.navLinks}>
-          {navLinks.map(item => (
+          {navLinks.map((item) => (
             <Link to={item.to} key={item.name}>
-              < ListItem button >
+              <ListItem button>
                 <ListItemIcon className={classes.MuiListItemIcon}>
-                  <Icon >
+                  <Icon>
                     <img src={item.iconPath} className={classes.navIcons} />
                   </Icon>
                 </ListItemIcon>
@@ -130,27 +139,34 @@ const Navbar = (props) => {
           ))}
         </List>
         <div className={classes.grow} />
-        < ListItem button onClick={() => dispatch(Actions.loginActions.logout())} className={classes.navLinks}>
+        <ListItem
+          button
+          onClick={() => dispatch(Actions.loginActions.logout())}
+          className={classes.navLinks}
+        >
           <ListItemIcon className={classes.MuiListItemIcon}>
-            <Icon >
+            <Icon>
               <img src={Logout} className={classes.navIcons} />
             </Icon>
           </ListItemIcon>
-          <ListItemText primary="logout"  />
+          <ListItemText primary="logout" />
         </ListItem>
-
-      </Drawer >
+      </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Paper style={{ minHeight: "86vh" }} elevation={3} className={classes.main}>
+        <Paper
+          style={{ minHeight: "86vh" }}
+          elevation={3}
+          className={classes.main}
+        >
           {props.children}
           <Box pt={4}>
             <Copyright />
           </Box>
         </Paper>
       </main>
-    </div >
+    </div>
   );
-}
+};
 
 export default Navbar;

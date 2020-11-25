@@ -6,16 +6,19 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "30px",
   },
   searchField: {
-    width: "100%",
+    width: " 610px",
+    marginRight: "235px",
   },
   paper: {
-    padding: theme.spacing(4),
+    padding: "16px 0 16px 10px",
     display: "flex",
     flexDirection: "row",
+    backgroundColor: "#f7f8fc",
   },
   heading: {
-    marginLeft: "45px",
-    marginBottom: "-30px",
+    marginRight: "67%",
+    color: "#621d58",
+    fontSize: "22px",
   },
   cardData: {
     display: "flex",

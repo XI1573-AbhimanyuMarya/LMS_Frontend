@@ -7,32 +7,73 @@ import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
 import { Paper } from "@material-ui/core";
-import { LEARNING_PATH_LABELS } from "../../modules/constants";
+import { MESSAGES, LEARNING_PATH_LABELS } from "../../modules/constants";
 import EmployeeCard from "./EmployeeCard";
-
+import UserSkelton from "../../components/Skelton/UserSkelton";
 import WithLoading from "../../hoc/WithLoading";
 
 import { useStyles } from "./style";
 
-const ManageAssignLearningPath = (props) => {
+const ManageAssignLearningPath = ({ props }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(
-      Actions.learningPathActions.getAssignedLearningPath("abhimanyu.marya@xebia.com")
-    );
-    return () => {
-      console.log("cleanup");
-    };
-  }, []);
   const getAssignedLearningPaths = useSelector(
     (state) => state.learningPathState
   );
-  console.log("getAssignedLearningPaths", getAssignedLearningPaths);
-  // const newArray = getAssignedLearningPaths
+  const { isLoading } = getAssignedLearningPaths;
+  const [selectedUsersArr, setSelectedUsersArr] = useState([]);
+  useEffect(() => {
+    console.log("employees.length", employees.length);
+    if (employees.length === 0) {
+      dispatch(
+        Actions.learningPathActions.getAssignedLearningPath(
+          "abhimanyu.marya@xebia.com"
+        )
+      );
+    } else {
+      setSelectedUsersArr(isLoading);
+    }
+  }, []);
+
+  const data = getAssignedLearningPaths.assignedCources.assignedLearningPaths;
+
+  let employees = [];
+  if (data && data.length > 0) {
+    data.map((path) => {
+      path.madeFor.map((emp) => {
+        let id = parseInt(emp.employee.id);
+        let tempEmployee = Object.assign({}, emp.employee);
+        let learningPath = {
+          name: path.name,
+          learningPathId: path.learningPathId,
+          startDate: path.startDate,
+          endDate: path.endDate,
+          hasExpired: path.isLearningPathExpired,
+          learningPathEmployeesId: emp.learningPathEmployeesId,
+          completed: emp.percentCompleted,
+        };
+        const existEmployee = employees.find((item) => item.empID === id);
+        if (existEmployee) {
+          existEmployee.learningPath.push(learningPath);
+        } else {
+          employees.push({
+            empID: id,
+            employee: tempEmployee,
+            learningPath: [learningPath],
+          });
+        }
+      });
+    });
+  }
+  let renderUser = "";
+  if (employees.length > 0) {
+    renderUser = employees.map((data, i) => (
+      <EmployeeCard key={i} data={data} />
+    ));
+    console.log("employees", employees);
+  }
+
   return (
     <>
       <Box component="div" display="flex" justifyContent="center">
@@ -45,7 +86,6 @@ const ManageAssignLearningPath = (props) => {
               variant="outlined"
               className={classes.searchField}
               name="search"
-              //   onChange={changeHandler}
             />
           </Grid>
         </Grid>
@@ -55,20 +95,24 @@ const ManageAssignLearningPath = (props) => {
       <Typography variant="h6" className={classes.heading}>
         {LEARNING_PATH_LABELS.ASSIGNED_LEARNING_PATH}
       </Typography>
-      <Paper className={classes.paper} elevation={0}>
+      <Paper className={classes.paper} elevation={1}>
         <div className={classes.cardData}>
-          {[1, 2, 3, 4, 5].map((item) => (
-            <EmployeeCard key={item} />
-          ))}
+          {isLoading && employees.length === 0 && <UserSkelton />}
+          {renderUser !== "" ? (
+            renderUser
+          ) : (
+            <div>
+              <Typography variant="h6" align="center">
+                {MESSAGES.NO_DATA_FOUND}
+              </Typography>
+            </div>
+          )}
         </div>
       </Paper>
     </>
   );
 };
 
-ManageAssignLearningPath.propTypes = {
-  handleClose: PropTypes.func.isRequired,
-  handleClosePath: PropTypes.func.isRequired,
-};
+ManageAssignLearningPath.propTypes = {};
 
 export default WithLoading(ManageAssignLearningPath);
