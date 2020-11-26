@@ -7,6 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -46,9 +47,17 @@ export default function EmployeeCard(props) {
   const data = props.data;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [editOption, setEditOption] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  console.log("data", data);
+  const handleClick = () => {
+    setEditOption(!editOption);
+    console.log("edit");
+    setExpanded(!expanded);
+  };
+  console.log("editOption", editOption);
   return (
     <>
       <div>
@@ -59,7 +68,7 @@ export default function EmployeeCard(props) {
                 <Avatar aria-label="recipe" className={classes.avatar}></Avatar>
               }
               action={
-                <IconButton aria-label="settings">
+                <IconButton aria-label="settings" onClick={handleClick}>
                   <EditIcon className={classes.editIcon} />
                 </IconButton>
               }
@@ -99,7 +108,7 @@ export default function EmployeeCard(props) {
                       data.startDate == null
                         ? "course not started"
                         : data.startDate
-                    }`}
+                    } ${!editOption ? "hello" : ""}`}
                   />
                 </ThemeProvider>
               </CardContent>

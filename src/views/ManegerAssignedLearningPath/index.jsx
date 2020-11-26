@@ -14,6 +14,7 @@ import UserSkelton from "../../components/Skelton/UserSkelton";
 import WithLoading from "../../hoc/WithLoading";
 
 import { useStyles } from "./style";
+import TopNav from "../../components/TopNav";
 
 const ManageAssignLearningPath = ({ props }) => {
   const classes = useStyles();
@@ -75,41 +76,46 @@ const ManageAssignLearningPath = ({ props }) => {
   }
 
   return (
-    <>
-      <Box component="div" display="flex" justifyContent="center">
-        <Grid container className={classes.container}>
-          <Grid item xs={2}></Grid>
-          <Grid item xs={8}>
-            <TextField
-              label={LEARNING_PATH_LABELS.SEARCH_BY_MANAGER}
-              type="search"
-              variant="outlined"
-              className={classes.searchField}
-              name="search"
-            />
-          </Grid>
-        </Grid>
-      </Box>
-      <br />
-      <br />
-      <Typography variant="h6" className={classes.heading}>
-        {LEARNING_PATH_LABELS.ASSIGNED_LEARNING_PATH}
-      </Typography>
-      <Paper className={classes.paper} elevation={1}>
-        <div className={classes.cardData}>
-          {isLoading && employees.length === 0 && <UserSkelton />}
-          {renderUser !== "" ? (
-            renderUser
-          ) : (
-            <div>
-              <Typography variant="h6" align="center">
-                {MESSAGES.NO_DATA_FOUND}
-              </Typography>
+    <div>
+      <TopNav />
+      <main className="main-content">
+        <div className={classes.toolbar} />
+        <div className="container">
+          <Box component="div" display="flex" justifyContent="center">
+            <Grid container className={classes.container}>
+              <Grid item xs={2}></Grid>
+              <Grid item xs={8}>
+                <TextField
+                  label={LEARNING_PATH_LABELS.SEARCH_BY_MANAGER}
+                  type="search"
+                  variant="outlined"
+                  className={classes.searchField}
+                  name="search"
+                />
+              </Grid>
+            </Grid>
+          </Box>
+
+          <Typography variant="h6" className={classes.heading}>
+            {LEARNING_PATH_LABELS.ASSIGNED_LEARNING_PATH}
+          </Typography>
+          <Paper className={classes.paper} elevation={1}>
+            <div className={classes.cardData}>
+              {isLoading && employees.length === 0 && <UserSkelton />}
+              {renderUser !== "" ? (
+                renderUser
+              ) : (
+                <div>
+                  <Typography variant="h6" align="center">
+                    {MESSAGES.NO_DATA_FOUND}
+                  </Typography>
+                </div>
+              )}
             </div>
-          )}
+          </Paper>
         </div>
-      </Paper>
-    </>
+      </main>
+    </div>
   );
 };
 

@@ -5,6 +5,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     marginTop: "30px",
   },
+  toolbar: theme.mixins.toolbar,
   searchField: {
     width: " 610px",
     marginRight: "235px",
