@@ -80,7 +80,7 @@ const ManageAssignLearningPath = ({ props }) => {
         <Grid container className={classes.container}>
           <Grid item xs={2}></Grid>
           <Grid item xs={8}>
-            <TextField
+            <TextField className={classes.search}
               label={LEARNING_PATH_LABELS.SEARCH_BY_MANAGER}
               type="search"
               variant="outlined"
