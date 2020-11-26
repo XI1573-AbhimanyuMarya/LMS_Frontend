@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +78,7 @@ public class EmployeeLearningPathController {
     }
 
     @PutMapping("/myLearningRate")
-    public ResponseEntity updateLearningPathProgress(@RequestBody EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException {
+    public ResponseEntity updateLearningPathProgress(@ModelAttribute EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException {
         UserResponse userResponse = new UserResponse();
         EmployeeLearningPathStatisticsDto employee;
         try {
@@ -88,7 +89,7 @@ public class EmployeeLearningPathController {
                 throw new LearningPathException("Wrong Format for Employee Learning Rate Request");
             }
 
-        } catch (LearningPathException e) {
+        } catch (LearningPathException | IOException e) {
             userResponse.setStatus("failure");
             userResponse.setMessage(e.getLocalizedMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
