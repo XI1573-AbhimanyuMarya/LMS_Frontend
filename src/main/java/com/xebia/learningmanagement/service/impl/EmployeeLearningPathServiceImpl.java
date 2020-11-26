@@ -20,10 +20,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.PENDING;
 
 @Service
 public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathService {
@@ -85,10 +90,17 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     }
 
     @Override
-    public EmployeeLearningPathStatisticsDto updateLearningPathProgress(EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException {
+    public EmployeeLearningPathStatisticsDto updateLearningPathProgress(EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException, IOException {
         ModelMapper modelMapper = new ModelMapper();
         LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById((long) employeeLearningRateRequest.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("LearningPath Employee Id not found"));
         learningPathEmployees.setPercentCompleted(employeeLearningRateRequest.getPercentCompleted());
+        if (Objects.nonNull(employeeLearningRateRequest.getFile())) {
+            learningPathEmployees.setCertificate(employeeLearningRateRequest.getFile().getBytes());
+        } else {
+            learningPathEmployees.setCertificate(null);
+        }
+        learningPathEmployees.setApprovalStatus(PENDING);
+        learningPathEmployees.setModifiedDate(LocalDateTime.now());
         LearningPathEmployees updatedLearningPathEmployee = learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
         return modelMapper.map(updatedLearningPathEmployee, EmployeeLearningPathStatisticsDto.class);
     }
