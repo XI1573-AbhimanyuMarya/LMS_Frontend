@@ -76,8 +76,8 @@ const ManageAssignLearningPath = ({ props }) => {
   }
 
   return (
-    <div>
-      <TopNav />
+    <React.Fragment>
+      <TopNav></TopNav>
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
@@ -86,6 +86,7 @@ const ManageAssignLearningPath = ({ props }) => {
               <Grid item xs={2}></Grid>
               <Grid item xs={8}>
                 <TextField
+                  className={classes.search}
                   label={LEARNING_PATH_LABELS.SEARCH_BY_MANAGER}
                   type="search"
                   variant="outlined"
@@ -95,7 +96,8 @@ const ManageAssignLearningPath = ({ props }) => {
               </Grid>
             </Grid>
           </Box>
-
+          <br />
+          <br />
           <Typography variant="h6" className={classes.heading}>
             {LEARNING_PATH_LABELS.ASSIGNED_LEARNING_PATH}
           </Typography>
@@ -115,7 +117,7 @@ const ManageAssignLearningPath = ({ props }) => {
           </Paper>
         </div>
       </main>
-    </div>
+    </React.Fragment>
   );
 };
 

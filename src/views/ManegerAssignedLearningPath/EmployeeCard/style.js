@@ -6,11 +6,27 @@ export const useStyles = makeStyles((theme) => ({
     borderRadius: "8px",
     boxShadow: "2px 4px 10px 0 rgba(0, 0, 0, 0.1)",
     backgroundColor: "#ffffff",
+    [theme.breakpoints.up('md')]: {
+      // backgroundColor:"pink",
+    },
+    [theme.breakpoints.up('lg')]: {
+      // backgroundColor:"blue",
+    },
   },
   delete: {
     marginTop: "-42px",
     marginLeft: "56px",
     fontSize: ".5rem",
+    [theme.breakpoints.up('md')]: {
+      marginTop: "-42px",
+      marginLeft: "56px",
+      fontSize: ".3rem",
+    },
+    [theme.breakpoints.up('lg')]: {
+      marginTop: "-42px",
+      marginLeft: "56px",
+      fontSize: ".5rem",
+    },
   },
   expand: {
     transform: "rotate(0deg)",
@@ -38,11 +54,31 @@ export const useStyles = makeStyles((theme) => ({
     width: "14px",
     height: "14px",
     color: "#ff2600",
+    [theme.breakpoints.up('md')]: {
+      width: "12px",
+    height: "12px",
+    color: "#ff2600",
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: "14px",
+    height: "14px",
+    color: "#ff2600",
+    },
   },
   editIcon: {
     width: "14px",
     height: "14px",
     color: "#027aff",
+    [theme.breakpoints.up('md')]: {
+      width: "12px",
+    height: "12px",
+    color: "#027aff",
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: "14px",
+    height: "14px",
+    color: "#027aff",
+    },
   },
   learningPath: {
     backgroundColor: " #f6f8ff",
@@ -56,5 +92,13 @@ export const useStyles = makeStyles((theme) => ({
   pathTitle: {
     fontSize: "10px",
     color: "#888888",
+    [theme.breakpoints.up('md')]: {
+      fontSize: "9px",
+    color: "#888888",
+    },
+    [theme.breakpoints.up('lg')]: {
+      fontSize: "10px",
+      color: "#888888",
+    },
   },
 }));
