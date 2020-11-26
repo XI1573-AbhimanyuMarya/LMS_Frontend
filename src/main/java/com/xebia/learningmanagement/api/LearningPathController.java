@@ -1,5 +1,6 @@
 package com.xebia.learningmanagement.api;
 
+import com.xebia.learningmanagement.dtos.ApprovalDto;
 import com.xebia.learningmanagement.dtos.LearningPathDto;
 import com.xebia.learningmanagement.dtos.ListOfLearningPathsAssignedByManagerDto;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -58,5 +60,23 @@ public class LearningPathController {
 
     }
 
+    @PostMapping(value = "/approve/LearningPath")
+    public ResponseEntity needsApproval(@RequestBody ManagerEmailRequest managerEmailRequest) {
+        UserResponse userResponse = new UserResponse();
+        List<ApprovalDto> pendingApprovals;
+        try {
+            if (managerEmailRequest != null && !"".equalsIgnoreCase(managerEmailRequest.getManagerEmail())) {
+                pendingApprovals = learningPathService.getPendingApprovals(managerEmailRequest);
+            } else {
+                throw new LearningPathException("Wrong Format for Managers Email");
+            }
+        } catch (Exception e) {
+            userResponse.setStatus("failure");
+            userResponse.setMessage(e.getLocalizedMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
+        }
+        return new ResponseEntity(pendingApprovals, HttpStatus.OK);
+
+    }
 
 }
