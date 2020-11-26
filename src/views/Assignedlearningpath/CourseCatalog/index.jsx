@@ -8,53 +8,49 @@ import Typography from '@material-ui/core/Typography';
 import { Box } from '@material-ui/core';
 
 import { useStyles } from './style';
-import BarIcon from '../SignalIcon';
-import ProgressBar from '../ProgressBar';
+import BarIcon from '../../../components/SignalIcon';
+import ProgressBar from '../../../components/ProgressBar';
 
 const CourseCard = (props) => {
   const classes = useStyles();
-  const { course, onButtonClick, showButton } = props;
+  const { course, onButtonClick } = props;
   course.progress = '';
   let btnlabel = "Let's begin"
-  if (course?.progress) {
+  if (course.progress) {
     btnlabel = "Explore"
   }
-  
+
+
   let darkBar = 0;
-  if (course?.competency?.name === "Beginner") {
+  if (course.competency.name === "Beginner") {
     darkBar = 1;
-  } else if (course?.competency?.name === "Intermediate") {
+  } else if (course.competency.name === "Intermediate") {
     darkBar = 2
-  } else if (course?.competency?.name === "Expert") {
+  } else if (course.competency.name === "Expert") {
     darkBar = 3
   }
 
   return (
-    <Card className={classes.root} >
+    <Card className={classes.root}>
       <CardContent>
         <Grid container spacing={2} alignContent="space-between" className={classes.header}>
-          <Grid item xs >
-            <Box component="span" className={classes.courseType}>
-              {course.category.name}
-            </Box>
+          <Grid item xs style={{margin:"-15px 0 0 10px"}}>
+		  <Typography variant="body1" component="h6" className={classes.courseTitle} >
+            {course.name}
+          </Typography>
           </Grid>
           <Grid item container xs className={classes.compatency} >
             <Grid item xs>
-              <Box className={classes.bar}>
+              <Box >
                 <BarIcon darkBar={darkBar} />
               </Box >
             </Grid>
             <Grid item xs>
               <Typography component="span" className={classes.courseLevel}>
-                {course?.competency?.name}
+                {course.competency.name}
               </Typography>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid container spacing={2}>
-          <Typography variant="body1" component="h5" className={classes.courseTitle}>
-            {course.name}
-          </Typography>
         </Grid>
         {
           course.progress ?
@@ -76,13 +72,6 @@ const CourseCard = (props) => {
         </Grid>
 
       </CardContent>
-      {
-        showButton ?
-          <CardActions className={classes.action}>
-            <Button size="large" className={classes.btn} onClick={onButtonClick}>{btnlabel}</Button>
-          </CardActions>
-          : ''
-      }
     </Card>
   );
 }

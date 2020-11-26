@@ -1,10 +1,11 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
+import { DRAWER_WIDTH } from '../../modules/constants';
 
-const drawerWidth = "18%";
+const drawerWidth = DRAWER_WIDTH;
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    display: 'flex',
   },
   grow: {
     flexGrow: 1,
@@ -12,7 +13,7 @@ export const useStyles = makeStyles((theme) => ({
   appBar: {
     width: `calc(100% - ${drawerWidth})`,
     marginLeft: drawerWidth,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#ffffff"
   },
   drawer: {
     width: drawerWidth,
@@ -23,36 +24,19 @@ export const useStyles = makeStyles((theme) => ({
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    // padding: theme.spacing(2),
-  },
-  title: {
-    display: "block",
-  },
-  sectionDesktop: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-    },
-  },
-  imgXebia: {
-    width: 90,
-    height: 25,
-    marginRight: theme.spacing(2),
-  },
-  notification: {
-    width: 35,
-    height: 24,
-    color: "#999999",
-  },
   navIcons: {
-    width: 25,
-    height: 25,
+    width: 20,
     objectFit: "contain",
+    [theme.breakpoints.up('md')]: {
+      width: 22,
+    },
+    [theme.breakpoints.up('xl')]: {
+      width: 25,
+    },
   },
   MuiListItemIcon: {
     minWidth: 28,
+    margin: '0px 7px 0px 0px',
   },
   userIcon: {
     marginTop: theme.spacing(2),
@@ -60,25 +44,40 @@ export const useStyles = makeStyles((theme) => ({
     height: theme.spacing(10),
   },
   name: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(2)
   },
   designation: {
     // margin: theme.spacing(2),
-    color: "#a1a1a1",
+    color: "#a1a1a1"
+  },
+  navList: {
+    marginTop: theme.spacing(3),
   },
   navLinks: {
-    marginTop: theme.spacing(5),
+    marginTop: theme.spacing(1),
     "& a": {
       textDecoration: "none",
-      color: "#a1a1a1",
+      color: "#a8adc2"
     },
   },
-  main: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexGrow: 1,
-    backgroundColor: "#f7f8fc",
+  linkItem: {
+    "& span ": {
+      fontSize: 12,
+      [theme.breakpoints.up('md')]: {
+        fontSize: 14,
+      },
+      [theme.breakpoints.up('xl')]: {
+        fontSize: 16,
+      },
+    },
   },
+  disableLink: {
+    pointerEvents: 'none'
+  },
+
+  active: {
+    "& a": {
+      color: "#621d58"
+    }
+  }
 }));

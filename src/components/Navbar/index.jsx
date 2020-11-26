@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import CardMedia from "@material-ui/core/CardMedia";
 import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
@@ -22,7 +22,9 @@ import Box from "@material-ui/core/Box";
 
 import XebiaLogo from "../../images/Logo.svg";
 import DashboardIcon from "../../images/dashboard.svg";
+import DashboardActive from "../../images/dashboardActive.svg";
 import LearningPath from "../../images/LearningPath.svg";
+import LearningPathActive from "../../images/learningpathActive.svg";
 import Logout from "../../images/Logout.svg";
 import AddLearningPath from "../../images/AddLearningPath.svg";
 import Approvals from "../../images/Approvals.svg";
@@ -30,74 +32,66 @@ import { useStyles } from "./style";
 import Actions from "../../store/actions";
 import userIcon from "../../images/Profile.jpg";
 import Copyright from "../Copyright";
+import TopNav from "../TopNav";
 
 const Navbar = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  let location = useLocation();
+  const [path, setPath] = useState("/");
   const loginState = useSelector((res) => res.loginState);
   const { user } = loginState;
-  let title = "dashboard";
-  let notification = 1;
-  let notifLabel = `show ${notification} new notifications"`;
-  let extracontent;
+  let extracontent, currentPath;
+  currentPath = path;
+
   const navLinks = [
     {
       name: "Dashboard",
-      iconPath: DashboardIcon,
+      iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
       to: "dashboard",
+      isActive: currentPath === "/dashboard",
+      canAccess: true,
     },
     {
       name: "My Learning Path",
-      iconPath: LearningPath,
+      iconPath:
+        currentPath === "/learningpath" ? LearningPathActive : LearningPath,
       to: "learningpath",
+      isActive: currentPath === "/learningpath",
+      canAccess: true,
     },
     {
       name: "Assign Learning Path",
       iconPath: AddLearningPath,
-      to: "/assigned",
+      to: "assigned",
+      isActive: currentPath === "/assigned",
+      canAccess: true,
+      // canAccess: user.designation !== "Consultant"
     },
     {
       name: "Approvals",
       iconPath: Approvals,
-      to: "",
+      to: "approvals",
+      isActive: currentPath === "/approvals",
+      // canAccess: true
+      canAccess: user.designation !== "Consultant",
     },
     {
       name: "Manage assigned learning",
       iconPath: DashboardIcon,
-      to: "",
+      to: "manage",
+      isActive: currentPath === "/manage",
+      // canAccess: user.designation !== "Consultant"
+      canAccess: true,
     },
   ];
+  useEffect(() => {
+    setPath(location.pathname);
+  }, [path]);
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar} color="transparent">
-        <Toolbar>
-          <CardMedia
-            className={classes.imgXebia}
-            image={XebiaLogo}
-            title="Dashboard"
-          />
-          <Typography className={classes.title} variant="h6" noWrap>
-            {title}
-          </Typography>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            {extracontent ? extracontent : ""}
-            <IconButton aria-label={notifLabel} color="inherit">
-              <Badge
-                badgeContent={notification}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                color="secondary"
-              >
-                <NotificationsOutlinedIcon className={classes.notification} />
-              </Badge>
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
+
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -124,18 +118,30 @@ const Navbar = (props) => {
           </Typography>
         </div>
 
-        <List className={classes.navLinks}>
+        <List className={classes.navList}>
           {navLinks.map((item) => (
-            <Link to={item.to} key={item.name}>
-              <ListItem button>
-                <ListItemIcon className={classes.MuiListItemIcon}>
-                  <Icon>
-                    <img src={item.iconPath} className={classes.navIcons} />
-                  </Icon>
-                </ListItemIcon>
-                <ListItemText primary={item.name} />
-              </ListItem>
-            </Link>
+            <div
+              key={item.to}
+              className={[
+                classes.navLinks,
+                item.isActive ? classes.active : "",
+                item.canAccess ? "" : classes.disableLink,
+              ].join(" ")}
+            >
+              <Link to={item.to} key={item.name}>
+                <ListItem button>
+                  <ListItemIcon className={classes.MuiListItemIcon}>
+                    <Icon>
+                      <img src={item.iconPath} className={classes.navIcons} />
+                    </Icon>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.name}
+                    className={classes.linkItem}
+                  />
+                </ListItem>
+              </Link>
+            </div>
           ))}
         </List>
         <div className={classes.grow} />
@@ -152,19 +158,7 @@ const Navbar = (props) => {
           <ListItemText primary="logout" />
         </ListItem>
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Paper
-          style={{ minHeight: "86vh" }}
-          elevation={3}
-          className={classes.main}
-        >
-          {props.children}
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Paper>
-      </main>
+      {props.children}
     </div>
   );
 };
