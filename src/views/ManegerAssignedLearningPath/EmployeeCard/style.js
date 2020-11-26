@@ -7,10 +7,10 @@ export const useStyles = makeStyles((theme) => ({
     boxShadow: "2px 4px 10px 0 rgba(0, 0, 0, 0.1)",
     backgroundColor: "#ffffff",
     [theme.breakpoints.up('md')]: {
-      backgroundColor:"pink",
+      // backgroundColor:"pink",
     },
     [theme.breakpoints.up('lg')]: {
-      backgroundColor:"blue",
+      // backgroundColor:"blue",
     },
   },
   delete: {
