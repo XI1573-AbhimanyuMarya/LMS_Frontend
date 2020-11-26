@@ -95,11 +95,9 @@ const deleteAllPath = async ({ ids }) => {
 }
 
 function* deleteAllPaths(action) {
-  console.log(action);
   try {
     const response = yield call(deleteAllPath, action.payload);
     const { data } = response;
-    console.log(data);
     yield put({ type: actionTypes.DELETE_ALL_PATH_SUCCESS, payload: data });
 
   } catch (error) {

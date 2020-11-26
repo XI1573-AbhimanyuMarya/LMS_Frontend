@@ -34,7 +34,6 @@ const Dashboard = () => {
   const showDashboard = (assignedCources.assignedLearningPaths
     && assignedCources.assignedLearningPaths.length ?
     true : false);
-  console.log(assignedCources.assignedLearningPaths);
 
   useEffect(() => {
     dispatch(
@@ -47,7 +46,6 @@ const Dashboard = () => {
    * function to open learning path model
    */
   const handleClickOpen = () => {
-    console.log("cli");
     dispatch(Actions.learningPathActions.pathModelOpen(true));
   };
 
