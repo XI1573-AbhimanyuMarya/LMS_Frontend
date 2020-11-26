@@ -6,6 +6,7 @@ import com.xebia.learningmanagement.dtos.request.EmployeeLearningRateRequest;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,5 +16,5 @@ public interface EmployeeLearningPathService {
 
     List<EmployeeLearningPathStatisticsDto> getMyAssignedLearningPaths(EmployeeEmailRequest employeeEmail) throws LearningPathException;
 
-    EmployeeLearningPathStatisticsDto updateLearningPathProgress(EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException;
+    EmployeeLearningPathStatisticsDto updateLearningPathProgress(EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException, IOException;
 }
