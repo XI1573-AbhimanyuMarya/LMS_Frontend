@@ -9,6 +9,7 @@ import com.xebia.learningmanagement.service.EmployeeLearningPathService;
 import com.xebia.learningmanagement.util.ErrorBank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,7 +78,7 @@ public class EmployeeLearningPathController {
 
     }
 
-    @PutMapping("/myLearningRate")
+    @PutMapping(value = "/myLearningRate" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity updateLearningPathProgress(@ModelAttribute EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException {
         UserResponse userResponse = new UserResponse();
         EmployeeLearningPathStatisticsDto employee;
