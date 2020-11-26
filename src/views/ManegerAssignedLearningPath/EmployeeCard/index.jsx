@@ -46,7 +46,7 @@ const theme = createMuiTheme({
 
 export default function EmployeeCard(props) {
   const data = props.data;
-  const { onDeleteAll } = props;
+  const { onDeleteAll, onDelete } = props;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [editOption, setEditOption] = React.useState(false);
@@ -57,11 +57,8 @@ export default function EmployeeCard(props) {
   };
   const handleEditClick = () => {
     setEditOption(!editOption);
-    setExpanded(!expanded);
+    setExpanded(expanded && editOption? false : true);
   };
-
-  const handleDeleteClick = () => { };
-  const onEditButtonClick = () => { };
 
   return (
     <>
@@ -114,14 +111,15 @@ export default function EmployeeCard(props) {
                     <span className={classes.courseStatus}>
                       {" "}
                       {`start- ${data.startDate == null
-                          ? "course not started"
-                          : data.startDate
+                        ? "course not started"
+                        : data.startDate
                         }`}
-                    </span>
-                    <span
-                      className={classes.deleteButton}
-                      onClick={onEditButtonClick}
-                    >{`${editOption ? "X" : ""}`}</span>
+                    </span>{editOption ?
+                      <span
+                        className={classes.deleteButton}
+                        onClick={() => onDelete(data.learningPathEmployeesId)}
+                      >X</span>
+                      : <span> </span>}
                   </Typography>
                 </ThemeProvider>
               </CardContent>

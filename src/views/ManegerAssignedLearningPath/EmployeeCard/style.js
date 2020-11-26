@@ -111,6 +111,7 @@ export const useStyles = makeStyles((theme) => ({
     paddingRight: "4px",
     color: "red",
     fontWeight: "600",
+    cursor: 'pointer'
   },
   courseName: {
     color: " #282828",

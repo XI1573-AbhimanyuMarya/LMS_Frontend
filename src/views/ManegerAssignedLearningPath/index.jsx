@@ -38,6 +38,11 @@ const ManageAssignLearningPath = ({ props }) => {
     dispatch(Actions.learningPathActions.deleteAllPaths(ids))
 
   }
+  const onDelete = (learningPathId) => {
+    dispatch(Actions.learningPathActions.deletePath([learningPathId]))
+    console.log(learningPathId);
+  }
+
   const prepareData = (data) => {
     let employees = [];
     if (data && data.length > 0) {
@@ -74,7 +79,7 @@ const ManageAssignLearningPath = ({ props }) => {
   let renderUser = "";
   if (employees.length > 0) {
     renderUser = employees.map((data, i) => (
-      <EmployeeCard key={i} data={data} onDeleteAll={onDeleteAll} />
+      <EmployeeCard key={i} data={data} onDeleteAll={onDeleteAll} onDelete={onDelete}/>
     ));
   }
 

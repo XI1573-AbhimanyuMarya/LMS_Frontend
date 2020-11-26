@@ -60,6 +60,11 @@ const deleteAllPaths = (ids) => ({
   payload: {ids},
 });
 
+const deletePath = (ids) => ({
+  type: actionTypes.DELETE_PATH,
+  payload: {ids},
+});
+
 export default {
   fetchAllCourses,
   getFilteredCourses,
@@ -77,4 +82,5 @@ export default {
   getAssignedLearningPath,
   getMyLearningPath,
   deleteAllPaths,
+  deletePath,
 };
