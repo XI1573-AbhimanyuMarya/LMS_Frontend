@@ -72,7 +72,6 @@ const ManageAssignLearningPath = ({ props }) => {
     renderUser = employees.map((data, i) => (
       <EmployeeCard key={i} data={data} />
     ));
-    console.log("employees", employees);
   }
 
   return (

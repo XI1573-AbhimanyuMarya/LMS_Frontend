@@ -46,6 +46,7 @@ export const LEARNING_PATH_LABELS = {
   SOMETHING_WENT_WRONG: "Something went wrong!",
   CLICK_OVER_CLOSE_BUTTON: "Click over close button to create this again",
   ASSIGNED_LEARNING_PATH: "Assigned Learning Path for people",
+  SEARCH_BY_MANAGER: "Search",
 };
 
 export const BUTTONS = {

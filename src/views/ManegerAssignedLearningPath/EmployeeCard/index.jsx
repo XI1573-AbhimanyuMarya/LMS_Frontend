@@ -7,13 +7,13 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ListItemText from "@material-ui/core/ListItemText";
+import DiscardPopup from "../../../components/DiscardPopup";
+
 import { useStyles } from "./style";
 
 const theme = createMuiTheme({
@@ -38,6 +38,7 @@ const theme = createMuiTheme({
       secondary: {
         fontSize: "10px",
         color: "#282828",
+        marginRight: "10px",
       },
     },
   },
@@ -48,16 +49,19 @@ export default function EmployeeCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [editOption, setEditOption] = React.useState(false);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    setEditOption(false);
   };
-  console.log("data", data);
-  const handleClick = () => {
+  const handleEditClick = () => {
     setEditOption(!editOption);
-    console.log("edit");
     setExpanded(!expanded);
   };
-  console.log("editOption", editOption);
+
+  const handleDeleteClick = () => {};
+  const onEditButtonClick = () => {};
+
   return (
     <>
       <div>
@@ -68,7 +72,7 @@ export default function EmployeeCard(props) {
                 <Avatar aria-label="recipe" className={classes.avatar}></Avatar>
               }
               action={
-                <IconButton aria-label="settings" onClick={handleClick}>
+                <IconButton aria-label="settings" onClick={handleEditClick}>
                   <EditIcon className={classes.editIcon} />
                 </IconButton>
               }
@@ -79,7 +83,7 @@ export default function EmployeeCard(props) {
           <CardHeader
             className={classes.delete}
             action={
-              <IconButton aria-label="settings">
+              <IconButton aria-label="settings" onClick={handleDeleteClick}>
                 <DeleteIcon className={classes.deleteIcon} />
               </IconButton>
             }
@@ -103,13 +107,23 @@ export default function EmployeeCard(props) {
             {data.learningPath.map((data, index) => (
               <CardContent key={index} className={classes.learningPath}>
                 <ThemeProvider theme={theme}>
-                  <ListItemText
-                    secondary={`${index + 1} ${data.name}    start- ${
-                      data.startDate == null
-                        ? "course not started"
-                        : data.startDate
-                    } ${!editOption ? "hello" : ""}`}
-                  />
+                  <Typography aria-label="share" className={classes.listData}>
+                    <span className={classes.courseName}>{`${index + 1}. ${
+                      data.name
+                    }`}</span>
+                    <span className={classes.courseStatus}>
+                      {" "}
+                      {`start- ${
+                        data.startDate == null
+                          ? "course not started"
+                          : data.startDate
+                      }`}
+                    </span>
+                    <span
+                      className={classes.deleteButton}
+                      onClick={onEditButtonClick}
+                    >{`${editOption ? "X" : ""}`}</span>
+                  </Typography>
                 </ThemeProvider>
               </CardContent>
             ))}
