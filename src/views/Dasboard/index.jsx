@@ -31,7 +31,10 @@ const Dashboard = () => {
   const userName = getOr("User Name", "user.fullName", loginState);
   const { assignedCources, pathModelOpen } = learningPathState;
 
-  const showDashboard = !assignedCources.length;
+  const showDashboard = (assignedCources.assignedLearningPaths
+    && assignedCources.assignedLearningPaths.length ?
+    true : false);
+  console.log(assignedCources.assignedLearningPaths);
 
   useEffect(() => {
     dispatch(
@@ -126,8 +129,8 @@ const Dashboard = () => {
           {showDashboard && !pathModelOpen ? (
             <DashboardDetail />
           ) : (
-            renderWelcome
-          )}
+              renderWelcome
+            )}
         </div>
         <div className="copyright">
           <Copyright />

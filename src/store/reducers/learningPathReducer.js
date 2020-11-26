@@ -192,6 +192,26 @@ export const learningPathReducer = (state = initialState, action) => {
                 isLoading: false,
                 errorMessage: payload.error
             };
+        case actionTypes.DELETE_ALL_PATH:
+            return {
+                ...state,
+                isLoading: true,
+                errorMessage: ''
+            };
+        case actionTypes.DELETE_ALL_PATH_SUCCESS:
+            return {
+                ...state,
+                deleteStatus: payload,
+                isLoading: false,
+                errorMessage: ''
+            };
+        case actionTypes.DELETE_ALL_PATH_FAILURE:
+            return {
+                ...state,
+                deleteStatus: '',
+                isLoading: false,
+                errorMessage: payload.error
+            };
         default: return state;
     }
 }

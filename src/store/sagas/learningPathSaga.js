@@ -5,23 +5,24 @@ import { SERVICE_URLS } from '../../modules/constants';
 import { authHeader } from '../../modules/authServices';
 
 const fetchAllCourses = async () => {
-    return await axios.get(SERVICE_URLS.FETCH_COURSES, { headers: authHeader() });
+  return await axios.get(SERVICE_URLS.FETCH_COURSES, { headers: authHeader() });
 }
 
 const fetchAllUsers = async () => {
-    return await axios.get(SERVICE_URLS.FETCH_USERS, { headers: authHeader() });
+  return await axios.get(SERVICE_URLS.FETCH_USERS, { headers: authHeader() });
 }
 
 const createLearningPath = async ({ path }) => {
-    return await axios.post(SERVICE_URLS.CREATE_LEARNING_PATH, { path }, { headers: authHeader() });
+  return await axios.post(SERVICE_URLS.CREATE_LEARNING_PATH, { path }, { headers: authHeader() });
 }
 
 export function* learningPathSaga() {
-    yield takeLatest(actionTypes.FETCH_COURSES_REQUEST, fetchCourses);
-    yield takeLatest(actionTypes.FETCH_USERS_REQUEST, fetchUsers);
-    yield takeLatest(actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST, createLearning);
-    yield takeLatest(actionTypes.GET_ASSIGNED_LEARNING_PATH_REQUEST, getAssignedLearningPaths);
-    yield takeLatest(actionTypes.GET_MY_LEARNING_PATH_REQUEST, getMyLearningPath);
+  yield takeLatest(actionTypes.FETCH_COURSES_REQUEST, fetchCourses);
+  yield takeLatest(actionTypes.FETCH_USERS_REQUEST, fetchUsers);
+  yield takeLatest(actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST, createLearning);
+  yield takeLatest(actionTypes.GET_ASSIGNED_LEARNING_PATH_REQUEST, getAssignedLearningPaths);
+  yield takeLatest(actionTypes.GET_MY_LEARNING_PATH_REQUEST, getMyLearningPath);
+  yield takeLatest(actionTypes.DELETE_ALL_PATH, deleteAllPaths);
 }
 
 function* fetchCourses() {
@@ -88,4 +89,20 @@ function* getMyLearningPath(action) {
     } catch (error) {
         yield put({ type: actionTypes.GET_MY_LEARNING_PATH_FAILURE, payload: error });
     }
+}
+const deleteAllPath = async ({ ids }) => {
+  return await axios.post(SERVICE_URLS.DELETE_ALL_PATH, { ids }, { headers: authHeader() });
+}
+
+function* deleteAllPaths(action) {
+  console.log(action);
+  try {
+    const response = yield call(deleteAllPath, action.payload);
+    const { data } = response;
+    console.log(data);
+    yield put({ type: actionTypes.DELETE_ALL_PATH_SUCCESS, payload: data });
+
+  } catch (error) {
+    yield put({ type: actionTypes.DELETE_ALL_PATH_FAILURE, payload: error });
+  }
 }

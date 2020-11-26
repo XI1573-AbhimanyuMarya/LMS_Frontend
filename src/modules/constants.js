@@ -10,6 +10,7 @@ export const SERVICE_URLS = {
   CREATE_LEARNING_PATH: `${API_HOST_PATH}/api/learningPath`,
   ASSIGNED_PATH: `${API_HOST_PATH}/api/getAssignedLearningPaths`,
   MY_PATH: `${API_HOST_PATH}/employeelearning/myLearningPath`,
+  DELETE_ALL_PATH: `${API_HOST_PATH}/employeelearning/deletelearningpath`,
 };
 
 export const API_STATUS = {

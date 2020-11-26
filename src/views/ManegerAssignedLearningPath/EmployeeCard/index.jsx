@@ -46,6 +46,7 @@ const theme = createMuiTheme({
 
 export default function EmployeeCard(props) {
   const data = props.data;
+  const { onDeleteAll } = props;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [editOption, setEditOption] = React.useState(false);
@@ -59,8 +60,8 @@ export default function EmployeeCard(props) {
     setExpanded(!expanded);
   };
 
-  const handleDeleteClick = () => {};
-  const onEditButtonClick = () => {};
+  const handleDeleteClick = () => { };
+  const onEditButtonClick = () => { };
 
   return (
     <>
@@ -83,7 +84,7 @@ export default function EmployeeCard(props) {
           <CardHeader
             className={classes.delete}
             action={
-              <IconButton aria-label="settings" onClick={handleDeleteClick}>
+              <IconButton aria-label="settings" onClick={() => onDeleteAll(data.empID)}>
                 <DeleteIcon className={classes.deleteIcon} />
               </IconButton>
             }
@@ -108,16 +109,14 @@ export default function EmployeeCard(props) {
               <CardContent key={index} className={classes.learningPath}>
                 <ThemeProvider theme={theme}>
                   <Typography aria-label="share" className={classes.listData}>
-                    <span className={classes.courseName}>{`${index + 1}. ${
-                      data.name
-                    }`}</span>
+                    <span className={classes.courseName}>{`${index + 1}. ${data.name
+                      }`}</span>
                     <span className={classes.courseStatus}>
                       {" "}
-                      {`start- ${
-                        data.startDate == null
+                      {`start- ${data.startDate == null
                           ? "course not started"
                           : data.startDate
-                      }`}
+                        }`}
                     </span>
                     <span
                       className={classes.deleteButton}

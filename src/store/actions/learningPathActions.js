@@ -55,6 +55,11 @@ const getMyLearningPath = (employeeEmail) => ({
   payload: { employeeEmail },
 });
 
+const deleteAllPaths = (ids) => ({
+  type: actionTypes.DELETE_ALL_PATH,
+  payload: {ids},
+});
+
 export default {
   fetchAllCourses,
   getFilteredCourses,
@@ -71,4 +76,5 @@ export default {
   getActivePathStep,
   getAssignedLearningPath,
   getMyLearningPath,
+  deleteAllPaths,
 };

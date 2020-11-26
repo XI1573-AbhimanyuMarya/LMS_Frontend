@@ -22,55 +22,59 @@ const ManageAssignLearningPath = ({ props }) => {
   const getAssignedLearningPaths = useSelector(
     (state) => state.learningPathState
   );
-  const { isLoading } = getAssignedLearningPaths;
+
+  const loginState = useSelector(
+    (state) => state.loginState
+  );
+  const { isLoading, assignedCources, deleteStatus } = getAssignedLearningPaths;
   const [selectedUsersArr, setSelectedUsersArr] = useState([]);
   useEffect(() => {
-    console.log("employees.length", employees.length);
-    if (employees.length === 0) {
-      dispatch(
-        Actions.learningPathActions.getAssignedLearningPath(
-          "abhimanyu.marya@xebia.com"
-        )
-      );
-    } else {
-      setSelectedUsersArr(isLoading);
-    }
-  }, []);
+    dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username));
 
-  const data = getAssignedLearningPaths.assignedCources.assignedLearningPaths;
+  }, [deleteStatus]);
+  const onDeleteAll = (employeeId) => {
+    const employeeData = employees.find(emp => (emp.empID === employeeId))
+    const ids = employeeData.learningPath.map(path => (path.learningPathEmployeesId))
+    dispatch(Actions.learningPathActions.deleteAllPaths(ids))
 
-  let employees = [];
-  if (data && data.length > 0) {
-    data.map((path) => {
-      path.madeFor.map((emp) => {
-        let id = parseInt(emp.employee.id);
-        let tempEmployee = Object.assign({}, emp.employee);
-        let learningPath = {
-          name: path.name,
-          learningPathId: path.learningPathId,
-          startDate: path.startDate,
-          endDate: path.endDate,
-          hasExpired: path.isLearningPathExpired,
-          learningPathEmployeesId: emp.learningPathEmployeesId,
-          completed: emp.percentCompleted,
-        };
-        const existEmployee = employees.find((item) => item.empID === id);
-        if (existEmployee) {
-          existEmployee.learningPath.push(learningPath);
-        } else {
-          employees.push({
-            empID: id,
-            employee: tempEmployee,
-            learningPath: [learningPath],
-          });
-        }
-      });
-    });
   }
+  const prepareData = (data) => {
+    let employees = [];
+    if (data && data.length > 0) {
+      data.map((path) => {
+        path.madeFor.map((emp) => {
+          let id = parseInt(emp.employee.id);
+          let tempEmployee = Object.assign({}, emp.employee);
+          let learningPath = {
+            name: path.name,
+            learningPathId: path.learningPathId,
+            startDate: path.startDate,
+            endDate: path.endDate,
+            hasExpired: path.isLearningPathExpired,
+            learningPathEmployeesId: emp.learningPathEmployeesId,
+            completed: emp.percentCompleted,
+          };
+          const existEmployee = employees.find((item) => item.empID === id);
+          if (existEmployee) {
+            existEmployee.learningPath.push(learningPath);
+          } else {
+            employees.push({
+              empID: id,
+              employee: tempEmployee,
+              learningPath: [learningPath],
+            });
+          }
+        });
+      });
+    }
+    return employees;
+  }
+  const employees = prepareData(assignedCources.assignedLearningPaths);
+
   let renderUser = "";
   if (employees.length > 0) {
     renderUser = employees.map((data, i) => (
-      <EmployeeCard key={i} data={data} />
+      <EmployeeCard key={i} data={data} onDeleteAll={onDeleteAll} />
     ));
   }
 
@@ -106,12 +110,12 @@ const ManageAssignLearningPath = ({ props }) => {
               {renderUser !== "" ? (
                 renderUser
               ) : (
-                <div>
-                  <Typography variant="h6" align="center">
-                    {MESSAGES.NO_DATA_FOUND}
-                  </Typography>
-                </div>
-              )}
+                  <div>
+                    <Typography variant="h6" align="center">
+                      {MESSAGES.NO_DATA_FOUND}
+                    </Typography>
+                  </div>
+                )}
             </div>
           </Paper>
         </div>
