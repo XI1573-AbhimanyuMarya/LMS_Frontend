@@ -12,7 +12,7 @@ import java.util.List;
 public class LearningPathManagerApprovalDto {
     private Long learningPathId;
     private String name;
-    private EmployeeDto employee;
+//    private EmployeeDto employee;
     private List<CoursesListDto> courses;
     private DurationDto duration;
     private LocalDate startDate;

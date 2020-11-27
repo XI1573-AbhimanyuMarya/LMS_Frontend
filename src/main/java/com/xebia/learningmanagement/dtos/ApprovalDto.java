@@ -13,6 +13,7 @@ public class ApprovalDto {
 
     private Long learningPathEmployeesId;
     private int percentCompleted;
+    private EmployeeDto employee;
     private LearningPathManagerApprovalDto learningPath;
     private String certificate;
     private LearningPathApprovalStatus approvalStatus;

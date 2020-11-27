@@ -173,18 +173,13 @@ public class LearningPathServiceImpl implements LearningPathService {
         ModelMapper modelMapper = new ModelMapper();
 
         String bytes = Objects.nonNull(employee.getCertificate()) ? new String(Base64.encodeBase64(employee.getCertificate()), StandardCharsets.UTF_8) : null;
-        LearningPathManagerApprovalDto learningPathManager = modelMapper.map(employee.getLearningPath(), LearningPathManagerApprovalDto.class);
-        learningPathManager.setEmployee(null);
-        User user = userRepository.findById(employee.getEmployee().getId()).orElseThrow(() -> new UsernameNotFoundException("Userid not found"));
-        learningPathManager.setEmployee(modelMapper.map(user,EmployeeDto.class));
-
         approvalDto.setCertificate(bytes);
         approvalDto.setApprovalStatus(employee.getApprovalStatus());
         approvalDto.setLearningPathEmployeesId(employee.getLearningPathEmployeesId());
         approvalDto.setPercentCompleted(employee.getPercentCompleted());
         approvalDto.setModifiedDate(employee.getModifiedDate());
-        approvalDto.setLearningPath(learningPathManager);
-
+        approvalDto.setLearningPath(modelMapper.map(employee.getLearningPath(),LearningPathManagerApprovalDto.class));
+        approvalDto.setEmployee(modelMapper.map(employee.getEmployee(),EmployeeDto.class));
         return approvalDto;
 
     }

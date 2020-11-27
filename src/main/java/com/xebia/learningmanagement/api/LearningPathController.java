@@ -59,7 +59,7 @@ public class LearningPathController {
         return new ResponseEntity(allAssignedLearningPath, HttpStatus.OK);
 
     }
-
+    
     @PostMapping(value = "/approve/LearningPath")
     public ResponseEntity needsApproval(@RequestBody ManagerEmailRequest managerEmailRequest) {
         UserResponse userResponse = new UserResponse();
