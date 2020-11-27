@@ -187,7 +187,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
     @Override
-    public void approveRequests(LearningPathEmployeeApprovalRequest request) throws LearningPathEmployeesException {
+    public void approveRequests(LearningPathEmployeeApprovalRequest request) throws Exception {
         LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(request.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("Learning Path Employee Id not found"));
 
         if (request.getStatus().equalsIgnoreCase("APPROVED")) {
@@ -195,6 +195,28 @@ public class LearningPathServiceImpl implements LearningPathService {
         } else {
             learningPathEmployees.setApprovalStatus(REJECTED);
         }
-        learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
+
+        try {
+            setApprovalMailPropertiesAndSendEmail(learningPathEmployees);
+            learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
+        } catch (Exception e) {
+            throw new LearningPathEmployeesException("Unable to Send Email & update Status");
+        }
+
+
     }
+
+
+    private void setApprovalMailPropertiesAndSendEmail(LearningPathEmployees learningPathEmployees) throws Exception {
+
+        Map<String, String> model = new HashMap<>();
+
+        model.put("learningPathName", learningPathEmployees.getLearningPath().getName());
+        model.put("Email", learningPathEmployees.getEmployee().getUsername());
+        model.put("status", learningPathEmployees.getApprovalStatus().toString());
+        model.put("emailFor", learningPathEmployees.getEmployee().getFullName());
+        emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_APPROVAL_REJECTION.getValue(), model);
+    }
+
+
 }

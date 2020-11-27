@@ -24,5 +24,5 @@ public interface LearningPathService {
 
     List<ApprovalDto> getPendingApprovals(ManagerEmailRequest managerEmailRequest) throws LearningPathException;
 
-    void approveRequests(LearningPathEmployeeApprovalRequest request) throws LearningPathEmployeesException;
+    void approveRequests(LearningPathEmployeeApprovalRequest request) throws Exception;
 }
