@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-// import Carosals from '../LearningPath/SelectCourses/Carosals';
-import Carosals from './Carosals/index';
 import Actions from '../../store/actions';
 import CourseSkelton from '../../components/Skelton/CourseSkelton';
 import { useStyles } from './style';
@@ -12,8 +10,9 @@ import Copyright from '../../components/Copyright';
 import WithLoading from '../../hoc/WithLoading';
 import { Button } from '@material-ui/core';
 import DiscardPopup from '../../components/DiscardPopup';
-import AddLearningPath from '../../images/AddLearningPath.svg'
-import LearningPath from '../Assignedlearningpath/LearningPath/index';
+import LearningPath from '../LearningPath';
+import { getOr } from 'lodash/fp';
+import Carosals from './Carosals/index';
 
 const AssignedLearningPath = () => {
   const classes = useStyles();
@@ -23,21 +22,14 @@ const AssignedLearningPath = () => {
   const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
   const [touch, setTouch] = useState(false);
   const loginState = useSelector(res => res.loginState);
-  const { assignedCources } = learningPathState;
+  const userName = getOr("User Name", "user.fullName", loginState);
+  const { assignedCources, pathModelOpen } = learningPathState;
 
-  useEffect(() => {
-    dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username))
-  }, [])
-
-  const onCourseClickHandler = (courseId) => {
-    console.log(courseId);
-  }
-  const logoutUser = () => {
-    dispatch(Actions.loginActions.logout());
-  }
+  // useEffect(() => {
+  //   dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username))
+  // }, [])
 
   const handleClickOpen = () => {
-    console.log('cli');
     dispatch(Actions.learningPathActions.pathModelOpen(true));
   };
 
@@ -47,17 +39,15 @@ const AssignedLearningPath = () => {
 
   const handleClosePathHandler = () => {
     dispatch(Actions.learningPathActions.pathModelOpen(false));
-  }
+  };
 
   const discardHandler = (closeMainModel) => {
+    console.log(closeMainModel);
     dispatch(Actions.learningPathActions.discardModelOpen(false));
     if (closeMainModel) {
       dispatch(Actions.learningPathActions.pathModelOpen(false));
     }
-  }
-  /**
-   * function to fetch all courses initial time
-   */
+  };
   useEffect(() => {
     if (courseIdArr?.length === 0) {
       // dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username));
@@ -65,7 +55,7 @@ const AssignedLearningPath = () => {
     } else {
       setSelectedCoursesArr(courseIdArr)
     }
-  }, []);
+  }, [pathModelOpen]);
 
   var headings = courses
   var headresult = headings.map((item) => { return item.category });
@@ -91,30 +81,25 @@ const AssignedLearningPath = () => {
         <div className={classes.toolbar} />
         <div className="container">
           <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" p={3} style={{ position: "unset !important" }}>
-            {finaldata.map(item => {
-              var Item = (
-                <>
-                  <Box alignItems="flex-start" py={2} >
-                    <Typography variant="h6" style={{ color: "#621d58", fontSize: "16px", padding: "0" }}>
-                      <Button onClick={handleClickOpen}>{item.name}</Button>
-                    </Typography>
-                    <LearningPath
-                      handleClose={closeHandler}
-                      handleClosePath={handleClosePathHandler}
-                    />
-                    <DiscardPopup
-                      discardHandler={discardHandler}
-                    />
-                  </Box>
-                  <Box alignItems="center">
-                    {isLoading && item?.length === 0 && <CourseSkelton />}
-                    <Carosals coursesList={item.courses} />
-                    {/* <Carosals coursesList={item.courses} handleCourseClick={(id) => onCourseClickHandler(id)} /> */}
-                  </Box>
-                </>
-              )
-              return Item
-            })}
+            {!pathModelOpen && finaldata.map(item => (
+              <div key={item.name}>
+                <Box component="div" m="auto">
+                  <Button type="button" onClick={handleClickOpen} >
+                    {item.name}
+                  </Button>
+                </Box>
+                <Box alignItems="center">
+                  {isLoading && item?.length === 0 && <CourseSkelton />}
+                  <Carosals coursesList={item.courses} />
+                  {/* <Carosals coursesList={item.courses} handleCourseClick={(id) => onCourseClickHandler(id)} /> */}
+                </Box>
+              </div>
+            ))}
+            <LearningPath
+              handleClose={closeHandler}
+              handleClosePath={handleClosePathHandler}
+            />
+            <DiscardPopup discardHandler={discardHandler} />
           </Box>
           <div className="copyright">
             <Copyright />
