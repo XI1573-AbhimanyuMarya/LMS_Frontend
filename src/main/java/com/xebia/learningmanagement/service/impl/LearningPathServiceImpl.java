@@ -1,28 +1,28 @@
 package com.xebia.learningmanagement.service.impl;
 
 import com.google.common.base.CharMatcher;
-import com.xebia.learningmanagement.dtos.LearningPathDto;
-import com.xebia.learningmanagement.dtos.LearningPathManagerDto;
-import com.xebia.learningmanagement.dtos.ListOfLearningPathsAssignedByManagerDto;
+import com.xebia.learningmanagement.dtos.*;
+import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
+import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.*;
 import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 @Service
@@ -159,4 +159,64 @@ public class LearningPathServiceImpl implements LearningPathService {
         List<LearningPath> learningPathList = learningPathRepository.findAll().stream().filter(a -> a.getMadeBy().equals(user)).collect(Collectors.toList());
         return new ListOfLearningPathsAssignedByManagerDto(learningPathList.stream().map(a -> modelMapper.map(a, LearningPathManagerDto.class)).collect(Collectors.toList()));
     }
+
+    @Override
+    public List<ApprovalDto> getPendingApprovals(ManagerEmailRequest managerEmail) {
+        ModelMapper modelMapper = new ModelMapper();
+        User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
+        List<LearningPathEmployees> madeByManager = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
+        List<LearningPathEmployees> needsApprovalEmpList = madeByManager.stream().filter(a -> PENDING.equals(a.getApprovalStatus())).sorted(Comparator.comparing(LearningPathEmployees::getModifiedDate)).collect(Collectors.toList());
+        List<ApprovalDto> approvalDtos = needsApprovalEmpList.stream().map(this::PendingApprovalsListToApprovalDto).collect(Collectors.toList());
+        return approvalDtos;
+    }
+
+    public ApprovalDto PendingApprovalsListToApprovalDto(LearningPathEmployees employee) {
+        ApprovalDto approvalDto = new ApprovalDto();
+        ModelMapper modelMapper = new ModelMapper();
+
+        String bytes = Objects.nonNull(employee.getCertificate()) ? new String(Base64.encodeBase64(employee.getCertificate()), StandardCharsets.UTF_8) : null;
+        approvalDto.setCertificate(bytes);
+        approvalDto.setApprovalStatus(employee.getApprovalStatus());
+        approvalDto.setLearningPathEmployeesId(employee.getLearningPathEmployeesId());
+        approvalDto.setPercentCompleted(employee.getPercentCompleted());
+        approvalDto.setModifiedDate(employee.getModifiedDate());
+        approvalDto.setLearningPath(modelMapper.map(employee.getLearningPath(), LearningPathManagerApprovalDto.class));
+        approvalDto.setEmployee(modelMapper.map(employee.getEmployee(), EmployeeDto.class));
+        return approvalDto;
+
+    }
+
+    @Override
+    public void approveRequests(LearningPathEmployeeApprovalRequest request) throws Exception {
+        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(request.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("Learning Path Employee Id not found"));
+
+        if (request.getStatus().equalsIgnoreCase("APPROVED")) {
+            learningPathEmployees.setApprovalStatus(APPROVED);
+        } else {
+            learningPathEmployees.setApprovalStatus(REJECTED);
+        }
+
+        try {
+            setApprovalMailPropertiesAndSendEmail(learningPathEmployees);
+            learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
+        } catch (Exception e) {
+            throw new LearningPathEmployeesException("Unable to Send Email & update Status");
+        }
+
+
+    }
+
+
+    private void setApprovalMailPropertiesAndSendEmail(LearningPathEmployees learningPathEmployees) throws Exception {
+
+        Map<String, String> model = new HashMap<>();
+
+        model.put("learningPathName", learningPathEmployees.getLearningPath().getName());
+        model.put("Email", learningPathEmployees.getEmployee().getUsername());
+        model.put("status", learningPathEmployees.getApprovalStatus().toString());
+        model.put("emailFor", learningPathEmployees.getEmployee().getFullName());
+        emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_APPROVAL_REJECTION.getValue(), model);
+    }
+
+
 }

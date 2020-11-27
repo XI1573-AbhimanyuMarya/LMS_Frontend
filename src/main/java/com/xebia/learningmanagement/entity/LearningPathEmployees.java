@@ -1,11 +1,14 @@
 package com.xebia.learningmanagement.entity;
 
+import com.xebia.learningmanagement.enums.LearningPathApprovalStatus;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +26,14 @@ public class LearningPathEmployees {
     private User employee;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private LearningPath learningPath;
+
+    @Column
+    private byte[] certificate;
+    @Enumerated(EnumType.STRING)
+    private LearningPathApprovalStatus approvalStatus;
+    @Column(name = "modified_date")
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
 
     @Override
     public boolean equals(Object o) {
