@@ -2,9 +2,11 @@ package com.xebia.learningmanagement.service.impl;
 
 import com.google.common.base.CharMatcher;
 import com.xebia.learningmanagement.dtos.*;
+import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
+import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.repository.*;
@@ -20,7 +22,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.PENDING;
+import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.*;
 import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 @Service
@@ -178,11 +180,21 @@ public class LearningPathServiceImpl implements LearningPathService {
         approvalDto.setLearningPathEmployeesId(employee.getLearningPathEmployeesId());
         approvalDto.setPercentCompleted(employee.getPercentCompleted());
         approvalDto.setModifiedDate(employee.getModifiedDate());
-        approvalDto.setLearningPath(modelMapper.map(employee.getLearningPath(),LearningPathManagerApprovalDto.class));
-        approvalDto.setEmployee(modelMapper.map(employee.getEmployee(),EmployeeDto.class));
+        approvalDto.setLearningPath(modelMapper.map(employee.getLearningPath(), LearningPathManagerApprovalDto.class));
+        approvalDto.setEmployee(modelMapper.map(employee.getEmployee(), EmployeeDto.class));
         return approvalDto;
 
     }
 
+    @Override
+    public void approveRequests(LearningPathEmployeeApprovalRequest request) throws LearningPathEmployeesException {
+        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(request.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("Learning Path Employee Id not found"));
 
+        if (request.getStatus().equalsIgnoreCase("APPROVED")) {
+            learningPathEmployees.setApprovalStatus(APPROVED);
+        } else {
+            learningPathEmployees.setApprovalStatus(REJECTED);
+        }
+        learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
+    }
 }
