@@ -3,8 +3,10 @@ package com.xebia.learningmanagement.api;
 import com.xebia.learningmanagement.dtos.ApprovalDto;
 import com.xebia.learningmanagement.dtos.LearningPathDto;
 import com.xebia.learningmanagement.dtos.ListOfLearningPathsAssignedByManagerDto;
+import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
+import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.service.LearningPathService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +61,8 @@ public class LearningPathController {
         return new ResponseEntity(allAssignedLearningPath, HttpStatus.OK);
 
     }
-    
-    @PostMapping(value = "/approve/LearningPath")
+
+    @PostMapping(value = "/pending/approvals")
     public ResponseEntity needsApproval(@RequestBody ManagerEmailRequest managerEmailRequest) {
         UserResponse userResponse = new UserResponse();
         List<ApprovalDto> pendingApprovals;
@@ -78,5 +80,23 @@ public class LearningPathController {
         return new ResponseEntity(pendingApprovals, HttpStatus.OK);
 
     }
+
+    @PutMapping(value = "/review/approvals")
+    public ResponseEntity approveLearningPath(@RequestBody LearningPathEmployeeApprovalRequest request) {
+        UserResponse userResponse = new UserResponse();
+        try {
+            if (request.getLearningPathEmployeeId() != null && request.getStatus() != null) {
+                learningPathService.approveRequests(request);
+            } else {
+                throw new LearningPathEmployeesException("Learning Path EmployeeId should not be null & Approval Status should be in format APPROVED/REJECTED only");
+            }
+        } catch (Exception e) {
+            userResponse.setStatus("failure");
+            userResponse.setMessage(e.getLocalizedMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
+        }
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
 
 }
