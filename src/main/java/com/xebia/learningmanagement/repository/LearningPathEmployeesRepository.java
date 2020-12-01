@@ -12,6 +12,7 @@ import java.util.List;
 public interface LearningPathEmployeesRepository extends JpaRepository<LearningPathEmployees,Long> {
 
     List<LearningPathEmployees> findByLearningPathMadeBy(User user);
+    List<LearningPathEmployees> findByEmployee(User user);
 
     @Modifying
     @Transactional
