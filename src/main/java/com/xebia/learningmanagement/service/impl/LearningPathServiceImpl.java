@@ -195,6 +195,10 @@ public class LearningPathServiceImpl implements LearningPathService {
         approvalDto.setModifiedDate(employee.getModifiedDate());
         approvalDto.setLearningPath(modelMapper.map(employee.getLearningPath(), LearningPathManagerApprovalDto.class));
         approvalDto.setEmployee(modelMapper.map(employee.getEmployee(), EmployeeDto.class));
+        approvalDto.setStartDate(employee.getStartDate());
+        approvalDto.setEndDate(employee.getEndDate());
+        approvalDto.setIsLearningPathExpired(employee.getIsLearningPathExpired());
+        approvalDto.setDuration(modelMapper.map(employee.getDuration(),DurationDto.class));
         return approvalDto;
 
     }
