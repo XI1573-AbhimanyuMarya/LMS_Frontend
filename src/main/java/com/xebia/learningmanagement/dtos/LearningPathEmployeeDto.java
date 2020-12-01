@@ -13,9 +13,10 @@ public class LearningPathEmployeeDto {
 
     private Long learningPathId;
     private String name;
-    private EmployeeDto madeBy;
-    private List<CoursesListDto> courses;
     private String description;
     private Competency competency;
+    private EmployeeDto madeBy;
+    private List<CoursesListDto> courses;
+
 
 }
