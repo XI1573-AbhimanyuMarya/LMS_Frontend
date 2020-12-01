@@ -15,7 +15,7 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
 
     @Modifying
     @Transactional
-    @Query(value = "Update public.learning_path_employees SET  is_expired=true WHERE ( now() >= learning_path.end_date )", nativeQuery = true)
+    @Query(value = "Update public.learning_path_employees SET  is_expired=true WHERE ( now() >= learning_path_employees.end_date )", nativeQuery = true)
     void updateIsExpiredOfLearningPath();
 
 }
