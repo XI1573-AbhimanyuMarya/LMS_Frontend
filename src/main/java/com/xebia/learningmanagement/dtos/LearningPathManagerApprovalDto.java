@@ -13,10 +13,11 @@ import java.util.List;
 public class LearningPathManagerApprovalDto {
     private Long learningPathId;
     private String name;
-//    private EmployeeDto employee;
-    private List<CoursesListDto> courses;
     private String description;
     private Competency competency;
+//    private EmployeeDto employee;
+    private List<CoursesListDto> courses;
+
 
 
 }
