@@ -1,9 +1,11 @@
 package com.xebia.learningmanagement.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class LearningPathDto {
@@ -18,7 +20,9 @@ public class LearningPathDto {
         this.path = path;
     }
 
-    public class Path{
+    @Getter
+    @Setter
+    public class Path {
         @NotBlank
         private String name;
         private Long madeById;
@@ -27,44 +31,8 @@ public class LearningPathDto {
         private List<Long> coursesId;
         private int duration;
 
-        public String getName() {
-            return name;
-        }
+        private String description = "Dummy description";
+        private Long competencyLevelId;
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Long getMadeById() {
-            return madeById;
-        }
-
-        public void setMadeById(Long madeById) {
-            this.madeById = madeById;
-        }
-
-        public List<Long> getMadeForId() {
-            return madeForId;
-        }
-
-        public void setMadeForId(List<Long> madeForId) {
-            this.madeForId = madeForId;
-        }
-
-        public List<Long> getCoursesId() {
-            return coursesId;
-        }
-
-        public void setCoursesId(List<Long> coursesId) {
-            this.coursesId = coursesId;
-        }
-
-        public int getDuration() {
-            return duration;
-        }
-
-        public void setDuration(int duration) {
-            this.duration = duration;
-        }
     }
 }

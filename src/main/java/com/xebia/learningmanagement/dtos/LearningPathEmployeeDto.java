@@ -1,5 +1,6 @@
 package com.xebia.learningmanagement.dtos;
 
+import com.xebia.learningmanagement.entity.Competency;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +15,7 @@ public class LearningPathEmployeeDto {
     private String name;
     private EmployeeDto madeBy;
     private List<CoursesListDto> courses;
-    private DurationDto duration;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private Boolean isLearningPathExpired;
+    private String description;
+    private Competency competency;
 
 }
