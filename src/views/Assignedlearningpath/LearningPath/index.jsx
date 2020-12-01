@@ -13,7 +13,7 @@ const transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const LearningPath = (props) => {
+const AssignedLearningPath = (props) => {
     const learningPathState = useSelector(state => state.learningPathState);
     const { pathModelOpen } = learningPathState;
     const { handleClose, handleClosePath } = props;
@@ -39,4 +39,4 @@ LearningPath.propTypes = {
     handleClosePath: PropTypes.func.isRequired,
 };
 
-export default LearningPath;
+export default AssignedLearningPath;

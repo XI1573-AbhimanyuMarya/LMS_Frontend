@@ -40,7 +40,7 @@ const getStepContent = (step) => {
   }
 }
 
-const CreateLearningPath = (props) => {
+const AssignedCreateLearningPath = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
@@ -204,9 +204,9 @@ const CreateLearningPath = (props) => {
   );
 }
 
-CreateLearningPath.propTypes = {
+AssignedCreateLearningPath.propTypes = {
   handleClose: PropTypes.func.isRequired,
   handleClosePath: PropTypes.func.isRequired,
 };
 
-export default WithLoading(CreateLearningPath);
+export default WithLoading(AssignedCreateLearningPath);

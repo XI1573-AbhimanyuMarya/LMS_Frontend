@@ -12,7 +12,7 @@ import CourseSkelton from '../../../../components/Skelton/CourseSkelton';
 import { useStyles } from './style';
 import { LEARNING_PATH_LABELS } from '../../../../modules/constants';
 
-const SelectCourses = () => {
+const SelectAssignedPath = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
@@ -135,4 +135,4 @@ const SelectCourses = () => {
 	);
 }
 
-export default SelectCourses;
+export default SelectAssignedPath;
