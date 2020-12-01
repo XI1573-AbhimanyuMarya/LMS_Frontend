@@ -169,7 +169,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     public ListOfLearningPathsAssignedByManagerDto getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException {
         ModelMapper modelMapper = new ModelMapper();
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
-        List<LearningPath> learningPathList = learningPathRepository.findAll().stream().filter(a -> a.getMadeBy().equals(user)).collect(Collectors.toList());
+        List<LearningPathEmployees> learningPathList = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
         return new ListOfLearningPathsAssignedByManagerDto(learningPathList.stream().map(a -> modelMapper.map(a, LearningPathManagerDto.class)).collect(Collectors.toList()));
     }
 
