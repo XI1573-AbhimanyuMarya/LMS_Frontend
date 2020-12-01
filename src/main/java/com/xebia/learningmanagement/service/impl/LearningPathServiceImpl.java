@@ -6,6 +6,7 @@ import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalReq
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
+import com.xebia.learningmanagement.exception.CompetencyLevelException;
 import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
@@ -41,6 +42,9 @@ public class LearningPathServiceImpl implements LearningPathService {
     protected CourseRepository courseRepository;
 
     @Autowired
+    protected CompetencyRepository competencyRepository;
+
+    @Autowired
     protected LearningPathEmployeesRepository learningPathEmployeesRepository;
 
     @Autowired
@@ -50,6 +54,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Override
     public void createLearningPath(LearningPathDto.Path path) throws Exception {
         LearningPath learningPath = new LearningPath();
+        LearningPathEmployees learningPathEmployees =new LearningPathEmployees();
 
         Optional<Duration> duration = durationRepository.findById(path.getDuration());
         if (!duration.isPresent()) {
@@ -75,13 +80,15 @@ public class LearningPathServiceImpl implements LearningPathService {
             }
         }
         // Set Learning path
-        learningPath.setDuration(durationRepository.findById(path.getDuration()).get());
         learningPath.setMadeBy(userRepository.findById(path.getMadeById()).get());
         learningPath.setName(path.getName());
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
-        learningPath.setStartDate(LocalDate.now());
-        Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(learningPath.getDuration().getName()));
-        learningPath.setEndDate(LocalDate.now().plusMonths(lpDuration));
+        learningPath.setDescription(path.getDescription());
+//        Competency competencyLevel = competencyRepository.findById(path.getCompetencyLevelId()).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
+        Competency competencyLevel1 = competencyRepository.findById((long) 102).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));;
+
+        learningPath.setCompetency(competencyLevel1);
+
         getTemplatePlaceholderValuesAndSaveData(path, learningPath);
 
 //        Save learning Path After the mail & mapping between Learning path : Employee has been saved
@@ -98,6 +105,12 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathEmployees.setLearningPath(learningPath);
             learningPathEmployees.setEmployee(user);
             learningPathEmployees.setPercentCompleted(0);
+            learningPathEmployees.setDuration(durationRepository.findById(path.getDuration()).get());
+            learningPathEmployees.setStartDate(LocalDate.now());
+            Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(learningPathEmployees.getDuration().getName()));
+            learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
+
+
 
             //TODO : Send Email to concerned User
             User madeByUser = userRepository.findById(path.getMadeById()).orElseThrow(() -> new NotFoundException());
@@ -107,8 +120,8 @@ public class LearningPathServiceImpl implements LearningPathService {
             List<Courses> coursesListById = courseRepository.findAllById(path.getCoursesId());
             List<String> stringList = coursesListById.stream().map(Courses::getName).map(String::toUpperCase).collect(Collectors.toList());
 
-            LocalDate startDate = learningPath.getStartDate();
-            LocalDate endDate = learningPath.getEndDate();
+            LocalDate startDate = learningPathEmployees.getStartDate();
+            LocalDate endDate = learningPathEmployees.getEndDate();
 
             //todo Set Email Properties
             try {
