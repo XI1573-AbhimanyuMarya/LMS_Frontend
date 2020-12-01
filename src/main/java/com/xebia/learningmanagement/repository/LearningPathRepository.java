@@ -9,9 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface LearningPathRepository extends JpaRepository<LearningPath, Long> {
-    @Modifying
-    @Transactional
-    @Query(value = "Update public.learning_path SET  is_expired=true WHERE ( now() >= learning_path.end_date )", nativeQuery = true)
-    void updateIsExpiredOfLearningPath();
+
 
 }
