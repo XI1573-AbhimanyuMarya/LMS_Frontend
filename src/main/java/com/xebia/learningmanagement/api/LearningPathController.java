@@ -1,8 +1,6 @@
 package com.xebia.learningmanagement.api;
 
-import com.xebia.learningmanagement.dtos.ApprovalDto;
-import com.xebia.learningmanagement.dtos.LearningPathDto;
-import com.xebia.learningmanagement.dtos.ListOfLearningPathsAssignedByManagerDto;
+import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -45,7 +44,7 @@ public class LearningPathController {
     @PostMapping("/getAssignedLearningPaths")
     public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerEmailRequest managerEmail) throws LearningPathException {
         UserResponse userResponse = new UserResponse();
-        ListOfLearningPathsAssignedByManagerDto allAssignedLearningPath;
+        Map<EmployeeDto, List<LearningPathManagerDto>> allAssignedLearningPath;
         try {
             if (managerEmail != null && !"".equalsIgnoreCase(managerEmail.getManagerEmail())) {
                 allAssignedLearningPath = learningPathService.getAllAssignedLearningPath(managerEmail);

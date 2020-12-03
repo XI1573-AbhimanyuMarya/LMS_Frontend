@@ -54,7 +54,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Override
     public void createLearningPath(LearningPathDto.Path path) throws Exception {
         LearningPath learningPath = new LearningPath();
-        LearningPathEmployees learningPathEmployees =new LearningPathEmployees();
+        LearningPathEmployees learningPathEmployees = new LearningPathEmployees();
 
         Optional<Duration> duration = durationRepository.findById(path.getDuration());
         if (!duration.isPresent()) {
@@ -85,7 +85,8 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
         learningPath.setDescription(path.getDescription());
 //        Competency competencyLevel = competencyRepository.findById(path.getCompetencyLevelId()).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
-        Competency competencyLevel1 = competencyRepository.findById((long) 102).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));;
+        Competency competencyLevel1 = competencyRepository.findById((long) 102).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
+        ;
 
         learningPath.setCompetency(competencyLevel1);
 
@@ -109,7 +110,6 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathEmployees.setStartDate(LocalDate.now());
             Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(learningPathEmployees.getDuration().getName()));
             learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
-
 
 
             //TODO : Send Email to concerned User
@@ -166,11 +166,14 @@ public class LearningPathServiceImpl implements LearningPathService {
      * @throws LearningPathException
      */
     @Override
-    public ListOfLearningPathsAssignedByManagerDto getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException {
+    public Map<EmployeeDto, List<LearningPathManagerDto>> getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException {
         ModelMapper modelMapper = new ModelMapper();
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
         List<LearningPathEmployees> learningPathList = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
-        return new ListOfLearningPathsAssignedByManagerDto(learningPathList.stream().map(a -> modelMapper.map(a, LearningPathManagerDto.class)).collect(Collectors.toList()));
+        List<LearningPathManagerDto> learningPathManagerDtos = learningPathList.stream().map(a -> modelMapper.map(a, LearningPathManagerDto.class)).collect(Collectors.toList());
+        Map<EmployeeDto, List<LearningPathManagerDto>> employeeLearningPathMapping = learningPathManagerDtos.stream().collect(Collectors.groupingBy(LearningPathManagerDto::getEmployee));
+        return employeeLearningPathMapping;
+
     }
 
     @Override
@@ -198,7 +201,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         approvalDto.setStartDate(employee.getStartDate());
         approvalDto.setEndDate(employee.getEndDate());
         approvalDto.setIsLearningPathExpired(employee.getIsLearningPathExpired());
-        approvalDto.setDuration(modelMapper.map(employee.getDuration(),DurationDto.class));
+        approvalDto.setDuration(modelMapper.map(employee.getDuration(), DurationDto.class));
         return approvalDto;
 
     }
