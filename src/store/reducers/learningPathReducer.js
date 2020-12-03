@@ -2,6 +2,7 @@ import { actionTypes } from '../types';
 
 const initialState = {
   learningPathName: '',
+  learningPathDes: '',
   courses: [],
   courseIdArr: [],
   users: [],
@@ -92,6 +93,12 @@ export const learningPathReducer = (state = initialState, action) => {
         learningPathName: payload.pathName,
         isLoading: false
       }
+      case actionTypes.GET_LEARNING_PATH_DES:
+        return {
+          ...state,
+          learningPathDes: payload.pathDes,
+          isLoading: false
+        }
     case actionTypes.PATH_MODEL_OPEN:
       if (payload.val === true) {
         return {

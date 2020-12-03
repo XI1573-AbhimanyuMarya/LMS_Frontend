@@ -6,7 +6,7 @@ import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
 import Typography from "@material-ui/core/Typography";
 import CourseCatalog from "../ChartViewCatalog";
 import { MESSAGES } from "../../../modules/constants";
-import CourseCard from "../../../components/CourseCard";
+import CourseCard from "../../../components/CourseCard/index1";
 import { useStyles } from "./style";
 
 const Carosalschart = (props) => {

@@ -23,7 +23,7 @@ const Carosals = (props) => {
 		});
 
 		renderCarousel = <div style={{ padding: `0 ${chevronWidth}px` }}>
-			<ItemsCarousel
+			{/* <ItemsCarousel
 				requestToChangeActive={setActiveItemIndex}
 				activeItemIndex={activeItemIndex}
 				numberOfCards={4}
@@ -32,11 +32,11 @@ const Carosals = (props) => {
 				rightChevron={<ArrowForwardIosOutlinedIcon />}
 				outsideChevron
 				chevronWidth={chevronWidth}
-			>
+			> */}
 				{
 					renderCourses
 				}
-			</ItemsCarousel>
+			{/* </ItemsCarousel> */}
 		</div>
 	}
 	return (

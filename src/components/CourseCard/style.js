@@ -160,4 +160,54 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "auto",
     },
   },
+  row1: {
+    width:"220px",
+    fontWeight:"500",
+    fontfamily: 'Roboto',
+  },
+  row2: {
+    width:"150px",
+    fontWeight:"500",
+    fontfamily: 'Roboto',
+    margin: "0 20px 0 0"
+  },
+  row3: {
+    width:"160px",
+    fontWeight:"500",
+    fontfamily: 'Roboto',
+    color:"#621d58",
+  },
+  row4: {
+    width:"120px",
+    fontWeight:"500",
+    fontfamily: 'Roboto',
+  },
+  row5: {
+    width:"120px",
+    fontWeight:"500",
+    fontfamily: 'Roboto',
+    
+  },
+  row6: {
+    width:"68px",
+    display:"flex",
+    border:"1px solid #c2c2c2",
+    justifyContent:"center",
+    margin:"0 50px 0 0",
+    color:"#007aff",
+    borderRadius:"4px",
+    fontfamily: 'Roboto',
+
+  },
+  row7: {
+   width:"100px",
+    display:"flex",
+    border:"1px solid #f07301",
+    justifyContent:"center",
+    color:"#f07402",
+    fontWeight:"500",
+    borderRadius:"4px",
+    fontfamily: 'Roboto',
+    
+  },
 }));

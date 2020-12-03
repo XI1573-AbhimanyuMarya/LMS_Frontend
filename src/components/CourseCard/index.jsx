@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Box } from '@material-ui/core';
-
 import { useStyles } from './style';
 import BarIcon from '../SignalIcon';
 import ProgressBar from '../ProgressBar';
@@ -15,23 +14,44 @@ const CourseCard = (props) => {
   const classes = useStyles();
   const { course, onButtonClick, showButton } = props;
   course.progress = '';
-  let btnlabel = "Let's begin"
-  if (course?.progress) {
-    btnlabel = "Explore"
-  }
-  
-  let darkBar = 0;
-  if (course?.competency?.name === "Beginner") {
-    darkBar = 1;
-  } else if (course?.competency?.name === "Intermediate") {
-    darkBar = 2
-  } else if (course?.competency?.name === "Expert") {
-    darkBar = 3
-  }
+  // let btnlabel = "Let's begin"
+  // if (course?.progress) {
+  //   btnlabel = "Explore"
+  // }
+
+  // let darkBar = 0;
+  // if (course?.competency?.name === "Beginner") {
+  //   darkBar = 1;
+  // } else if (course?.competency?.name === "Intermediate") {
+  //   darkBar = 2
+  // } else if (course?.competency?.name === "Expert") {
+  //   darkBar = 3
+  // }
 
   return (
-    <Card className={classes.root} >
-      <CardContent>
+
+    <>
+      <table>
+        <tr style={{display:"flex", marginTop:"10px"}}>
+          <td className={classes.row1} > {course.name}</td>
+          <td className={classes.row2} > {course.category.name}</td>
+          <td className={classes.row3} > Beginner</td>
+          <td className={classes.row4} >05/12/2020</td>
+          <td className={classes.row5} >05/12/2020</td>
+          <td className={classes.row6} > 30%</td>
+          <td className={classes.row7} > let's begin</td>
+        </tr>
+      </table>
+    </>
+
+  );
+}
+
+
+export default CourseCard;
+
+// <Card className={classes.root} >
+{/* <CardContent>
         <Grid container spacing={2} alignContent="space-between" className={classes.header}>
           <Grid item xs >
             <Box component="span" className={classes.courseType}>
@@ -82,10 +102,5 @@ const CourseCard = (props) => {
             <Button size="large" className={classes.btn} onClick={onButtonClick}>{btnlabel}</Button>
           </CardActions>
           : ''
-      }
-    </Card>
-  );
-}
-
-
-export default CourseCard;
+      } */}
+      // </Card>

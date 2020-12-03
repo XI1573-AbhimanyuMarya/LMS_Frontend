@@ -87,6 +87,7 @@ const SelectCourses = () => {
 		: courses;
 	return (
 		<React.Fragment>
+      <br></br>
 			<Box component='div' display="flex" justifyContent="center">
 				<TextField id="standard-search"
 					label={LEARNING_PATH_LABELS.SEARCH_COURSE}
@@ -98,7 +99,7 @@ const SelectCourses = () => {
 					onChange={changeHandler} />
 			</Box>
 			<Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" >
-				<Grid container className={classes.pathName}>
+				{/* <Grid container className={classes.pathName}>
 					<Grid item xs={3}>
 						<InputLabel
 							htmlFor="standard-search"
@@ -119,8 +120,8 @@ const SelectCourses = () => {
 							value={learningPathName ? learningPathName : ''}
 						/>
 					</Grid>
-				</Grid>
-				<Divider variant="middle" />
+				</Grid> */}
+				{/* <Divider variant="middle" /> */}
 				<Box alignItems="flex-start" py={2} pl={5}>
 					<Typography variant="h6">
 						{LEARNING_PATH_LABELS.COURSE_CATALOG}

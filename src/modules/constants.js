@@ -33,6 +33,7 @@ export const LEARNING_PATH_LABELS = {
   EMAIL_SENT_TO_EMPLOYEE: "An email has been sent to the employees",
   SEARCH_COURSE: "Search Course",
   LEARNING_PATH_NAME: "Learning Path Name",
+  LEARNING_PATH_DESCRIPTION: "Learning Path Description",
   COURSE_CATALOG: "Course Catalog",
   COURSE_CATALOG1: "Learning Path Completed",
   LEARNING_PATH_COMPLETED: "Learning Path Completed",
@@ -58,7 +59,7 @@ export const BUTTONS = {
   NEXT: "Next",
 };
 
-export const STEPS = ["Courses", "Assign Users", "Set Duration"];
+export const STEPS = ["Learning Path Details", "Courses", "Assign Users", "Set Duration"];
 
 export const MARKS = [
   {
