@@ -2,6 +2,8 @@ package com.xebia.learningmanagement.service.impl;
 
 import com.google.common.base.CharMatcher;
 import com.xebia.learningmanagement.dtos.*;
+import com.xebia.learningmanagement.dtos.LearningPathDto.Path;
+import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
@@ -9,6 +11,7 @@ import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.CompetencyLevelException;
 import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
+import com.xebia.learningmanagement.exception.UserNotFoundException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
@@ -22,6 +25,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.*;
 import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -234,6 +239,69 @@ public class LearningPathServiceImpl implements LearningPathService {
         model.put("emailFor", learningPathEmployees.getEmployee().getFullName());
         emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_APPROVAL_REJECTION.getValue(), model);
     }
+
+	@Override
+	public Optional<LearningPath> getLearningPathWithCourse(Long assigneeId) {
+
+		Optional<LearningPath> learningPathCourseList = learningPathRepository.findByMadeById(assigneeId);
+
+		return learningPathCourseList;
+	}
+
+	@Override
+	public void saveAssignLearningPaths(@Valid AssignLearningPathRequest request) throws Exception {
+
+		request.getLearningPathIds().forEach(learningPathId -> {
+
+			LearningPath learningPath = learningPathRepository.findById(learningPathId)
+					.orElseThrow(() -> new LearningPathException("No such leaning path :  " + learningPathId));
+
+			request.getEmployeeIds().forEach(employeeId -> {
+
+				User user = userRepository.findById(employeeId)
+						.orElseThrow(() -> new UserNotFoundException("No such employee : " + employeeId));
+
+				LearningPathEmployees learningPathEmployees = new LearningPathEmployees();
+
+				learningPathEmployees.setLearningPath(learningPath);
+				learningPathEmployees.setEmployee(user);
+				learningPathEmployees.setPercentCompleted(0);
+				learningPathEmployees.setDuration(request.getDuration());
+				learningPathEmployees.setStartDate(LocalDate.now());
+				Integer lpDuration = Integer
+						.valueOf(CharMatcher.inRange('0', '9').retainFrom(request.getDuration().getName()));
+				learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
+
+				try {
+
+					String madeByUserFullName = learningPath.getMadeBy().getFullName() + " : "
+							+ learningPath.getMadeBy().getEmpID();
+					List<Courses> coursesList = learningPath.getCourses();
+					List<String> stringList = coursesList.stream().map(Courses::getName).map(String::toUpperCase)
+							.collect(Collectors.toList());
+					LearningPathDto learningDto = new LearningPathDto();// new LearningPathDto.Path();
+					Path path = learningDto.new Path();
+					path.setName(learningPath.getName());
+					path.setDuration(request.getDuration().getId());
+
+					// Sent Email Mail
+					setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList,
+							learningPathEmployees.getStartDate(), learningPathEmployees.getEndDate());
+
+				} catch (Exception e) {
+					throw new RuntimeException("Unable to send Email & Save data");
+				}
+
+				// Save Learning path for Employee
+				learningPathEmployeesRepository.save(learningPathEmployees);
+
+			});
+
+		});
+		
+	}
+
+	
 
 
 }
