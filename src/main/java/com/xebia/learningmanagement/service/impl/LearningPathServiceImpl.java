@@ -86,7 +86,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setDescription(path.getDescription());
         Competency competencyLevel = competencyRepository.findById(path.getCompetencyLevelId()).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
 //        Competency competencyLevel1 = competencyRepository.findById((long) 102).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
-        ;
+
 
         learningPath.setCompetency(competencyLevel);
 
@@ -239,9 +239,9 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
     @Override
-    public Optional<LearningPath> getLearningPathWithCourse(Long assigneeId) {
+    public List<LearningPath> getLearningPathWithCourse(Long assigneeId) {
 
-        Optional<LearningPath> learningPathCourseList = learningPathRepository.findByMadeById(assigneeId);
+        List<LearningPath> learningPathCourseList = learningPathRepository.findByMadeById(assigneeId);
 
         return learningPathCourseList;
     }
