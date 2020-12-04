@@ -14,5 +14,5 @@ public interface LearningPathRepository extends JpaRepository<LearningPath, Long
 	
     List<LearningPath> findByMadeBy(User user);
 
-	Optional<LearningPath> findByMadeById(Long assigneeId);
+	List<LearningPath> findByMadeById(Long assigneeId);
 }

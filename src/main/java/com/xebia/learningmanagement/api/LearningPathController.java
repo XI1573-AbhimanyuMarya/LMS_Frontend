@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @CrossOrigin("*")
@@ -113,9 +114,9 @@ public class LearningPathController {
 
         try {
 
-            Optional<LearningPath> learningPathCourseList = learningPathService.getLearningPathWithCourse(assigneeId);
+            List<LearningPath> learningPathCourseList = learningPathService.getLearningPathWithCourse(assigneeId);
 
-            if (learningPathCourseList.isPresent()) {
+            if (Objects.nonNull(learningPathCourseList)) {
                 return new ResponseEntity<Object>(learningPathCourseList, HttpStatus.OK);
             } else {
                 return new ResponseEntity<Object>("No Learning Path exists", HttpStatus.FORBIDDEN);

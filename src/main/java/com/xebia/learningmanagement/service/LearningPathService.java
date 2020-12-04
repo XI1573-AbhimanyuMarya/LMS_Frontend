@@ -30,7 +30,7 @@ public interface LearningPathService {
 
     void approveRequests(LearningPathEmployeeApprovalRequest request) throws Exception;
 
-    Optional<LearningPath> getLearningPathWithCourse(Long assigneeId);
+    List<LearningPath> getLearningPathWithCourse(Long assigneeId);
 
     void saveAssignLearningPaths(AssignLearningPathRequest request) throws Exception;
 }
