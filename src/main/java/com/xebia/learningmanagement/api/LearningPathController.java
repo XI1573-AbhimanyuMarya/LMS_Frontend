@@ -1,12 +1,19 @@
 package com.xebia.learningmanagement.api;
 
-import com.xebia.learningmanagement.dtos.*;
+import com.xebia.learningmanagement.dtos.ApprovalDto;
+import com.xebia.learningmanagement.dtos.EmployeeDto;
+import com.xebia.learningmanagement.dtos.LearningPathDto;
+import com.xebia.learningmanagement.dtos.LearningPathManagerDto;
+import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
+import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.service.LearningPathService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +22,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
 public class LearningPathController {
+
+    Logger logger = LoggerFactory.getLogger(LearningPathController.class);
+
     @Autowired
     LearningPathService learningPathService;
 
@@ -95,6 +106,39 @@ public class LearningPathController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
         }
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping(value = "/learningPath/courseDetails/{assigneeId}")
+    public ResponseEntity<Object> getLearningPathWithCourseDetails(@PathVariable("assigneeId") Long assigneeId) {
+
+        try {
+
+            Optional<LearningPath> learningPathCourseList = learningPathService.getLearningPathWithCourse(assigneeId);
+
+            if (learningPathCourseList.isPresent()) {
+                return new ResponseEntity<Object>(learningPathCourseList, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Object>("No Learning Path exists", HttpStatus.FORBIDDEN);
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at backend");
+        }
+
+    }
+
+
+    @PutMapping(value = "/learningPath/assignLearningPaths")
+    public ResponseEntity<String> saveAssignLearningPaths(@RequestBody @Valid AssignLearningPathRequest request) {
+
+        try {
+
+            learningPathService.saveAssignLearningPaths(request);
+            return new ResponseEntity<String>("LearningPath successfully assigned", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at backend");
+        }
     }
 
 

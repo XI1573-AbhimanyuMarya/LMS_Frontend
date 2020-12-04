@@ -2,8 +2,6 @@ package com.xebia.learningmanagement.entity;
 
 import com.xebia.learningmanagement.enums.LearningPathApprovalStatus;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -11,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Data
@@ -46,6 +43,7 @@ public class LearningPathEmployees {
     private LocalDate endDate;
 
     @Column(name = "isExpired")
-    private Boolean isLearningPathExpired = Boolean.FALSE;;
+    private Boolean isLearningPathExpired = Boolean.FALSE;
+    ;
 
 }
