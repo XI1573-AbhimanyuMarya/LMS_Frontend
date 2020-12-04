@@ -31,7 +31,7 @@ public class LearningPathDto {
         private List<Long> coursesId;
         private int duration;
 
-        private String description = "Dummy description";
+        private String description;
         private Long competencyLevelId;
 
     }
