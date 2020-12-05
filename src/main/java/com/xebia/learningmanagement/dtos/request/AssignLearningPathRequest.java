@@ -8,16 +8,16 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
 public class AssignLearningPathRequest {
 
     @NotEmpty
-    private List<Long> learningPathIds;
+    private Map<Long,Duration> learningPathIds;
     @NotEmpty
     private List<Long> employeeIds;
-    @NotBlank
-    private Duration duration;
-    
+
+
 }

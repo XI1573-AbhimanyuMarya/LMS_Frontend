@@ -249,7 +249,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Override
     public void saveAssignLearningPaths(@Valid AssignLearningPathRequest request) throws Exception {
 
-        request.getLearningPathIds().forEach(learningPathId -> {
+        request.getLearningPathIds().forEach((learningPathId,duration) -> {
 
             LearningPath learningPath = learningPathRepository.findById(learningPathId)
                     .orElseThrow(() -> new LearningPathException("No such leaning path :  " + learningPathId));
@@ -264,10 +264,10 @@ public class LearningPathServiceImpl implements LearningPathService {
                 learningPathEmployees.setLearningPath(learningPath);
                 learningPathEmployees.setEmployee(user);
                 learningPathEmployees.setPercentCompleted(0);
-                learningPathEmployees.setDuration(request.getDuration());
+                learningPathEmployees.setDuration(duration);
                 learningPathEmployees.setStartDate(LocalDate.now());
                 Integer lpDuration = Integer
-                        .valueOf(CharMatcher.inRange('0', '9').retainFrom(request.getDuration().getName()));
+                        .valueOf(CharMatcher.inRange('0', '9').retainFrom(duration.getName()));
                 learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
 
                 try {
@@ -280,7 +280,7 @@ public class LearningPathServiceImpl implements LearningPathService {
                     LearningPathDto learningDto = new LearningPathDto();// new LearningPathDto.Path();
                     Path path = learningDto.new Path();
                     path.setName(learningPath.getName());
-                    path.setDuration(request.getDuration().getId());
+                    path.setDuration(duration.getId());
 
                     // Sent Email Mail
                     setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList,
