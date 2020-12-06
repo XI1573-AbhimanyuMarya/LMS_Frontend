@@ -39,40 +39,4 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "employee")
-    private List<LearningPathEmployees> learningPath;
-
-    @JsonIgnore
-    public List<LearningPathEmployees> getLearningPath() {
-        return learningPath;
-    }
-
-    @JsonIgnore
-    public void setLearningPathEmployees(List<LearningPathEmployees> learningPath) {
-        this.learningPath = learningPath;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return isActive() == user.isActive() &&
-                Objects.equals(getId(), user.getId()) &&
-                getFullName().equals(user.getFullName()) &&
-                Objects.equals(getDesignation(), user.getDesignation()) &&
-                Objects.equals(getEmpID(), user.getEmpID()) &&
-                Objects.equals(getLocation(), user.getLocation()) &&
-                Objects.equals(cOEType, user.cOEType) &&
-                getUsername().equals(user.getUsername()) &&
-                Objects.equals(getPassword(), user.getPassword()) &&
-                Objects.equals(getRoles(), user.getRoles()) &&
-                Objects.equals(getLearningPath(), user.getLearningPath());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getFullName(), getDesignation(), getEmpID(), getLocation(), cOEType, getUsername(), getPassword(), isActive(), getRoles(), getLearningPath());
-    }
 }

@@ -1,6 +1,6 @@
 insert into competency (id,name) values (101,'Beginner');
-insert into competency (id,name) values (102,'Mediocre');
-insert into competency (id,name) values (103,'Advanced');
+insert into competency (id,name) values (102,'Intermediate');
+insert into competency (id,name) values (103,'Advance');
 insert into competency (id,name) values (104,'Expert');
 commit;
 

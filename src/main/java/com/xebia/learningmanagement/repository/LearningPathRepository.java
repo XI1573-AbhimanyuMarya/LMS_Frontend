@@ -1,17 +1,18 @@
 package com.xebia.learningmanagement.repository;
 
-import com.xebia.learningmanagement.entity.LearningPath;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
+import com.xebia.learningmanagement.entity.LearningPath;
+import com.xebia.learningmanagement.entity.User;
 
 @Repository
 public interface LearningPathRepository extends JpaRepository<LearningPath, Long> {
-    @Modifying
-    @Transactional
-    @Query(value = "Update public.learning_path SET  is_expired=true WHERE ( now() >= learning_path.end_date )", nativeQuery = true)
-    void updateIsExpiredOfLearningPath();
+	
+    List<LearningPath> findByMadeBy(User user);
 
+	List<LearningPath> findByMadeById(Long assigneeId);
 }

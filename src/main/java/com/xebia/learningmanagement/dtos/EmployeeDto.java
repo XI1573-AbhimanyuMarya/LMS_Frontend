@@ -1,10 +1,11 @@
 package com.xebia.learningmanagement.dtos;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+
+@Data
 public class EmployeeDto {
     private Long id;
     private String fullName;

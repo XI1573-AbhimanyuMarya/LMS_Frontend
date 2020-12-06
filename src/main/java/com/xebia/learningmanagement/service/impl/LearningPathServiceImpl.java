@@ -2,13 +2,13 @@ package com.xebia.learningmanagement.service.impl;
 
 import com.google.common.base.CharMatcher;
 import com.xebia.learningmanagement.dtos.*;
+import com.xebia.learningmanagement.dtos.LearningPathDto.Path;
+import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
-import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
-import com.xebia.learningmanagement.exception.LearningPathException;
-import com.xebia.learningmanagement.exception.UsernameNotFoundException;
+import com.xebia.learningmanagement.exception.*;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
@@ -17,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
@@ -41,6 +42,9 @@ public class LearningPathServiceImpl implements LearningPathService {
     protected CourseRepository courseRepository;
 
     @Autowired
+    protected CompetencyRepository competencyRepository;
+
+    @Autowired
     protected LearningPathEmployeesRepository learningPathEmployeesRepository;
 
     @Autowired
@@ -50,6 +54,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Override
     public void createLearningPath(LearningPathDto.Path path) throws Exception {
         LearningPath learningPath = new LearningPath();
+        LearningPathEmployees learningPathEmployees = new LearningPathEmployees();
 
         Optional<Duration> duration = durationRepository.findById(path.getDuration());
         if (!duration.isPresent()) {
@@ -75,13 +80,16 @@ public class LearningPathServiceImpl implements LearningPathService {
             }
         }
         // Set Learning path
-        learningPath.setDuration(durationRepository.findById(path.getDuration()).get());
         learningPath.setMadeBy(userRepository.findById(path.getMadeById()).get());
         learningPath.setName(path.getName());
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
-        learningPath.setStartDate(LocalDate.now());
-        Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(learningPath.getDuration().getName()));
-        learningPath.setEndDate(LocalDate.now().plusMonths(lpDuration));
+        learningPath.setDescription(path.getDescription());
+        Competency competencyLevel = competencyRepository.findById(path.getCompetencyLevelId()).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
+//        Competency competencyLevel1 = competencyRepository.findById((long) 102).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
+
+
+        learningPath.setCompetency(competencyLevel);
+
         getTemplatePlaceholderValuesAndSaveData(path, learningPath);
 
 //        Save learning Path After the mail & mapping between Learning path : Employee has been saved
@@ -98,6 +106,11 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathEmployees.setLearningPath(learningPath);
             learningPathEmployees.setEmployee(user);
             learningPathEmployees.setPercentCompleted(0);
+            learningPathEmployees.setDuration(durationRepository.findById(path.getDuration()).get());
+            learningPathEmployees.setStartDate(LocalDate.now());
+            Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(learningPathEmployees.getDuration().getName()));
+            learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
+
 
             //TODO : Send Email to concerned User
             User madeByUser = userRepository.findById(path.getMadeById()).orElseThrow(() -> new NotFoundException());
@@ -107,8 +120,8 @@ public class LearningPathServiceImpl implements LearningPathService {
             List<Courses> coursesListById = courseRepository.findAllById(path.getCoursesId());
             List<String> stringList = coursesListById.stream().map(Courses::getName).map(String::toUpperCase).collect(Collectors.toList());
 
-            LocalDate startDate = learningPath.getStartDate();
-            LocalDate endDate = learningPath.getEndDate();
+            LocalDate startDate = learningPathEmployees.getStartDate();
+            LocalDate endDate = learningPathEmployees.getEndDate();
 
             //todo Set Email Properties
             try {
@@ -153,11 +166,14 @@ public class LearningPathServiceImpl implements LearningPathService {
      * @throws LearningPathException
      */
     @Override
-    public ListOfLearningPathsAssignedByManagerDto getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException {
+    public Map<EmployeeDto, List<LearningPathManagerDto>> getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException {
         ModelMapper modelMapper = new ModelMapper();
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
-        List<LearningPath> learningPathList = learningPathRepository.findAll().stream().filter(a -> a.getMadeBy().equals(user)).collect(Collectors.toList());
-        return new ListOfLearningPathsAssignedByManagerDto(learningPathList.stream().map(a -> modelMapper.map(a, LearningPathManagerDto.class)).collect(Collectors.toList()));
+        List<LearningPathEmployees> learningPathList = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
+        List<LearningPathManagerDto> learningPathManagerDtos = learningPathList.stream().map(a -> modelMapper.map(a, LearningPathManagerDto.class)).collect(Collectors.toList());
+        Map<EmployeeDto, List<LearningPathManagerDto>> employeeLearningPathMapping = learningPathManagerDtos.stream().collect(Collectors.groupingBy(LearningPathManagerDto::getEmployee));
+        return employeeLearningPathMapping;
+
     }
 
     @Override
@@ -182,6 +198,10 @@ public class LearningPathServiceImpl implements LearningPathService {
         approvalDto.setModifiedDate(employee.getModifiedDate());
         approvalDto.setLearningPath(modelMapper.map(employee.getLearningPath(), LearningPathManagerApprovalDto.class));
         approvalDto.setEmployee(modelMapper.map(employee.getEmployee(), EmployeeDto.class));
+        approvalDto.setStartDate(employee.getStartDate());
+        approvalDto.setEndDate(employee.getEndDate());
+        approvalDto.setIsLearningPathExpired(employee.getIsLearningPathExpired());
+        approvalDto.setDuration(modelMapper.map(employee.getDuration(), DurationDto.class));
         return approvalDto;
 
     }
@@ -216,6 +236,67 @@ public class LearningPathServiceImpl implements LearningPathService {
         model.put("status", learningPathEmployees.getApprovalStatus().toString());
         model.put("emailFor", learningPathEmployees.getEmployee().getFullName());
         emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_APPROVAL_REJECTION.getValue(), model);
+    }
+
+    @Override
+    public List<LearningPath> getLearningPathWithCourse(Long assigneeId) {
+
+        List<LearningPath> learningPathCourseList = learningPathRepository.findByMadeById(assigneeId);
+
+        return learningPathCourseList;
+    }
+
+    @Override
+    public void saveAssignLearningPaths(@Valid AssignLearningPathRequest request) throws Exception {
+
+        request.getLearningPathIds().forEach((learningPathId,duration) -> {
+
+            LearningPath learningPath = learningPathRepository.findById(learningPathId)
+                    .orElseThrow(() -> new LearningPathException("No such leaning path :  " + learningPathId));
+
+            request.getEmployeeIds().forEach(employeeId -> {
+
+                User user = userRepository.findById(employeeId)
+                        .orElseThrow(() -> new UserNotFoundException("No such employee : " + employeeId));
+
+                LearningPathEmployees learningPathEmployees = new LearningPathEmployees();
+
+                learningPathEmployees.setLearningPath(learningPath);
+                learningPathEmployees.setEmployee(user);
+                learningPathEmployees.setPercentCompleted(0);
+                learningPathEmployees.setDuration(duration);
+                learningPathEmployees.setStartDate(LocalDate.now());
+                Integer lpDuration = Integer
+                        .valueOf(CharMatcher.inRange('0', '9').retainFrom(duration.getName()));
+                learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
+
+                try {
+
+                    String madeByUserFullName = learningPath.getMadeBy().getFullName() + " : "
+                            + learningPath.getMadeBy().getEmpID();
+                    List<Courses> coursesList = learningPath.getCourses();
+                    List<String> stringList = coursesList.stream().map(Courses::getName).map(String::toUpperCase)
+                            .collect(Collectors.toList());
+                    LearningPathDto learningDto = new LearningPathDto();// new LearningPathDto.Path();
+                    Path path = learningDto.new Path();
+                    path.setName(learningPath.getName());
+                    path.setDuration(duration.getId());
+
+                    // Sent Email Mail
+                    setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList,
+                            learningPathEmployees.getStartDate(), learningPathEmployees.getEndDate());
+
+                } catch (Exception e) {
+                    throw new RuntimeException("Unable to send Email & Save data");
+                }
+
+                // Save Learning path for Employee
+                learningPathEmployeesRepository.save(learningPathEmployees);
+
+            });
+
+        });
+
     }
 
 

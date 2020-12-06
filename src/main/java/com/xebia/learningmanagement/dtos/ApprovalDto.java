@@ -5,6 +5,7 @@ import com.xebia.learningmanagement.enums.LearningPathApprovalStatus;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -15,7 +16,12 @@ public class ApprovalDto {
     private int percentCompleted;
     private EmployeeDto employee;
     private LearningPathManagerApprovalDto learningPath;
-    private String certificate;
     private LearningPathApprovalStatus approvalStatus;
     private LocalDateTime modifiedDate;
+    private DurationDto duration;
+    // Refers to Learning Path start Date and End Date
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private Boolean isLearningPathExpired;
+    private String certificate;
 }

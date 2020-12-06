@@ -1,19 +1,17 @@
 package com.xebia.learningmanagement.entity;
 
 import com.xebia.learningmanagement.enums.LearningPathApprovalStatus;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
+@Data
 public class LearningPathEmployees {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,19 +33,17 @@ public class LearningPathEmployees {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof LearningPathEmployees)) return false;
-        LearningPathEmployees that = (LearningPathEmployees) o;
-        return getLearningPathEmployeesId() == that.getLearningPathEmployeesId() &&
-                getPercentCompleted() == that.getPercentCompleted() &&
-                getEmployee().equals(that.getEmployee()) &&
-                getLearningPath().equals(that.getLearningPath());
-    }
+    @ManyToOne
+    private Duration duration;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getLearningPathEmployeesId(), getPercentCompleted(), getEmployee(), getLearningPath());
-    }
+    @Column(name = "start_Date")
+    private LocalDate startDate;
+
+    @Column(name = "end_Date")
+    private LocalDate endDate;
+
+    @Column(name = "isExpired")
+    private Boolean isLearningPathExpired = Boolean.FALSE;
+    ;
+
 }
