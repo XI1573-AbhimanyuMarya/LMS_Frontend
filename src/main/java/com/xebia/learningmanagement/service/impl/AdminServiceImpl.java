@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.YTBD;
+
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -56,9 +58,7 @@ public class AdminServiceImpl implements AdminService {
         long TOTAL_LEARNING_PATH_ASSIGNED = employeesRepository.count();
         long TOTAL_LEARNING_PATH_COMPLETED = employeesRepository.countByPercentCompleted(100);
         long TOTAL_LEARNING_PATH_INPROGRESS = employeesRepository.countByPercentCompletedNot(100);
-        //TODO : Yet to implement logic LEARNING_PATH_EXPIRED should ony be for LP's which are yet not Approved/rejected or not in pending state
-        long TOTAL_LEARNING_PATH_EXPIRED = employeesRepository.countByIsLearningPathExpired(true);
-
+        long TOTAL_LEARNING_PATH_EXPIRED = employeesRepository.countByIsLearningPathExpiredAndApprovalStatus(true, YTBD);
         return AdminDashboardStatisticsDTO.builder()
                 .totalLearningPathAssigned(TOTAL_LEARNING_PATH_ASSIGNED)
                 .totalLearningPathCompleted(TOTAL_LEARNING_PATH_COMPLETED)
