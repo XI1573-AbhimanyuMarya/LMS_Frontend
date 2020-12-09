@@ -1,1 +1,1 @@
-LMS portal : OTP
+One Time Password (O T P)
