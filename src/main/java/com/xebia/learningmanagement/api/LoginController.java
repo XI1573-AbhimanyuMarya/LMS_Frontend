@@ -1,5 +1,6 @@
 package com.xebia.learningmanagement.api;
 
+import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.Login;
 import com.xebia.learningmanagement.dtos.response.LoginResponse;
 import com.xebia.learningmanagement.model.*;
@@ -100,7 +101,9 @@ public class LoginController {
             login.setJwt(jwt);
             login.setIslogin(true);
             loginResponse.setLogin(login);
-            loginResponse.setUser(userRepository.findByUsername(tempUsername.getUsername()).get());
+            User user = userRepository.findByUsername(tempUsername.getUsername()).get();
+            loginResponse.setUser(user);
+            loginResponse.setRoles(user.getRoles());
             return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
         } catch (BadCredentialsException e) {
             loginResponse.setStatus("failure");
