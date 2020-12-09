@@ -85,10 +85,10 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
         learningPath.setDescription(path.getDescription());
         Competency competencyLevel = competencyRepository.findById(path.getCompetencyLevelId()).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
-//        Competency competencyLevel1 = competencyRepository.findById((long) 102).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
-
-
         learningPath.setCompetency(competencyLevel);
+
+        //Competency competencyLevel1 = competencyRepository.findById((long) 102).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
+        //learningPath.setCompetency(competencyLevel1);
 
         getTemplatePlaceholderValuesAndSaveData(path, learningPath);
 
@@ -110,6 +110,7 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathEmployees.setStartDate(LocalDate.now());
             Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(learningPathEmployees.getDuration().getName()));
             learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
+            learningPathEmployees.setApprovalStatus(YTBD);
 
 
             //TODO : Send Email to concerned User
@@ -249,7 +250,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Override
     public void saveAssignLearningPaths(@Valid AssignLearningPathRequest request) throws Exception {
 
-        request.getLearningPathIds().forEach((learningPathId,duration) -> {
+        request.getLearningPathIds().forEach((learningPathId, duration) -> {
 
             LearningPath learningPath = learningPathRepository.findById(learningPathId)
                     .orElseThrow(() -> new LearningPathException("No such leaning path :  " + learningPathId));
