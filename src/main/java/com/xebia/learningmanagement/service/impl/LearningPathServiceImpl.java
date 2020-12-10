@@ -84,11 +84,11 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setName(path.getName());
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
         learningPath.setDescription(path.getDescription());
-        Competency competencyLevel = competencyRepository.findById(path.getCompetencyLevelId()).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
-        learningPath.setCompetency(competencyLevel);
+//        Competency competencyLevel = competencyRepository.findById(path.getCompetencyLevelId()).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
+//        learningPath.setCompetency(competencyLevel);
 
-        //Competency competencyLevel1 = competencyRepository.findById((long) 102).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
-        //learningPath.setCompetency(competencyLevel1);
+        Competency competencyLevel1 = competencyRepository.findById((long) 102).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
+        learningPath.setCompetency(competencyLevel1);
 
         getTemplatePlaceholderValuesAndSaveData(path, learningPath);
 
