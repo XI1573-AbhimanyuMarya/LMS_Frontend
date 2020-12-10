@@ -74,7 +74,9 @@ const ManageAssignLearningPath = ({ props }) => {
     }
     return employees;
   }
+  
   const employees = prepareData(assignedCources.assignedLearningPaths);
+  console.log(employees,'raghav')
 
   let renderUser = "";
   if (employees.length > 0) {

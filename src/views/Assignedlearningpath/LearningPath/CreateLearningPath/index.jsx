@@ -47,7 +47,7 @@ const AssignedCreateLearningPath = (props) => {
   const loginState = useSelector(res => res.loginState);
   const { handleClose, handleClosePath } = props;
   const [activePathStep, setActivePathStep] = useState(0);
-  const { learningPathName, courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
+  const { learningPathName,learningPathDes , courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
   const { user } = loginState;
 
   const handleNext = () => {
@@ -66,6 +66,8 @@ const AssignedCreateLearningPath = (props) => {
         madeForId: userIdArr,
         coursesId: courseIdArr,
         duration: learningPathDuration,
+        description: learningPathDes,
+        competencyLevelId: '101',
       }
       dispatch(Actions.learningPathActions.createLearningPath(path));
       setTimeout(() => {

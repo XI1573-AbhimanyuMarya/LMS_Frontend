@@ -61,6 +61,7 @@ const CreateLearningPath = (props) => {
     userIdArr,
     learningPathDuration,
     status,
+    learningPathDes,
   } = learningPathState;
   const { user } = loginState;
 
@@ -92,6 +93,8 @@ const CreateLearningPath = (props) => {
         madeForId: userIdArr,
         coursesId: courseIdArr,
         duration: learningPathDuration,
+        description: learningPathDes,
+        competencyLevelId: '101',
       };
       dispatch(Actions.learningPathActions.createLearningPath(path));
       setTimeout(() => {
