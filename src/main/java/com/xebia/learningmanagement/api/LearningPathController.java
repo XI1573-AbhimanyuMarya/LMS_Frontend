@@ -56,7 +56,7 @@ public class LearningPathController {
     @PostMapping("/getAssignedLearningPaths")
     public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerEmailRequest managerEmail) throws LearningPathException {
         UserResponse userResponse = new UserResponse();
-        Map<EmployeeDto, List<LearningPathManagerDto>> allAssignedLearningPath;
+        Map<Long, List<LearningPathManagerDto>> allAssignedLearningPath;
         try {
             if (managerEmail != null && !"".equalsIgnoreCase(managerEmail.getManagerEmail())) {
                 allAssignedLearningPath = learningPathService.getAllAssignedLearningPath(managerEmail);

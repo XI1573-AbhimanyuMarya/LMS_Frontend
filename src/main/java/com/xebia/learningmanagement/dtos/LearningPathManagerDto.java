@@ -14,7 +14,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
-@JsonIgnoreProperties(value = "employee")
+//@JsonIgnoreProperties(value = "employee")
 public class LearningPathManagerDto {
 
     private Long learningPathEmployeesId;

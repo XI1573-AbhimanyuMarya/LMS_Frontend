@@ -24,7 +24,7 @@ public interface LearningPathService {
      * @return
      * @throws LearningPathException
      */
-    Map<EmployeeDto, List<LearningPathManagerDto>> getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException;
+    Map<Long, List<LearningPathManagerDto>> getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException;
 
     List<ApprovalDto> getPendingApprovals(ManagerEmailRequest managerEmailRequest) throws LearningPathException;
 
