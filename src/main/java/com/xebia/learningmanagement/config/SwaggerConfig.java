@@ -31,15 +31,15 @@ public class SwaggerConfig {
                                                 .reference("AZURE_AD_ACCESS_TOKEN")
                                                 .scopes(new AuthorizationScope[0])
                                                 .build())).build())).select().apis(RequestHandlerSelectors
-                        .basePackage("com.xebia.learningmanagement.controller"))
-                .paths(PathSelectors.regex("/.*"))
+                        .basePackage("com.xebia.learningmanagement.api"))
+                .paths(PathSelectors.any())
                 .build().apiInfo(apiEndPointsInfo());
     }
 
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder().title("Spring Boot REST API")
                 .description("REST API")
-                .contact(new Contact("Pooja Pandey", "", "pooja.pandey@xebia.com"))
+                .contact(new Contact("LMS PORTAL", "", "LMSPortal@xebia.com"))
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .version("1.0.0")

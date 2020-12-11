@@ -86,7 +86,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 "/username",
                 "/password",
                 "/webjars/**").anonymous()
-                .antMatchers("http://localhost:8082/swagger-ui.html#/").permitAll()
+                .antMatchers("**/swagger-ui.html#/").permitAll()
                 .antMatchers("/addNewUsers").permitAll()
                 .antMatchers("/username").permitAll()
                 .antMatchers("/password").permitAll().antMatchers("/api").permitAll()
