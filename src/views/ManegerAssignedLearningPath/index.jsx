@@ -43,41 +43,45 @@ const ManageAssignLearningPath = ({ props }) => {
     console.log(learningPathId);
   }
 
+  const isObject=(data)=>{
+    return (typeof data === 'object' && data !== null);
+  }
+  const learningpathPrepareData=(elm)=>{
+    return {
+      name: elm.learningPath.name,
+      learningPathId: elm.learningPath.learningPathId,
+      startDate: elm.startDate,
+      endDate: elm.endDate,
+      hasExpired: elm.isLearningPathExpired,
+      learningPathEmployeesId: elm.learningPathEmployeesId,
+      completed: elm.percentCompleted
+    };
+  }
   const prepareData = (data) => {
     let employees = [];
-    if (data && data.length > 0) {
-      data.map((path) => {
-        path.madeFor.map((emp) => {
-          let id = parseInt(emp.employee.id);
-          let tempEmployee = Object.assign({}, emp.employee);
-          let learningPath = {
-            name: path.name,
-            learningPathId: path.learningPathId,
-            startDate: path.startDate,
-            endDate: path.endDate,
-            hasExpired: path.isLearningPathExpired,
-            learningPathEmployeesId: emp.learningPathEmployeesId,
-            completed: emp.percentCompleted,
-          };
-          const existEmployee = employees.find((item) => item.empID === id);
-          if (existEmployee) {
-            existEmployee.learningPath.push(learningPath);
-          } else {
-            employees.push({
-              empID: id,
-              employee: tempEmployee,
-              learningPath: [learningPath],
-            });
-          }
-        });
-      });
+    if(isObject(data)){
+      let learningDetails;
+      let tempEmployee;
+      for (var key in data) {
+        learningDetails=[];
+        if (data.hasOwnProperty(key)) {
+            if(data[key].length>0){
+              data[key].forEach((elm) => {
+                tempEmployee=elm.employee;
+                learningDetails.push(learningpathPrepareData(elm));
+              });
+              employees.push({
+                empID: tempEmployee.id,
+                employee: tempEmployee,
+                learningPath: learningDetails,
+              });
+            }
+        }
+      }
     }
     return employees;
   }
-  
-  const employees = prepareData(assignedCources.assignedLearningPaths);
-  console.log(employees,'raghav')
-
+  const employees = prepareData(assignedCources);//prepareData(assignedCources.assignedLearningPaths);
   let renderUser = "";
   if (employees.length > 0) {
     renderUser = employees.map((data, i) => (
