@@ -31,7 +31,7 @@ public class LearningPathDto {
         private List<Long> coursesId;
         private int duration;
 
-        private String description ="This description is only for testing Purposes";
+        private String description;
         private Long competencyLevelId;
 
     }
