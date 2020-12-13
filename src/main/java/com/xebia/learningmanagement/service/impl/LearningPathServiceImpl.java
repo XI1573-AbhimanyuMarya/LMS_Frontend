@@ -172,9 +172,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
         List<LearningPathEmployees> learningPathList = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
         List<LearningPathManagerDto> learningPathManagerDtos = learningPathList.stream().map(a -> modelMapper.map(a, LearningPathManagerDto.class)).collect(Collectors.toList());
-        Map<Long, List<LearningPathManagerDto>> employeeLearningPathMapping = learningPathManagerDtos.stream().collect(Collectors.groupingBy(a->a.getEmployee().getId()));
-        return employeeLearningPathMapping;
-
+        return learningPathManagerDtos.stream().collect(Collectors.groupingBy(a -> a.getEmployee().getId()));
     }
 
     @Override
@@ -183,8 +181,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
         List<LearningPathEmployees> madeByManager = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
         List<LearningPathEmployees> needsApprovalEmpList = madeByManager.stream().filter(a -> PENDING.equals(a.getApprovalStatus())).sorted(Comparator.comparing(LearningPathEmployees::getModifiedDate)).collect(Collectors.toList());
-        List<ApprovalDto> approvalDtos = needsApprovalEmpList.stream().map(this::PendingApprovalsListToApprovalDto).collect(Collectors.toList());
-        return approvalDtos;
+        return needsApprovalEmpList.stream().map(this::PendingApprovalsListToApprovalDto).collect(Collectors.toList());
     }
 
     public ApprovalDto PendingApprovalsListToApprovalDto(LearningPathEmployees employee) {
@@ -241,10 +238,7 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     @Override
     public List<LearningPath> getLearningPathWithCourse(Long assigneeId) {
-
-        List<LearningPath> learningPathCourseList = learningPathRepository.findByMadeById(assigneeId);
-
-        return learningPathCourseList;
+        return learningPathRepository.findByMadeById(assigneeId);
     }
 
     @Override

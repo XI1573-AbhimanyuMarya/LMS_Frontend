@@ -15,8 +15,7 @@ public class DurationServiceImpl implements DurationService {
     private DurationRepository durationRepository;
 
     public List<Duration> getDurationList(){
-        List<Duration> durations = durationRepository.findAll();
-        return durations;
+        return durationRepository.findAll();
     }
 
 }
