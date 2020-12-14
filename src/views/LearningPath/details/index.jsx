@@ -11,12 +11,12 @@ import Actions from '../../../store/actions';
 import CourseSkelton from '../../../components/Skelton/CourseSkelton';
 import { useStyles } from './style';
 import { LEARNING_PATH_LABELS } from '../../../modules/constants';
-import Beginner from '../../../images/101-Beginner.svg';
+// import Beginner from '../../../images/101-Beginner.svg';
 import Intermediate from '../../../images/102-Intermediate.svg';
-import Advance from '../../../images/103-Advance.svg';
-import Expert from '../../../images/104-Expert.svg';
+// import Advance from '../../../images/103-Advance.svg';
+// import Expert from '../../../images/104-Expert.svg';
 import OutlinedBeginner from '../../../images/101-OutlinedBeginner.svg';
-import OutlinedIntermediate from '../../../images/102-OutlinedIntermediate.svg';
+// import OutlinedIntermediate from '../../../images/102-OutlinedIntermediate.svg';
 import OutlinedAdvance from '../../../images/103-OutlinedAdvance.svg';
 import OutlinedExpert from '../../../images/104-OutlinedExpert.svg';
 
