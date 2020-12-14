@@ -83,23 +83,23 @@ const SelectCourses = () => {
             {LEARNING_PATH_LABELS.MY_LEARNING_PATH}
           </Typography>
         </Box> */}
-            <table style={{margin:"40px 0 10px 40px", backgroundColor:"white", padding:"10px 0 10px 0"}}>
-              <thead>
-                <tr style={{color:"gray", opacity:"0.7"}}>
-                  <th style={{width:"150px",padding:"0 19px 0 0"}}>Learning Path Name</th>
-                  <th style={{width:"250px"}}>Learning Category</th>
-                  <th style={{width:"120px",padding:"0 85px 0 0"}}>Level</th>
-                  <th style={{width:"120px"}}>Start Date</th>
-                  <th style={{width:"130px"}}>End Date</th>
-                  <th style={{width:"120px"}}>Learning Rate</th>
-                  <th style={{width:"120px"}}>Action</th>
+            <table style={{margin:"40px 0 10px 40px"}} className={classes.table}>
+              <thead style={{color:"gray",backgroundColor:"white",opacity:"0.7"}}>
+                <tr>
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>Learning Path Name</th>
+                  {/*<th style={{padding:"20px 30px",textAlign:"left"}}>Learning Category</th>*/}
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>Level</th>
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>Start Date</th>
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>End Date</th>
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>Learning Rate</th>
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>Action</th>
                 </tr>
-                </thead>
+              </thead>
+              <tbody>
+                {isLoading && !inprogress && <CourseSkelton />}
+                <Carosals coursesList={inprogress} />
+              </tbody>
             </table>
-            {/* <Box alignItems="center" mb={2}>
-              {isLoading && !inprogress && <CourseSkelton />}
-              <Carosals coursesList={inprogress} />
-            </Box> */}
           </Box>
           <div className="copyright">
             <Copyright />

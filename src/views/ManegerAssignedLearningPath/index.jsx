@@ -73,7 +73,7 @@ const ManageAssignLearningPath = ({ props }) => {
               employees.push({
                 empID: tempEmployee.id,
                 employee: tempEmployee,
-                learningPath: learningDetails,
+                learningPath: learningDetails
               });
             }
         }

@@ -11,6 +11,14 @@ import Actions from '../../../store/actions';
 import CourseSkelton from '../../../components/Skelton/CourseSkelton';
 import { useStyles } from './style';
 import { LEARNING_PATH_LABELS } from '../../../modules/constants';
+import Beginner from '../../../images/101-Beginner.svg';
+import Intermediate from '../../../images/102-Intermediate.svg';
+import Advance from '../../../images/103-Advance.svg';
+import Expert from '../../../images/104-Expert.svg';
+import OutlinedBeginner from '../../../images/101-OutlinedBeginner.svg';
+import OutlinedIntermediate from '../../../images/102-OutlinedIntermediate.svg';
+import OutlinedAdvance from '../../../images/103-OutlinedAdvance.svg';
+import OutlinedExpert from '../../../images/104-OutlinedExpert.svg';
 
 const SelectCourses1 = () => {
 	const classes = useStyles();
@@ -107,12 +115,12 @@ const SelectCourses1 = () => {
 			<Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" >
 				<Grid container className={classes.pathName}>
 					<Grid item xs={3}>
-						<InputLabel
+						{/*<InputLabel
 							htmlFor="standard-search"
 							className={classes.courseLabel}>
 							{LEARNING_PATH_LABELS.LEARNING_PATH_NAME}
 							<Box component="span" className={classes.error}>*</Box>
-						</InputLabel>
+            </InputLabel>*/}
 					</Grid>
 					<Grid item xs={6}>
 						<TextField error={(!learningPathName && touch) || (!learningPathName && firstNextClicked) ? true : false}
@@ -141,12 +149,12 @@ const SelectCourses1 = () => {
       <Box className={classes.catalogContainer} height="150px" display="flex-inline" justifyContent="center" >
 				<Grid container className={classes.pathName}>
 					<Grid item xs={3}>
-						<InputLabel
+						{/*<InputLabel
 							htmlFor="standard-search"
 							className={classes.courseLabel}>
 							{LEARNING_PATH_LABELS.LEARNING_PATH_DESCRIPTION}
 							<Box component="span" className={classes.error}>*</Box>
-						</InputLabel>
+            </InputLabel>*/}
 					</Grid>
 					<Grid item xs={6} style={{height:"50px"}}>
 						<TextField error={(!learningPathDes && touch) || (!learningPathDes && firstNextClicked) ? true : false}
@@ -165,6 +173,12 @@ const SelectCourses1 = () => {
 				</Grid>
 				{/* <Divider variant="middle" /> */}
 			</Box>
+      <Box className={classes.catalogContainer} display="flex" justifyContent="center">
+        <img src={OutlinedBeginner} style={{width:"145px",height:"56px"}} />
+        <img src={Intermediate} style={{width:"178px",height:"56px"}} />
+        <img src={OutlinedAdvance} style={{width:"146px",height:"56px"}}/>
+        <img src={OutlinedExpert} style={{width:"146px",height:"56px"}} />
+      </Box>
 		</React.Fragment>
 	);
 }

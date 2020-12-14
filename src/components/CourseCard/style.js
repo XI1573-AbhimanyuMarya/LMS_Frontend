@@ -210,4 +210,8 @@ export const useStyles = makeStyles((theme) => ({
     fontfamily: 'Roboto',
     
   },
+  levIcons: {
+    width: 80,
+    objectFit: "contain"
+  }
 }));

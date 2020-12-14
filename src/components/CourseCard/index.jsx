@@ -9,6 +9,26 @@ import { Box } from '@material-ui/core';
 import { useStyles } from './style';
 import BarIcon from '../SignalIcon';
 import ProgressBar from '../ProgressBar';
+import Beginner from '../../images/101-Beginner.svg';
+import Intermediate from '../../images/102-Intermediate.svg';
+import Advance from '../../images/103-Advance.svg';
+import Expert from '../../images/104-Expert.svg';
+const levels={
+  "101-Beginner":Beginner,
+  "102-Intermediate":Intermediate,
+  "103-Advance":Advance,
+  "104-Expert":Expert
+};
+const dateFormat=(inputDate) =>{
+  var date = new Date(inputDate);
+  if (!isNaN(date.getTime())) {
+    let mon=parseInt(date.getMonth()) + 1;
+    if(mon<10){
+      mon="0"+mon;
+    }
+    return date.getDate()+ '/' + mon + '/' + date.getFullYear();
+  }
+}
 
 const CourseCard = (props) => {
   const classes = useStyles();
@@ -27,21 +47,24 @@ const CourseCard = (props) => {
   // } else if (course?.competency?.name === "Expert") {
   //   darkBar = 3
   // }
-
   return (
 
     <>
-      <table>
-        <tr style={{display:"flex", marginTop:"10px"}}>
-          <td className={classes.row1} > {course.name}</td>
-          <td className={classes.row2} > {course.category.name}</td>
-          <td className={classes.row3} > Beginner</td>
-          <td className={classes.row4} >05/12/2020</td>
-          <td className={classes.row5} >05/12/2020</td>
-          <td className={classes.row6} > 30%</td>
-          <td className={classes.row7} > let's begin</td>
+        <tr>
+          <td style={{padding:"10px 30px"}}> {course.learningPath.name}</td>
+          {/*<td style={{padding:"10px 30px"}}> {"UI"}</td>*/}
+          <td style={{padding:"10px 25px"}}> <img src={levels[course.learningPath.competency.id+"-"+course.learningPath.competency.name]} className={classes.levIcons}/></td>
+          <td style={{padding:"10px 30px"}}>{dateFormat(course.startDate)}</td>
+          <td style={{padding:"10px 30px"}}>{dateFormat(course.endDate)}</td>
+          <td style={{padding:"10px 30px"}}> 
+            <Button variant="outlined" size="small" color="primary">
+            {"30"}
+            </Button>
+          </td>
+          <td style={{padding:"10px 30px"}}> <Button variant="outlined" size="small" style={{borderColor:"#f07402",color:"#f07402"}}>
+            {"View"}
+            </Button></td>
         </tr>
-      </table>
     </>
 
   );
