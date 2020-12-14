@@ -87,7 +87,6 @@ export default function EmployeeCard(props) {
             }
             subheader={data.employee.location}
           />
-
           <CardActions className={classes.cardActions}>
             <Typography aria-label="share" className={classes.pathTitle}>
               {data.learningPath.length}- Learning Path Assigned
