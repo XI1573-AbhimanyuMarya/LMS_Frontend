@@ -96,10 +96,10 @@ const SelectCourses = () => {
                 </tr>
                 </thead>
             </table>
-            <Box alignItems="center" mb={2}>
+            {/* <Box alignItems="center" mb={2}>
               {isLoading && !inprogress && <CourseSkelton />}
               <Carosals coursesList={inprogress} />
-            </Box>
+            </Box> */}
           </Box>
           <div className="copyright">
             <Copyright />

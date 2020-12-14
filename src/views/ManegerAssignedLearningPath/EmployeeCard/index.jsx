@@ -12,7 +12,9 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import DiscardPopup from "../../../components/DiscardPopup";
+import DiscardPopup from "../../../components/DiscardPopup/index1";
+import Actions from '../../../store/actions';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { useStyles } from "./style";
 
@@ -45,6 +47,7 @@ const theme = createMuiTheme({
 });
 
 export default function EmployeeCard(props) {
+  const dispatch = useDispatch();
   const data = props.data;
   const { onDeleteAll, onDelete } = props;
   const classes = useStyles();
@@ -58,6 +61,14 @@ export default function EmployeeCard(props) {
   const handleEditClick = () => {
     setEditOption(!editOption);
     setExpanded(expanded && editOption? false : true);
+  };
+
+  const discardHandler = (closeMainModel) => {
+    console.log(closeMainModel);
+    dispatch(Actions.learningPathActions.discardModelOpen(false));
+    if (closeMainModel) {
+      dispatch(Actions.learningPathActions.pathModelOpen(false));
+    }
   };
 
   return (
@@ -82,6 +93,7 @@ export default function EmployeeCard(props) {
             className={classes.delete}
             action={
               <IconButton aria-label="settings" onClick={() => onDeleteAll(data.empID)}>
+                 <DiscardPopup discardHandler={discardHandler} />
                 <DeleteIcon className={classes.deleteIcon} />
               </IconButton>
             }
