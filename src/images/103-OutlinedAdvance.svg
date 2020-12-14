@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="164" height="74" viewBox="0 0 164 74">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #707070;
+      }
+
+      .cls-3 {
+        fill: #707070;
+        font-size: 19px;
+        font-family: Roboto-Regular, Roboto;
+      }
+
+      .cls-4 {
+        filter: url(#Rectangle_9);
+      }
+    </style>
+    <filter id="Rectangle_9" x="0" y="0" width="164" height="74" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.122"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_105" data-name="Group 105" transform="translate(4510.5 6803)">
+    <g class="cls-4" transform="matrix(1, 0, 0, 1, -4510.5, -6803)">
+      <rect id="Rectangle_9-2" data-name="Rectangle 9" class="cls-1" width="146" height="56" rx="4" transform="translate(9 6)"/>
+    </g>
+    <g id="Group_11" data-name="Group 11" transform="translate(-4482.5 -6784)">
+      <path id="Path_4" data-name="Path 4" class="cls-2" d="M-5231.367-4682.6a1.8,1.8,0,0,1-1.124-.47l-.521,3.414-5.039-1.277v-1.771s2.989-1.256,3.281-2.9c.161-.694-4.666-1.17-6.479-1.747v-3.091s2.748-.648,6.821-5.047v-5.716s.674.755,1.124.69.58-.531.58-.9.194-7.261,1.527-7.618c.771,0,1.5,3.552,1.549,7.618.008.616.074.9.551.9s1.086-.69,1.086-.69v5.716c0,.426,2.992,3.032,6.809,5.211.055,1.055,0,2.39,0,2.695s-6.494,1.287-6.484,1.979,1.773,2.34,3.215,2.869c.039.936,0,1.888,0,1.888s-4.425.833-4.977,1.091c-.086-.248-.482-3.312-.482-3.312A3.527,3.527,0,0,1-5231.367-4682.6Z" transform="translate(5241.341 4709.127)"/>
+    </g>
+    <text id="Advance" class="cls-3" transform="translate(-4449.127 -6760.908)"><tspan x="0" y="0">Advance</tspan></text>
+  </g>
+</svg>

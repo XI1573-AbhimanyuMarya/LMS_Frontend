@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="196" height="74" viewBox="0 0 196 74">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: rgba(255,255,255,0.25);
+      }
+
+      .cls-2 {
+        fill: #fff;
+        stroke: rgba(121,36,109,0.4);
+      }
+
+      .cls-3 {
+        fill: #79246d;
+      }
+
+      .cls-4 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-5 {
+        fill: #621d58;
+        font-size: 19px;
+        font-family: Roboto-Regular, Roboto;
+      }
+
+      .cls-6 {
+        stroke: none;
+      }
+
+      .cls-7 {
+        fill: none;
+      }
+
+      .cls-8 {
+        filter: url(#Rectangle_7);
+      }
+    </style>
+    <filter id="Rectangle_7" x="0" y="0" width="196" height="74" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.122"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_3" data-name="Rectangle 3" class="cls-1" width="18.633" height="31.906" transform="translate(0)"/>
+    </clipPath>
+  </defs>
+  <g id="Group_66" data-name="Group 66" transform="translate(-967.5 -614.5)">
+    <g class="cls-8" transform="matrix(1, 0, 0, 1, 967.5, 614.5)">
+      <g id="Rectangle_7-2" data-name="Rectangle 7" class="cls-2" transform="translate(9 6)">
+        <rect class="cls-6" width="178" height="56" rx="4"/>
+        <rect class="cls-7" x="0.5" y="0.5" width="177" height="55" rx="3.5"/>
+      </g>
+    </g>
+    <g id="Group_16" data-name="Group 16" transform="translate(988.5 632.5)">
+      <g id="Group_10" data-name="Group 10" transform="translate(0 0)">
+        <path id="Path_3" data-name="Path 3" class="cls-3" d="M-4874.083-3422.9c2.507.623,6.418,1.25,13.5-.122.067-1,.463-2.616-5.685-4.139,0-1.357.4-9.8.4-9.8a70.389,70.389,0,0,0,10.1-.186c3.515-.515,6.721-1.247,7.481-2.956.2-1.253-.5-2.332-5.427-2.366s-9.482,0-9.482,0,.325-2.221-1.409-2.871a9.3,9.3,0,0,0-2.648-6.263c-2.25,2.043-2.7,5.232-2.871,6.263-.909.356-1.295,1.745-1.277,2.871a80.046,80.046,0,0,0-12.62.36c-2.263.412-2.018,2.286-1.677,3.22s7.275,1.816,10.064,1.928,7.039,0,7.039,0l.231,9.8S-4875.181-3425.544-4874.083-3422.9Z" transform="translate(4885.921 3452.871)"/>
+        <g id="Mask_Group_2" data-name="Mask Group 2" class="cls-4" transform="translate(0.058)">
+          <path id="Path_8" data-name="Path 8" class="cls-1" d="M-4874.083-3422.9c2.507.623,6.418,1.25,13.5-.122.067-1,.463-2.616-5.685-4.139,0-1.357.4-9.8.4-9.8a70.389,70.389,0,0,0,10.1-.186c3.515-.515,6.721-1.247,7.481-2.956.2-1.253-.5-2.332-5.427-2.366s-9.482,0-9.482,0,.325-2.221-1.409-2.871a9.3,9.3,0,0,0-2.648-6.263c-2.25,2.043-2.7,5.232-2.871,6.263-.909.356-1.295,1.745-1.277,2.871a80.046,80.046,0,0,0-12.62.36c-2.263.412-2.018,2.286-1.677,3.22s7.275,1.816,10.064,1.928,7.039,0,7.039,0l.231,9.8S-4875.181-3425.544-4874.083-3422.9Z" transform="translate(4885.862 3452.871)"/>
+        </g>
+      </g>
+      <text id="Intermediate" class="cls-5" transform="translate(48.054 25.184)"><tspan x="0" y="0">Intermediate</tspan></text>
+    </g>
+  </g>
+</svg>
