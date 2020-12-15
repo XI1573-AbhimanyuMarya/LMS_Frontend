@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const NoCourse = (props) => {
+const NoAssignedlearningpath = (props) => {
   const classes = useStyles();
   const loginState = useSelector((res) => res.loginState);
   const { user } = loginState;
@@ -51,4 +51,4 @@ const NoCourse = (props) => {
   )
 }
 
-export default NoCourse;
+export default NoAssignedlearningpath;

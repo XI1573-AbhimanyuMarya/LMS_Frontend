@@ -73,7 +73,7 @@ const ManageAssignLearningPath = ({ props }) => {
               employees.push({
                 empID: tempEmployee.id,
                 employee: tempEmployee,
-                learningPath: learningDetails
+                learningPath: learningDetails,
               });
             }
         }
@@ -99,22 +99,9 @@ const ManageAssignLearningPath = ({ props }) => {
             <Grid container className={classes.container}>
               <Grid item xs={2}></Grid>
               <Grid item xs={8}>
-                <TextField
-                  className={classes.search}
-                  label={LEARNING_PATH_LABELS.SEARCH_BY_MANAGER}
-                  type="search"
-                  variant="outlined"
-                  className={classes.searchField}
-                  name="search"
-                />
               </Grid>
             </Grid>
           </Box>
-          <br />
-          <br />
-          <Typography variant="h6" className={classes.heading}>
-            {LEARNING_PATH_LABELS.ASSIGNED_LEARNING_PATH}
-          </Typography>
           <Paper className={classes.paper} elevation={1}>
             <div className={classes.cardData}>
               {isLoading && employees.length === 0 && <UserSkelton />}

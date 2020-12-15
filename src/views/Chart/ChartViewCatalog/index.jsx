@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { useStyles } from './style';
 
-const CourseCatalog1 = (props) => {
+const CourseCatalogchart = (props) => {
   const classes = useStyles();
   const { course, handleCourseClick } = props;
   const courseClass = course.selected && course.selected === true ? classes.selected : classes.root;
@@ -103,9 +103,9 @@ const CourseCatalog1 = (props) => {
   );
 }
 
-CourseCatalog1.propTypes = {
+CourseCatalogchart.propTypes = {
   course: PropTypes.object.isRequired,
   // handleCourseClick: PropTypes.func.isRequired,
 };
 
-export default CourseCatalog1;
+export default CourseCatalogchart;

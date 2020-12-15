@@ -12,18 +12,24 @@ const Carosals = (props) => {
 	const { coursesList, handleCourseClick } = props;
 	const [activeItemIndex, setActiveItemIndex] = useState(0);
 	const chevronWidth = 40;
-	let renderCarousel = "";
+  let renderCarousel = "";
+  let renderCourses="";
+  console.log(coursesList);
 	if (coursesList && Array.isArray(coursesList)) {
-		const renderCourses = coursesList.map((course) => {
-			return course.learningPath.courses.map(item => (
-				<CourseCard key={item.courses.id} course={item.courses} onButtonClick={handleCourseClick} showButton={true} />
-				))
+    console.log(coursesList);
+    renderCourses=coursesList.map((course)=>{
+      return (<CourseCard key={course.learningPath.learningPathId} course={course} onButtonClick={handleCourseClick} showButton={true} />)
+    });
+		//renderCourses = coursesList.map((course) => {
+			//return course.learningPath.courses.map(item => (
+			//<CourseCard course={course} onButtonClick={handleCourseClick} showButton={true} />
+				//))
 			// return <CourseCatalog key={course.id} course={course} handleCourseClick={handleCourseClick} />
 
-		});
+    //});
 
 		renderCarousel = <div style={{ padding: `0 ${chevronWidth}px` }}>
-			<ItemsCarousel
+			{/* <ItemsCarousel
 				requestToChangeActive={setActiveItemIndex}
 				activeItemIndex={activeItemIndex}
 				numberOfCards={4}
@@ -32,17 +38,17 @@ const Carosals = (props) => {
 				rightChevron={<ArrowForwardIosOutlinedIcon />}
 				outsideChevron
 				chevronWidth={chevronWidth}
-			>
+			> */}
 				{
 					renderCourses
 				}
-			</ItemsCarousel>
+			{/* </ItemsCarousel> */}
 		</div>
 	}
 	return (
 		<React.Fragment>
 			{
-				renderCarousel !== "" ? renderCarousel
+				renderCourses !== "" ? renderCourses
 					:
 					<div>
 						<Typography variant="h6" align="center">

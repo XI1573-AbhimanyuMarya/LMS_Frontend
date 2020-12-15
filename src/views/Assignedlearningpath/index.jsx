@@ -14,7 +14,7 @@ import LearningPath from '../LearningPath';
 import { getOr } from 'lodash/fp';
 import Carosals from './Carosals/index';
 
-const AssignedLearningPath = () => {
+const AssignedLearningPathMain = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
@@ -110,4 +110,4 @@ const AssignedLearningPath = () => {
   );
 }
 
-export default WithLoading(AssignedLearningPath);
+export default WithLoading(AssignedLearningPathMain);

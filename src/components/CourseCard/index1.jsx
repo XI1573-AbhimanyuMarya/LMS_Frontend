@@ -9,72 +9,29 @@ import { Box } from '@material-ui/core';
 import { useStyles } from './style';
 import BarIcon from '../SignalIcon';
 import ProgressBar from '../ProgressBar';
-import Beginner from '../../images/101-Beginner.svg';
-import Intermediate from '../../images/102-Intermediate.svg';
-import Advance from '../../images/103-Advance.svg';
-import Expert from '../../images/104-Expert.svg';
-const levels={
-  "101-Beginner":Beginner,
-  "102-Intermediate":Intermediate,
-  "103-Advance":Advance,
-  "104-Expert":Expert
-};
-const dateFormat=(inputDate) =>{
-  var date = new Date(inputDate);
-  if (!isNaN(date.getTime())) {
-    let mon=parseInt(date.getMonth()) + 1;
-    if(mon<10){
-      mon="0"+mon;
-    }
-    return date.getDate()+ '/' + mon + '/' + date.getFullYear();
-  }
-}
 
 const CourseCard = (props) => {
   const classes = useStyles();
   const { course, onButtonClick, showButton } = props;
   course.progress = '';
-  // let btnlabel = "Let's begin"
-  // if (course?.progress) {
-  //   btnlabel = "Explore"
-  // }
+  let btnlabel = "Let's begin"
+  if (course?.progress) {
+    btnlabel = "Explore"
+  }
 
-  // let darkBar = 0;
-  // if (course?.competency?.name === "Beginner") {
-  //   darkBar = 1;
-  // } else if (course?.competency?.name === "Intermediate") {
-  //   darkBar = 2
-  // } else if (course?.competency?.name === "Expert") {
-  //   darkBar = 3
-  // }
+  let darkBar = 0;
+  if (course?.competency?.name === "Beginner") {
+    darkBar = 1;
+  } else if (course?.competency?.name === "Intermediate") {
+    darkBar = 2
+  } else if (course?.competency?.name === "Expert") {
+    darkBar = 3
+  }
+
   return (
 
-    <>
-        <tr>
-          <td style={{padding:"10px 30px"}}> {course.learningPath.name}</td>
-          {/*<td style={{padding:"10px 30px"}}> {"UI"}</td>*/}
-          <td style={{padding:"10px 25px"}}> <img src={levels[course.learningPath.competency.id+"-"+course.learningPath.competency.name]} className={classes.levIcons}/></td>
-          <td style={{padding:"10px 30px"}}>{dateFormat(course.startDate)}</td>
-          <td style={{padding:"10px 30px"}}>{dateFormat(course.endDate)}</td>
-          <td style={{padding:"10px 30px"}}> 
-            <Button variant="outlined" size="small" color="primary">
-            {"30"}
-            </Button>
-          </td>
-          <td style={{padding:"10px 30px"}}> <Button variant="outlined" size="small" style={{borderColor:"#f07402",color:"#f07402"}}>
-            {"View"}
-            </Button></td>
-        </tr>
-    </>
-
-  );
-}
-
-
-export default CourseCard;
-
-// <Card className={classes.root} >
-{/* <CardContent>
+   <Card className={classes.root} >
+<CardContent>
         <Grid container spacing={2} alignContent="space-between" className={classes.header}>
           <Grid item xs >
             <Box component="span" className={classes.courseType}>
@@ -125,5 +82,11 @@ export default CourseCard;
             <Button size="large" className={classes.btn} onClick={onButtonClick}>{btnlabel}</Button>
           </CardActions>
           : ''
-      } */}
-      // </Card>
+      }
+      </Card>
+  );
+}
+
+
+export default CourseCard;
+

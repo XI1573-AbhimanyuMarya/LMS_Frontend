@@ -16,6 +16,7 @@ import Box from "@material-ui/core/Box";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ErrorIcon from "@material-ui/icons/Error";
 import SelectCourses from "../SelectCourses";
+import SelectCourses1 from "../details";
 import SelectUsers from "../SelectUsers";
 import SetDuration from "../SetDuration";
 import AddLearningPath from "../../../images/AddLearningPath.svg";
@@ -35,10 +36,12 @@ const steps = STEPS;
 const getStepContent = (step) => {
   switch (step) {
     case 0:
-      return <SelectCourses />;
+      return <SelectCourses1 />;
     case 1:
-      return <SelectUsers />;
+      return <SelectCourses />;
     case 2:
+      return <SelectUsers />;
+      case 3:
       return <SetDuration />;
     default:
       throw new Error(MESSAGES.UNKNOWN_STEP);
@@ -58,6 +61,7 @@ const CreateLearningPath = (props) => {
     userIdArr,
     learningPathDuration,
     status,
+    learningPathDes,
   } = learningPathState;
   const { user } = loginState;
 
@@ -73,18 +77,24 @@ const CreateLearningPath = (props) => {
       learningPathName !== "" &&
       courseIdArr?.length === 0
     ) {
-      error(MESSAGES.PLEASE_SELECT_ATLEAST_ONE_COURSE);
+      setActivePathStep(activePathStep + 1);
+      // error(MESSAGES.PLEASE_SELECT_ATLEAST_ONE_COURSE);
     } else if (activePathStep === 0) {
       dispatch(Actions.learningPathActions.getFirstNextClicked(true));
     } else if (activePathStep === 1) {
       setActivePathStep(activePathStep + 1);
-    } else if (activePathStep === steps?.length - 1) {
+    } else if (activePathStep === 2) {
+      setActivePathStep(activePathStep + 1);
+    }
+    else if (activePathStep === steps?.length - 1) {
       const path = {
         name: learningPathName,
         madeById: user.id,
         madeForId: userIdArr,
         coursesId: courseIdArr,
         duration: learningPathDuration,
+        description: learningPathDes,
+        competencyLevelId: '101',
       };
       dispatch(Actions.learningPathActions.createLearningPath(path));
       setTimeout(() => {

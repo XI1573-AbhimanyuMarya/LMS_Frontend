@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import CourseCatalog from '../CourseCatalog';
 import { MESSAGES } from '../../../../../modules/constants';
 
-const Carosals = (props) => {
+const AssignedCarosals = (props) => {
 	const { coursesList, handleCourseClick } = props;
 	const [activeItemIndex, setActiveItemIndex] = useState(0);
 	const chevronWidth = 40;
@@ -49,7 +49,7 @@ const Carosals = (props) => {
 	);
 };
 
-Carosals.propTypes = {
+AssignedCarosals.propTypes = {
     coursesList: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.array
@@ -57,4 +57,4 @@ Carosals.propTypes = {
     handleCourseClick: PropTypes.func.isRequired,
 };
 
-export default Carosals;
+export default AssignedCarosals;

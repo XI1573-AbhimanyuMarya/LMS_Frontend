@@ -63,32 +63,47 @@ const SelectCourses = () => {
 
   return (
     <React.Fragment>
-       <TopNav>
+      <TopNav>
       </TopNav>
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
-      <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center">
-        <Box alignItems="flex-start" py={2} pl={5}>
-          <Typography variant="h6" className={classes.headerText}>
-            {LEARNING_PATH_LABELS.COURSE_CATALOG1}
-          </Typography>
-        </Box>
-        <Box alignItems="center">
-          {isLoading && completedCourse?.length === 0 && <CourseSkelton1 />}
-          <MyCarosals coursesList={completedCourse} />
-        </Box>
-        <Box alignItems="flex-start" py={2} pl={5}>
+          <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center">
+            <Box alignItems="flex-start" py={2} pl={5}>
+              <Typography variant="h6" className={classes.headerText}>
+                {LEARNING_PATH_LABELS.COURSE_CATALOG1}
+              </Typography>
+            </Box>
+            <Box alignItems="center">
+              {isLoading && completedCourse?.length === 0 && <CourseSkelton1 />}
+              <MyCarosals coursesList={completedCourse} />
+            </Box>
+            {/* <Box alignItems="flex-start" py={2} pl={5}>
           <Typography variant="h6" className={classes.headerText}>
             {LEARNING_PATH_LABELS.MY_LEARNING_PATH}
           </Typography>
-        </Box>
-        <Box alignItems="center" mb={2}>
-          {isLoading && !inprogress && <CourseSkelton />}
-          <Carosals coursesList={inprogress} />
-        </Box>
-      </Box>
-      <div className="copyright">
+        </Box> */}
+        <div style={{overflowX:"auto", overflowY:"auto", height:"53vh"}}>
+            <table style={{margin:"40px 0 10px 40px"}} className={classes.table}>
+              <thead style={{color:"gray",backgroundColor:"white",opacity:"0.7"}}>
+                <tr>
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>Learning Path Name</th>
+                  {/*<th style={{padding:"20px 30px",textAlign:"left"}}>Learning Category</th>*/}
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>Level</th>
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>Start Date</th>
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>End Date</th>
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>Learning Rate</th>
+                  <th style={{padding:"20px 30px",textAlign:"left"}}>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {isLoading && !inprogress && <CourseSkelton />}
+                <Carosals coursesList={inprogress} />
+              </tbody>
+            </table>
+            </div>
+          </Box>
+          <div className="copyright">
             <Copyright />
           </div>
         </div>

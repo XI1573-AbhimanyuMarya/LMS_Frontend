@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="163" height="74" viewBox="0 0 163 74">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: rgba(255,255,255,0.25);
+      }
+
+      .cls-2 {
+        fill: #fff;
+        stroke: rgba(121,36,109,0.4);
+      }
+
+      .cls-3 {
+        fill: #79246d;
+      }
+
+      .cls-4 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-5 {
+        fill: #621d58;
+        font-size: 19px;
+        font-family: Roboto-Regular, Roboto;
+      }
+
+      .cls-6 {
+        stroke: none;
+      }
+
+      .cls-7 {
+        fill: none;
+      }
+
+      .cls-8 {
+        filter: url(#Rectangle_6);
+      }
+    </style>
+    <filter id="Rectangle_6" x="0" y="0" width="163" height="74" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.122"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <path id="Path_11" data-name="Path 11" class="cls-1" d="M0,0H11.956V30.749H0Z"/>
+    </clipPath>
+  </defs>
+  <g id="Group_65" data-name="Group 65" transform="translate(-802.5 -614.5)">
+    <g class="cls-8" transform="matrix(1, 0, 0, 1, 802.5, 614.5)">
+      <g id="Rectangle_6-2" data-name="Rectangle 6" class="cls-2" transform="translate(9 6)">
+        <rect class="cls-6" width="145" height="56" rx="4"/>
+        <rect class="cls-7" x="0.5" y="0.5" width="144" height="55" rx="3.5"/>
+      </g>
+    </g>
+    <g id="Group_17" data-name="Group 17" transform="translate(828.5 633.5)">
+      <g id="Group_9" data-name="Group 9" transform="translate(0 0)">
+        <path id="Union_3" data-name="Union 3" class="cls-3" d="M14,25.241,11.727,22.1v-.008L9.459,25.229,2.047,29,0,25.068,11.73,0V.017L23.458,25.08l-2.047,3.931Z" transform="translate(0.162 1.157)"/>
+        <g id="Mask_Group_5" data-name="Mask Group 5" class="cls-4" transform="translate(0 0)">
+          <path id="Union_6" data-name="Union 6" class="cls-1" d="M14,25.241,11.727,22.1v-.008L9.459,25.229,2.047,29,0,25.068,11.73,0V.017L23.458,25.08l-2.047,3.931Z" transform="translate(0.162 1.157)"/>
+        </g>
+      </g>
+      <text id="Beginner" class="cls-5" transform="translate(35.127 23.565)"><tspan x="0" y="0">Beginner</tspan></text>
+    </g>
+  </g>
+</svg>

@@ -40,14 +40,14 @@ const getStepContent = (step) => {
   }
 }
 
-const CreateLearningPath = (props) => {
+const AssignedCreateLearningPath = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
   const loginState = useSelector(res => res.loginState);
   const { handleClose, handleClosePath } = props;
   const [activePathStep, setActivePathStep] = useState(0);
-  const { learningPathName, courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
+  const { learningPathName,learningPathDes , courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
   const { user } = loginState;
 
   const handleNext = () => {
@@ -66,6 +66,8 @@ const CreateLearningPath = (props) => {
         madeForId: userIdArr,
         coursesId: courseIdArr,
         duration: learningPathDuration,
+        description: learningPathDes,
+        competencyLevelId: '101',
       }
       dispatch(Actions.learningPathActions.createLearningPath(path));
       setTimeout(() => {
@@ -204,9 +206,9 @@ const CreateLearningPath = (props) => {
   );
 }
 
-CreateLearningPath.propTypes = {
+AssignedCreateLearningPath.propTypes = {
   handleClose: PropTypes.func.isRequired,
   handleClosePath: PropTypes.func.isRequired,
 };
 
-export default WithLoading(CreateLearningPath);
+export default WithLoading(AssignedCreateLearningPath);

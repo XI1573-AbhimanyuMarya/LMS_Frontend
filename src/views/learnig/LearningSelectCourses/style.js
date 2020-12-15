@@ -41,5 +41,9 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 'auto'
-  },  
+  },
+  table: {
+    minWidth: 950,
+    minHeight: 100
+  }  
 }));

@@ -14,6 +14,7 @@ import CourseCatalog from "../views/learnig/LearningSelectCourses";
 import Assigned from "../views/Assignedlearningpath";
 import NoCourse from "../views/LearningPath/NoCourse";
 import ManageAssignLearningPath from "../views/ManegerAssignedLearningPath";
+import Approval from "../views/Approval";
 
 const Routers = () => {
   return (
@@ -28,7 +29,7 @@ const Routers = () => {
           path="/manage"
           component={ManageAssignLearningPath}
         />
-        <ProtectedRoute exact path="/approvals" component={Dashboard} />
+        <ProtectedRoute exact path="/approvals" component={Approval} />
         <ProtectedRoute exact path="/" component={Dashboard} />
       </Switch>
     </Router>
