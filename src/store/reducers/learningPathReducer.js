@@ -3,6 +3,7 @@ import { actionTypes } from '../types';
 const initialState = {
   learningPathName: '',
   learningPathDes: '',
+  learningPathLevel:101,
   courses: [],
   courseIdArr: [],
   users: [],
@@ -99,6 +100,12 @@ export const learningPathReducer = (state = initialState, action) => {
           learningPathDes: payload.pathDes,
           isLoading: false
         }
+    case actionTypes.GET_LEARNING_PATH_LEVEL:
+      return {
+        ...state,
+        learningPathLevel: payload.pathLevel,
+        isLoading: false
+      }
     case actionTypes.PATH_MODEL_OPEN:
       if (payload.val === true) {
         return {

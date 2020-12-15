@@ -24,5 +24,5 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	pathNameField: {
 		background: '#FFFFFF',
-	}
+  }
 }));

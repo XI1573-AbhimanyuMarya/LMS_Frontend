@@ -13,12 +13,14 @@ import Beginner from '../../images/101-Beginner.svg';
 import Intermediate from '../../images/102-Intermediate.svg';
 import Advance from '../../images/103-Advance.svg';
 import Expert from '../../images/104-Expert.svg';
-const levels={
-  "101-Beginner":Beginner,
-  "102-Intermediate":Intermediate,
-  "103-Advance":Advance,
-  "104-Expert":Expert
-};
+import { SHOW_LEVELS } from '../../modules/constants';
+//const levels=LEVELS;
+// {
+//   "101-Beginner":Beginner,
+//   "102-Intermediate":Intermediate,
+//   "103-Advance":Advance,
+//   "104-Expert":Expert
+// };
 const dateFormat=(inputDate) =>{
   var date = new Date(inputDate);
   if (!isNaN(date.getTime())) {
@@ -53,7 +55,7 @@ const CourseCard = (props) => {
         <tr>
           <td style={{padding:"10px 30px"}}> {course.learningPath.name}</td>
           {/*<td style={{padding:"10px 30px"}}> {"UI"}</td>*/}
-          <td style={{padding:"10px 25px"}}> <img src={levels[course.learningPath.competency.id+"-"+course.learningPath.competency.name]} className={classes.levIcons}/></td>
+          <td style={{padding:"10px 25px"}}> <img src={SHOW_LEVELS[course.learningPath.competency.id+"-"+course.learningPath.competency.name]} className={classes.levIcons}/></td>
           <td style={{padding:"10px 30px"}}>{dateFormat(course.startDate)}</td>
           <td style={{padding:"10px 30px"}}>{dateFormat(course.endDate)}</td>
           <td style={{padding:"10px 30px"}}> 

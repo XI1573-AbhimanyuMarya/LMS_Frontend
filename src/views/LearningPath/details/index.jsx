@@ -10,21 +10,13 @@ import { Grid } from '@material-ui/core';
 import Actions from '../../../store/actions';
 import CourseSkelton from '../../../components/Skelton/CourseSkelton';
 import { useStyles } from './style';
-import { LEARNING_PATH_LABELS } from '../../../modules/constants';
-import Beginner from '../../../images/101-Beginner.svg';
-import Intermediate from '../../../images/102-Intermediate.svg';
-import Advance from '../../../images/103-Advance.svg';
-import Expert from '../../../images/104-Expert.svg';
-import OutlinedBeginner from '../../../images/101-OutlinedBeginner.svg';
-import OutlinedIntermediate from '../../../images/102-OutlinedIntermediate.svg';
-import OutlinedAdvance from '../../../images/103-OutlinedAdvance.svg';
-import OutlinedExpert from '../../../images/104-OutlinedExpert.svg';
+import { LEARNING_PATH_LABELS,SHOW_LEVELS,LEVELS } from '../../../modules/constants';
 
 const SelectCourses1 = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
-	const { courses, filteredCoursesList, isLoading, learningPathName,learningPathDes, firstNextClicked, courseIdArr } = learningPathState;
+	const { courses, filteredCoursesList, isLoading, learningPathName,learningPathDes,learningPathLevel, firstNextClicked, courseIdArr } = learningPathState;
 	const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
 	const [touch, setTouch] = useState(false);
 
@@ -93,34 +85,30 @@ const SelectCourses1 = () => {
 		const pathDes = e.target.value;
 		setTouch(true);
 		dispatch(Actions.learningPathActions.getLearningPathDes(pathDes));
+  }
+  
+  const onClickHandlerLevel = (e) => {
+    const pathLevel = e.target.className;
+		setTouch(true);
+		dispatch(Actions.learningPathActions.getLearningPathLevel(pathLevel));
 	}
 
 	const coursesList = filteredCoursesList
 		? filteredCoursesList?.length > 0
 			? filteredCoursesList
 			: ''
-		: courses;
+    : courses;
+  
+  const renderLevels=LEVELS.map((level)=>{
+    return ((level.id==learningPathLevel) ? <img src={SHOW_LEVELS[level.id+'-'+level.value]} style={{width:"150px",height:"56px"}} className={level.id} onClick={onClickHandlerLevel}/> : <img src={SHOW_LEVELS[level.id+'-Outlined'+level.value]} style={{width:"150px",height:"56px"}} className={level.id} onClick={onClickHandlerLevel}/>);
+  });
+  
+
 	return (
 		<React.Fragment>
-			{/* <Box component='div' display="flex" justifyContent="center">
-				<TextField id="standard-search"
-					label={LEARNING_PATH_LABELS.SEARCH_COURSE}
-					type="search"
-					variant="outlined"
-					className={classes.searchField}
-					name="searchName"
-					size="small"
-					onChange={changeHandler} />
-			</Box> */}
 			<Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" >
 				<Grid container className={classes.pathName}>
 					<Grid item xs={3}>
-						{/*<InputLabel
-							htmlFor="standard-search"
-							className={classes.courseLabel}>
-							{LEARNING_PATH_LABELS.LEARNING_PATH_NAME}
-							<Box component="span" className={classes.error}>*</Box>
-            </InputLabel>*/}
 					</Grid>
 					<Grid item xs={6}>
 						<TextField error={(!learningPathName && touch) || (!learningPathName && firstNextClicked) ? true : false}
@@ -136,25 +124,10 @@ const SelectCourses1 = () => {
 					</Grid>
 				</Grid>
 				<Divider variant="middle" />
-				{/* <Box alignItems="flex-start" py={2} pl={5}>
-					<Typography variant="h6">
-						{LEARNING_PATH_LABELS.COURSE_CATALOG}
-					</Typography>
-				</Box> */}
-				{/* <Box alignItems="center">
-					{isLoading && coursesList?.length === 0 && <CourseSkelton />}
-					<Carosals coursesList={coursesList} handleCourseClick={(id) => onCourseClickHandler(id)} />
-				</Box> */}
 			</Box>
       <Box className={classes.catalogContainer} height="150px" display="flex-inline" justifyContent="center" >
 				<Grid container className={classes.pathName}>
 					<Grid item xs={3}>
-						{/*<InputLabel
-							htmlFor="standard-search"
-							className={classes.courseLabel}>
-							{LEARNING_PATH_LABELS.LEARNING_PATH_DESCRIPTION}
-							<Box component="span" className={classes.error}>*</Box>
-            </InputLabel>*/}
 					</Grid>
 					<Grid item xs={6} style={{height:"50px"}}>
 						<TextField error={(!learningPathDes && touch) || (!learningPathDes && firstNextClicked) ? true : false}
@@ -171,13 +144,9 @@ const SelectCourses1 = () => {
 						/>
 					</Grid>
 				</Grid>
-				{/* <Divider variant="middle" /> */}
 			</Box>
       <Box className={classes.catalogContainer} display="flex" justifyContent="center">
-        <img src={OutlinedBeginner} style={{width:"145px",height:"56px"}} />
-        <img src={Intermediate} style={{width:"178px",height:"56px"}} />
-        <img src={OutlinedAdvance} style={{width:"146px",height:"56px"}}/>
-        <img src={OutlinedExpert} style={{width:"146px",height:"56px"}} />
+        {renderLevels}
       </Box>
 		</React.Fragment>
 	);
