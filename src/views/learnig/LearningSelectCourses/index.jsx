@@ -83,6 +83,7 @@ const SelectCourses = () => {
             {LEARNING_PATH_LABELS.MY_LEARNING_PATH}
           </Typography>
         </Box> */}
+        <div style={{overflowX:"auto", overflowY:"auto", height:"53vh"}}>
             <table style={{margin:"40px 0 10px 40px"}} className={classes.table}>
               <thead style={{color:"gray",backgroundColor:"white",opacity:"0.7"}}>
                 <tr>
@@ -100,6 +101,7 @@ const SelectCourses = () => {
                 <Carosals coursesList={inprogress} />
               </tbody>
             </table>
+            </div>
           </Box>
           <div className="copyright">
             <Copyright />
