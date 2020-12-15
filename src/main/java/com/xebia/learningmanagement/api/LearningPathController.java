@@ -8,6 +8,7 @@ import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
+import com.xebia.learningmanagement.entity.Courses;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
@@ -71,6 +72,11 @@ public class LearningPathController {
 
         return new ResponseEntity(allAssignedLearningPath, HttpStatus.OK);
 
+    }
+
+    @GetMapping(value = "/learningPath/courses/{learningPathId}")
+    public List<Courses> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") Long learningPathId){
+        return learningPathService.getCourseDetails(learningPathId);
     }
 
     @PostMapping(value = "/pending/approvals")
