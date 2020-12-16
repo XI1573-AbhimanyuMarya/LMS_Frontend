@@ -31,12 +31,14 @@ const CourseCard = (props) => {
   }
 
   return (
+    
     <Card className={classes.root}>
       <CardContent>
         <Grid container spacing={2} alignContent="space-between" className={classes.header}>
           <Grid item xs style={{margin:"-15px 0 0 10px"}}>
 		  <Typography variant="body1" component="h6" className={classes.courseTitle} >
-            {course.name}
+            {/* {course.name} */}
+            {/* {console.log(course,'raghav')} */}
           </Typography>
           </Grid>
           <Grid item container xs className={classes.compatency} >
@@ -47,7 +49,7 @@ const CourseCard = (props) => {
             </Grid>
             <Grid item xs>
               <Typography component="span" className={classes.courseLevel}>
-                {course.competency.name}
+                {/* {course.competency.name} */}
               </Typography>
             </Grid>
           </Grid>
@@ -66,7 +68,7 @@ const CourseCard = (props) => {
         <Grid container spacing={2}>
           <Grid item xs>
             <Typography variant="body2" color="textSecondary" component="p" className={classes.courseDesc}>
-              {course.description}
+              {/* {course.description} */}
             </Typography>
           </Grid>
         </Grid>

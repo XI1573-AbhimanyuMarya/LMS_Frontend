@@ -34,7 +34,7 @@ const AssignedLearningPath = (props) => {
     );
 }
 
-LearningPath.propTypes = {
+AssignedLearningPath.propTypes = {
     handleClose: PropTypes.func.isRequired,
     handleClosePath: PropTypes.func.isRequired,
 };

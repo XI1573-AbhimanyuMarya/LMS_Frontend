@@ -26,7 +26,7 @@ const SelectCourses = () => {
   const [touch, setTouch] = useState(false);
   const loginState = useSelector(res => res.loginState);
   const { mycourses } = learningPathState;
-  console.log(mycourses, learningPathState);
+  console.log(mycourses, learningPathState, "learn");
   const logoutUser = () => {
     dispatch(Actions.loginActions.logout());
   }

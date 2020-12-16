@@ -6,32 +6,25 @@ import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import Typography from '@material-ui/core/Typography';
 import CourseCatalog from '../CourseCatalog';
 import { MESSAGES } from '../../../../../modules/constants';
+import Scrollbars from 'react-custom-scrollbars'
+import { useStyles } from '../CourseCatalog/style';
 
 const AssignedCarosals = (props) => {
 	const { coursesList, handleCourseClick } = props;
 	const [activeItemIndex, setActiveItemIndex] = useState(0);
-	const chevronWidth = 40;
-	let renderCarousel = "";
+  const chevronWidth = 40;
+  const classes = useStyles();
+  let renderCarousel = "";
+  console.log(coursesList,"raghav2")
 	if (coursesList && Array.isArray(coursesList)) {
 		const renderCourses = coursesList.map((course) => {
-			return <CourseCatalog key={course.id} course={course} handleCourseClick={handleCourseClick} />
+			return <CourseCatalog key={course.learningPath.learningPathId} course={course} handleCourseClick={handleCourseClick} />
 		});
 
-		renderCarousel = <div style={{ padding: `0 ${chevronWidth}px` }}>
-			<ItemsCarousel
-				requestToChangeActive={setActiveItemIndex}
-				activeItemIndex={activeItemIndex}
-				numberOfCards={4}
-				gutter={20}
-				leftChevron={<ArrowBackIosOutlinedIcon />}
-				rightChevron={<ArrowForwardIosOutlinedIcon />}
-				outsideChevron
-				chevronWidth={chevronWidth}
-			>
+		renderCarousel = <div className={classes.card} style={{ padding: `0 ${chevronWidth}px`, display:"flex", flexWrap:"wrap", overflow:"auto",}}>
 				{
 					renderCourses
 				}
-			</ItemsCarousel>
 		</div>
 	}
 	return (

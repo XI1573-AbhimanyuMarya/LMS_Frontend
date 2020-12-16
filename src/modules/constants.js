@@ -36,6 +36,7 @@ export const LEARNING_PATH_LABELS = {
   LEARNING_PATH_DESCRIPTION: "Learning Path Description",
   COURSE_CATALOG: "Course Catalog",
   COURSE_CATALOG1: "Learning Path Completed",
+  COURSE_CATALOG2: "Assign Learning Path",
   LEARNING_PATH_COMPLETED: "Learning Path Completed",
   COURSE_CAT: "Data Science",
   COURSE_CAT1: "Cloud Services",
@@ -60,6 +61,7 @@ export const BUTTONS = {
 };
 
 export const STEPS = ["Learning Path Details", "Courses", "Assign Users", "Set Duration"];
+export const STEPS1 = [ "Learning Path", "Assign Users", "Set Duration"];
 
 export const MARKS = [
   {

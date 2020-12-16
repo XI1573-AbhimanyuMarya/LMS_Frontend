@@ -10,7 +10,7 @@ import Copyright from '../../components/Copyright';
 import WithLoading from '../../hoc/WithLoading';
 import { Button } from '@material-ui/core';
 import DiscardPopup from '../../components/DiscardPopup';
-import LearningPath from '../LearningPath';
+import LearningPath from './LearningPath/index';
 import { getOr } from 'lodash/fp';
 import Carosals from './Carosals/index';
 
