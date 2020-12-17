@@ -8,13 +8,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
-import { useStyles } from './style';   
+import { useStyles } from './styles';   
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 const DiscardPopup = (props) => {
     const classes = useStyles();
     const learningPathState = useSelector(state => state.learningPathState);
-    const { discardModelOpen } = learningPathState;
+    const { uploadFilePopup } = learningPathState;
     const { discardHandler } = props;
+   
     
     /**
      * function to cancel disacrd popup
@@ -31,27 +34,35 @@ const DiscardPopup = (props) => {
     return (
         <div>
             <Dialog
-                maxWidth='xs'
-                open={discardModelOpen}
+                maxWidth='sm'
+                open={uploadFilePopup}
                 onClose={handleClose}
-                aria-labelledby="responsive-dialog-title"
+               
+                display="flex"
+                className={classes.box}
             >
-                <DialogTitle className={classes.dailogTitle} id="responsive-dialog-title">{"Discard Changes?"}</DialogTitle>
-                <Divider/>
-                <DialogContent>
-                    <DialogContentText>
-                        Changes done will be discarded permanantely, Please confirm
-                    </DialogContentText>
+              
+               <div className={classes.uploadContent}>
+                 img
+                </div>
+               
+                
+                <DialogContent className={classes.uploadFile}>
+                 img
                 </DialogContent>
-                <Divider variant="middle" />
-                <DialogActions>
+               
+              
+               
+                
+                
+                {/* <DialogActions>
                     <Button autoFocus onClick={handleDiscard} color="primary" variant="contained" className={classes.discardButton}>
                         Discard
                     </Button>
                     <Button onClick={handleClose} color="default" autoFocus variant="outlined" className={classes.cancelButton}>
                         Cancel
                     </Button>
-                </DialogActions>
+                </DialogActions> */}
             </Dialog>
         </div>
     );

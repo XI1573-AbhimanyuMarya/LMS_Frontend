@@ -38,6 +38,10 @@ const discardModelOpen = (val) => ({
   type: actionTypes.DISCARD_MODEL_OPEN,
   payload: { val },
 });
+const uploadFileModelOpen = (val) => (console.log("val",val),{
+  type: actionTypes.UPLOADFILE_MODEL_OPEN,
+  payload: { val },
+});
 const createLearningPath = (path) => ({
   type: actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST,
   payload: { path },
@@ -88,4 +92,5 @@ export default {
   getMyLearningPath,
   deleteAllPaths,
   deletePath,
+  uploadFileModelOpen
 };

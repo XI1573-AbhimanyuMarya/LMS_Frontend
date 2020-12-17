@@ -3,6 +3,8 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import { useDispatch  } from "react-redux";
+import Actions from '../../store/actions'
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Box } from '@material-ui/core';
@@ -13,6 +15,7 @@ import Beginner from '../../images/101-Beginner.svg';
 import Intermediate from '../../images/102-Intermediate.svg';
 import Advance from '../../images/103-Advance.svg';
 import Expert from '../../images/104-Expert.svg';
+import UploadFilePopup from '../UploadFilePopup/UploadFilePopup'
 const levels={
   "101-Beginner":Beginner,
   "102-Intermediate":Intermediate,
@@ -30,9 +33,20 @@ const dateFormat=(inputDate) =>{
   }
 }
 
+
 const CourseCard = (props) => {
+  const dispatch = useDispatch(); 
   const classes = useStyles();
   const { course, onButtonClick, showButton } = props;
+
+  const onViewClick = () =>{
+    console.log("view clicked")
+    dispatch(Actions.learningPathActions.uploadFileModelOpen(true));
+  }
+
+  const discardHandler = () =>{
+    dispatch(Actions.learningPathActions.uploadFileModelOpen(false));
+  }
   course.progress = '';
   // let btnlabel = "Let's begin"
   // if (course?.progress) {
@@ -57,9 +71,10 @@ const CourseCard = (props) => {
           <td style={{padding:"10px 30px"}}>{dateFormat(course.startDate)}</td>
           <td style={{padding:"10px 30px"}}>{dateFormat(course.endDate)}</td>
           <td style={{padding:"10px 30px"}}> 
-            <Button variant="outlined" size="small" color="primary">
+            <Button variant="outlined" size="small" color="primary" onClick={onViewClick}>
             {"30"}
             </Button>
+          <UploadFilePopup discardHandler={discardHandler}/>
           </td>
           <td style={{padding:"10px 30px"}}> <Button variant="outlined" size="small" style={{borderColor:"#f07402",color:"#f07402"}}>
             {"View"}
