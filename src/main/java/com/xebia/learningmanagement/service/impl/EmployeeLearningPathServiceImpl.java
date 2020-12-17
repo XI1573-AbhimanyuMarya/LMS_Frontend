@@ -157,6 +157,24 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     }
 
     @Override
+    public Map<String, String> updateCourseRating(long courseRatingId, CourseCompletedPercentRequest courseCompletedPercent) {
+        Map<String,String> message=new HashMap<>();
+        CourseRating courseRating=CourseRating.builder()
+                .id(courseRatingId)
+                .courseId(courseCompletedPercent.getCourseId())
+                .employeeId(courseCompletedPercent.getEmployeeId())
+                .learningPathId(courseCompletedPercent.getLearningPathId())
+                .percentCompleted(courseCompletedPercent.getPercentCompleted())
+                .build();
+
+        if(courseRatingRepository.save(courseRating)!=null)
+        {
+            message.put("message","Course Rating Succesfully Updated");
+        }
+        return message;
+    }
+
+    @Override
     public int courseCompletionAverage(long employeeId, long learningPathId) {
 
        List<CourseRating> courseRating= courseRatingRepository.getRatingByCourseIdAndLEarningPath(learningPathId,employeeId);
