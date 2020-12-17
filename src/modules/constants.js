@@ -1,4 +1,14 @@
 // const API_HOST_PATH = process.env.REACT_APP_BASE_API_URL;
+import Beginner from '../images/101-Beginner.svg';
+import Intermediate from '../images/102-Intermediate.svg';
+import Advance from '../images/103-Advance.svg';
+import Expert from '../images/104-Expert.svg';
+import OutlinedBeginner from '../images/101-OutlinedBeginner.svg';
+import OutlinedIntermediate from '../images/102-OutlinedIntermediate.svg';
+import OutlinedAdvance from '../images/103-OutlinedAdvance.svg';
+import OutlinedExpert from '../images/104-OutlinedExpert.svg';
+
+// const API_HOST_PATH = process.env.REACT_APP_BASE_API_URL;
 //'https://learningmanagementxeb.herokuapp.com';
 const API_HOST_PATH =  'https://xebia-lms.herokuapp.com'
 
@@ -32,10 +42,11 @@ export const LEARNING_PATH_LABELS = {
   LEARNING_PATH_CREATED: "Learning path has created sucessfully",
   EMAIL_SENT_TO_EMPLOYEE: "An email has been sent to the employees",
   SEARCH_COURSE: "Search Course",
-  LEARNING_PATH_NAME: "Learning Path Name",
-  LEARNING_PATH_DESCRIPTION: "Learning Path Description",
+  LEARNING_PATH_NAME: "Enter Learning Path Name",
+  LEARNING_PATH_DESCRIPTION: "Enter Learning Path Description",
   COURSE_CATALOG: "Course Catalog",
   COURSE_CATALOG1: "Learning Path Completed",
+  COURSE_CATALOG2: "Assign Learning Path",
   LEARNING_PATH_COMPLETED: "Learning Path Completed",
   COURSE_CAT: "Data Science",
   COURSE_CAT1: "Cloud Services",
@@ -60,6 +71,7 @@ export const BUTTONS = {
 };
 
 export const STEPS = ["Learning Path Details", "Courses", "Assign Users", "Set Duration"];
+export const STEPS1 = [ "Learning Path", "Assign Users", "Set Duration"];
 
 export const MARKS = [
   {
@@ -81,3 +93,21 @@ export const MARKS = [
 ];
 
 export const DRAWER_WIDTH = "18%";
+
+export const SHOW_LEVELS={
+  "101-Beginner":Beginner,
+  "102-Intermediate":Intermediate,
+  "103-Advance":Advance,
+  "104-Expert":Expert,
+  "101-OutlinedBeginner":OutlinedBeginner,
+  "102-OutlinedIntermediate":OutlinedIntermediate,
+  "103-OutlinedAdvance":OutlinedAdvance,
+  "104-OutlinedExpert":OutlinedExpert
+};
+
+export const LEVELS=[
+  {id:101,value:"Beginner"},
+  {id:102,value:"Intermediate"},
+  {id:103,value:"Advance"},
+  {id:104,value:"Expert"}
+];

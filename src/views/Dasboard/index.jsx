@@ -13,7 +13,7 @@ import Box from "@material-ui/core/Box";
 import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
 
-import DiscardPopup from "../../components/DiscardPopup";
+import DiscardPopup from "../../components/DiscardPopup/index";
 import AddLearningPath from "../../images/AddLearningPath.svg";
 import LearningPath from "../LearningPath/index";
 import { useStyles } from "./style";

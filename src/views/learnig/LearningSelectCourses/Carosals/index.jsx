@@ -14,7 +14,7 @@ const Carosals = (props) => {
 	const chevronWidth = 40;
   let renderCarousel = "";
   let renderCourses="";
-  console.log(coursesList);
+  console.log(coursesList,"raghav1");
 	if (coursesList && Array.isArray(coursesList)) {
     console.log(coursesList);
     renderCourses=coursesList.map((course)=>{

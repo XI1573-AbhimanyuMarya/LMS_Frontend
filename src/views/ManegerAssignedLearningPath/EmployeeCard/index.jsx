@@ -13,8 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Actions from "../../../store/actions";
-import DiscardPopup from "../../../components/DiscardPopup";
+import DiscardPopup from "../../../components/DiscardPopup/index1";
+import Actions from '../../../store/actions';
 
 import { useStyles } from "./style";
 
@@ -77,6 +77,7 @@ function EmployeeCard(props) {
     setEditOption(!editOption);
     setExpanded(expanded && editOption? false : true);
   };
+
 
   return (
     <>

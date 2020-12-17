@@ -43,6 +43,7 @@ export const useStyles = makeStyles((theme) => ({
     margin: 'auto'
   },
   table: {
-    minWidth: 1250,
+    minWidth: 950,
+    minHeight: 100
   }  
 }));

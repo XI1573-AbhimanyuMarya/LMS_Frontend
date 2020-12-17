@@ -21,12 +21,12 @@ import SetDuration from '../SetDuration';
 import AddLearningPath from '../../../../images/AddLearningPath.svg';
 import { useStyles, QontoConnector } from './style';
 import Actions from '../../../../store/actions';
-import { STEPS, MESSAGES, LEARNING_PATH_LABELS, BUTTONS } from '../../../../modules/constants';
+import { STEPS1, MESSAGES, LEARNING_PATH_LABELS, BUTTONS } from '../../../../modules/constants';
 import WithLoading from '../../../../hoc/WithLoading';
 import { error } from '../../../../utils/notifications';
 import TopNav from '../../../../components/TopNav';
 
-const steps = STEPS;
+const steps = STEPS1;
 const getStepContent = (step) => {
   switch (step) {
     case 0:
@@ -51,9 +51,9 @@ const AssignedCreateLearningPath = (props) => {
   const { user } = loginState;
 
   const handleNext = () => {
-    if (activePathStep === 0 && learningPathName == "" && courseIdArr?.length > 0) {
+    if (activePathStep === 0 && courseIdArr?.length > 0) {
       setActivePathStep(activePathStep + 1);
-    } else if (activePathStep === 0 && learningPathName == "" && courseIdArr?.length === 0) {
+    } else if (activePathStep === 0 && courseIdArr?.length === 0) {
       error(MESSAGES.PLEASE_SELECT_ATLEAST_ONE_COURSE)
     } else if (activePathStep === 0) {
       dispatch(Actions.learningPathActions.getFirstNextClicked(true));
@@ -61,12 +61,12 @@ const AssignedCreateLearningPath = (props) => {
       setActivePathStep(activePathStep + 1);
     } else if (activePathStep === steps?.length - 1) {
       const path = {
-        name: learningPathName,
+        name: 'null',
         madeById: user.id,
         madeForId: userIdArr,
         coursesId: courseIdArr,
         duration: learningPathDuration,
-        description: learningPathDes,
+        description: 'null',
         competencyLevelId: '101',
       }
       dispatch(Actions.learningPathActions.createLearningPath(path));

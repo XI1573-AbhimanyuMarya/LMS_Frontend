@@ -30,6 +30,10 @@ const getLearningPathDes = (pathDes) => ({
   type: actionTypes.GET_LEARNING_PATH_DES,
   payload: { pathDes },
 });
+const getLearningPathLevel = (pathLevel) => ({
+  type: actionTypes.GET_LEARNING_PATH_LEVEL,
+  payload: { pathLevel },
+});
 const pathModelOpen = (val) => ({
   type: actionTypes.PATH_MODEL_OPEN,
   payload: { val },
@@ -83,6 +87,7 @@ export default {
   getSliderDuration,
   getLearningPathName,
   getLearningPathDes,
+  getLearningPathLevel,
   pathModelOpen,
   discardModelOpen,
   createLearningPath,
