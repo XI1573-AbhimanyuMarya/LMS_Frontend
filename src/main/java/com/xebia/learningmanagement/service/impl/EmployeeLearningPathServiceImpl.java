@@ -1,8 +1,10 @@
 package com.xebia.learningmanagement.service.impl;
 
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
+import com.xebia.learningmanagement.dtos.request.CourseCompletedPercentRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeLearningRateRequest;
+import com.xebia.learningmanagement.entity.CourseRating;
 import com.xebia.learningmanagement.entity.Courses;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.entity.User;
@@ -10,6 +12,7 @@ import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
+import com.xebia.learningmanagement.repository.CourseRatingRepository;
 import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.EmployeeLearningPathService;
@@ -33,13 +36,16 @@ import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.PEND
 @Service
 public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathService {
     @Autowired
-    protected UserRepository userRepository;
+    private  UserRepository userRepository;
     @Autowired
-    LearningPathEmployeesRepository learningPathEmployeesRepository;
+    private LearningPathEmployeesRepository learningPathEmployeesRepository;
     @Autowired
-    LearningPathServiceImpl serviceimpl;
+    private LearningPathServiceImpl serviceimpl;
     @Autowired
-    EmailSend emailSend;
+    private EmailSend emailSend;
+    @Autowired
+    private CourseRatingRepository courseRatingRepository;
+
 
     /***
      *
@@ -131,4 +137,38 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         }
         return emailcontent;
     }
+
+    @Override
+    public Map<String,String> addCourseRating(CourseCompletedPercentRequest courseCompletedPercent)
+    {
+       Map<String,String> message=new HashMap<>();
+        CourseRating courseRating=CourseRating.builder()
+                                    .courseId(courseCompletedPercent.getCourseId())
+                                    .employeeId(courseCompletedPercent.getEmployeeId())
+                                    .learningPathId(courseCompletedPercent.getLearningPathId())
+                                    .percentCompleted(courseCompletedPercent.getPercentCompleted())
+                                     .build();
+
+        if(courseRatingRepository.save(courseRating)!=null)
+        {
+         message.put("message","Course Rating Succesfully Added");
+        }
+        return message;
+    }
+
+    @Override
+    public int courseCompletionAverage(long employeeId, long learningPathId) {
+
+       List<CourseRating> courseRating= courseRatingRepository.getRatingByCourseIdAndLEarningPath(learningPathId,employeeId);
+
+       if(courseRating.size()<1)
+           return 0;
+
+       int count= courseRating.stream()
+                .mapToInt(x->x.getPercentCompleted())
+                .sum();
+        return (count*100)/(courseRating.size()*100);
+
+    }
+
 }

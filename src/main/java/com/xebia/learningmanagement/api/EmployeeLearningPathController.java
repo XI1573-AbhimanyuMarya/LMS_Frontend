@@ -1,6 +1,7 @@
 package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
+import com.xebia.learningmanagement.dtos.request.CourseCompletedPercentRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeLearningRateRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
@@ -13,18 +14,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/employeelearning")
-
 public class EmployeeLearningPathController {
 
     @Autowired
-    EmployeeLearningPathService employeelearningservice;
+    private EmployeeLearningPathService employeelearningservice;
 
     /***
      *
@@ -78,7 +80,7 @@ public class EmployeeLearningPathController {
 
     }
 
-    @PutMapping(value = "/myLearningRate" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/myLearningRate", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity updateLearningPathProgress(@ModelAttribute EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException {
         UserResponse userResponse = new UserResponse();
         EmployeeLearningPathStatisticsDto employee;
@@ -97,6 +99,19 @@ public class EmployeeLearningPathController {
         }
 
         return new ResponseEntity(employee, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/api/v1/addcourserating", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> addCourseRating(@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest) {
+        return employeelearningservice.addCourseRating(courseCompleteRequest);
+    }
+
+    @GetMapping(value = "/api/v1/getcoursecompletedaverage/{learningPathId}/{employeeId}")
+    public Map<String, Integer> getCompletionAverage(@PathVariable Long learningPathId, @PathVariable Long employeeId) {
+
+        Map<String, Integer> data = new HashMap<>();
+        data.put("courseAverage", employeelearningservice.courseCompletionAverage(employeeId, learningPathId));
+        return data;
     }
 
 
