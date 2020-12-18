@@ -26,12 +26,14 @@ const ManageAssignLearningPath = ({ props }) => {
   const loginState = useSelector(
     (state) => state.loginState
   );
-  const { isLoading, assignedCources, deleteStatus } = getAssignedLearningPaths;
+  const { isLoading, assignedCources, deleteStatus, pfApproval } = getAssignedLearningPaths;
+  console.log(pfApproval,"pfApproval")
   const [selectedUsersArr, setSelectedUsersArr] = useState([]);
   useEffect(() => {
-    dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username));
+    // dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username));
+    dispatch(Actions.learningPathActions.getPendingForApproval(loginState.user.username));
 
-  }, [deleteStatus]);
+  }, []);
   const onDeleteAll = (employeeId) => {
     const employeeData = employees.find(emp => (emp.empID === employeeId))
     const ids = employeeData.learningPath.map(path => (path.learningPathEmployeesId))
@@ -43,10 +45,10 @@ const ManageAssignLearningPath = ({ props }) => {
     console.log(learningPathId);
   }
 
-  const isObject=(data)=>{
+  const isObject = (data) => {
     return (typeof data === 'object' && data !== null);
   }
-  const learningpathPrepareData=(elm)=>{
+  const learningpathPrepareData = (elm) => {
     return {
       name: elm.learningPath.name,
       learningPathId: elm.learningPath.learningPathId,
@@ -59,23 +61,23 @@ const ManageAssignLearningPath = ({ props }) => {
   }
   const prepareData = (data) => {
     let employees = [];
-    if(isObject(data)){
+    if (isObject(data)) {
       let learningDetails;
       let tempEmployee;
       for (var key in data) {
-        learningDetails=[];
+        learningDetails = [];
         if (data.hasOwnProperty(key)) {
-            if(data[key].length>0){
-              data[key].forEach((elm) => {
-                tempEmployee=elm.employee;
-                learningDetails.push(learningpathPrepareData(elm));
-              });
-              employees.push({
-                empID: tempEmployee.id,
-                employee: tempEmployee,
-                learningPath: learningDetails,
-              });
-            }
+          if (data[key].length > 0) {
+            data[key].forEach((elm) => {
+              tempEmployee = elm.employee;
+              learningDetails.push(learningpathPrepareData(elm));
+            });
+            employees.push({
+              empID: tempEmployee.id,
+              employee: tempEmployee,
+              learningPath: learningDetails,
+            });
+          }
         }
       }
     }
@@ -83,9 +85,9 @@ const ManageAssignLearningPath = ({ props }) => {
   }
   const employees = prepareData(assignedCources);//prepareData(assignedCources.assignedLearningPaths);
   let renderUser = "";
-  if (employees.length > 0) {
-    renderUser = employees.map((data, i) => (
-      <EmployeeCard key={i} data={data} onDeleteAll={onDeleteAll} onDelete={onDelete}/>
+  if (pfApproval.length > 0) {
+    renderUser = pfApproval.map((data, i) => (
+      <EmployeeCard key={i} data={data} onDeleteAll={onDeleteAll} onDelete={onDelete} />
     ));
   }
 

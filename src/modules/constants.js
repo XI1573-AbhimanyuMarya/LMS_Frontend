@@ -21,6 +21,8 @@ export const SERVICE_URLS = {
   ASSIGNED_PATH: `${API_HOST_PATH}/api/getAssignedLearningPaths`,
   MY_PATH: `${API_HOST_PATH}/employeelearning/myLearningPath`,
   DELETE_ALL_PATH: `${API_HOST_PATH}/employeelearning/deletelearningpath`,
+  PENDING_FOR_APPROVAL: `${API_HOST_PATH}/api/pending/approvals`,
+  APPROVAL_REJEACT: `${API_HOST_PATH}/api/review/approvals`
 };
 
 export const API_STATUS = {

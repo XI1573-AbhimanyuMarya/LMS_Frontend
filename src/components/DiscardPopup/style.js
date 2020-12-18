@@ -79,5 +79,12 @@ export const useStyles = makeStyles((theme) => ({
     letterSpacing: "normal",
     textAlign: "left",
     color: "#000000"
+  },
+  discardButtonpop:{
+    width: "309px",
+    height: "40px",
+    margin: "15px 0 0 0",
+    borderRadius: "4px",
+    backgroundColor: "#0073e6"
   }
 }));

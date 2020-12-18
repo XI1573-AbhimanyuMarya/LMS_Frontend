@@ -46,6 +46,14 @@ const uploadFileModelOpen = (val) => (console.log("val",val),{
   type: actionTypes.UPLOADFILE_MODEL_OPEN,
   payload: { val },
 });
+const RejectModelOpen = (val) => (console.log("val",val),{
+  type: actionTypes.REJECT,
+  payload: { val },
+});
+const ApproveModelOpen = (val) => (console.log("val",val),{
+  type: actionTypes.APPROVE,
+  payload: { val },
+});
 const createLearningPath = (path) => ({
   type: actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST,
   payload: { path },
@@ -77,6 +85,11 @@ const deletePath = (ids) => ({
   payload: {ids},
 });
 
+const getPendingForApproval = (managerEmail) => ({
+  type: actionTypes.GET_PENDING_APPROVAL,
+  payload: { managerEmail },
+});
+
 export default {
   fetchAllCourses,
   getFilteredCourses,
@@ -97,5 +110,8 @@ export default {
   getMyLearningPath,
   deleteAllPaths,
   deletePath,
-  uploadFileModelOpen
+  uploadFileModelOpen,
+  RejectModelOpen,
+  ApproveModelOpen,
+  getPendingForApproval
 };
