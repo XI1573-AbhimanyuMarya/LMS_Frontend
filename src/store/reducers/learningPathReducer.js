@@ -16,7 +16,8 @@ const initialState = {
   activePathStep: '',
   errorMessage: '',
   mycourses: [],
-  assignedCources: []
+  assignedCources: [],
+  learningPathCourses:[]
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -104,6 +105,38 @@ export const learningPathReducer = (state = initialState, action) => {
       return {
         ...state,
         learningPathLevel: payload.pathLevel,
+        isLoading: false
+      }
+    case actionTypes.SHOW_BUTTON_BASED_ON_RATE:
+      let showBtn;
+      if(payload.course.percentageCompleted==100){
+        showBtn="Upload";
+      }else if(payload.course.percentageCompleted<100){
+        showBtn="Save";
+      }
+      let learningPathCourses=state.learningPathCourses.map((elm)=>{
+        if(elm.id==payload.course.id){
+          elm.showBtn=showBtn;
+        }else{
+          elm.showBtn='';
+        }
+        return elm;
+      });
+      return {
+        ...state,
+        learningPathCourses: learningPathCourses,
+        isLoading: false
+      }
+    case actionTypes.CHANGE_COURSE_RATE:
+      let learningPathCourses1=state.learningPathCourses.map((elm)=>{
+        if(elm.id==payload.course.id){
+          elm.percentageCompleted=payload.changeRate;
+        }
+        return elm;
+      });
+      return {
+        ...state,
+        learningPathCourses: learningPathCourses1,
         isLoading: false
       }
     case actionTypes.PATH_MODEL_OPEN:
@@ -243,6 +276,30 @@ export const learningPathReducer = (state = initialState, action) => {
       return {
         ...state,
         deleteStatus: '',
+        isLoading: false,
+        errorMessage: payload.error
+      };
+    case actionTypes.GET_LEARNING_PATH_COURSES_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: ''
+      };
+    case actionTypes.GET_LEARNING_PATH_COURSES_SUCCESS:
+      payload.map((course)=>{
+        course.percentageCompleted=10;
+        return course;
+      });
+      return {
+        ...state,
+        learningPathCourses: payload,
+        isLoading: false,
+        errorMessage: ''
+      };
+    case actionTypes.GET_LEARNING_PATH_COURSES_FAILURE:
+      return {
+        ...state,
+        learningPathCourses: [],
         isLoading: false,
         errorMessage: payload.error
       };

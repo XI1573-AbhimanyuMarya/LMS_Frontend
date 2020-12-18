@@ -34,6 +34,10 @@ const getLearningPathLevel = (pathLevel) => ({
   type: actionTypes.GET_LEARNING_PATH_LEVEL,
   payload: { pathLevel },
 });
+const openBtn = (course) => ({
+  type: actionTypes.SHOW_BUTTON_BASED_ON_RATE,
+  payload: {course}
+});
 const pathModelOpen = (val) => ({
   type: actionTypes.PATH_MODEL_OPEN,
   payload: { val },
@@ -73,6 +77,15 @@ const deletePath = (ids) => ({
   payload: {ids},
 });
 
+const getLearningPathCourses=(ids)=>({
+  type:actionTypes.GET_LEARNING_PATH_COURSES_REQUEST,
+  payload: {ids}
+});
+
+const changeCourseRate = (changeRate,course) => ({
+  type: actionTypes.CHANGE_COURSE_RATE,
+  payload: {changeRate,course}
+});
 export default {
   fetchAllCourses,
   getFilteredCourses,
@@ -84,6 +97,7 @@ export default {
   getLearningPathName,
   getLearningPathDes,
   getLearningPathLevel,
+  openBtn,
   pathModelOpen,
   discardModelOpen,
   createLearningPath,
@@ -93,4 +107,6 @@ export default {
   getMyLearningPath,
   deleteAllPaths,
   deletePath,
+  getLearningPathCourses,
+  changeCourseRate
 };

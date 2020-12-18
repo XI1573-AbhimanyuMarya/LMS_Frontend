@@ -10,6 +10,7 @@ import { Box } from '@material-ui/core';
 import { useStyles } from './style';
 import BarIcon from '../../../components/SignalIcon';
 import ProgressBar from '../../../components/ProgressBar';
+import { SHOW_LEVELS,LEVELS } from '../../../modules/constants';
 
 const CourseCard = (props) => {
   const classes = useStyles();
@@ -29,7 +30,7 @@ const CourseCard = (props) => {
   } else if (course.competency.name === "Expert") {
     darkBar = 3
   }
-
+  
   return (
     <Card className={classes.root}>
       <CardContent>

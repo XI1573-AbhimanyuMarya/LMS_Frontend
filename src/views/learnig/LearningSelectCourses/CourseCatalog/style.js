@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
 		borderRadius: 15,
 		padding: 3,
 		color: '#4a90e2',
-		border: '1px solid #B2C8E4',
+    border: '1px solid #B2C8E4'
 	},
 	courseLevel: {
 		fontSize: 15,

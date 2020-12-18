@@ -1,6 +1,19 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
+  '@global': {
+    '*::-webkit-scrollbar': {
+      width: '0.6em'
+    },
+    '*::-webkit-scrollbar-track': {
+      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
+      borderRadius: '10px'
+    },
+    '*::-webkit-scrollbar-thumb': {
+      backgroundColor: '#888',
+      borderRadius: '10px'
+    }
+  },
 	pathName: {
 		margin: theme.spacing(2),
 	},
@@ -43,7 +56,27 @@ export const useStyles = makeStyles((theme) => ({
     margin: 'auto'
   },
   table: {
-    minWidth: 950,
+    minWidth: "100%",
     minHeight: 100
+  },
+  lptbldiv:{
+    overflowX:"auto",
+    overflowY:"auto",
+    height:"35vh",
+    margin:"20px 30px 10px 0px"
+  },
+  tblheading:{
+    '& tr':{
+      '& th':{
+        padding: "15px 15px 10px 31px",
+        textAlign:"left",
+        fontWeight:"normal"
+      }
+    },
+    backgroundColor:"white",
+    fontSize:"12px"
+  },
+  tblbody:{
+    fontSize:"10px"
   }  
 }));

@@ -213,5 +213,39 @@ export const useStyles = makeStyles((theme) => ({
   levIcons: {
     width: 80,
     objectFit: "contain"
+  },
+  Beginner: {
+    width: 80,
+    height:48
+  },
+  Intermediate: {
+    width: 100,
+    height:48
+  },
+  Advance: {
+    width: 80,
+    height:48
+  },
+  Expert: {
+    width: 80,
+    height:48
+  },
+  tblrow:{
+    '& td':{
+      padding:"5px 31px"
+    }
+  },
+  avglearningrate:{
+    color:"#007aff" ,
+    backgroundColor: "#ffffff",
+    fontSize:"10px",
+    padding: "5px 20px"
+  },
+  actionbtn:{
+    borderColor:"#f07402",
+    color:"#f07402" ,
+    backgroundColor: "#ffffff",
+    fontSize:"9px",
+    padding: "5px 20px"
   }
 }));
