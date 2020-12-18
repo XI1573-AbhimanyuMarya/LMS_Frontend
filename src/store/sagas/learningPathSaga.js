@@ -27,6 +27,7 @@ export function* learningPathSaga() {
 
   yield takeLatest(actionTypes.GET_LEARNING_PATH_COURSES_REQUEST, getLearningPathCourses);
   yield takeLatest(actionTypes.GET_PENDING_APPROVAL, getPendingForApproval);
+  yield takeLatest(actionTypes.APPROVAL_REJEACT, getApprovalRejects);
 }
 
 function* fetchCourses() {
@@ -155,7 +156,7 @@ function* getPendingForApproval(action) {
 }
 
 const getApprovalReject = async ({ learningPathEmployeeId, status }) => {
-  return await axios.put(SERVICE_URLS.PENDING_FOR_APPROVAL, { learningPathEmployeeId, status }, { headers: authHeader() });
+  return await axios.put(SERVICE_URLS.APPROVAL_REJEACT, { learningPathEmployeeId, status }, { headers: authHeader() });
 }
 
 function* getApprovalRejects(action) {
@@ -163,9 +164,9 @@ function* getApprovalRejects(action) {
     const response = yield call(getApprovalReject,action.payload);
     const { data } = response;
 
-    yield put({ type: actionTypes.FETCH_PENDING_FOR_APPROVAL_SUCCESS, payload: data });
+    yield put({ type: actionTypes.FETCH_APPROVAL_SUCCESS, payload: data });
 
   } catch (error) {
-    yield put({ type: actionTypes.FETCH_PENDING_FOR_APPROVAL_FAILURE, error });
+    yield put({ type: actionTypes.FETCH_APPROVAL_FAILURE, error });
   }
 }

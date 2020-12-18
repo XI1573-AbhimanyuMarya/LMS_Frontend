@@ -70,9 +70,9 @@ const CourseCard = (props) => {
       <td>{dateFormat(course.startDate)}</td>
       <td>{dateFormat(course.endDate)}</td>
       <td> 
-        <Button variant="outlined" size="small" className={classes.avglearningrate}>
+        <Button variant="outlined" size="small" className={classes.avglearningrate} onClick={onViewClick}>
           {course.percentCompleted ? course.percentCompleted :"30"}{"%"}
-        </Button>
+        </Button><UploadFilePopup discardHandler={discardHandler}></UploadFilePopup>
       </td>
       <td> 
         <Button variant="outlined" onClick={onButtonClick} size="small" className={classes.actionbtn}>

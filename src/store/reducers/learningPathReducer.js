@@ -22,7 +22,8 @@ const initialState = {
   uploadFilePopup:false,
   rejectPopup:false,
   approvePopup:false,
-  pfApproval:[]
+  pfApproval:[],
+  ApprovedRejected:''
 
 }
 
@@ -348,6 +349,24 @@ export const learningPathReducer = (state = initialState, action) => {
           isLoading: false,
           pfApproval: []
         }
+        case actionTypes.FETCH_APPROVAL_REJECT_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          ApprovedRejected: payload
+        }
+      case actionTypes.FETCH_APPROVAL_REJECT_FAILURE:
+        return {
+          ...state,
+          isLoading: false,
+          ApprovedRejected: []
+        }
+        case actionTypes.GET_APPROVAL_REJECTION:
+        return {
+          ...state,
+          isLoading: true,
+          errorMessage: ''
+        };
 
     default: return state;
   }

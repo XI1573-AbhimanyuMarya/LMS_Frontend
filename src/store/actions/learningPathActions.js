@@ -103,6 +103,11 @@ const getPendingForApproval = (managerEmail) => ({
   payload: { managerEmail },
 });
 
+const getApprovalRejects = (learningPathEmployeeId, status) => ({
+  type: actionTypes.GET_APPROVAL_REJECTION,
+  payload: { learningPathEmployeeId, status},
+});
+
 export default {
   fetchAllCourses,
   getFilteredCourses,
@@ -130,5 +135,6 @@ export default {
   uploadFileModelOpen,
   RejectModelOpen,
   ApproveModelOpen,
-  getPendingForApproval
+  getPendingForApproval,
+  getApprovalRejects
 };

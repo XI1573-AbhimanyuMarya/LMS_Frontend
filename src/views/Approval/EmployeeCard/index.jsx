@@ -55,8 +55,11 @@ export default function EmployeeCardApproval(props) {
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
   const { pfApproval } = learningPathState;
-  console.log(pfApproval, "pfA")
-
+  
+  const loginState = useSelector(
+    (state) => state.loginState
+  );
+console.log(loginState, "pfA")
   const onViewClick = () => {
     console.log("view clicked")
     dispatch(Actions.learningPathActions.RejectModelOpen(true));
@@ -69,6 +72,7 @@ export default function EmployeeCardApproval(props) {
   const onViewClickApprove = () => {
     console.log("view clicked")
     dispatch(Actions.learningPathActions.ApproveModelOpen(true));
+      dispatch(Actions.learningPathActions.getApprovalRejects(loginState.user.username));
   }
 
   const discardHandlerApprove = () => {
@@ -93,9 +97,8 @@ export default function EmployeeCardApproval(props) {
           <CardContent className={classes.learningPath} >
             <ThemeProvider theme={theme}>
             <Typography aria-label="share" className={classes.listData} style={{minWidth:"50px", maxWidth:"50px"}}>
-              <span className={classes.courseName}>{` ${data.learningPath.name
-                  } ${data.learningPath.description
-                  }`}</span>
+              <span className={classes.courseName}>{` ${data.learningPath.name}`}
+                   </span>
               </Typography>
             </ThemeProvider>
           </CardContent>
