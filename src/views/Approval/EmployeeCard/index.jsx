@@ -16,6 +16,8 @@ import DiscardPopup from "../../../components/DiscardPopup/index1";
 import Actions from '../../../store/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import Approve from '../../../components/DiscardPopup/approve'
+import Reject from '../../../components/DiscardPopup/Reject'
 
 import { useStyles } from "./style";
 
@@ -50,14 +52,35 @@ const theme = createMuiTheme({
 export default function EmployeeCardApproval(props) {
   const data = props.data;
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const learningPathState = useSelector(state => state.learningPathState);
+  const { pfApproval } = learningPathState;
+  console.log(pfApproval, "pfA")
 
+  const onViewClick = () => {
+    console.log("view clicked")
+    dispatch(Actions.learningPathActions.RejectModelOpen(true));
+  }
 
+  const discardHandler = () => {
+    dispatch(Actions.learningPathActions.RejectModelOpen(false));
+  }
 
+  const onViewClickApprove = () => {
+    console.log("view clicked")
+    dispatch(Actions.learningPathActions.ApproveModelOpen(true));
+  }
+
+  const discardHandlerApprove = () => {
+    dispatch(Actions.learningPathActions.ApproveModelOpen(false));
+  }
+
+  console.log(data, 'data')
   return (
     <>
       <div className={classes.root}>
         <ThemeProvider theme={theme}>
-          <CardHeader style={{minWidth:"250px", maxWidth:"250px"}}
+          <CardHeader style={{ minWidth: "250px", maxWidth: "250px" }}
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar}></Avatar>
             }
@@ -65,22 +88,23 @@ export default function EmployeeCardApproval(props) {
             subheader={data.employee.designation}
           />
         </ThemeProvider>
-        <div style={{minWidth:"50px", maxWidth:"50px"}}>
-        {data.learningPath.map((data, index) => (
-          <CardContent key={index} className={classes.learningPath} >
+        <div style={{ minWidth: "50px", maxWidth: "50px" }}>
+          {/* {data.learningPath.map((data, index) => ( */}
+          <CardContent className={classes.learningPath} >
             <ThemeProvider theme={theme}>
             <Typography aria-label="share" className={classes.listData} style={{minWidth:"50px", maxWidth:"50px"}}>
-              <span className={classes.courseName}>{`${index + 1}. ${data.name
+              <span className={classes.courseName}>{` ${data.learningPath.name
+                  } ${data.learningPath.description
                   }`}</span>
               </Typography>
             </ThemeProvider>
           </CardContent>
-        ))}
+        {/* ))} */}
         </div>
         <div className={classes.head}>
           <Typography className={classes.view}>View Attachments</Typography>
-          <Button className={classes.approve}>Approve</Button>
-          <Button className={classes.reject}>Reject</Button>
+          <Button className={classes.approve} onClick={onViewClickApprove}>Approve</Button><Approve discardHandler={discardHandlerApprove}></Approve>
+          <Button className={classes.reject} onClick={onViewClick}>Reject</Button><Reject discardHandler={discardHandler}></Reject>
         </div>
       </div>
     </>

@@ -15,7 +15,7 @@ import Beginner from '../../images/101-Beginner.svg';
 import Intermediate from '../../images/102-Intermediate.svg';
 import Advance from '../../images/103-Advance.svg';
 import Expert from '../../images/104-Expert.svg';
-import UploadFilePopup from '../UploadFilePopup/UploadFilePopup'
+import UploadFilePopup from '../../components/DiscardPopup/draganddrop'
 import { SHOW_LEVELS } from '../../modules/constants';
 //const levels=LEVELS;
 // {

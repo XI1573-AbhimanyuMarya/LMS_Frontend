@@ -11,6 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import { useStyles } from './styles';   
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import { DropzoneArea } from 'material-ui-dropzone';
 
 const DiscardPopup = (props) => {
     const classes = useStyles();
@@ -41,28 +42,13 @@ const DiscardPopup = (props) => {
                 display="flex"
                 className={classes.box}
             >
-              
-               <div className={classes.uploadContent}>
-                 img
-                </div>
-               
-                
-                <DialogContent className={classes.uploadFile}>
-                 img
-                </DialogContent>
-               
-              
-               
-                
-                
-                {/* <DialogActions>
-                    <Button autoFocus onClick={handleDiscard} color="primary" variant="contained" className={classes.discardButton}>
-                        Discard
-                    </Button>
-                    <Button onClick={handleClose} color="default" autoFocus variant="outlined" className={classes.cancelButton}>
-                        Cancel
-                    </Button>
-                </DialogActions> */}
+          <DropzoneArea style={{ backgroundColor: 'red !important'}}
+            dropzoneText={  "Drag and drop files here or" }
+            acceptedFiles={['image/*']}
+						filesLimit={1}
+            maxFileSize={250000}
+					/>
+
             </Dialog>
         </div>
     );

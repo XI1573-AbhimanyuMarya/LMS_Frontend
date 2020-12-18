@@ -36,7 +36,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   head: {
     display: "flex",
-    margin: "0 0 0 100px",
+    margin: "145px 0 0 100px",
   },
   approve: {
     padding: "0 0 0 20px",

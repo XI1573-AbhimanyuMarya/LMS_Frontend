@@ -18,7 +18,12 @@ const initialState = {
   mycourses: [],
   assignedCources: [],
   learningPathCourses:[],
-  uploadFilePopup:false
+  uploadFilePopup:false,
+  uploadFilePopup:false,
+  rejectPopup:false,
+  approvePopup:false,
+  pfApproval:[]
+
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -176,6 +181,18 @@ export const learningPathReducer = (state = initialState, action) => {
           uploadFilePopup: payload.val,
           isLoading: false
         }
+        case actionTypes.REJECT:
+        return {
+          ...state,
+          rejectPopup: payload.val,
+          isLoading: false
+        }
+        case actionTypes.APPROVE:
+        return {
+          ...state,
+          approvePopup: payload.val,
+          isLoading: false
+        }
     case actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST:
       return {
         ...state,
@@ -311,6 +328,27 @@ export const learningPathReducer = (state = initialState, action) => {
         isLoading: false,
         errorMessage: payload.error
       };
+
+      case actionTypes.GET_PENDING_APPROVAL:
+        return {
+          ...state,
+          isLoading: true,
+          errorMessage: ''
+        };
+
+      case actionTypes.FETCH_PENDING_FOR_APPROVAL_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          pfApproval: payload
+        }
+      case actionTypes.FETCH_PENDING_FOR_APPROVAL_FAILURE:
+        return {
+          ...state,
+          isLoading: false,
+          pfApproval: []
+        }
+
     default: return state;
   }
 }
