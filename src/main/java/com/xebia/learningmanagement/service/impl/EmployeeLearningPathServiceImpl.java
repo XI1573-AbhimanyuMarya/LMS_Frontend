@@ -1,6 +1,9 @@
 package com.xebia.learningmanagement.service.impl;
 
+import com.xebia.learningmanagement.dtos.DurationDto;
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
+import com.xebia.learningmanagement.dtos.LearningPathDto;
+import com.xebia.learningmanagement.dtos.LearningPathEmployeeDto;
 import com.xebia.learningmanagement.dtos.request.CourseCompletedPercentRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeLearningRateRequest;
@@ -19,24 +22,25 @@ import com.xebia.learningmanagement.service.EmployeeLearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
 import com.xebia.learningmanagement.util.ErrorBank;
 import com.xebia.learningmanagement.util.MessageBank;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.PENDING;
 
 @Service
+@Slf4j
 public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathService {
+
     @Autowired
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
     private LearningPathEmployeesRepository learningPathEmployeesRepository;
     @Autowired
@@ -45,6 +49,8 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     private EmailSend emailSend;
     @Autowired
     private CourseRatingRepository courseRatingRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
 
     /***
@@ -88,15 +94,34 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
      */
     @Override
     public List<EmployeeLearningPathStatisticsDto> getMyAssignedLearningPaths(EmployeeEmailRequest employeeEmail) throws LearningPathException {
-        ModelMapper modelMapper = new ModelMapper();
+
         User user = userRepository.findByUsername(employeeEmail.getEmployeeEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
         List<LearningPathEmployees> learningPathEmployees = learningPathEmployeesRepository.findByEmployee(user);
-        return learningPathEmployees.stream().map(a -> modelMapper.map(a, EmployeeLearningPathStatisticsDto.class)).collect(Collectors.toList());
+
+        List<EmployeeLearningPathStatisticsDto> employeeLearningPathStatisticsDtoList = new ArrayList<>();
+
+        for (LearningPathEmployees learningPath : learningPathEmployees) {
+
+            EmployeeLearningPathStatisticsDto employeeLearningPathStatisticsDto = EmployeeLearningPathStatisticsDto.builder()
+                    .learningPathEmployeesId(learningPath.getLearningPathEmployeesId())
+                    .isLearningPathExpired(learningPath.getIsLearningPathExpired())
+                    .duration(new DurationDto(learningPath.getDuration().getName()))
+                    .learningPath(modelMapper.map(learningPath.getLearningPath(), LearningPathEmployeeDto.class))
+                    .endDate(learningPath.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                    .startDate(learningPath.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                    .percentCompleted(courseCompletionAverage(learningPath.getEmployee().getId(), learningPath.getLearningPath().getId()))
+                    .build();
+
+            employeeLearningPathStatisticsDtoList.add(employeeLearningPathStatisticsDto);
+        }
+
+
+        return employeeLearningPathStatisticsDtoList;
     }
 
     @Override
     public EmployeeLearningPathStatisticsDto updateLearningPathProgress(EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException, IOException {
-        ModelMapper modelMapper = new ModelMapper();
+
         LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById((long) employeeLearningRateRequest.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("LearningPath Employee Id not found"));
         learningPathEmployees.setPercentCompleted(employeeLearningRateRequest.getPercentCompleted());
         if (Objects.nonNull(employeeLearningRateRequest.getFile())) {
@@ -139,27 +164,25 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     }
 
     @Override
-    public Map<String,String> addCourseRating(CourseCompletedPercentRequest courseCompletedPercent)
-    {
-       Map<String,String> message=new HashMap<>();
-        CourseRating courseRating=CourseRating.builder()
-                                    .courseId(courseCompletedPercent.getCourseId())
-                                    .employeeId(courseCompletedPercent.getEmployeeId())
-                                    .learningPathId(courseCompletedPercent.getLearningPathId())
-                                    .percentCompleted(courseCompletedPercent.getPercentCompleted())
-                                     .build();
+    public Map<String, String> addCourseRating(CourseCompletedPercentRequest courseCompletedPercent) {
+        Map<String, String> message = new HashMap<>();
+        CourseRating courseRating = CourseRating.builder()
+                .courseId(courseCompletedPercent.getCourseId())
+                .employeeId(courseCompletedPercent.getEmployeeId())
+                .learningPathId(courseCompletedPercent.getLearningPathId())
+                .percentCompleted(courseCompletedPercent.getPercentCompleted())
+                .build();
 
-        if(courseRatingRepository.save(courseRating)!=null)
-        {
-         message.put("message","Course Rating Succesfully Added");
+        if (courseRatingRepository.save(courseRating) != null) {
+            message.put("message", "Course Rating Succesfully Added");
         }
         return message;
     }
 
     @Override
     public Map<String, String> updateCourseRating(long courseRatingId, CourseCompletedPercentRequest courseCompletedPercent) {
-        Map<String,String> message=new HashMap<>();
-        CourseRating courseRating=CourseRating.builder()
+        Map<String, String> message = new HashMap<>();
+        CourseRating courseRating = CourseRating.builder()
                 .id(courseRatingId)
                 .courseId(courseCompletedPercent.getCourseId())
                 .employeeId(courseCompletedPercent.getEmployeeId())
@@ -167,9 +190,8 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
                 .percentCompleted(courseCompletedPercent.getPercentCompleted())
                 .build();
 
-        if(courseRatingRepository.save(courseRating)!=null)
-        {
-            message.put("message","Course Rating Succesfully Updated");
+        if (courseRatingRepository.save(courseRating) != null) {
+            message.put("message", "Course Rating Succesfully Updated");
         }
         return message;
     }
@@ -177,16 +199,18 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     @Override
     public int courseCompletionAverage(long employeeId, long learningPathId) {
 
-       List<CourseRating> courseRating= courseRatingRepository.getRatingByCourseIdAndLEarningPath(learningPathId,employeeId);
+          System.out.println(employeeId+" "+learningPathId);
+        List<CourseRating> courseRating = courseRatingRepository.getRatingByCourseIdAndLEarningPath(learningPathId, employeeId);
 
-       if(courseRating.size()<1)
-           return 0;
+        if (courseRating.size() < 1)
+            return 0;
 
-       int count= courseRating.stream()
-                .mapToInt(x->x.getPercentCompleted())
+        int count = courseRating.stream()
+                .mapToInt(x -> x.getPercentCompleted())
                 .sum();
-        return (count*100)/(courseRating.size()*100);
+        return (count * 100) / (courseRating.size() * 100);
 
     }
+
 
 }
