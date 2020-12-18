@@ -171,7 +171,7 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   listData: {
-    display: "flex",
+    // display: "flex",
     justifyContent: "space-between",
     fontSize: "10px",
   },
@@ -183,9 +183,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   courseName: {
     color: "#282828",
-    width: "50px",
+    width: "80px",
     // padding: "0 0 0 50px",
-    width: "40px",
     // height: "16px",
     // margin: "5px 30px 5px 34px",
     // padding: "15px 21px 11px 22px",

@@ -57,7 +57,7 @@ export default function EmployeeCardApproval(props) {
     <>
       <div className={classes.root}>
         <ThemeProvider theme={theme}>
-          <CardHeader
+          <CardHeader style={{minWidth:"250px", maxWidth:"250px"}}
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar}></Avatar>
             }
@@ -65,16 +65,18 @@ export default function EmployeeCardApproval(props) {
             subheader={data.employee.designation}
           />
         </ThemeProvider>
+        <div style={{minWidth:"50px", maxWidth:"50px"}}>
         {data.learningPath.map((data, index) => (
-          <CardContent key={index} className={classes.learningPath}>
+          <CardContent key={index} className={classes.learningPath} >
             <ThemeProvider theme={theme}>
-              <Typography aria-label="share" className={classes.listData}>
-                <span className={classes.courseName}>{`${index + 1}. ${data.name
+            <Typography aria-label="share" className={classes.listData} style={{minWidth:"50px", maxWidth:"50px"}}>
+              <span className={classes.courseName}>{`${index + 1}. ${data.name
                   }`}</span>
               </Typography>
             </ThemeProvider>
           </CardContent>
         ))}
+        </div>
         <div className={classes.head}>
           <Typography className={classes.view}>View Attachments</Typography>
           <Button className={classes.approve}>Approve</Button>

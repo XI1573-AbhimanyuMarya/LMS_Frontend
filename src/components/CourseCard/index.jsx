@@ -3,6 +3,8 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import { useDispatch  } from "react-redux";
+import Actions from '../../store/actions'
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Box } from '@material-ui/core';
@@ -13,6 +15,7 @@ import Beginner from '../../images/101-Beginner.svg';
 import Intermediate from '../../images/102-Intermediate.svg';
 import Advance from '../../images/103-Advance.svg';
 import Expert from '../../images/104-Expert.svg';
+import UploadFilePopup from '../UploadFilePopup/UploadFilePopup'
 import { SHOW_LEVELS } from '../../modules/constants';
 //const levels=LEVELS;
 // {
@@ -32,9 +35,20 @@ const dateFormat=(inputDate) =>{
   }
 }
 
+
 const CourseCard = (props) => {
+  const dispatch = useDispatch(); 
   const classes = useStyles();
   const { course, onButtonClick, showButton } = props;
+
+  const onViewClick = () =>{
+    console.log("view clicked")
+    dispatch(Actions.learningPathActions.uploadFileModelOpen(true));
+  }
+
+  const discardHandler = () =>{
+    dispatch(Actions.learningPathActions.uploadFileModelOpen(false));
+  }
   course.progress = '';
   // let btnlabel = "Let's begin"
   // if (course?.progress) {

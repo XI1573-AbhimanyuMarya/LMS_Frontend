@@ -17,7 +17,8 @@ const initialState = {
   errorMessage: '',
   mycourses: [],
   assignedCources: [],
-  learningPathCourses:[]
+  learningPathCourses:[],
+  uploadFilePopup:false
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -168,6 +169,13 @@ export const learningPathReducer = (state = initialState, action) => {
         discardModelOpen: payload.val,
         isLoading: false
       }
+
+      case actionTypes.UPLOADFILE_MODEL_OPEN:
+        return {
+          ...state,
+          uploadFilePopup: payload.val,
+          isLoading: false
+        }
     case actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST:
       return {
         ...state,

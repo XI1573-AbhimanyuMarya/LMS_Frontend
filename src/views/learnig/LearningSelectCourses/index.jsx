@@ -37,6 +37,7 @@ const SelectCourses = () => {
   
   const [lpId,setLpId]=useState(0);//check
   
+  console.log(mycourses, learningPathState, "learn");
   const logoutUser = () => {
     dispatch(Actions.loginActions.logout());
   } 

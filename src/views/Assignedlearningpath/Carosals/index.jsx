@@ -4,7 +4,7 @@ import ItemsCarousel from 'react-items-carousel';
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import Typography from '@material-ui/core/Typography';
-import CourseCatalog from '../CourseCatalog';
+// import CourseCatalog from '../CourseCatalog';
 import { MESSAGES } from '../../../modules/constants';
 import CourseCard from '../CourseCatalog/index';
 
