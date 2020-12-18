@@ -27,7 +27,7 @@ export function* learningPathSaga() {
 
   yield takeLatest(actionTypes.GET_LEARNING_PATH_COURSES_REQUEST, getLearningPathCourses);
   yield takeLatest(actionTypes.GET_PENDING_APPROVAL, getPendingForApproval);
-  yield takeLatest(actionTypes.APPROVAL_REJEACT, getApprovalRejects);
+  yield takeLatest(actionTypes.GET_APPROVAL_REJECTION, getApprovalRejects);
 }
 
 function* fetchCourses() {

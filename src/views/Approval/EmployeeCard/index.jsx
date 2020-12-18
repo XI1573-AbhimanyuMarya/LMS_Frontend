@@ -63,6 +63,7 @@ console.log(loginState, "pfA")
   const onViewClick = () => {
     console.log("view clicked")
     dispatch(Actions.learningPathActions.RejectModelOpen(true));
+    dispatch(Actions.learningPathActions.getApprovalRejects(data.learningPathEmployeesId,"REJECTED"));
   }
 
   const discardHandler = () => {
@@ -72,11 +73,12 @@ console.log(loginState, "pfA")
   const onViewClickApprove = () => {
     console.log("view clicked")
     dispatch(Actions.learningPathActions.ApproveModelOpen(true));
-      dispatch(Actions.learningPathActions.getApprovalRejects(loginState.user.username));
+      dispatch(Actions.learningPathActions.getApprovalRejects(data.learningPathEmployeesId,"APPROVED"));
   }
 
   const discardHandlerApprove = () => {
     dispatch(Actions.learningPathActions.ApproveModelOpen(false));
+    
   }
 
   console.log(data, 'data')
