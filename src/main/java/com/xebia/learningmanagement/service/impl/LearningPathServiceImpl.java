@@ -176,6 +176,12 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
     @Override
+    public List<Courses> getCourseDetails(Long learningPathId) {
+        LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path Id not found"));
+        return learningPath.getCourses();
+    }
+
+    @Override
     public List<ApprovalDto> getPendingApprovals(ManagerEmailRequest managerEmail) {
         ModelMapper modelMapper = new ModelMapper();
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
