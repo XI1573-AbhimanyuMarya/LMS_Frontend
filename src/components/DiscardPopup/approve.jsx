@@ -8,12 +8,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
+import CheckIcon from '@material-ui/icons/Check';
 import { useStyles } from './style';   
 
-const DiscardPopup = (props) => {
+const DiscardPopup1 = (props) => {
     const classes = useStyles();
     const learningPathState = useSelector(state => state.learningPathState);
-    const { discardModelOpen } = learningPathState;
+    const { approvePopup } = learningPathState;
     const { discardHandler } = props;
     
     /**
@@ -28,28 +29,30 @@ const DiscardPopup = (props) => {
     const handleDiscard = () => {
         discardHandler(true);
     }
+
     return (
         <div>
             <Dialog
                 maxWidth='xs'
-                open={discardModelOpen}
+                open={approvePopup}
                 onClose={handleClose}
                 aria-labelledby="responsive-dialog-title"
             >
-                <DialogTitle className={classes.dailogTitle} id="responsive-dialog-title">{"Discard Changes?"}</DialogTitle>
-                <Divider/>
-                <DialogContent>
-                    <DialogContentText>
-                        Changes done will be discarded permanantely, Please confirm
+                <DialogTitle className={classes.dailogTitle} id="responsive-dialog-title"></DialogTitle>
+                {/* <Divider/> */}
+                <DialogContent className={classes.content}>
+                    <CheckIcon className={classes.check}></CheckIcon>
+                    <DialogContentText className={classes.checkapprove} >
+                    Approved
+                    </DialogContentText>
+                    <DialogContentText style={{textAlign:"center", fontSize:"12px"}}>
+                    You have Approved the course “Course Name” for “username”
                     </DialogContentText>
                 </DialogContent>
-                <Divider variant="middle" />
-                <DialogActions>
-                    <Button autoFocus onClick={handleDiscard} color="primary" variant="contained" className={classes.discardButton}>
-                        Discard
-                    </Button>
-                    <Button onClick={handleClose} color="default" autoFocus variant="outlined" className={classes.cancelButton}>
-                        Cancel
+                {/* <Divider variant="middle" /> */}
+                <DialogActions style={{display:"flex", justifyContent:"center"}}>
+                    <Button autoFocus onClick={handleDiscard} className={classes.discardButtonapprove}>
+                        Okay
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -57,8 +60,8 @@ const DiscardPopup = (props) => {
     );
 }
 
-DiscardPopup.propTypes = {
+DiscardPopup1.propTypes = {
     discardHandler: PropTypes.func.isRequired,
 };
 
-export default DiscardPopup;
+export default DiscardPopup1;

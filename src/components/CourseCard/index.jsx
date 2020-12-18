@@ -3,6 +3,8 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import { useDispatch  } from "react-redux";
+import Actions from '../../store/actions'
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Box } from '@material-ui/core';
@@ -13,6 +15,7 @@ import Beginner from '../../images/101-Beginner.svg';
 import Intermediate from '../../images/102-Intermediate.svg';
 import Advance from '../../images/103-Advance.svg';
 import Expert from '../../images/104-Expert.svg';
+import UploadFilePopup from '../../components/DiscardPopup/draganddrop'
 import { SHOW_LEVELS } from '../../modules/constants';
 //const levels=LEVELS;
 // {
@@ -32,9 +35,20 @@ const dateFormat=(inputDate) =>{
   }
 }
 
+
 const CourseCard = (props) => {
+  const dispatch = useDispatch(); 
   const classes = useStyles();
   const { course, onButtonClick, showButton } = props;
+
+  const onViewClick = () =>{
+    console.log("view clicked")
+    dispatch(Actions.learningPathActions.uploadFileModelOpen(true));
+  }
+
+  const discardHandler = () =>{
+    dispatch(Actions.learningPathActions.uploadFileModelOpen(false));
+  }
   course.progress = '';
   // let btnlabel = "Let's begin"
   // if (course?.progress) {
@@ -50,25 +64,22 @@ const CourseCard = (props) => {
   //   darkBar = 3
   // }
   return (
-
-    <>
-        <tr>
-          <td style={{padding:"10px 30px"}}> {course.learningPath.name}</td>
-          {/*<td style={{padding:"10px 30px"}}> {"UI"}</td>*/}
-          <td style={{padding:"10px 25px"}}> <img src={SHOW_LEVELS[course.learningPath.competency.id+"-"+course.learningPath.competency.name]} className={classes.levIcons}/></td>
-          <td style={{padding:"10px 30px"}}>{dateFormat(course.startDate)}</td>
-          <td style={{padding:"10px 30px"}}>{dateFormat(course.endDate)}</td>
-          <td style={{padding:"10px 30px"}}> 
-            <Button variant="outlined" size="small" color="primary">
-            {"30"}
-            </Button>
-          </td>
-          <td style={{padding:"10px 30px"}}> <Button variant="outlined" size="small" style={{borderColor:"#f07402",color:"#f07402"}}>
-            {"View"}
-            </Button></td>
-        </tr>
-    </>
-
+    <tr className={classes.tblrow}>
+      <td> {course.learningPath.name}</td>
+      <td> <img src={SHOW_LEVELS[course.learningPath.competency.id+"-"+course.learningPath.competency.name]} className={classes[course.learningPath.competency.name]}/></td>
+      <td>{dateFormat(course.startDate)}</td>
+      <td>{dateFormat(course.endDate)}</td>
+      <td> 
+        <Button variant="outlined" size="small" className={classes.avglearningrate}>
+          {course.percentCompleted ? course.percentCompleted :"30"}{"%"}
+        </Button>
+      </td>
+      <td> 
+        <Button variant="outlined" onClick={onButtonClick} size="small" className={classes.actionbtn}>
+          {"View"}
+        </Button>
+      </td>
+    </tr>
   );
 }
 

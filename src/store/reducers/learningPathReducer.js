@@ -16,7 +16,14 @@ const initialState = {
   activePathStep: '',
   errorMessage: '',
   mycourses: [],
-  assignedCources: []
+  assignedCources: [],
+  learningPathCourses:[],
+  uploadFilePopup:false,
+  uploadFilePopup:false,
+  rejectPopup:false,
+  approvePopup:false,
+  pfApproval:[]
+
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -106,6 +113,38 @@ export const learningPathReducer = (state = initialState, action) => {
         learningPathLevel: payload.pathLevel,
         isLoading: false
       }
+    case actionTypes.SHOW_BUTTON_BASED_ON_RATE:
+      let showBtn;
+      if(payload.course.percentageCompleted==100){
+        showBtn="Upload";
+      }else if(payload.course.percentageCompleted<100){
+        showBtn="Save";
+      }
+      let learningPathCourses=state.learningPathCourses.map((elm)=>{
+        if(elm.id==payload.course.id){
+          elm.showBtn=showBtn;
+        }else{
+          elm.showBtn='';
+        }
+        return elm;
+      });
+      return {
+        ...state,
+        learningPathCourses: learningPathCourses,
+        isLoading: false
+      }
+    case actionTypes.CHANGE_COURSE_RATE:
+      let learningPathCourses1=state.learningPathCourses.map((elm)=>{
+        if(elm.id==payload.course.id){
+          elm.percentageCompleted=payload.changeRate;
+        }
+        return elm;
+      });
+      return {
+        ...state,
+        learningPathCourses: learningPathCourses1,
+        isLoading: false
+      }
     case actionTypes.PATH_MODEL_OPEN:
       if (payload.val === true) {
         return {
@@ -135,6 +174,25 @@ export const learningPathReducer = (state = initialState, action) => {
         discardModelOpen: payload.val,
         isLoading: false
       }
+
+      case actionTypes.UPLOADFILE_MODEL_OPEN:
+        return {
+          ...state,
+          uploadFilePopup: payload.val,
+          isLoading: false
+        }
+        case actionTypes.REJECT:
+        return {
+          ...state,
+          rejectPopup: payload.val,
+          isLoading: false
+        }
+        case actionTypes.APPROVE:
+        return {
+          ...state,
+          approvePopup: payload.val,
+          isLoading: false
+        }
     case actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST:
       return {
         ...state,
@@ -246,6 +304,51 @@ export const learningPathReducer = (state = initialState, action) => {
         isLoading: false,
         errorMessage: payload.error
       };
+    case actionTypes.GET_LEARNING_PATH_COURSES_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: ''
+      };
+    case actionTypes.GET_LEARNING_PATH_COURSES_SUCCESS:
+      payload.map((course)=>{
+        course.percentageCompleted=10;
+        return course;
+      });
+      return {
+        ...state,
+        learningPathCourses: payload,
+        isLoading: false,
+        errorMessage: ''
+      };
+    case actionTypes.GET_LEARNING_PATH_COURSES_FAILURE:
+      return {
+        ...state,
+        learningPathCourses: [],
+        isLoading: false,
+        errorMessage: payload.error
+      };
+
+      case actionTypes.GET_PENDING_APPROVAL:
+        return {
+          ...state,
+          isLoading: true,
+          errorMessage: ''
+        };
+
+      case actionTypes.FETCH_PENDING_FOR_APPROVAL_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          pfApproval: payload
+        }
+      case actionTypes.FETCH_PENDING_FOR_APPROVAL_FAILURE:
+        return {
+          ...state,
+          isLoading: false,
+          pfApproval: []
+        }
+
     default: return state;
   }
 }

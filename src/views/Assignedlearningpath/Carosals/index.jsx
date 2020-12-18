@@ -4,7 +4,7 @@ import ItemsCarousel from 'react-items-carousel';
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import Typography from '@material-ui/core/Typography';
-import CourseCatalog from '../CourseCatalog';
+// import CourseCatalog from '../CourseCatalog';
 import { MESSAGES } from '../../../modules/constants';
 import CourseCard from '../CourseCatalog/index';
 
@@ -19,7 +19,7 @@ const Carosals = (props) => {
 		const renderCourses = coursesList.map((course) => {
 			return <CourseCard key={course.id} course={course} onButtonClick={handleCourseClick} />
 		});
-
+    //const renderCourses=<CourseCard key={coursesList[0].id} course={coursesList[0]} onButtonClick={handleCourseClick} />;
 		renderCarousel = <div style={{ padding: `0` }}>
 			<ItemsCarousel
 				requestToChangeActive={setActiveItemIndex}

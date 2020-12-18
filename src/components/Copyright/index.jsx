@@ -6,14 +6,16 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     bottom: 0,
-    fontSize: 12,
+    fontSize: 10,
+    color:"#858585",
+    paddingTop:7
   },
 }));
 
 const Copyright = () => {
   const classes = useStyles();
   return (
-    <Typography variant="body2" align="center">
+    <Typography variant="body2" align="center" className={classes.root}>
       © All rights are reserved with Xebia IT Architect
     </Typography>
   );

@@ -130,5 +130,9 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       backgroundColor: "blue",
     },
-  }
+  },
+  table: {
+    minWidth: 1220,
+    minHeight: 100
+  } 
 }));

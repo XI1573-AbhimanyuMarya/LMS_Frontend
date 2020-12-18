@@ -7,43 +7,23 @@ import Typography from '@material-ui/core/Typography';
 import CourseCatalog from '../CourseCatalog';
 import { MESSAGES } from '../../../../modules/constants';
 import CourseCard from '../../../../components/CourseCard';
+import Actions from '../../../../store/actions';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Carosals = (props) => {
-	const { coursesList, handleCourseClick } = props;
+  const { coursesList,setLpId } = props;
+  const dispatch = useDispatch();
 	const [activeItemIndex, setActiveItemIndex] = useState(0);
-	const chevronWidth = 40;
-  let renderCarousel = "";
+  const chevronWidth = 40;
+  const handleCourseClick=(id)=>{
+    dispatch(Actions.learningPathActions.getLearningPathCourses(id));
+  }
   let renderCourses="";
-  console.log(coursesList);
 	if (coursesList && Array.isArray(coursesList)) {
-    console.log(coursesList);
     renderCourses=coursesList.map((course)=>{
-      return (<CourseCard key={course.learningPath.learningPathId} course={course} onButtonClick={handleCourseClick} showButton={true} />)
+      return (<CourseCard key={course.learningPath.learningPathId} course={course} onButtonClick={()=>setLpId(course.learningPath.learningPathId)} showButton={true} />)
     });
-		//renderCourses = coursesList.map((course) => {
-			//return course.learningPath.courses.map(item => (
-			//<CourseCard course={course} onButtonClick={handleCourseClick} showButton={true} />
-				//))
-			// return <CourseCatalog key={course.id} course={course} handleCourseClick={handleCourseClick} />
-
-    //});
-
-		renderCarousel = <div style={{ padding: `0 ${chevronWidth}px` }}>
-			{/* <ItemsCarousel
-				requestToChangeActive={setActiveItemIndex}
-				activeItemIndex={activeItemIndex}
-				numberOfCards={4}
-				gutter={20}
-				leftChevron={<ArrowBackIosOutlinedIcon />}
-				rightChevron={<ArrowForwardIosOutlinedIcon />}
-				outsideChevron
-				chevronWidth={chevronWidth}
-			> */}
-				{
-					renderCourses
-				}
-			{/* </ItemsCarousel> */}
-		</div>
+    //onButtonClick={()=>handleCourseClick(course.learningPath.learningPathId)}
 	}
 	return (
 		<React.Fragment>

@@ -11,15 +11,14 @@ export const useStyles = makeStyles(theme => ({
 		fontSize: 12,
 		fontWeight: 400,
 		borderRadius: 15,
-		padding: 3,
 		color: '#4a90e2',
     border: '1px solid #B2C8E4',
+    padding:'5px 20px',
     [theme.breakpoints.up('md')]: {
       textTransform: 'capitalize',
       fontSize: 10,
       fontWeight: 400,
       borderRadius: 15,
-      padding: 3,
       color: '#4a90e2',
       border: '1px solid #B2C8E4',
     },
@@ -28,7 +27,6 @@ export const useStyles = makeStyles(theme => ({
       fontSize: 12,
       fontWeight: 400,
       borderRadius: 15,
-      padding: 3,
       color: '#4a90e2',
       border: '1px solid #B2C8E4',
     },
@@ -131,5 +129,33 @@ export const useStyles = makeStyles(theme => ({
       height:"40px",
     },
     
-	}
+  },
+  Beginner:{
+    width:"80px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
+  Intermediate:{
+    width:"100px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
+  Advance:{
+    width:"80px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
+  Expert:{
+    width:"80px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
+  cardheader:{
+    display:"flex",
+    justifyContent:"space-between"
+  },
 }));

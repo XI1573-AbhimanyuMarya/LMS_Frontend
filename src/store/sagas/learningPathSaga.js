@@ -24,6 +24,9 @@ export function* learningPathSaga() {
   yield takeLatest(actionTypes.GET_MY_LEARNING_PATH_REQUEST, getMyLearningPath);
   yield takeLatest(actionTypes.DELETE_ALL_PATH, deleteAllPaths);
   yield takeLatest(actionTypes.DELETE_PATH, deletePaths);
+
+  yield takeLatest(actionTypes.GET_LEARNING_PATH_COURSES_REQUEST, getLearningPathCourses);
+  yield takeLatest(actionTypes.GET_PENDING_APPROVAL, getPendingForApproval);
 }
 
 function* fetchCourses() {
@@ -118,5 +121,51 @@ function* deletePaths(action) {
 
   } catch (error) {
     yield put({ type: actionTypes.DELETE_PATH_FAILURE, payload: error });
+  }
+}
+
+const fetchPathCourses = async ({ ids }) => {
+  return await axios.get(SERVICE_URLS.LEARNINGPATH_COURSES+ids, { headers: authHeader() });
+}
+
+function* getLearningPathCourses(action) {
+  try {
+    const response = yield call(fetchPathCourses, action.payload);
+    const { data } = response;
+    yield put({ type: actionTypes.GET_LEARNING_PATH_COURSES_SUCCESS, payload: data });
+
+  } catch (error) {
+    yield put({ type: actionTypes.GET_LEARNING_PATH_COURSES_FAILURE, payload: error });
+  }
+}
+const getPFApproval = async ({ managerEmail }) => {
+  return await axios.post(SERVICE_URLS.PENDING_FOR_APPROVAL, { managerEmail }, { headers: authHeader() });
+}
+
+function* getPendingForApproval(action) {
+  try {
+    const response = yield call(getPFApproval,action.payload);
+    const { data } = response;
+
+    yield put({ type: actionTypes.FETCH_PENDING_FOR_APPROVAL_SUCCESS, payload: data });
+
+  } catch (error) {
+    yield put({ type: actionTypes.FETCH_PENDING_FOR_APPROVAL_FAILURE, error });
+  }
+}
+
+const getApprovalReject = async ({ learningPathEmployeeId, status }) => {
+  return await axios.put(SERVICE_URLS.PENDING_FOR_APPROVAL, { learningPathEmployeeId, status }, { headers: authHeader() });
+}
+
+function* getApprovalRejects(action) {
+  try {
+    const response = yield call(getApprovalReject,action.payload);
+    const { data } = response;
+
+    yield put({ type: actionTypes.FETCH_PENDING_FOR_APPROVAL_SUCCESS, payload: data });
+
+  } catch (error) {
+    yield put({ type: actionTypes.FETCH_PENDING_FOR_APPROVAL_FAILURE, error });
   }
 }

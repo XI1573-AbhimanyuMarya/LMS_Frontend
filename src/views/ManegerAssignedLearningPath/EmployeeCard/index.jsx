@@ -1,5 +1,6 @@
 import React from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { useDispatch , useSelector, connect } from "react-redux";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -14,7 +15,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DiscardPopup from "../../../components/DiscardPopup/index1";
 import Actions from '../../../store/actions';
-import { useSelector, useDispatch } from 'react-redux';
 
 import { useStyles } from "./style";
 
@@ -24,6 +24,8 @@ const theme = createMuiTheme({
       body2: {
         fontSize: "12px",
       },
+
+
     },
     MuiCardHeader: {
       subheader: {
@@ -46,13 +48,26 @@ const theme = createMuiTheme({
   },
 });
 
-export default function EmployeeCard(props) {
-  const dispatch = useDispatch();
+function EmployeeCard(props) {
   const data = props.data;
   const { onDeleteAll, onDelete } = props;
   const classes = useStyles();
+  const dispatch = useDispatch(); 
   const [expanded, setExpanded] = React.useState(false);
   const [editOption, setEditOption] = React.useState(false);
+  const [discardOption,setDiscardOption] = React.useState(false)
+  const learningPathState = useSelector((state) => state.learningPathState);
+
+  const discardHandler = (closeMainModel) => {
+    if (closeMainModel) {
+      onDeleteAll(data.empID);
+    }
+    dispatch(Actions.learningPathActions.discardModelOpen(false));
+  };
+
+  const  handleDiscardClick = () =>{
+    dispatch(Actions.learningPathActions.discardModelOpen(true));
+  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -63,13 +78,6 @@ export default function EmployeeCard(props) {
     setExpanded(expanded && editOption? false : true);
   };
 
-  const discardHandler = (closeMainModel) => {
-    console.log(closeMainModel);
-    dispatch(Actions.learningPathActions.discardModelOpen(false));
-    if (closeMainModel) {
-      dispatch(Actions.learningPathActions.pathModelOpen(false));
-    }
-  };
 
   return (
     <>
@@ -92,9 +100,9 @@ export default function EmployeeCard(props) {
           <CardHeader
             className={classes.delete}
             action={
-              <IconButton aria-label="settings" onClick={() => onDeleteAll(data.empID)}>
-                 <DiscardPopup discardHandler={discardHandler} />
-                <DeleteIcon className={classes.deleteIcon} />
+              <IconButton aria-label="settings"  >
+                <DeleteIcon className={classes.deleteIcon} onClick={handleDiscardClick} /> 
+                <DiscardPopup discardHandler={discardHandler}/>                     
               </IconButton>
             }
             subheader={data.employee.location}
@@ -141,3 +149,10 @@ export default function EmployeeCard(props) {
     </>
   );
 }
+
+
+const mapStateToProps =(state)=> {
+  const { learningPathState } = state
+  return { discardModelOpen: learningPathState.discardModelOpen }
+}
+export default connect(mapStateToProps)(EmployeeCard)

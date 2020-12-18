@@ -24,5 +24,19 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	pathNameField: {
 		background: '#FFFFFF',
-	}
+  },
+  head:{
+    width: "202px",
+    height: "27px",
+    // margin: "0 173px 24px 43px",
+    fontFamily: "ProximaNova",
+    fontSize: "22px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: 1.23,
+    letterSpacing: "normal",
+    textAlign: "left",
+    color: "#621d58"
+  }
 }));

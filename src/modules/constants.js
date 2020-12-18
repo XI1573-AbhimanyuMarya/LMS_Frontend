@@ -1,3 +1,4 @@
+// const API_HOST_PATH = process.env.REACT_APP_BASE_API_URL;
 import Beginner from '../images/101-Beginner.svg';
 import Intermediate from '../images/102-Intermediate.svg';
 import Advance from '../images/103-Advance.svg';
@@ -7,9 +8,9 @@ import OutlinedIntermediate from '../images/102-OutlinedIntermediate.svg';
 import OutlinedAdvance from '../images/103-OutlinedAdvance.svg';
 import OutlinedExpert from '../images/104-OutlinedExpert.svg';
 
-const API_HOST_PATH = process.env.REACT_APP_BASE_API_URL;
+// const API_HOST_PATH = process.env.REACT_APP_BASE_API_URL;
 //'https://learningmanagementxeb.herokuapp.com';
-// const API_HOST_PATH =  'https://xebia-lms.herokuapp.com'
+const API_HOST_PATH =  'https://xebia-lms.herokuapp.com'
 
 export const SERVICE_URLS = {
   LOGIN: `${API_HOST_PATH}/username`,
@@ -20,6 +21,9 @@ export const SERVICE_URLS = {
   ASSIGNED_PATH: `${API_HOST_PATH}/api/getAssignedLearningPaths`,
   MY_PATH: `${API_HOST_PATH}/employeelearning/myLearningPath`,
   DELETE_ALL_PATH: `${API_HOST_PATH}/employeelearning/deletelearningpath`,
+  LEARNINGPATH_COURSES:`${API_HOST_PATH}/api/learningPath/courses/`,
+  PENDING_FOR_APPROVAL: `${API_HOST_PATH}/api/pending/approvals`,
+  APPROVAL_REJEACT: `${API_HOST_PATH}/api/review/approvals`
 };
 
 export const API_STATUS = {
@@ -45,6 +49,7 @@ export const LEARNING_PATH_LABELS = {
   LEARNING_PATH_DESCRIPTION: "Enter Learning Path Description",
   COURSE_CATALOG: "Course Catalog",
   COURSE_CATALOG1: "Learning Path Completed",
+  COURSE_CATALOG2: "Assign Learning Path",
   LEARNING_PATH_COMPLETED: "Learning Path Completed",
   COURSE_CAT: "Data Science",
   COURSE_CAT1: "Cloud Services",
@@ -69,6 +74,7 @@ export const BUTTONS = {
 };
 
 export const STEPS = ["Learning Path Details", "Courses", "Assign Users", "Set Duration"];
+export const STEPS1 = [ "Learning Path", "Assign Users", "Set Duration"];
 
 export const MARKS = [
   {
