@@ -13,9 +13,9 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Certificate {
-
-
 
 
     @Id
@@ -25,6 +25,7 @@ public class Certificate {
     private long  courseId;
     private long learningPathEmployeeId;
     private byte[] certificate;
+    private String fileName;
 
 
 
