@@ -177,6 +177,7 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     @Override
     public List<Courses> getCourseDetails(Long learningPathId) {
+
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path Id not found"));
         return learningPath.getCourses();
     }
@@ -204,7 +205,6 @@ public class LearningPathServiceImpl implements LearningPathService {
         approvalDto.setEmployee(modelMapper.map(employee.getEmployee(), EmployeeDto.class));
         approvalDto.setStartDate(employee.getStartDate());
         approvalDto.setEndDate(employee.getEndDate());
-        approvalDto.setIsLearningPathExpired(employee.getIsLearningPathExpired());
         approvalDto.setDuration(modelMapper.map(employee.getDuration(), DurationDto.class));
         return approvalDto;
 

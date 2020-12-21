@@ -41,7 +41,7 @@ public class AdminServiceImpl implements AdminService {
         Map<LearningPath, Long> LEARNING_PATH_ASSIGNED_TO_EMPLOYEE_COUNT = learningPathEmployeesList.stream().collect(Collectors.groupingBy(LearningPathEmployees::getLearningPath, Collectors.counting()));
         Map<LearningPath, Long> LEARNING_PATH_COMPLETED_COUNT = learningPathEmployeesList.stream().filter(a -> a.getPercentCompleted() == 100).collect(Collectors.groupingBy(LearningPathEmployees::getLearningPath, Collectors.counting()));
         Map<LearningPath, Long> LEARNING_PATH_INPROGRESS_COUNT = learningPathEmployeesList.stream().filter(a -> a.getPercentCompleted() != 100).collect(Collectors.groupingBy(LearningPathEmployees::getLearningPath, Collectors.counting()));
-        Map<LearningPath, Long> LEARNING_PATH_OVERDUE_COUNT = learningPathEmployeesList.stream().filter(a -> a.getIsLearningPathExpired().equals(true)).collect(Collectors.groupingBy(LearningPathEmployees::getLearningPath, Collectors.counting()));
+        Map<LearningPath, Long> LEARNING_PATH_OVERDUE_COUNT = null;  //todo - 1
 
         return AdminDashboardDetailsDTO.builder().learningPathName(LEARNING_PATH_EMPLOYEES.getLearningPath().getName())
                 .learningPathId(LEARNING_PATH_EMPLOYEES.getLearningPath().getId())
@@ -58,7 +58,9 @@ public class AdminServiceImpl implements AdminService {
         long TOTAL_LEARNING_PATH_ASSIGNED = employeesRepository.count();
         long TOTAL_LEARNING_PATH_COMPLETED = employeesRepository.countByPercentCompleted(100);
         long TOTAL_LEARNING_PATH_INPROGRESS = employeesRepository.countByPercentCompletedNot(100);
-        long TOTAL_LEARNING_PATH_EXPIRED = employeesRepository.countByIsLearningPathExpiredAndApprovalStatus(true, YTBD);
+//        long TOTAL_LEARNING_PATH_EXPIRED = employeesRepository.countByIsLearningPathExpiredAndApprovalStatus(true, YTBD);
+        //todo -2
+        long TOTAL_LEARNING_PATH_EXPIRED = Long.parseLong(null);
         return AdminDashboardStatisticsDTO.builder()
                 .totalLearningPathAssigned(TOTAL_LEARNING_PATH_ASSIGNED)
                 .totalLearningPathCompleted(TOTAL_LEARNING_PATH_COMPLETED)

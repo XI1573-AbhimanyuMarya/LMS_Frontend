@@ -42,8 +42,4 @@ public class LearningPathEmployees {
     @Column(name = "end_Date")
     private LocalDate endDate;
 
-    @Column(name = "isExpired")
-    private Boolean isLearningPathExpired = Boolean.FALSE;
-    ;
-
 }

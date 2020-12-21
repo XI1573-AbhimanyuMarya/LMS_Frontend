@@ -22,6 +22,6 @@ public class ApprovalDto {
     // Refers to Learning Path start Date and End Date
     private LocalDate startDate;
     private LocalDate endDate;
-    private Boolean isLearningPathExpired;
+//    private Boolean isLearningPathExpired;
     private String certificate;
 }

@@ -21,22 +21,17 @@ import java.util.stream.Collectors;
 public class CertificateServiceImpl implements CertificateService {
 
 
-
     private CertificateRepository certificateRepository;
 
     @Autowired
-    public CertificateServiceImpl(CertificateRepository certificateRepository)
-    {
-        this.certificateRepository=certificateRepository;
+    public CertificateServiceImpl(CertificateRepository certificateRepository) {
+        this.certificateRepository = certificateRepository;
     }
 
 
-
     public List<Certificate> uploadCertificate(CertificateRequest certificateRequest) throws Exception {
-        List<Certificate> certificateList = new ArrayList<>();;
-
+        List<Certificate> certificateList = new ArrayList<>();
         try {
-
             for (MultipartFile request : certificateRequest.getCertificate()) {
                 Certificate certificate = Certificate.builder()
                         .employeeId(certificateRequest.getEmployeeId())
@@ -44,25 +39,19 @@ public class CertificateServiceImpl implements CertificateService {
                         .learningPathEmployeeId(certificateRequest.getLearningPathEmployeeId())
                         .certificate(request.getBytes())
                         .build();
-
                 certificateList.add(certificate);
             }
         } catch (Exception e) {
-           throw new Exception(e.getMessage());
+            throw new Exception(e.getMessage());
         }
-
         return certificateRepository.saveAll(certificateList);
-
-
-
     }
 
-    public List<byte[]> fetchCertificate(long learningPathEmployeeId, long employeeId)
-    {
+    public List<byte[]> fetchCertificate(long learningPathEmployeeId, long employeeId) {
         return certificateRepository
-                .getCertificateByLearningPathIdAndEmployeeId(learningPathEmployeeId,employeeId)
+                .getCertificateByLearningPathIdAndEmployeeId(learningPathEmployeeId, employeeId)
                 .stream()
-                .map(x-> Base64.encodeBase64(x.getCertificate()))
+                .map(x -> Base64.encodeBase64(x.getCertificate()))
                 .collect(Collectors.toList());
     }
 
