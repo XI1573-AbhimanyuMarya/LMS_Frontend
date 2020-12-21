@@ -8,6 +8,7 @@ import javax.validation.constraints.Min;
 @Getter
 @Setter
 public class CourseCompletedPercentRequest {
+
     @Min(value=1)
    private long employeeId;
     @Min(value=1)
