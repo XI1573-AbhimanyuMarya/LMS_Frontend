@@ -2,21 +2,18 @@ package com.xebia.learningmanagement.service.impl;
 
 import com.xebia.learningmanagement.dtos.DurationDto;
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
-import com.xebia.learningmanagement.dtos.LearningPathDto;
 import com.xebia.learningmanagement.dtos.LearningPathEmployeeDto;
 import com.xebia.learningmanagement.dtos.request.CourseCompletedPercentRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeLearningRateRequest;
-import com.xebia.learningmanagement.entity.CourseRating;
-import com.xebia.learningmanagement.entity.Courses;
-import com.xebia.learningmanagement.entity.LearningPathEmployees;
-import com.xebia.learningmanagement.entity.User;
+import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.repository.CourseRatingRepository;
 import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
+import com.xebia.learningmanagement.repository.LearningPathRepository;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.EmployeeLearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
@@ -28,10 +25,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.PENDING;
 
@@ -49,8 +46,9 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     private EmailSend emailSend;
     @Autowired
     private CourseRatingRepository courseRatingRepository;
+
     @Autowired
-    private ModelMapper modelMapper;
+    private LearningPathRepository learningPathRepository;
 
 
     /***
@@ -94,20 +92,22 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
      */
     @Override
     public List<EmployeeLearningPathStatisticsDto> getMyAssignedLearningPaths(EmployeeEmailRequest employeeEmail) throws LearningPathException {
-
+        ModelMapper modelMapper = new ModelMapper();
+        String endDate;
         User user = userRepository.findByUsername(employeeEmail.getEmployeeEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
         List<LearningPathEmployees> learningPathEmployees = learningPathEmployeesRepository.findByEmployee(user);
-
         List<EmployeeLearningPathStatisticsDto> employeeLearningPathStatisticsDtoList = new ArrayList<>();
-
         for (LearningPathEmployees learningPath : learningPathEmployees) {
-
+            if (learningPath.getEndDate().compareTo(LocalDate.now()) == 1) {
+                endDate = learningPath.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            } else {
+                endDate = "Expired";
+            }
             EmployeeLearningPathStatisticsDto employeeLearningPathStatisticsDto = EmployeeLearningPathStatisticsDto.builder()
                     .learningPathEmployeesId(learningPath.getLearningPathEmployeesId())
-                    .isLearningPathExpired(learningPath.getIsLearningPathExpired())
-                    .duration(new DurationDto(learningPath.getDuration().getName()))
+                    .duration(modelMapper.map(learningPath.getDuration(),DurationDto.class))
                     .learningPath(modelMapper.map(learningPath.getLearningPath(), LearningPathEmployeeDto.class))
-                    .endDate(learningPath.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                    .endDate(endDate)
                     .startDate(learningPath.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                     .percentCompleted(courseCompletionAverage(learningPath.getEmployee().getId(), learningPath.getLearningPath().getId()))
                     .build();
@@ -119,9 +119,9 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         return employeeLearningPathStatisticsDtoList;
     }
 
-    @Override
+       @Override
     public EmployeeLearningPathStatisticsDto updateLearningPathProgress(EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException, IOException {
-
+        ModelMapper modelMapper = new ModelMapper();
         LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById((long) employeeLearningRateRequest.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("LearningPath Employee Id not found"));
         learningPathEmployees.setPercentCompleted(employeeLearningRateRequest.getPercentCompleted());
         if (Objects.nonNull(employeeLearningRateRequest.getFile())) {
@@ -189,26 +189,50 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
                 .learningPathId(courseCompletedPercent.getLearningPathId())
                 .percentCompleted(courseCompletedPercent.getPercentCompleted())
                 .build();
-
+        CourseRating courseRating1 = courseRatingRepository.findByLearningPathIdAndCourseIdAndEmployeeId(courseCompletedPercent.getLearningPathId(), courseCompletedPercent.getCourseId(), courseCompletedPercent.getEmployeeId());
         if (courseRatingRepository.save(courseRating) != null) {
             message.put("message", "Course Rating Succesfully Updated");
         }
         return message;
     }
 
+
+    public Map<String, String> saveOrUpdateCourseRating(CourseCompletedPercentRequest courseCompletedPercent) {
+        Map<String, String> message = new HashMap<>();
+        CourseRating recordExists = courseRatingRepository.findByLearningPathIdAndCourseIdAndEmployeeId(courseCompletedPercent.getLearningPathId(), courseCompletedPercent.getCourseId(), courseCompletedPercent.getEmployeeId());
+        CourseRating courseRating = new CourseRating();
+        if (Objects.isNull(recordExists)) {
+            courseRating = CourseRating.builder()
+                    .courseId(courseCompletedPercent.getCourseId())
+                    .employeeId(courseCompletedPercent.getEmployeeId())
+                    .learningPathId(courseCompletedPercent.getLearningPathId())
+                    .percentCompleted(courseCompletedPercent.getPercentCompleted())
+                    .build();
+        } else {
+            courseRating=recordExists;
+            courseRating.setPercentCompleted(courseCompletedPercent.getPercentCompleted());
+        }
+        courseRatingRepository.save(courseRating);
+        message.put("message", "Course Rating Succesfully Updated");
+        return message;
+    }
+
+
     @Override
     public int courseCompletionAverage(long employeeId, long learningPathId) {
 
-          System.out.println(employeeId+" "+learningPathId);
+        System.out.println(employeeId + " " + learningPathId);
         List<CourseRating> courseRating = courseRatingRepository.getRatingByCourseIdAndLEarningPath(learningPathId, employeeId);
+        LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path ID not found: " + learningPathId));
+        int coursesCount=learningPath.getCourses().size();
 
         if (courseRating.size() < 1)
             return 0;
 
         int count = courseRating.stream()
-                .mapToInt(x -> x.getPercentCompleted())
+                .mapToInt(CourseRating::getPercentCompleted)
                 .sum();
-        return (count * 100) / (courseRating.size() * 100);
+        return (count) / (coursesCount);
 
     }
 

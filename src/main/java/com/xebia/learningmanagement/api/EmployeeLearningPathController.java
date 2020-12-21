@@ -101,9 +101,10 @@ public class EmployeeLearningPathController {
         return new ResponseEntity(employee, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping(value = "/api/v1/addcourserating", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/api/v1/update/courseratings", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourseRating(@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest) {
-        return employeelearningservice.addCourseRating(courseCompleteRequest);
+//        return employeelearningservice.addCourseRating(courseCompleteRequest);
+        return  employeelearningservice.saveOrUpdateCourseRating(courseCompleteRequest);
     }
     @PutMapping(value="/api/v1/updatecourserating/{ratingId}",consumes=MediaType.APPLICATION_JSON_VALUE)
     public Map<String,String> updateCourseRating(@PathVariable long ratingId,@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest)

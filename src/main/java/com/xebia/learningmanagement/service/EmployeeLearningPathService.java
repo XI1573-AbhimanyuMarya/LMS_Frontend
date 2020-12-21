@@ -24,4 +24,6 @@ public interface EmployeeLearningPathService {
     Map<String, String> updateCourseRating(long courseRatingId, CourseCompletedPercentRequest courseCompletedPercent);
 
     public int courseCompletionAverage(long employeeId, long learninfPathId);
+
+    public Map<String, String> saveOrUpdateCourseRating(CourseCompletedPercentRequest courseCompletedPercent);
 }
