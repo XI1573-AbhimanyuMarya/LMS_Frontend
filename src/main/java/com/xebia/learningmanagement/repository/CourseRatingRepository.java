@@ -15,7 +15,5 @@ public interface CourseRatingRepository extends JpaRepository<CourseRating, Long
     public List<CourseRating> getRatingByCourseIdAndLEarningPath(long learningPathId,long employeeId);
 
 
-
-
-
+    CourseRating findByLearningPathIdAndCourseIdAndEmployeeId(long learningPathId, long courseId, long employeeId);
 }
