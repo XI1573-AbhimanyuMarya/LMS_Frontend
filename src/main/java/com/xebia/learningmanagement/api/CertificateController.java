@@ -22,14 +22,14 @@ public class CertificateController {
         this.certificateServiceImpl = certificateServiceImpl;
     }
 
-    @PostMapping(value = "/api/v1/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/api/v1/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<Certificate> uplaodCertificate(@Valid @ModelAttribute CertificateRequest certificateRequest) throws Exception {
         return certificateServiceImpl.uploadCertificate(certificateRequest);
     }
-
-    @GetMapping(value = "/api/v1/get/{learningPathId}/{employeeId}")
-    public List<String> fetchImage(@PathVariable long learningPathId, @PathVariable long employeeId) {
-        return null;
+    
+    @GetMapping(value = "/api/v1/get/{learningPathEmployeeId}/{employeeId}")
+    public List< String> fetchImage(@PathVariable long learningPathEmployeeId, @PathVariable long employeeId) {
+        return certificateServiceImpl.fetchCertificate(learningPathEmployeeId,employeeId);
     }
 
 

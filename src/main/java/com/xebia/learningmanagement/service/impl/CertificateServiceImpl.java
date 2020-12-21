@@ -11,9 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @Service
 @Transactional
@@ -37,6 +36,7 @@ public class CertificateServiceImpl implements CertificateService {
                         .employeeId(certificateRequest.getEmployeeId())
                         .courseId(certificateRequest.getCourseId())
                         .learningPathEmployeeId(certificateRequest.getLearningPathEmployeeId())
+                        .fileName(request.getOriginalFilename())
                         .certificate(request.getBytes())
                         .build();
                 certificateList.add(certificate);
@@ -47,12 +47,14 @@ public class CertificateServiceImpl implements CertificateService {
         return certificateRepository.saveAll(certificateList);
     }
 
-    public List<byte[]> fetchCertificate(long learningPathEmployeeId, long employeeId) {
-        return certificateRepository
-                .getCertificateByLearningPathIdAndEmployeeId(learningPathEmployeeId, employeeId)
-                .stream()
-                .map(x -> Base64.encodeBase64(x.getCertificate()))
-                .collect(Collectors.toList());
+    public List< String> fetchCertificate(long learningPathEmployeeId, long employeeId) {
+        List< String> certificateBag = null;
+        List<Certificate> certificates = certificateRepository.findByLearningPathEmployeeIdAndEmployeeId(learningPathEmployeeId, employeeId);
+        for (Certificate certificatesObject : certificates) {
+            String image = Objects.nonNull(certificatesObject.getCertificate()) ? new String(Base64.encodeBase64(certificatesObject.getCertificate()), StandardCharsets.UTF_8) : "No Certificate Found";
+            certificateBag.add(image);
+        }
+        return certificateBag;
     }
 
 
