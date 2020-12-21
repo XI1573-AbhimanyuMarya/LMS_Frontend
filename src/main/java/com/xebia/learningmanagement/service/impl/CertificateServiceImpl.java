@@ -50,7 +50,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     public List<String> fetchCertificate(long learningPathEmployeeId, long employeeId) {
-        List<String> certificateBag = null;
+        List<String> certificateBag = new ArrayList<>();
         List<Certificate> certificates = certificateRepository.findByLearningPathEmployeeIdAndEmployeeId(learningPathEmployeeId, employeeId);
         for (Certificate certificatesObject : certificates) {
             String image = Objects.nonNull(certificatesObject.getCertificate()) ? new String(Base64.encodeBase64(certificatesObject.getCertificate()), StandardCharsets.UTF_8) : "No Certificate Found";
