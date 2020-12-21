@@ -26,7 +26,7 @@ public class CertificateController {
     public List<Certificate> uplaodCertificate(@Valid @ModelAttribute CertificateRequest certificateRequest) throws Exception {
         return certificateServiceImpl.uploadCertificate(certificateRequest);
     }
-    
+
     @GetMapping(value = "/api/v1/get/{learningPathEmployeeId}/{employeeId}")
     public List< String> fetchImage(@PathVariable long learningPathEmployeeId, @PathVariable long employeeId) {
         return certificateServiceImpl.fetchCertificate(learningPathEmployeeId,employeeId);

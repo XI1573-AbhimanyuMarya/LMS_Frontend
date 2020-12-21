@@ -2,7 +2,6 @@ package com.xebia.learningmanagement.entity;
 
 import lombok.*;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,11 +21,10 @@ public class Certificate {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private long employeeId;
-    private long  courseId;
+    private long courseId;
     private long learningPathEmployeeId;
     private byte[] certificate;
     private String fileName;
-
 
 
 }

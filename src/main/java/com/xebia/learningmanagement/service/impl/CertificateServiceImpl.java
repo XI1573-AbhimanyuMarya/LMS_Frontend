@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -47,8 +49,8 @@ public class CertificateServiceImpl implements CertificateService {
         return certificateRepository.saveAll(certificateList);
     }
 
-    public List< String> fetchCertificate(long learningPathEmployeeId, long employeeId) {
-        List< String> certificateBag = null;
+    public List<String> fetchCertificate(long learningPathEmployeeId, long employeeId) {
+        List<String> certificateBag = null;
         List<Certificate> certificates = certificateRepository.findByLearningPathEmployeeIdAndEmployeeId(learningPathEmployeeId, employeeId);
         for (Certificate certificatesObject : certificates) {
             String image = Objects.nonNull(certificatesObject.getCertificate()) ? new String(Base64.encodeBase64(certificatesObject.getCertificate()), StandardCharsets.UTF_8) : "No Certificate Found";
