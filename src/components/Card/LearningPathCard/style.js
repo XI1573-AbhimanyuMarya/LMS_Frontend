@@ -39,7 +39,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   carddesc:{
     textAlign: "justify",
-    fontSize:"10px"
+    fontSize:"10px",
+    minHeight:"55px"
   },
   cardfooter:{
     backgroundColor:"#f5f5f5",
@@ -54,5 +55,9 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor:"white",
     borderRadius:"21px",
     width:"55px"
+  },
+  checkIcon: {
+    color: "#67B104",
+    float: "right",
   }
 }));

@@ -28,6 +28,8 @@ export function* learningPathSaga() {
   yield takeLatest(actionTypes.GET_LEARNING_PATH_COURSES_REQUEST, getLearningPathCourses);
   yield takeLatest(actionTypes.GET_PENDING_APPROVAL, getPendingForApproval);
   yield takeLatest(actionTypes.GET_APPROVAL_REJECTION, getApprovalRejects);
+
+  yield takeLatest(actionTypes.SAVE_COURSE_RATE, saveCourseRate);  
 }
 
 function* fetchCourses() {
@@ -125,8 +127,8 @@ function* deletePaths(action) {
   }
 }
 
-const fetchPathCourses = async ({ ids }) => {
-  return await axios.get(SERVICE_URLS.LEARNINGPATH_COURSES+ids, { headers: authHeader() });
+const fetchPathCourses = async ({ ids,empid }) => {
+  return await axios.get(SERVICE_URLS.LEARNINGPATH_COURSES+ids+'/'+empid, { headers: authHeader() });
 }
 
 function* getLearningPathCourses(action) {
@@ -134,7 +136,6 @@ function* getLearningPathCourses(action) {
     const response = yield call(fetchPathCourses, action.payload);
     const { data } = response;
     yield put({ type: actionTypes.GET_LEARNING_PATH_COURSES_SUCCESS, payload: data });
-
   } catch (error) {
     yield put({ type: actionTypes.GET_LEARNING_PATH_COURSES_FAILURE, payload: error });
   }
@@ -155,18 +156,33 @@ function* getPendingForApproval(action) {
   }
 }
 
-const getApprovalReject = async ({ learningPathEmployeeId, status }) => {
-  return await axios.put(SERVICE_URLS.APPROVAL_REJEACT, { learningPathEmployeeId, status }, { headers: authHeader() });
+const getApprovalReject = async ({ reqBody }) => {
+  return await axios.put(SERVICE_URLS.APPROVAL_REJEACT, { ...reqBody }, { headers: authHeader() });
 }
 
 function* getApprovalRejects(action) {
   try {
     const response = yield call(getApprovalReject,action.payload);
     const { data } = response;
-
     yield put({ type: actionTypes.FETCH_APPROVAL_SUCCESS, payload: data });
 
   } catch (error) {
     yield put({ type: actionTypes.FETCH_APPROVAL_FAILURE, error });
+  }
+}
+
+const saveCourseRateRequest = async ({ reqBody }) => {
+  return await axios.put(SERVICE_URLS.SAVE_COURSE_RATE, { ...reqBody }, { headers: authHeader() });
+}
+
+function* saveCourseRate(action) {
+  try {
+    const response = yield call(saveCourseRateRequest,action.payload);
+    const { data } = response;
+
+    yield put({ type: actionTypes.SAVE_COURSE_RATE_SUCCESS, payload: data });
+
+  } catch (error) {
+    yield put({ type: actionTypes.SAVE_COURSE_RATE_FAILURE, error });
   }
 }

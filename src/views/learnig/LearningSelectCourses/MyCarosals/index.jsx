@@ -31,7 +31,7 @@ const Carosals1 = (props) => {
 				rightChevron={<ArrowForwardIosOutlinedIcon />}
 				outsideChevron
         chevronWidth={chevronWidth}
-        style={{display:"flex",boxSizing:"border-box",maxHeight:"10vh"}}
+        style={{display:"flex",boxSizing:"border-box"}}
 			>
         {
           renderCourses

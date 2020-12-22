@@ -6,8 +6,9 @@ import { useStyles } from './style';
 
 const LearningRate=(props)=>{
   const classes=useStyles();
-  const learningPathState = useSelector(state => state.learningPathState);
-  const {course}=props;
+  //const learningPathState = useSelector(state => state.learningPathState);
+  const loginState = useSelector(res => res.loginState);
+  const {course,lpId}=props;
   const {percentageCompleted}=course;
   const dispatch=useDispatch();
   const focusHandler=()=>{
@@ -18,11 +19,26 @@ const LearningRate=(props)=>{
     dispatch(Actions.learningPathActions.changeCourseRate(changeRate,course));
   }
   const saveRateHandler=()=>{
-    console.log(course);
+    let reqBody={
+      "employeeId":loginState.user.id,
+      "learningPathId":lpId,
+      "courseId":course.id,
+      "percentCompleted":parseInt(percentageCompleted)
+    };
+    dispatch(Actions.learningPathActions.saveCourseRate(reqBody));
   }
+
+  const onViewClick = () =>{
+    dispatch(Actions.learningPathActions.uploadFileModelOpen(true));
+  }
+
+  const discardHandler = () =>{
+    dispatch(Actions.learningPathActions.uploadFileModelOpen(false));
+  }
+
   const BtnObj={
     "Save":<SaveButton saveRateHandler={saveRateHandler}/>,
-    "Upload":<UploadButton />,
+    "Upload":<UploadButton onViewClick={onViewClick} discardHandler={discardHandler}/>,
     "Wait":<WaitForApprovalButton/>,
     "Approved":<ApprovedButton />
   }

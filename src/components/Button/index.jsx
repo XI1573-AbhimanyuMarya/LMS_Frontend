@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import GreenCheck from '../../images/greencheck.svg';
 import { useStyles } from './style';
+import UploadFilePopup from '../DiscardPopup/draganddrop';
 
 export const SaveButton=(props)=>{
   const {saveRateHandler}=props;
@@ -14,12 +15,15 @@ export const SaveButton=(props)=>{
   );
 }
 
-export const UploadButton=()=>{
+export const UploadButton=(props)=>{
+  const { onViewClick,discardHandler }=props;
   const classes=useStyles();
   return (
-      <Button className={classes.uploadbtn} size="small">
+    <>
+      <Button className={classes.uploadbtn} size="small" onClick={onViewClick}>
         Upload Document
-      </Button>
+      </Button><UploadFilePopup discardHandler={discardHandler}></UploadFilePopup>
+    </>
   );
 }
 

@@ -23,7 +23,8 @@ export const SERVICE_URLS = {
   DELETE_ALL_PATH: `${API_HOST_PATH}/employeelearning/deletelearningpath`,
   LEARNINGPATH_COURSES:`${API_HOST_PATH}/api/learningPath/courses/`,
   PENDING_FOR_APPROVAL: `${API_HOST_PATH}/api/pending/approvals`,
-  APPROVAL_REJEACT: `${API_HOST_PATH}/api/review/approvals`
+  APPROVAL_REJEACT: `${API_HOST_PATH}/api/review/approvals`,
+  SAVE_COURSE_RATE: `${API_HOST_PATH}/employeelearning/api/v1/update/courseratings`
 };
 
 export const API_STATUS = {

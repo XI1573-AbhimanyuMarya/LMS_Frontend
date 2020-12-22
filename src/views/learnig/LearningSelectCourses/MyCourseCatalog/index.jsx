@@ -16,7 +16,7 @@ const CourseCatalog1 = (props) => {
   const { lp,setLpId } = props;
 	const courseClass = lp.selected && lp.selected === true ? classes.selected : classes.root;
 	return (
-		<Card className={courseClass} style={{border:"1px solid #67b104",maxHeight:"35vh"}}>
+		<Card className={courseClass} style={{border:"1px solid #67b104"}}>
 			<CardActionArea>
 				{/* {course.selected && course.selected === true && <CheckCircleIcon className={classes.checkIcon} />} */}
 				<CardContent>

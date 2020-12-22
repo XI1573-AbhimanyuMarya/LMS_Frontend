@@ -40,7 +40,7 @@ const SelectCourses = () => {
   console.log(mycourses, learningPathState, "learn");
   const logoutUser = () => {
     dispatch(Actions.loginActions.logout());
-  } 
+  }
   /**
    * function to fetch all courses initial time
    */
@@ -75,7 +75,7 @@ const SelectCourses = () => {
   const LearningPathDesc=()=>{
     return (
       <>
-        <Button size="small" onClick={()=>setLpId(0)} startIcon={<img src={ArrowBackIos}/>}>
+        <Button size="small" onClick={()=>setLpId(0)} style={{textTransform:"lowercase",opacity:0.7}} startIcon={<img src={ArrowBackIos}/>}>
           Back
         </Button>
         <div style={{maxWidth:"300px",margin:"10px 0px 0px"}}>
@@ -132,7 +132,7 @@ const SelectCourses = () => {
             {lpId!==0 ? <LearningPathDesc/> : <MyLearningPaths/> }
           </Box>
         </div>
-        {lpId!==0 ? <div style={{overflowX:"auto", overflowY:"auto", height:"38vh",margin:"35px 30px 10px 0px"}}><LearningCoursesTable lpId={lpId}/></div> : <MyLearningPathTable/> }
+        {lpId!==0 ? <LearningCoursesTable lpId={lpId} withRate={true}/> : <MyLearningPathTable/> }
         <div className="copyright" style={{border:"1px solid #d3d3d3"}}>
           <Copyright />
         </div>

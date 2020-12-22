@@ -367,6 +367,25 @@ export const learningPathReducer = (state = initialState, action) => {
           isLoading: true,
           errorMessage: ''
         };
+        case actionTypes.SAVE_COURSE_RATE:
+          return {
+            ...state,
+            isLoading: true,
+            errorMessage: ''
+          };
+  
+        case actionTypes.SAVE_COURSE_RATE_SUCCESS:
+          console.log(payload);
+          return {
+            ...state,
+            isLoading: false
+          }
+        case actionTypes.SAVE_COURSE_RATE_FAILURE:
+          console.log(payload);
+          return {
+            ...state,
+            isLoading: false
+          }
 
     default: return state;
   }

@@ -63,7 +63,6 @@ console.log(loginState, "pfA")
   const onViewClick = () => {
     console.log("view clicked")
     dispatch(Actions.learningPathActions.RejectModelOpen(true));
-    dispatch(Actions.learningPathActions.getApprovalRejects(data.learningPathEmployeesId,"REJECTED"));
   }
 
   const discardHandler = () => {
@@ -71,9 +70,22 @@ console.log(loginState, "pfA")
   }
 
   const onViewClickApprove = () => {
-    console.log("view clicked")
+    let reqBody={
+      learningPathEmployeeId:data.learningPathEmployeesId,
+      status:"APPROVED"
+    };
     dispatch(Actions.learningPathActions.ApproveModelOpen(true));
-      dispatch(Actions.learningPathActions.getApprovalRejects(data.learningPathEmployeesId,"APPROVED"));
+      dispatch(Actions.learningPathActions.getApprovalRejects(reqBody));
+  }
+
+  const rejectHandler=(reviewMessage)=>{
+    let reqBody={
+      learningPathEmployeeId:data.learningPathEmployeesId,
+      status:"REJECTED",
+      reviewMessage:reviewMessage
+    };
+    dispatch(Actions.learningPathActions.RejectModelOpen(false));
+    dispatch(Actions.learningPathActions.getApprovalRejects(reqBody));
   }
 
   const discardHandlerApprove = () => {
@@ -109,7 +121,7 @@ console.log(loginState, "pfA")
         <div className={classes.head}>
           <Typography className={classes.view}>View Attachments</Typography>
           <Button className={classes.approve} onClick={onViewClickApprove}>Approve</Button><Approve discardHandler={discardHandlerApprove}></Approve>
-          <Button className={classes.reject} onClick={onViewClick}>Reject</Button><Reject discardHandler={discardHandler}></Reject>
+          <Button className={classes.reject} onClick={onViewClick}>Reject</Button><Reject discardHandler={discardHandler} rejectHandler={rejectHandler}></Reject>
         </div>
       </div>
     </>
