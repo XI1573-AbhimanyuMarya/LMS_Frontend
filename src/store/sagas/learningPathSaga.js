@@ -174,7 +174,7 @@ function* getApprovalRejects(action) {
 }
 
 const saveCourseRateRequest = async ({ reqBody }) => {
-  return await axios.put(SERVICE_URLS.SAVE_COURSE_RATE, { ...reqBody }, { headers: authHeader() });
+  return await axios.post(SERVICE_URLS.SAVE_COURSE_RATE, { ...reqBody }, { headers: authHeader() });
 }
 
 function* saveCourseRate(action) {
