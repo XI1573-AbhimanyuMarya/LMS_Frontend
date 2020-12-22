@@ -163,7 +163,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         return emailcontent;
     }
 
-    @Override
+  /*  @Override
     public Map<String, String> addCourseRating(CourseCompletedPercentRequest courseCompletedPercent) {
         Map<String, String> message = new HashMap<>();
         CourseRating courseRating = CourseRating.builder()
@@ -195,7 +195,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         }
         return message;
     }
-
+*/
 
     public Map<String, String> saveOrUpdateCourseRating(CourseCompletedPercentRequest courseCompletedPercent) {
         Map<String, String> message = new HashMap<>();

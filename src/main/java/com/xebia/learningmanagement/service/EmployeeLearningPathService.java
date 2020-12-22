@@ -19,9 +19,9 @@ public interface EmployeeLearningPathService {
 
     EmployeeLearningPathStatisticsDto updateLearningPathProgress(EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException, IOException;
 
-    Map<String,String> addCourseRating(CourseCompletedPercentRequest courseCompletedPercent);
-
-    Map<String, String> updateCourseRating(long courseRatingId, CourseCompletedPercentRequest courseCompletedPercent);
+//    Map<String,String> addCourseRating(CourseCompletedPercentRequest courseCompletedPercent);
+//
+//    Map<String, String> updateCourseRating(long courseRatingId, CourseCompletedPercentRequest courseCompletedPercent);
 
     public int courseCompletionAverage(long employeeId, long learninfPathId);
 

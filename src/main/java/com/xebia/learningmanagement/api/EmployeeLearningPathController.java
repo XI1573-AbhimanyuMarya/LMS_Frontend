@@ -106,11 +106,11 @@ public class EmployeeLearningPathController {
 //        return employeelearningservice.addCourseRating(courseCompleteRequest);
         return  employeelearningservice.saveOrUpdateCourseRating(courseCompleteRequest);
     }
-    @PutMapping(value="/api/v1/updatecourserating/{ratingId}",consumes=MediaType.APPLICATION_JSON_VALUE)
+/*    @PutMapping(value="/api/v1/updatecourserating/{ratingId}",consumes=MediaType.APPLICATION_JSON_VALUE)
     public Map<String,String> updateCourseRating(@PathVariable long ratingId,@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest)
     {
    return employeelearningservice.updateCourseRating(ratingId,courseCompleteRequest);
-    }
+    }*/
 
     @GetMapping(value = "/api/v1/getcoursecompletedaverage/{learningPathId}/{employeeId}")
     public Map<String, Integer> getCompletionAverage(@PathVariable Long learningPathId, @PathVariable Long employeeId) {
