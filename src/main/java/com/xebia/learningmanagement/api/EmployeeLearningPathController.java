@@ -102,7 +102,7 @@ public class EmployeeLearningPathController {
     }
 
     @PostMapping(value = "/api/v1/update/courseratings", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> addCourseRating(@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest) {
+    public Map<String, String> addCourseRating(@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest) throws Exception {
 //        return employeelearningservice.addCourseRating(courseCompleteRequest);
         return  employeelearningservice.saveOrUpdateCourseRating(courseCompleteRequest);
     }

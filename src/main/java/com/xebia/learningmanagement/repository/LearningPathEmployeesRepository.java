@@ -23,5 +23,7 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
 //    long countByIsLearningPathExpired(boolean b);
 
     List<LearningPathEmployees> findByLearningPathId(Long learningPathId);
+
+    LearningPathEmployees findByLearningPathIdAndEmployeeId(long learningPathId, long employeeId);
 //    long countByIsLearningPathExpiredAndApprovalStatus(boolean b, LearningPathApprovalStatus ytbd);
 }

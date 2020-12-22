@@ -31,6 +31,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.PENDING;
+import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.YTBD;
 
 @Service
 @Slf4j
@@ -103,13 +104,14 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
             } else {
                 endDate = "Expired";
             }
+            int percentCompleted = courseCompletionAverage(learningPath.getEmployee().getId(), learningPath.getLearningPath().getId());
             EmployeeLearningPathStatisticsDto employeeLearningPathStatisticsDto = EmployeeLearningPathStatisticsDto.builder()
                     .learningPathEmployeesId(learningPath.getLearningPathEmployeesId())
-                    .duration(modelMapper.map(learningPath.getDuration(),DurationDto.class))
+                    .duration(modelMapper.map(learningPath.getDuration(), DurationDto.class))
                     .learningPath(modelMapper.map(learningPath.getLearningPath(), LearningPathEmployeeDto.class))
                     .endDate(endDate)
                     .startDate(learningPath.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-                    .percentCompleted(courseCompletionAverage(learningPath.getEmployee().getId(), learningPath.getLearningPath().getId()))
+                    .percentCompleted(percentCompleted)
                     .build();
 
             employeeLearningPathStatisticsDtoList.add(employeeLearningPathStatisticsDto);
@@ -119,7 +121,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         return employeeLearningPathStatisticsDtoList;
     }
 
-       @Override
+    @Override
     public EmployeeLearningPathStatisticsDto updateLearningPathProgress(EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException, IOException {
         ModelMapper modelMapper = new ModelMapper();
         LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById((long) employeeLearningRateRequest.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("LearningPath Employee Id not found"));
@@ -197,7 +199,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     }
 */
 
-    public Map<String, String> saveOrUpdateCourseRating(CourseCompletedPercentRequest courseCompletedPercent) {
+    public Map<String, String> saveOrUpdateCourseRating(CourseCompletedPercentRequest courseCompletedPercent) throws Exception {
         Map<String, String> message = new HashMap<>();
         CourseRating recordExists = courseRatingRepository.findByLearningPathIdAndCourseIdAndEmployeeId(courseCompletedPercent.getLearningPathId(), courseCompletedPercent.getCourseId(), courseCompletedPercent.getEmployeeId());
         CourseRating courseRating = new CourseRating();
@@ -209,10 +211,15 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
                     .percentCompleted(courseCompletedPercent.getPercentCompleted())
                     .build();
         } else {
-            courseRating=recordExists;
+            courseRating = recordExists;
             courseRating.setPercentCompleted(courseCompletedPercent.getPercentCompleted());
         }
         courseRatingRepository.save(courseRating);
+        try {
+            updateStatusAndLearningRate(courseRating.getEmployeeId(),courseRating.getLearningPathId());
+        }catch (Exception e){
+            throw new Exception("Error updating Employee Update Status And Learning Rate");
+        }
         message.put("message", "Course Rating Succesfully Updated");
         return message;
     }
@@ -224,15 +231,27 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         System.out.println(employeeId + " " + learningPathId);
         List<CourseRating> courseRating = courseRatingRepository.getRatingByCourseIdAndLEarningPath(learningPathId, employeeId);
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path ID not found: " + learningPathId));
-        int coursesCount=learningPath.getCourses().size();
-
+        int coursesCount = learningPath.getCourses().size();
         if (courseRating.size() < 1)
             return 0;
-
         int count = courseRating.stream()
                 .mapToInt(CourseRating::getPercentCompleted)
                 .sum();
         return (count) / (coursesCount);
+    }
+
+    private void updateStatusAndLearningRate(long employeeId, long learningPathId) {
+        int percentCompletedCalculation =courseCompletionAverage(employeeId,learningPathId);
+        LearningPathEmployees learningPath = learningPathEmployeesRepository.findByLearningPathIdAndEmployeeId(learningPathId, employeeId);
+
+        if (percentCompletedCalculation == 100 && learningPath.getApprovalStatus().equals(YTBD)) {
+            learningPath.setApprovalStatus(PENDING);
+            learningPath.setPercentCompleted(percentCompletedCalculation);
+            learningPathEmployeesRepository.saveAndFlush(learningPath);
+        } else if (percentCompletedCalculation != 100 && learningPath.getApprovalStatus().equals(YTBD)) {
+            learningPath.setPercentCompleted(percentCompletedCalculation);
+            learningPathEmployeesRepository.saveAndFlush(learningPath);
+        }
 
     }
 
