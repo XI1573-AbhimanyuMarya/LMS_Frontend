@@ -50,6 +50,11 @@ const createLearningPath = (path) => ({
   type: actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST,
   payload: { path },
 });
+
+const createAssignLearningPath = (path) => (console.log("path in assign",path),{
+  type: actionTypes.CREATE_ASSIGNED_LEARNING_PATH_CALL_REQUEST,
+  payload: {path} ,
+});
 const getFirstNextClicked = (val) => ({
   type: actionTypes.GET_FIRST_NEXT_CLICKED,
   payload: { val },
@@ -91,6 +96,7 @@ export default {
   pathModelOpen,
   discardModelOpen,
   createLearningPath,
+  createAssignLearningPath,
   getFirstNextClicked,
   getActivePathStep,
   getAssignedLearningPath,

@@ -16,10 +16,15 @@ const createLearningPath = async ({ path }) => {
   return await axios.post(SERVICE_URLS.CREATE_LEARNING_PATH, { path }, { headers: authHeader() });
 }
 
+const createAssignLearningPath = async ({path}) =>{
+  return await axios.put(SERVICE_URLS.CREATE_ASSIGNED_PATH,  path , { headers: authHeader() });
+}
+
 export function* learningPathSaga() {
   yield takeLatest(actionTypes.FETCH_COURSES_REQUEST, fetchCourses);
   yield takeLatest(actionTypes.FETCH_USERS_REQUEST, fetchUsers);
   yield takeLatest(actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST, createLearning);
+  yield takeLatest(actionTypes.CREATE_ASSIGNED_LEARNING_PATH_CALL_REQUEST, createAssignLearning);
   yield takeLatest(actionTypes.GET_ASSIGNED_LEARNING_PATH_REQUEST, getAssignedLearningPaths);
   yield takeLatest(actionTypes.GET_MY_LEARNING_PATH_REQUEST, getMyLearningPath);
   yield takeLatest(actionTypes.DELETE_ALL_PATH, deleteAllPaths);
@@ -60,6 +65,23 @@ function* createLearning(action) {
     const { response } = error;
     const { data } = response
     yield put({ type: actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE, payload: data });
+  }
+}
+
+
+function* createAssignLearning(action)
+{
+  try{
+    const response = yield call(createAssignLearningPath,action.payload);
+    const {data} = response;
+    yield put({ type: actionTypes.CREATE_ASSIGNED_LEARNING_PATH_SUCCESS, payload: data })
+
+  } catch(error)
+  {
+    const { response } = error;
+    const { data } = response
+    yield put({ type: actionTypes.CREATE_ASSIGNED_LEARNING_PATH_FAILURE, payload: data });
+
   }
 }
 

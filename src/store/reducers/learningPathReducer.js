@@ -17,7 +17,8 @@ const initialState = {
   errorMessage: '',
   mycourses: [],
   assignedCources: [],
-  uploadFilePopup:false
+  uploadFilePopup:false,
+  learningPathIds:3
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -148,6 +149,13 @@ export const learningPathReducer = (state = initialState, action) => {
         ...state,
         isLoading: true
       }
+      case actionTypes.CREATE_ASSIGNED_LEARNING_PATH_CALL_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      }
+
+
     case actionTypes.CREATE_LEARNING_PATH_CALL_SUCCESS:
       return {
         ...state,

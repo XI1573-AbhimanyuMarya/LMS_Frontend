@@ -55,8 +55,14 @@ export const useStyles = makeStyles((theme) => ({
     textAlign: "left",
   },
   selected: {
-    maxWidth: 345,
+    maxWidth: 365,
+    minWidth:305,
     border: "2px solid #67B104",
+    maxHeight: 174,
+    minHeight: 174,
+    margin:' 0 20px 20px 0',
+    
+   
   },
   checkIcon: {
     color: "#67B104",

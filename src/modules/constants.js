@@ -19,6 +19,7 @@ export const SERVICE_URLS = {
   FETCH_USERS: `${API_HOST_PATH}/getAllUsers`,
   CREATE_LEARNING_PATH: `${API_HOST_PATH}/api/learningPath`,
   ASSIGNED_PATH: `${API_HOST_PATH}/api/getAssignedLearningPaths`,
+  CREATE_ASSIGNED_PATH: `${API_HOST_PATH}/api/learningPath/assignLearningPaths`,
   MY_PATH: `${API_HOST_PATH}/employeelearning/myLearningPath`,
   DELETE_ALL_PATH: `${API_HOST_PATH}/employeelearning/deletelearningpath`,
 };

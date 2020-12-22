@@ -67,7 +67,10 @@ const SelectCourses = () => {
 					!el.selected ? el.selected = true : el.selected = false;
 				}
 				return el;
-			});
+      });
+      
+      console.log(" selectedCoursesArr", selectedCoursesArr)
+      console.log(" selectedCourses", selectedCourses)
 			dispatch(Actions.learningPathActions.getSelectedCourses(selectedCourses, selectedCoursesArr));
 		}
 	}
