@@ -121,21 +121,6 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         return employeeLearningPathStatisticsDtoList;
     }
 
-    @Override
-    public EmployeeLearningPathStatisticsDto updateLearningPathProgress(EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException, IOException {
-        ModelMapper modelMapper = new ModelMapper();
-        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById((long) employeeLearningRateRequest.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("LearningPath Employee Id not found"));
-        learningPathEmployees.setPercentCompleted(employeeLearningRateRequest.getPercentCompleted());
-        if (Objects.nonNull(employeeLearningRateRequest.getFile())) {
-            learningPathEmployees.setCertificate(employeeLearningRateRequest.getFile().getBytes());
-        } else {
-            learningPathEmployees.setCertificate(null);
-        }
-        learningPathEmployees.setApprovalStatus(PENDING);
-        learningPathEmployees.setModifiedDate(LocalDateTime.now());
-        LearningPathEmployees updatedLearningPathEmployee = learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
-        return modelMapper.map(updatedLearningPathEmployee, EmployeeLearningPathStatisticsDto.class);
-    }
 
 
     /***
@@ -228,7 +213,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     @Override
     public int courseCompletionAverage(long employeeId, long learningPathId) {
 
-        System.out.println(employeeId + " " + learningPathId);
+        System.out.println("Setting course rating for employee with ID "+employeeId + " & Learning Path with ID" + learningPathId);
         List<CourseRating> courseRating = courseRatingRepository.getRatingByCourseIdAndLEarningPath(learningPathId, employeeId);
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path ID not found: " + learningPathId));
         int coursesCount = learningPath.getCourses().size();
@@ -240,7 +225,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         return (count) / (coursesCount);
     }
 
-    private void updateStatusAndLearningRate(long employeeId, long learningPathId) {
+    private void updateStatusAndLearningRate(long employeeId, long learningPathId) throws Exception {
         int percentCompletedCalculation =courseCompletionAverage(employeeId,learningPathId);
         LearningPathEmployees learningPath = learningPathEmployeesRepository.findByLearningPathIdAndEmployeeId(learningPathId, employeeId);
 
@@ -248,11 +233,26 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
             learningPath.setApprovalStatus(PENDING);
             learningPath.setPercentCompleted(percentCompletedCalculation);
             learningPathEmployeesRepository.saveAndFlush(learningPath);
+            setReviewApprovalMailPropertiesAndSendEmail(learningPath);
+
         } else if (percentCompletedCalculation != 100 && learningPath.getApprovalStatus().equals(YTBD)) {
             learningPath.setPercentCompleted(percentCompletedCalculation);
             learningPathEmployeesRepository.saveAndFlush(learningPath);
         }
 
+    }
+
+
+
+    private void setReviewApprovalMailPropertiesAndSendEmail(LearningPathEmployees learningPathEmployees) throws Exception {
+
+        Map<String, String> model = new HashMap<>();
+
+        model.put("learningPathName", learningPathEmployees.getLearningPath().getName());
+        model.put("Email", learningPathEmployees.getLearningPath().getMadeBy().getUsername());
+        model.put("employeeName", learningPathEmployees.getEmployee().getFullName() );
+        model.put("emailFor", learningPathEmployees.getLearningPath().getMadeBy().getFullName() );
+        emailSend.sendEmailMethodUsingTemplate(EmailType.REVIEW_LEARNING_PATH_APPROVAL_REJECTION_MANAGER.getValue(), model);
     }
 
 
