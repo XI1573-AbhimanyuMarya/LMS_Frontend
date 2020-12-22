@@ -179,20 +179,21 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
     @Override
-    public List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId,Long employeeId) {
-        ModelMapper modelMapper=new ModelMapper();
+    public List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId) {
+        ModelMapper modelMapper = new ModelMapper();
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path Id not found"));
 
-        List<LearningPathCourseDetailsDTO> courseDetailsList=new ArrayList<>();
+        List<LearningPathCourseDetailsDTO> courseDetailsList = new ArrayList<>();
 
-        for (Courses singleCourse : learningPath.getCourses()){
+        for (Courses singleCourse : learningPath.getCourses()) {
 
             LearningPathCourseDetailsDTO singleCourseDetails = LearningPathCourseDetailsDTO.builder()
                     .id(singleCourse.getId())
                     .name(singleCourse.getName())
                     .description(singleCourse.getDescription())
                     .category(modelMapper.map(singleCourse.getCategory(), CategoryDto.class))
-                    .percentCompleted(evaluateCourseCompletionPercentage(learningPath, employeeId,singleCourse.getId())).build();
+                    .competency(singleCourse.getCompetency())
+                    .percentCompleted(evaluateCourseCompletionPercentage(learningPath, employeeId, singleCourse.getId())).build();
 
             courseDetailsList.add(singleCourseDetails);
         }
@@ -200,8 +201,8 @@ public class LearningPathServiceImpl implements LearningPathService {
         return courseDetailsList;
     }
 
-    private int evaluateCourseCompletionPercentage(LearningPath learningPath,  Long employeeId,Long courseId) {
-        CourseRating courseRatingForEmployee = courseRatingRepository.findByLearningPathIdAndCourseIdAndEmployeeId(learningPath.getId(),courseId,employeeId);
+    private int evaluateCourseCompletionPercentage(LearningPath learningPath, Long employeeId, Long courseId) {
+        CourseRating courseRatingForEmployee = courseRatingRepository.findByLearningPathIdAndCourseIdAndEmployeeId(learningPath.getId(), courseId, employeeId);
         return courseRatingForEmployee.getPercentCompleted();
 
     }

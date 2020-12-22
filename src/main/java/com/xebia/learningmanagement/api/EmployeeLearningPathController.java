@@ -3,7 +3,6 @@ package com.xebia.learningmanagement.api;
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
 import com.xebia.learningmanagement.dtos.request.CourseCompletedPercentRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
-import com.xebia.learningmanagement.dtos.request.EmployeeLearningRateRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.service.EmployeeLearningPathService;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +81,7 @@ public class EmployeeLearningPathController {
 
     @PostMapping(value = "/api/v1/update/courseratings", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourseRating(@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest) throws Exception {
-        return  employeelearningservice.saveOrUpdateCourseRating(courseCompleteRequest);
+        return employeelearningservice.saveOrUpdateCourseRating(courseCompleteRequest);
     }
 
 

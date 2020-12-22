@@ -1,5 +1,6 @@
 package com.xebia.learningmanagement.dtos;
 
+import com.xebia.learningmanagement.entity.Competency;
 import lombok.*;
 
 @Builder
@@ -12,5 +13,6 @@ public class LearningPathCourseDetailsDTO {
     private String name;
     private String description;
     private CategoryDto category;
+    private Competency competency;
     private int percentCompleted;
 }

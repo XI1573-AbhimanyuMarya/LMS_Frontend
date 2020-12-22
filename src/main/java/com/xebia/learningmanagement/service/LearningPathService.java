@@ -7,7 +7,6 @@ import com.xebia.learningmanagement.dtos.LearningPathManagerDto;
 import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
-import com.xebia.learningmanagement.entity.Courses;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.exception.LearningPathException;
 
