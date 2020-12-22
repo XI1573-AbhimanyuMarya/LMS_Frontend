@@ -3,16 +3,15 @@ package com.xebia.learningmanagement.dtos;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xebia.learningmanagement.enums.LearningPathApprovalStatus;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 //@JsonIgnoreProperties(value = "employee")
 public class LearningPathManagerDto {
@@ -24,7 +23,7 @@ public class LearningPathManagerDto {
     private DurationDto duration;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Boolean isLearningPathExpired;
+//    private Boolean isLearningPathExpired;
 
 
 }
