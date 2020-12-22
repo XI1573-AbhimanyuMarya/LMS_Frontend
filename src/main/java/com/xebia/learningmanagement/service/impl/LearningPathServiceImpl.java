@@ -50,6 +50,9 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Autowired
     protected EmailSend emailSend;
 
+    @Autowired
+    private CourseRatingRepository courseRatingRepository;
+
 
     @Override
     public void createLearningPath(LearningPathDto.Path path) throws Exception {
@@ -176,11 +179,33 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
     @Override
-    public List<Courses> getCourseDetails(Long learningPathId) {
-
+    public List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId,Long employeeId) {
+        ModelMapper modelMapper=new ModelMapper();
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path Id not found"));
-        return learningPath.getCourses();
+
+        List<LearningPathCourseDetailsDTO> courseDetailsList=new ArrayList<>();
+
+        for (Courses singleCourse : learningPath.getCourses()){
+
+            LearningPathCourseDetailsDTO singleCourseDetails = LearningPathCourseDetailsDTO.builder()
+                    .id(singleCourse.getId())
+                    .name(singleCourse.getName())
+                    .description(singleCourse.getDescription())
+                    .category(modelMapper.map(singleCourse.getCategory(), CategoryDto.class))
+                    .percentCompleted(evaluateCourseCompletionPercentage(learningPath, employeeId,singleCourse.getId())).build();
+
+            courseDetailsList.add(singleCourseDetails);
+        }
+
+        return courseDetailsList;
     }
+
+    private int evaluateCourseCompletionPercentage(LearningPath learningPath,  Long employeeId,Long courseId) {
+        CourseRating courseRatingForEmployee = courseRatingRepository.findByLearningPathIdAndCourseIdAndEmployeeId(learningPath.getId(),courseId,employeeId);
+        return courseRatingForEmployee.getPercentCompleted();
+
+    }
+
 
     @Override
     public List<ApprovalDto> getPendingApprovals(ManagerEmailRequest managerEmail) {

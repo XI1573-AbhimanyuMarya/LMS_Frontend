@@ -14,6 +14,5 @@ public interface CourseRatingRepository extends JpaRepository<CourseRating, Long
     @Query("SELECT u FROM CourseRating u WHERE u.learningPathId = ?1 and u.employeeId = ?2")
     public List<CourseRating> getRatingByCourseIdAndLEarningPath(long learningPathId,long employeeId);
 
-
     CourseRating findByLearningPathIdAndCourseIdAndEmployeeId(long learningPathId, long courseId, long employeeId);
 }

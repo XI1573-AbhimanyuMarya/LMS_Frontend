@@ -80,37 +80,12 @@ public class EmployeeLearningPathController {
 
     }
 
-    @PutMapping(value = "/myLearningRate", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity updateLearningPathProgress(@ModelAttribute EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException {
-        UserResponse userResponse = new UserResponse();
-        EmployeeLearningPathStatisticsDto employee;
-        try {
-            if (employeeLearningRateRequest.getPercentCompleted() != null
-                    && employeeLearningRateRequest.getLearningPathEmployeeId() != null) {
-                employee = employeelearningservice.updateLearningPathProgress(employeeLearningRateRequest);
-            } else {
-                throw new LearningPathException("Wrong Format for Employee Learning Rate Request");
-            }
-
-        } catch (LearningPathException | IOException e) {
-            userResponse.setStatus("failure");
-            userResponse.setMessage(e.getLocalizedMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
-        }
-
-        return new ResponseEntity(employee, HttpStatus.ACCEPTED);
-    }
 
     @PostMapping(value = "/api/v1/update/courseratings", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourseRating(@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest) throws Exception {
-//        return employeelearningservice.addCourseRating(courseCompleteRequest);
         return  employeelearningservice.saveOrUpdateCourseRating(courseCompleteRequest);
     }
-/*    @PutMapping(value="/api/v1/updatecourserating/{ratingId}",consumes=MediaType.APPLICATION_JSON_VALUE)
-    public Map<String,String> updateCourseRating(@PathVariable long ratingId,@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest)
-    {
-   return employeelearningservice.updateCourseRating(ratingId,courseCompleteRequest);
-    }*/
+
 
     @GetMapping(value = "/api/v1/getcoursecompletedaverage/{learningPathId}/{employeeId}")
     public Map<String, Integer> getCompletionAverage(@PathVariable Long learningPathId, @PathVariable Long employeeId) {

@@ -1,9 +1,6 @@
 package com.xebia.learningmanagement.api;
 
-import com.xebia.learningmanagement.dtos.ApprovalDto;
-import com.xebia.learningmanagement.dtos.EmployeeDto;
-import com.xebia.learningmanagement.dtos.LearningPathDto;
-import com.xebia.learningmanagement.dtos.LearningPathManagerDto;
+import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
@@ -47,13 +44,6 @@ public class LearningPathController {
         return ResponseEntity.ok(userResponse);
     }
 
-    /***
-     * Get mapping Does not support Request Body so changing the mapping to @PostMapping
-     * https://stackoverflow.com/questions/978061/http-get-with-request-body/983458#983458
-     * @param managerEmail
-     * @return
-     * @throws LearningPathException
-     */
     @PostMapping("/getAssignedLearningPaths")
     public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerEmailRequest managerEmail) throws LearningPathException {
         UserResponse userResponse = new UserResponse();
@@ -74,10 +64,10 @@ public class LearningPathController {
 
     }
 
-    @GetMapping(value = "/learningPath/courses/{learningPathId}")
-    public List<Courses> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") Long learningPathId){
-        logger.info("Fetching all the courses inside the specific learning Paths ID-"+ learningPathId);
-        return learningPathService.getCourseDetails(learningPathId);
+    @GetMapping(value = "/learningPath/courses/{learningPathId}/{employeeId}")
+    public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") Long learningPathId, @PathVariable("employeeId")Long employeeId ){
+        logger.info("Fetching all the courses inside the specific a learning Paths with ID-"+ learningPathId + " for employee with ID-"+employeeId);
+        return learningPathService.getCourseDetails(learningPathId,employeeId);
     }
 
     @PostMapping(value = "/pending/approvals")
