@@ -25,13 +25,8 @@ public class LearningPathEmployees {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private LearningPath learningPath;
 
-    @Column
-    private byte[] certificate;
     @Enumerated(EnumType.STRING)
     private LearningPathApprovalStatus approvalStatus;
-    @Column(name = "modified_date")
-    @LastModifiedDate
-    private LocalDateTime modifiedDate;
 
     @ManyToOne
     private Duration duration;

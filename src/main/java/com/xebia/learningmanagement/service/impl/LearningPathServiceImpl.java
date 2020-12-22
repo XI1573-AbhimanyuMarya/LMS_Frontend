@@ -213,7 +213,8 @@ public class LearningPathServiceImpl implements LearningPathService {
         ModelMapper modelMapper = new ModelMapper();
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
         List<LearningPathEmployees> madeByManager = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
-        List<LearningPathEmployees> needsApprovalEmpList = madeByManager.stream().filter(a -> PENDING.equals(a.getApprovalStatus())).sorted(Comparator.comparing(LearningPathEmployees::getModifiedDate)).collect(Collectors.toList());
+        // TODO : Pending approvals must be sorted by some date  : make abstract auditing entity
+        List<LearningPathEmployees> needsApprovalEmpList = madeByManager.stream().filter(a -> PENDING.equals(a.getApprovalStatus())).collect(Collectors.toList());
         return needsApprovalEmpList.stream().map(this::PendingApprovalsListToApprovalDto).collect(Collectors.toList());
     }
 
@@ -221,7 +222,6 @@ public class LearningPathServiceImpl implements LearningPathService {
         ApprovalDto approvalDto = new ApprovalDto();
         ModelMapper modelMapper = new ModelMapper();
 
-        String bytes = Objects.nonNull(employee.getCertificate()) ? new String(Base64.encodeBase64(employee.getCertificate()), StandardCharsets.UTF_8) : null;
         approvalDto.setApprovalStatus(employee.getApprovalStatus());
         approvalDto.setLearningPathEmployeesId(employee.getLearningPathEmployeesId());
         approvalDto.setPercentCompleted(employee.getPercentCompleted());
