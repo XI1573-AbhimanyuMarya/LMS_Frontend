@@ -9,11 +9,8 @@ import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalReq
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
 import com.xebia.learningmanagement.entity.LearningPath;
-import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
-import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.service.LearningPathService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,20 +19,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api")
+@Slf4j
+@RequestMapping("/manager")
 public class LearningPathController {
-
-    Logger logger = LoggerFactory.getLogger(LearningPathController.class);
-
     @Autowired
     LearningPathService learningPathService;
 
 
-    @PostMapping("/learningPath")
+    @PostMapping("/api/v1/create/learningPath")
     public ResponseEntity<UserResponse> createLearningPath(@RequestBody @Valid LearningPathDto pathRequest) throws Exception {
         UserResponse userResponse = new UserResponse();
         LearningPathDto.Path path = pathRequest.getPath();
@@ -45,99 +39,44 @@ public class LearningPathController {
         return ResponseEntity.ok(userResponse);
     }
 
-    @PostMapping("/getAssignedLearningPaths")
-    public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerEmailRequest managerEmail) throws LearningPathException {
-        UserResponse userResponse = new UserResponse();
-        Map<Long, List<LearningPathManagerDto>> allAssignedLearningPath;
-        try {
-            if (managerEmail != null && !"".equalsIgnoreCase(managerEmail.getManagerEmail())) {
-                allAssignedLearningPath = learningPathService.getAllAssignedLearningPath(managerEmail);
-            } else {
-                throw new LearningPathException("Wrong Format for Managers Email");
-            }
-        } catch (LearningPathException e) {
-            userResponse.setStatus("failure");
-            userResponse.setMessage(e.getLocalizedMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
-        }
-
-        return new ResponseEntity(allAssignedLearningPath, HttpStatus.OK);
-
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/api/v1/manage/learningPaths/assigned")
+    public Map<Long, List<LearningPathManagerDto>> manageAssignedLearningpaths(@Valid @RequestBody ManagerEmailRequest managerEmail) {
+        return learningPathService.getAllAssignedLearningPath(managerEmail);
     }
 
-    @GetMapping(value = "/learningPath/courses/{learningPathId}/{employeeId}")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/api/v1/learningPath/courses/{learningPathId}/{employeeId}")
     public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") Long learningPathId, @PathVariable("employeeId") Long employeeId) {
-        logger.info("Fetching all the courses inside the specific a learning Paths with ID-" + learningPathId + " for employee with ID-" + employeeId);
+        log.info("Fetching all the courses inside the specific a learning Paths with ID-" + learningPathId + " for employee with ID-" + employeeId);
         return learningPathService.getCourseDetails(learningPathId, employeeId);
     }
 
-    @PostMapping(value = "/pending/approvals")
-    public ResponseEntity needsApproval(@RequestBody ManagerEmailRequest managerEmailRequest) {
-        UserResponse userResponse = new UserResponse();
-        List<ApprovalDto> pendingApprovals;
-        try {
-            if (managerEmailRequest != null && !"".equalsIgnoreCase(managerEmailRequest.getManagerEmail())) {
-                pendingApprovals = learningPathService.getPendingApprovals(managerEmailRequest);
-            } else {
-                throw new LearningPathException("Wrong Format for Managers Email");
-            }
-        } catch (Exception e) {
-            userResponse.setStatus("failure");
-            userResponse.setMessage(e.getLocalizedMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
-        }
-        return new ResponseEntity(pendingApprovals, HttpStatus.OK);
-
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(value = "/api/v1/pending/approvals")
+    public List<ApprovalDto> needsApproval(@Valid @RequestBody ManagerEmailRequest managerEmailRequest) {
+        return learningPathService.getPendingApprovals(managerEmailRequest);
     }
 
-    @PutMapping(value = "/review/approvals")
-    public ResponseEntity approveLearningPath(@RequestBody LearningPathEmployeeApprovalRequest request) {
-        UserResponse userResponse = new UserResponse();
-        try {
-            if (request.getLearningPathEmployeeId() != null && request.getStatus() != null) {
-                learningPathService.approveRequests(request);
-            } else {
-                throw new LearningPathEmployeesException("Learning Path EmployeeId should not be null & Approval Status should be in format APPROVED/REJECTED only");
-            }
-        } catch (Exception e) {
-            userResponse.setStatus("failure");
-            userResponse.setMessage(e.getLocalizedMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
-        }
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    @PutMapping(value = "/api/v1/review/approvals")
+    public ResponseEntity<Object> approveLearningPath(@Valid @RequestBody LearningPathEmployeeApprovalRequest request) throws Exception {
+        learningPathService.approveRequests(request);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Review Successful");
     }
 
-    @GetMapping(value = "/learningPath/courseDetails/{assigneeId}")
-    public ResponseEntity<Object> getLearningPathWithCourseDetails(@PathVariable("assigneeId") Long assigneeId) {
-        logger.info("Fetching all the learning Paths made by manager " + assigneeId);
-        try {
-
-            List<LearningPath> learningPathCourseList = learningPathService.getLearningPathWithCourse(assigneeId);
-
-            if (Objects.nonNull(learningPathCourseList)) {
-                return new ResponseEntity<Object>(learningPathCourseList, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<Object>("No Learning Path exists", HttpStatus.FORBIDDEN);
-            }
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at backend");
-        }
-
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/api/v1/details/learningPaths/{assigneeId}")
+    public List<LearningPath> getAllLearningPathsMadeByAssignee(@PathVariable("assigneeId") Long assigneeId) {
+        log.info("Fetching all pre-made learning Paths made earlier by managerID " + assigneeId);
+        return learningPathService.getLearningPathWithCourse(assigneeId);
     }
 
 
-    @PutMapping(value = "/learningPath/assignLearningPaths")
-    public ResponseEntity<String> saveAssignLearningPaths(@RequestBody @Valid AssignLearningPathRequest request) {
+    @PutMapping(value = "/api/v1/assign/learningPaths")
+    public ResponseEntity<String> saveAssignLearningPaths(@RequestBody @Valid AssignLearningPathRequest request) throws Exception {
+        learningPathService.saveAssignLearningPaths(request);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Learning path Assigned Successfully");
 
-        try {
-
-            learningPathService.saveAssignLearningPaths(request);
-            return new ResponseEntity<String>("LearningPath successfully assigned", HttpStatus.OK);
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error at backend");
-        }
     }
 
 

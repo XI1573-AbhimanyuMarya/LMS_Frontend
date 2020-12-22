@@ -14,14 +14,13 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/competency")
 @Slf4j
 public class CompetencyController {
     @Autowired
     private CompetencyService competencyService;
-    @GetMapping("/competency/levels")
+    @GetMapping("/api/v1/levels")
     public List<Competency> getDurations(){
-        List<Competency> competencyLevels = competencyService.getCompetencyLevels();
-        return competencyLevels;
+        return competencyService.getCompetencyLevels();
     }
 }

@@ -12,23 +12,23 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
 
-    @GetMapping("/admin/v1/dashboard/details")
+    @GetMapping("/api/v1/dashboard/details")
     public List<AdminDashboardDetailsDTO> dashboardDetails() {
         return adminService.dashboardDetails();
     }
 
-    @GetMapping("/admin/v1/dashboard/stats")
+    @GetMapping("/api/v1/dashboard/stats")
     public AdminDashboardStatisticsDTO dashboardStatistics() {
         return adminService.dashboardStatistics();
     }
 
-    @GetMapping("/admin/v1/learningPath/details")
+    @GetMapping("/api/v1/learningPath/details")
     public List<MadeForEmployeeDto> specificLearningPathDetails(@RequestParam @NotBlank Long learningPathId) {
         return adminService.specificLearningPathDetails(learningPathId);
     }

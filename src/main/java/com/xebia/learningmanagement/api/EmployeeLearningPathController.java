@@ -14,25 +14,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/employeelearning")
+@RequestMapping("/employee")
 public class EmployeeLearningPathController {
 
     @Autowired
     private EmployeeLearningPathService employeelearningservice;
 
-    /***
-     *
-     *
-     * @return
-     * @throws LearningPathException
-     */
-    @PostMapping("/deletelearningpath")
+
+    @PostMapping(value = "/api/v1/delete/learningpath")
     public ResponseEntity<UserResponse> editLearningPath(@RequestBody final Map userdata) throws LearningPathException {
         UserResponse userResponse = new UserResponse();
         try {
@@ -50,35 +44,13 @@ public class EmployeeLearningPathController {
         }
     }
 
-    /***
-     * Get mapping Does not support Request Body so changing the mapping to @PostMapping
-     * https://stackoverflow.com/questions/978061/http-get-with-request-body/983458#983458
-     * @param employeeEmail
-     * @return
-     * @throws LearningPathException
-     */
-    @PostMapping("/myLearningPath")
-    public ResponseEntity getMyLearningPath(@RequestBody EmployeeEmailRequest employeeEmail) throws LearningPathException {
-        UserResponse userResponse = new UserResponse();
-        List<EmployeeLearningPathStatisticsDto> employeeLearningPathStatistics;
-        try {
-            if (employeeEmail != null && !"".equalsIgnoreCase(employeeEmail.getEmployeeEmail())) {
-                employeeLearningPathStatistics = employeelearningservice.getMyAssignedLearningPaths(employeeEmail);
-            } else {
-                throw new LearningPathException("Wrong Format for Employee Email");
-            }
-
-        } catch (LearningPathException e) {
-            userResponse.setStatus("failure");
-            userResponse.setMessage(e.getLocalizedMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
-        }
-
-        return new ResponseEntity(employeeLearningPathStatistics, HttpStatus.OK);
-
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(value = "/api/v1/mylearningpaths", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<EmployeeLearningPathStatisticsDto> getMyLearningPath(@Valid @RequestBody EmployeeEmailRequest employeeEmail) {
+        return employeelearningservice.getMyAssignedLearningPaths(employeeEmail);
     }
 
-
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/api/v1/update/courseratings", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourseRating(@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest) throws Exception {
         return employeelearningservice.saveOrUpdateCourseRating(courseCompleteRequest);
