@@ -222,11 +222,9 @@ public class LearningPathServiceImpl implements LearningPathService {
         ModelMapper modelMapper = new ModelMapper();
 
         String bytes = Objects.nonNull(employee.getCertificate()) ? new String(Base64.encodeBase64(employee.getCertificate()), StandardCharsets.UTF_8) : null;
-        approvalDto.setCertificate(bytes);
         approvalDto.setApprovalStatus(employee.getApprovalStatus());
         approvalDto.setLearningPathEmployeesId(employee.getLearningPathEmployeesId());
         approvalDto.setPercentCompleted(employee.getPercentCompleted());
-        approvalDto.setModifiedDate(employee.getModifiedDate());
         approvalDto.setLearningPath(modelMapper.map(employee.getLearningPath(), LearningPathManagerApprovalDto.class));
         approvalDto.setEmployee(modelMapper.map(employee.getEmployee(), EmployeeDto.class));
         approvalDto.setStartDate(employee.getStartDate());
@@ -239,15 +237,17 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Override
     public void approveRequests(LearningPathEmployeeApprovalRequest request) throws Exception {
         LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(request.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("Learning Path Employee Id not found"));
-
+        String reviewMessage;
         if (request.getStatus().equalsIgnoreCase("APPROVED")) {
             learningPathEmployees.setApprovalStatus(APPROVED);
+            reviewMessage="APPROVED";
         } else {
             learningPathEmployees.setApprovalStatus(REJECTED);
+            reviewMessage=request.getReviewMessage();
         }
 
         try {
-            setApprovalMailPropertiesAndSendEmail(learningPathEmployees);
+            setApprovalMailPropertiesAndSendEmail(learningPathEmployees,reviewMessage);
             learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
         } catch (Exception e) {
             throw new LearningPathEmployeesException("Unable to Send Email & update Status");
@@ -257,7 +257,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
 
-    private void setApprovalMailPropertiesAndSendEmail(LearningPathEmployees learningPathEmployees) throws Exception {
+    private void setApprovalMailPropertiesAndSendEmail(LearningPathEmployees learningPathEmployees, String reviewMessage) throws Exception {
 
         Map<String, String> model = new HashMap<>();
 
@@ -265,6 +265,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         model.put("Email", learningPathEmployees.getEmployee().getUsername());
         model.put("status", learningPathEmployees.getApprovalStatus().toString());
         model.put("emailFor", learningPathEmployees.getEmployee().getFullName());
+        model.put("reviewMessage", reviewMessage);
         emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_APPROVAL_REJECTION.getValue(), model);
     }
 

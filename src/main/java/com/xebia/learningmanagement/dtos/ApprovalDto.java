@@ -17,11 +17,11 @@ public class ApprovalDto {
     private EmployeeDto employee;
     private LearningPathManagerApprovalDto learningPath;
     private LearningPathApprovalStatus approvalStatus;
-    private LocalDateTime modifiedDate;
+//    private LocalDateTime modifiedDate;
     private DurationDto duration;
     // Refers to Learning Path start Date and End Date
     private LocalDate startDate;
     private LocalDate endDate;
 //    private Boolean isLearningPathExpired;
-    private String certificate;
+//    private String certificate;
 }
