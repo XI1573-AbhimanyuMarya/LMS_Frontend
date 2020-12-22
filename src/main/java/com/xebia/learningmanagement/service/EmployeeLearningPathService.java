@@ -17,7 +17,5 @@ public interface EmployeeLearningPathService {
 
     List<EmployeeLearningPathStatisticsDto> getMyAssignedLearningPaths(EmployeeEmailRequest employeeEmail) throws LearningPathException;
 
-    public int courseCompletionAverage(long employeeId, long learninfPathId);
-
     public Map<String, String> saveOrUpdateCourseRating(CourseCompletedPercentRequest courseCompletedPercent) throws Exception;
 }

@@ -85,13 +85,4 @@ public class EmployeeLearningPathController {
     }
 
 
-    @GetMapping(value = "/api/v1/getcoursecompletedaverage/{learningPathId}/{employeeId}")
-    public Map<String, Integer> getCompletionAverage(@PathVariable Long learningPathId, @PathVariable Long employeeId) {
-
-        Map<String, Integer> data = new HashMap<>();
-        data.put("courseAverage", employeelearningservice.courseCompletionAverage(employeeId, learningPathId));
-        return data;
-    }
-
-
 }

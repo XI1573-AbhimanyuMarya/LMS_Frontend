@@ -5,10 +5,8 @@ import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
 import com.xebia.learningmanagement.dtos.LearningPathEmployeeDto;
 import com.xebia.learningmanagement.dtos.request.CourseCompletedPercentRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
-import com.xebia.learningmanagement.dtos.request.EmployeeLearningRateRequest;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
-import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.repository.CourseRatingRepository;
@@ -24,9 +22,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -52,11 +48,6 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     private LearningPathRepository learningPathRepository;
 
 
-    /***
-     *
-     * @param data
-     * @throws LearningPathException
-     */
     @Override
     public void deleteLearningPath(Map data) throws LearningPathException {
         Map<String, String> emailcontent = new HashMap<>();
@@ -86,11 +77,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         }
     }
 
-    /***
-     * @param employeeEmail
-     * @return
-     * @throws LearningPathException
-     */
+
     @Override
     public List<EmployeeLearningPathStatisticsDto> getMyAssignedLearningPaths(EmployeeEmailRequest employeeEmail) throws LearningPathException {
         ModelMapper modelMapper = new ModelMapper();
@@ -122,12 +109,6 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     }
 
 
-
-    /***
-     *
-     * @param learningpathemployees
-     * @return
-     */
     public Map setMailProperties(LearningPathEmployees learningpathemployees) {
         Map<String, String> emailcontent = new HashMap<>();
         List<Courses> courselist = null;
@@ -150,39 +131,6 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         return emailcontent;
     }
 
-  /*  @Override
-    public Map<String, String> addCourseRating(CourseCompletedPercentRequest courseCompletedPercent) {
-        Map<String, String> message = new HashMap<>();
-        CourseRating courseRating = CourseRating.builder()
-                .courseId(courseCompletedPercent.getCourseId())
-                .employeeId(courseCompletedPercent.getEmployeeId())
-                .learningPathId(courseCompletedPercent.getLearningPathId())
-                .percentCompleted(courseCompletedPercent.getPercentCompleted())
-                .build();
-
-        if (courseRatingRepository.save(courseRating) != null) {
-            message.put("message", "Course Rating Succesfully Added");
-        }
-        return message;
-    }
-
-    @Override
-    public Map<String, String> updateCourseRating(long courseRatingId, CourseCompletedPercentRequest courseCompletedPercent) {
-        Map<String, String> message = new HashMap<>();
-        CourseRating courseRating = CourseRating.builder()
-                .id(courseRatingId)
-                .courseId(courseCompletedPercent.getCourseId())
-                .employeeId(courseCompletedPercent.getEmployeeId())
-                .learningPathId(courseCompletedPercent.getLearningPathId())
-                .percentCompleted(courseCompletedPercent.getPercentCompleted())
-                .build();
-        CourseRating courseRating1 = courseRatingRepository.findByLearningPathIdAndCourseIdAndEmployeeId(courseCompletedPercent.getLearningPathId(), courseCompletedPercent.getCourseId(), courseCompletedPercent.getEmployeeId());
-        if (courseRatingRepository.save(courseRating) != null) {
-            message.put("message", "Course Rating Succesfully Updated");
-        }
-        return message;
-    }
-*/
 
     public Map<String, String> saveOrUpdateCourseRating(CourseCompletedPercentRequest courseCompletedPercent) throws Exception {
         Map<String, String> message = new HashMap<>();
@@ -201,19 +149,18 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         }
         courseRatingRepository.save(courseRating);
         try {
-            updateStatusAndLearningRate(courseRating.getEmployeeId(),courseRating.getLearningPathId());
-        }catch (Exception e){
-            throw new Exception("Error updating Employee Update Status And Learning Rate");
+            updateStatusAndLearningRate(courseRating.getEmployeeId(), courseRating.getLearningPathId());
+        } catch (Exception e) {
+            throw new Exception("Error updating Employee Update Status And Learning Rate. Reason: "+e.getMessage());
         }
         message.put("message", "Course Rating Succesfully Updated");
         return message;
     }
 
 
-    @Override
     public int courseCompletionAverage(long employeeId, long learningPathId) {
 
-        System.out.println("Setting course rating for employee with ID "+employeeId + " & Learning Path with ID" + learningPathId);
+        System.out.println("Setting course rating for employee with ID " + employeeId + " & Learning Path with ID" + learningPathId);
         List<CourseRating> courseRating = courseRatingRepository.getRatingByCourseIdAndLEarningPath(learningPathId, employeeId);
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path ID not found: " + learningPathId));
         int coursesCount = learningPath.getCourses().size();
@@ -226,7 +173,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     }
 
     private void updateStatusAndLearningRate(long employeeId, long learningPathId) throws Exception {
-        int percentCompletedCalculation =courseCompletionAverage(employeeId,learningPathId);
+        int percentCompletedCalculation = courseCompletionAverage(employeeId, learningPathId);
         LearningPathEmployees learningPath = learningPathEmployeesRepository.findByLearningPathIdAndEmployeeId(learningPathId, employeeId);
 
         if (percentCompletedCalculation == 100 && learningPath.getApprovalStatus().equals(YTBD)) {
@@ -243,15 +190,14 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     }
 
 
-
     private void setReviewApprovalMailPropertiesAndSendEmail(LearningPathEmployees learningPathEmployees) throws Exception {
 
         Map<String, String> model = new HashMap<>();
 
         model.put("learningPathName", learningPathEmployees.getLearningPath().getName());
         model.put("Email", learningPathEmployees.getLearningPath().getMadeBy().getUsername());
-        model.put("employeeName", learningPathEmployees.getEmployee().getFullName() );
-        model.put("emailFor", learningPathEmployees.getLearningPath().getMadeBy().getFullName() );
+        model.put("employeeName", learningPathEmployees.getEmployee().getFullName());
+        model.put("emailFor", learningPathEmployees.getLearningPath().getMadeBy().getFullName());
         emailSend.sendEmailMethodUsingTemplate(EmailType.REVIEW_LEARNING_PATH_APPROVAL_REJECTION_MANAGER.getValue(), model);
     }
 
