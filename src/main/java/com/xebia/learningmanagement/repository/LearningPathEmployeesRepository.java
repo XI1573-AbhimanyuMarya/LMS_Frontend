@@ -9,21 +9,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface LearningPathEmployeesRepository extends JpaRepository<LearningPathEmployees,Long> {
 
     List<LearningPathEmployees> findByLearningPathMadeBy(User user);
+
     List<LearningPathEmployees> findByEmployee(User user);
 
-//    List<LearningPathEmployees> findByIsLearningPathExpiredAndApprovalStatus(boolean b, LearningPathApprovalStatus pending);
-
     long countByPercentCompleted(int percent);
+
     long countByPercentCompletedNot(int percent);
-//    long countByIsLearningPathExpired(boolean b);
 
     List<LearningPathEmployees> findByLearningPathId(Long learningPathId);
 
     LearningPathEmployees findByLearningPathIdAndEmployeeId(long learningPathId, long employeeId);
-//    long countByIsLearningPathExpiredAndApprovalStatus(boolean b, LearningPathApprovalStatus ytbd);
+
+    long countByEndDateBefore(LocalDate now);
 }

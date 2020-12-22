@@ -12,11 +12,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.YTBD;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -41,7 +40,7 @@ public class AdminServiceImpl implements AdminService {
         Map<LearningPath, Long> LEARNING_PATH_ASSIGNED_TO_EMPLOYEE_COUNT = learningPathEmployeesList.stream().collect(Collectors.groupingBy(LearningPathEmployees::getLearningPath, Collectors.counting()));
         Map<LearningPath, Long> LEARNING_PATH_COMPLETED_COUNT = learningPathEmployeesList.stream().filter(a -> a.getPercentCompleted() == 100).collect(Collectors.groupingBy(LearningPathEmployees::getLearningPath, Collectors.counting()));
         Map<LearningPath, Long> LEARNING_PATH_INPROGRESS_COUNT = learningPathEmployeesList.stream().filter(a -> a.getPercentCompleted() != 100).collect(Collectors.groupingBy(LearningPathEmployees::getLearningPath, Collectors.counting()));
-        Map<LearningPath, Long> LEARNING_PATH_OVERDUE_COUNT = null;  //todo - 1
+        Map<LearningPath, Long> LEARNING_PATH_OVERDUE_COUNT = learningPathEmployeesList.stream().filter(a -> a.getEndDate().compareTo(LocalDate.now()) < 0).collect(Collectors.groupingBy(LearningPathEmployees::getLearningPath, Collectors.counting()));
 
         return AdminDashboardDetailsDTO.builder().learningPathName(LEARNING_PATH_EMPLOYEES.getLearningPath().getName())
                 .learningPathId(LEARNING_PATH_EMPLOYEES.getLearningPath().getId())
@@ -58,9 +57,8 @@ public class AdminServiceImpl implements AdminService {
         long TOTAL_LEARNING_PATH_ASSIGNED = employeesRepository.count();
         long TOTAL_LEARNING_PATH_COMPLETED = employeesRepository.countByPercentCompleted(100);
         long TOTAL_LEARNING_PATH_INPROGRESS = employeesRepository.countByPercentCompletedNot(100);
-//        long TOTAL_LEARNING_PATH_EXPIRED = employeesRepository.countByIsLearningPathExpiredAndApprovalStatus(true, YTBD);
-        //todo -2
-        long TOTAL_LEARNING_PATH_EXPIRED = Long.parseLong(null);
+        long TOTAL_LEARNING_PATH_EXPIRED = employeesRepository.countByEndDateBefore(LocalDate.now());
+
         return AdminDashboardStatisticsDTO.builder()
                 .totalLearningPathAssigned(TOTAL_LEARNING_PATH_ASSIGNED)
                 .totalLearningPathCompleted(TOTAL_LEARNING_PATH_COMPLETED)
