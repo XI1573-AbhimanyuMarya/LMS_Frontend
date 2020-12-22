@@ -50,6 +50,9 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Autowired
     protected EmailSend emailSend;
 
+    @Autowired
+    private CourseRatingRepository courseRatingRepository;
+
 
     @Override
     public void createLearningPath(LearningPathDto.Path path) throws Exception {
@@ -176,17 +179,42 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
     @Override
-    public List<Courses> getCourseDetails(Long learningPathId) {
+    public List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId) {
+        ModelMapper modelMapper = new ModelMapper();
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path Id not found"));
-        return learningPath.getCourses();
+
+        List<LearningPathCourseDetailsDTO> courseDetailsList = new ArrayList<>();
+
+        for (Courses singleCourse : learningPath.getCourses()) {
+
+            LearningPathCourseDetailsDTO singleCourseDetails = LearningPathCourseDetailsDTO.builder()
+                    .id(singleCourse.getId())
+                    .name(singleCourse.getName())
+                    .description(singleCourse.getDescription())
+                    .category(modelMapper.map(singleCourse.getCategory(), CategoryDto.class))
+                    .competency(singleCourse.getCompetency())
+                    .percentCompleted(evaluateCourseCompletionPercentage(learningPath, employeeId, singleCourse.getId())).build();
+
+            courseDetailsList.add(singleCourseDetails);
+        }
+
+        return courseDetailsList;
     }
+
+    private int evaluateCourseCompletionPercentage(LearningPath learningPath, Long employeeId, Long courseId) {
+        CourseRating courseRatingForEmployee = courseRatingRepository.findByLearningPathIdAndCourseIdAndEmployeeId(learningPath.getId(), courseId, employeeId);
+        return courseRatingForEmployee.getPercentCompleted();
+
+    }
+
 
     @Override
     public List<ApprovalDto> getPendingApprovals(ManagerEmailRequest managerEmail) {
         ModelMapper modelMapper = new ModelMapper();
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
         List<LearningPathEmployees> madeByManager = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
-        List<LearningPathEmployees> needsApprovalEmpList = madeByManager.stream().filter(a -> PENDING.equals(a.getApprovalStatus())).sorted(Comparator.comparing(LearningPathEmployees::getModifiedDate)).collect(Collectors.toList());
+        // TODO : Pending approvals must be sorted by some date  : make abstract auditing entity
+        List<LearningPathEmployees> needsApprovalEmpList = madeByManager.stream().filter(a -> PENDING.equals(a.getApprovalStatus())).collect(Collectors.toList());
         return needsApprovalEmpList.stream().map(this::PendingApprovalsListToApprovalDto).collect(Collectors.toList());
     }
 
@@ -194,17 +222,13 @@ public class LearningPathServiceImpl implements LearningPathService {
         ApprovalDto approvalDto = new ApprovalDto();
         ModelMapper modelMapper = new ModelMapper();
 
-        String bytes = Objects.nonNull(employee.getCertificate()) ? new String(Base64.encodeBase64(employee.getCertificate()), StandardCharsets.UTF_8) : null;
-        approvalDto.setCertificate(bytes);
         approvalDto.setApprovalStatus(employee.getApprovalStatus());
         approvalDto.setLearningPathEmployeesId(employee.getLearningPathEmployeesId());
         approvalDto.setPercentCompleted(employee.getPercentCompleted());
-        approvalDto.setModifiedDate(employee.getModifiedDate());
         approvalDto.setLearningPath(modelMapper.map(employee.getLearningPath(), LearningPathManagerApprovalDto.class));
         approvalDto.setEmployee(modelMapper.map(employee.getEmployee(), EmployeeDto.class));
         approvalDto.setStartDate(employee.getStartDate());
         approvalDto.setEndDate(employee.getEndDate());
-        approvalDto.setIsLearningPathExpired(employee.getIsLearningPathExpired());
         approvalDto.setDuration(modelMapper.map(employee.getDuration(), DurationDto.class));
         return approvalDto;
 
@@ -213,15 +237,17 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Override
     public void approveRequests(LearningPathEmployeeApprovalRequest request) throws Exception {
         LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(request.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("Learning Path Employee Id not found"));
-
+        String reviewMessage;
         if (request.getStatus().equalsIgnoreCase("APPROVED")) {
             learningPathEmployees.setApprovalStatus(APPROVED);
+            reviewMessage="APPROVED";
         } else {
             learningPathEmployees.setApprovalStatus(REJECTED);
+            reviewMessage=request.getReviewMessage();
         }
 
         try {
-            setApprovalMailPropertiesAndSendEmail(learningPathEmployees);
+            setApprovalMailPropertiesAndSendEmail(learningPathEmployees,reviewMessage);
             learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
         } catch (Exception e) {
             throw new LearningPathEmployeesException("Unable to Send Email & update Status");
@@ -231,7 +257,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
 
-    private void setApprovalMailPropertiesAndSendEmail(LearningPathEmployees learningPathEmployees) throws Exception {
+    private void setApprovalMailPropertiesAndSendEmail(LearningPathEmployees learningPathEmployees, String reviewMessage) throws Exception {
 
         Map<String, String> model = new HashMap<>();
 
@@ -239,6 +265,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         model.put("Email", learningPathEmployees.getEmployee().getUsername());
         model.put("status", learningPathEmployees.getApprovalStatus().toString());
         model.put("emailFor", learningPathEmployees.getEmployee().getFullName());
+        model.put("reviewMessage", reviewMessage);
         emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_APPROVAL_REJECTION.getValue(), model);
     }
 

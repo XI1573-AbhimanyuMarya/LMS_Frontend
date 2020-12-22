@@ -1,8 +1,8 @@
 package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
+import com.xebia.learningmanagement.dtos.request.CourseCompletedPercentRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
-import com.xebia.learningmanagement.dtos.request.EmployeeLearningRateRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.service.EmployeeLearningPathService;
@@ -13,18 +13,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/employeelearning")
-
 public class EmployeeLearningPathController {
 
     @Autowired
-    EmployeeLearningPathService employeelearningservice;
+    private EmployeeLearningPathService employeelearningservice;
 
     /***
      *
@@ -78,25 +78,10 @@ public class EmployeeLearningPathController {
 
     }
 
-    @PutMapping(value = "/myLearningRate" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity updateLearningPathProgress(@ModelAttribute EmployeeLearningRateRequest employeeLearningRateRequest) throws LearningPathException {
-        UserResponse userResponse = new UserResponse();
-        EmployeeLearningPathStatisticsDto employee;
-        try {
-            if (employeeLearningRateRequest.getPercentCompleted() != null
-                    && employeeLearningRateRequest.getLearningPathEmployeeId() != null) {
-                employee = employeelearningservice.updateLearningPathProgress(employeeLearningRateRequest);
-            } else {
-                throw new LearningPathException("Wrong Format for Employee Learning Rate Request");
-            }
 
-        } catch (LearningPathException | IOException e) {
-            userResponse.setStatus("failure");
-            userResponse.setMessage(e.getLocalizedMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
-        }
-
-        return new ResponseEntity(employee, HttpStatus.ACCEPTED);
+    @PostMapping(value = "/api/v1/update/courseratings", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> addCourseRating(@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest) throws Exception {
+        return employeelearningservice.saveOrUpdateCourseRating(courseCompleteRequest);
     }
 
 

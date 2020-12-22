@@ -1,14 +1,13 @@
 package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.dtos.ApprovalDto;
-import com.xebia.learningmanagement.dtos.EmployeeDto;
+import com.xebia.learningmanagement.dtos.LearningPathCourseDetailsDTO;
 import com.xebia.learningmanagement.dtos.LearningPathDto;
 import com.xebia.learningmanagement.dtos.LearningPathManagerDto;
 import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
-import com.xebia.learningmanagement.entity.Courses;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
 import com.xebia.learningmanagement.exception.LearningPathException;
@@ -24,7 +23,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -47,13 +45,6 @@ public class LearningPathController {
         return ResponseEntity.ok(userResponse);
     }
 
-    /***
-     * Get mapping Does not support Request Body so changing the mapping to @PostMapping
-     * https://stackoverflow.com/questions/978061/http-get-with-request-body/983458#983458
-     * @param managerEmail
-     * @return
-     * @throws LearningPathException
-     */
     @PostMapping("/getAssignedLearningPaths")
     public ResponseEntity getAllAssignedLearningPath(@RequestBody ManagerEmailRequest managerEmail) throws LearningPathException {
         UserResponse userResponse = new UserResponse();
@@ -74,9 +65,10 @@ public class LearningPathController {
 
     }
 
-    @GetMapping(value = "/learningPath/courses/{learningPathId}")
-    public List<Courses> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") Long learningPathId){
-        return learningPathService.getCourseDetails(learningPathId);
+    @GetMapping(value = "/learningPath/courses/{learningPathId}/{employeeId}")
+    public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") Long learningPathId, @PathVariable("employeeId") Long employeeId) {
+        logger.info("Fetching all the courses inside the specific a learning Paths with ID-" + learningPathId + " for employee with ID-" + employeeId);
+        return learningPathService.getCourseDetails(learningPathId, employeeId);
     }
 
     @PostMapping(value = "/pending/approvals")
@@ -117,7 +109,7 @@ public class LearningPathController {
 
     @GetMapping(value = "/learningPath/courseDetails/{assigneeId}")
     public ResponseEntity<Object> getLearningPathWithCourseDetails(@PathVariable("assigneeId") Long assigneeId) {
-
+        logger.info("Fetching all the learning Paths made by manager " + assigneeId);
         try {
 
             List<LearningPath> learningPathCourseList = learningPathService.getLearningPathWithCourse(assigneeId);
