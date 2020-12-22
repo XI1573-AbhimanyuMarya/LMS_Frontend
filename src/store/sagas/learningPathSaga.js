@@ -156,12 +156,14 @@ function* getPendingForApproval(action) {
   }
 }
 
-const getApprovalReject = async ({ reqBody }) => {
-  return await axios.put(SERVICE_URLS.APPROVAL_REJEACT, { ...reqBody }, { headers: authHeader() });
+const getApprovalReject = async (reqBody) => {
+  
+  return await axios.put(SERVICE_URLS.APPROVAL_REJEACT, reqBody , { headers: authHeader() });
 }
 
 function* getApprovalRejects(action) {
   try {
+  
     const response = yield call(getApprovalReject,action.payload);
     const { data } = response;
     yield put({ type: actionTypes.FETCH_APPROVAL_SUCCESS, payload: data });
