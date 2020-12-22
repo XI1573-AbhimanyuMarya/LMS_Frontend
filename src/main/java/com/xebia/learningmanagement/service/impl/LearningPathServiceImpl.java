@@ -12,13 +12,11 @@ import com.xebia.learningmanagement.exception.*;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -203,7 +201,11 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     private int evaluateCourseCompletionPercentage(LearningPath learningPath, Long employeeId, Long courseId) {
         CourseRating courseRatingForEmployee = courseRatingRepository.findByLearningPathIdAndCourseIdAndEmployeeId(learningPath.getId(), courseId, employeeId);
-        return courseRatingForEmployee.getPercentCompleted();
+        if (Objects.nonNull(courseRatingForEmployee)) {
+            return courseRatingForEmployee.getPercentCompleted();
+        } else {
+            return 0;
+        }
 
     }
 
@@ -240,14 +242,14 @@ public class LearningPathServiceImpl implements LearningPathService {
         String reviewMessage;
         if (request.getStatus().equalsIgnoreCase("APPROVED")) {
             learningPathEmployees.setApprovalStatus(APPROVED);
-            reviewMessage="APPROVED";
+            reviewMessage = "APPROVED";
         } else {
             learningPathEmployees.setApprovalStatus(REJECTED);
-            reviewMessage=request.getReviewMessage();
+            reviewMessage = request.getReviewMessage();
         }
 
         try {
-            setApprovalMailPropertiesAndSendEmail(learningPathEmployees,reviewMessage);
+            setApprovalMailPropertiesAndSendEmail(learningPathEmployees, reviewMessage);
             learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
         } catch (Exception e) {
             throw new LearningPathEmployeesException("Unable to Send Email & update Status");
