@@ -160,7 +160,6 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
 
     public int courseCompletionAverage(long employeeId, long learningPathId) {
 
-        System.out.println("Setting course rating for employee with ID " + employeeId + " & Learning Path with ID" + learningPathId);
         List<CourseRating> courseRating = courseRatingRepository.getRatingByCourseIdAndLEarningPath(learningPathId, employeeId);
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path ID not found: " + learningPathId));
         int coursesCount = learningPath.getCourses().size();
@@ -173,6 +172,8 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     }
 
     private void updateStatusAndLearningRate(long employeeId, long learningPathId) throws Exception {
+        log.info("Setting course rating for employee with ID " + employeeId + " & Learning Path with ID" + learningPathId);
+
         int percentCompletedCalculation = courseCompletionAverage(employeeId, learningPathId);
         LearningPathEmployees learningPath = learningPathEmployeesRepository.findByLearningPathIdAndEmployeeId(learningPathId, employeeId);
 

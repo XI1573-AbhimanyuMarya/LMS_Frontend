@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CertificateRepository extends JpaRepository<Certificate, Long> {
-    public List<Certificate> findByLearningPathEmployeeIdAndEmployeeId(long learningPathId, long employeeId);
+    List<Certificate> findByLearningPathEmployeeIdAndEmployeeId(long learningPathId, long employeeId);
 
 }
