@@ -76,6 +76,7 @@ public class LearningPathController {
 
     @GetMapping(value = "/learningPath/courses/{learningPathId}")
     public List<Courses> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") Long learningPathId){
+        logger.info("Fetching all the courses inside the specific learning Paths ID-"+ learningPathId);
         return learningPathService.getCourseDetails(learningPathId);
     }
 
@@ -117,7 +118,7 @@ public class LearningPathController {
 
     @GetMapping(value = "/learningPath/courseDetails/{assigneeId}")
     public ResponseEntity<Object> getLearningPathWithCourseDetails(@PathVariable("assigneeId") Long assigneeId) {
-
+        logger.info("Fetching all the learning Paths made by manager "+ assigneeId);
         try {
 
             List<LearningPath> learningPathCourseList = learningPathService.getLearningPathWithCourse(assigneeId);
