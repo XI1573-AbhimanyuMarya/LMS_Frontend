@@ -8,5 +8,6 @@ import lombok.Setter;
 public class LearningPathEmployeeApprovalRequest {
     private Long learningPathEmployeeId;
     private String status;
+    private String reviewMessage;
 
 }
