@@ -16,6 +16,5 @@ public class MadeForEmployeeDto {
     private DurationDto duration;
     private LocalDate startDate;
     private LocalDate endDate;
-//    private Boolean isLearningPathExpired;
 
 }

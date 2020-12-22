@@ -71,6 +71,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<MadeForEmployeeDto> specificLearningPathDetails(Long learningPathId) {
         ModelMapper modelMapper = new ModelMapper();
+        //TODO  : As per zeplin Level to be added in percent completed "Completed", "Expired to be produced at frontend
         List<LearningPathEmployees> learningPathEmployees = employeesRepository.findByLearningPathId(learningPathId);
         return learningPathEmployees.stream().map(a -> modelMapper.map(a, MadeForEmployeeDto.class)).collect(Collectors.toList());
     }
