@@ -4,6 +4,7 @@ import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.util.EmailSend;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,6 @@ public class EmailService {
 		userRepository.save(user);
 		System.out.println(otp);
 		setOtpMailPropertiesAndSendEmail(user,otp);
-//		EmailSend.setEmail(user.getUsername(),"LMS portal : OTP","Your OTP for Learning Management is : "+ otp);
 	}
 
 	private void setOtpMailPropertiesAndSendEmail(User user, int otp) throws Exception {

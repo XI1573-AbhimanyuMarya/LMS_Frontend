@@ -22,7 +22,7 @@ import java.util.Objects;
 public class CertificateServiceImpl implements CertificateService {
 
 
-    private CertificateRepository certificateRepository;
+    private final CertificateRepository certificateRepository;
 
     @Autowired
     public CertificateServiceImpl(CertificateRepository certificateRepository) {
