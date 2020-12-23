@@ -16,10 +16,10 @@ import java.util.regex.Pattern;
 public class CourseServiceImpl implements CourseService {
 
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Override
     public Set<Courses> getCoursesByKeyword(String keyword) {
