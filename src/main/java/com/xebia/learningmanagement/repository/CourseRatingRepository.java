@@ -11,7 +11,7 @@ import java.util.List;
 public interface CourseRatingRepository extends JpaRepository<CourseRating, Long> {
 
     @Query("SELECT u FROM CourseRating u WHERE u.learningPathId = ?1 and u.employeeId = ?2")
-    List<CourseRating> getRatingByCourseIdAndLEarningPath(long learningPathId, long employeeId);
+    List<CourseRating> getRatingByLearningPathAndEmployeeId(long learningPathId, long employeeId);
 
     CourseRating findByLearningPathIdAndCourseIdAndEmployeeId(long learningPathId, long courseId, long employeeId);
 }
