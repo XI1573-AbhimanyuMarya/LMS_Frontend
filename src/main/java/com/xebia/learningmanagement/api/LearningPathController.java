@@ -41,7 +41,7 @@ public class LearningPathController {
 
     @PostMapping("/api/v1/manage/learningPaths/assigned")
     public Map<Long, List<LearningPathManagerDto>> manageAssignedLearningpaths(@Valid @RequestBody ManagerEmailRequest managerEmail) {
-        return learningPathService.getAllAssignedLearningPath(managerEmail);
+        return learningPathService.manageAssignedLearningPaths(managerEmail);
     }
 
     @GetMapping(value = "/api/v1/learningPath/courses/{learningPathId}/{employeeId}")

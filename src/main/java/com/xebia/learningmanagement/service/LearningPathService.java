@@ -23,7 +23,7 @@ public interface LearningPathService {
      * @return
      * @throws LearningPathException
      */
-    Map<Long, List<LearningPathManagerDto>> getAllAssignedLearningPath(ManagerEmailRequest managerEmail) throws LearningPathException;
+    Map<Long, List<LearningPathManagerDto>> manageAssignedLearningPaths(ManagerEmailRequest managerEmail) throws LearningPathException;
 
     List<ApprovalDto> getPendingApprovals(ManagerEmailRequest managerEmailRequest) throws LearningPathException;
 
