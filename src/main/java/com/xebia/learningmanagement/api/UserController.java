@@ -21,7 +21,6 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/api/v1/get/all/employees")
     public List<UserDto> getAllUsers() {
        return userService.getAllUsers();

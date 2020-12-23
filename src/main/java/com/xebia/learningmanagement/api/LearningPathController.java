@@ -39,20 +39,17 @@ public class LearningPathController {
         return ResponseEntity.ok(userResponse);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/v1/manage/learningPaths/assigned")
     public Map<Long, List<LearningPathManagerDto>> manageAssignedLearningpaths(@Valid @RequestBody ManagerEmailRequest managerEmail) {
         return learningPathService.getAllAssignedLearningPath(managerEmail);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/api/v1/learningPath/courses/{learningPathId}/{employeeId}")
-    public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") Long learningPathId, @PathVariable("employeeId") Long employeeId) {
+    public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") long learningPathId, @PathVariable("employeeId") long employeeId) {
         log.info("Fetching all the courses inside the specific a learning Paths with ID-" + learningPathId + " for employee with ID-" + employeeId);
         return learningPathService.getCourseDetails(learningPathId, employeeId);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/api/v1/pending/approvals")
     public List<ApprovalDto> needsApproval(@Valid @RequestBody ManagerEmailRequest managerEmailRequest) {
         return learningPathService.getPendingApprovals(managerEmailRequest);
@@ -64,7 +61,6 @@ public class LearningPathController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Review Successful");
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/api/v1/details/learningPaths/{assigneeId}")
     public List<LearningPath> getAllLearningPathsMadeByAssignee(@PathVariable("assigneeId") Long assigneeId) {
         log.info("Fetching all pre-made learning Paths made earlier by managerID " + assigneeId);

@@ -19,14 +19,12 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/api/v1/getCourses/{keyword}")
     public Set<Courses> getCoursesAccordingToKeyword(@PathVariable("keyword") String keyword) {
         log.info("Fetching results containing keyword :" + keyword);
         return courseService.getCoursesByKeyword(keyword);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/api/v1/allcourses")
     public List<Courses> getAllCourses() {
         log.info("Fetching list of all available courses");
