@@ -14,9 +14,9 @@ import java.util.Map;
 @Setter
 public class AssignLearningPathRequest {
 
-    @NotEmpty
+    @NotEmpty(message = "Learning Path Ids can not be empty")
     private Map<Long,Duration> learningPathIds;
-    @NotEmpty
+    @NotEmpty(message = "Employee Ids Ids can not be empty")
     private List<Long> employeeIds;
 
 
