@@ -10,6 +10,6 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 public class EmployeeEmailRequest {
-    @NotBlank
+    @NotBlank(message = "Employee Email can not be Blank")
     public String employeeEmail;
 }

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class LearningPathEmployeeApprovalRequest {
-    @NotNull(message = "Learning Path EmployeeId can not be Null")
+    @NotNull(message = "Learning Path employee Id can not be Null")
     private Long learningPathEmployeeId;
     @NotBlank(message = "Status can not be blank")
     private String status;
