@@ -79,7 +79,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
 
 
     @Override
-    public List<EmployeeLearningPathStatisticsDto> getMyAssignedLearningPaths(EmployeeEmailRequest employeeEmail) throws LearningPathException {
+    public List<EmployeeLearningPathStatisticsDto> getLearningPathsAssignedToMe(EmployeeEmailRequest employeeEmail) throws LearningPathException {
         ModelMapper modelMapper = new ModelMapper();
         String endDate;
         User user = userRepository.findByUsername(employeeEmail.getEmployeeEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
@@ -89,6 +89,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
             if (learningPath.getEndDate().compareTo(LocalDate.now()) == 1) {
                 endDate = learningPath.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             } else {
+                //TODO Days remaining for expiration yet to be implemented
                 endDate = "Expired";
             }
             int percentCompleted = courseCompletionAverage(learningPath.getEmployee().getId(), learningPath.getLearningPath().getId());
@@ -160,7 +161,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
 
     public int courseCompletionAverage(long employeeId, long learningPathId) {
 
-        List<CourseRating> courseRating = courseRatingRepository.getRatingByCourseIdAndLEarningPath(learningPathId, employeeId);
+        List<CourseRating> courseRating = courseRatingRepository.getRatingByLearningPathAndEmployeeId(learningPathId, employeeId);
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path ID not found: " + learningPathId));
         int coursesCount = learningPath.getCourses().size();
         if (courseRating.size() < 1)

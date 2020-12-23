@@ -46,8 +46,8 @@ public class EmployeeLearningPathController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/api/v1/mylearningpaths", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<EmployeeLearningPathStatisticsDto> getMyLearningPath(@Valid @RequestBody EmployeeEmailRequest employeeEmail) {
-        return employeelearningservice.getMyAssignedLearningPaths(employeeEmail);
+    public List<EmployeeLearningPathStatisticsDto> getLearningPathsAssignedToMe(@Valid @RequestBody EmployeeEmailRequest employeeEmail) {
+        return employeelearningservice.getLearningPathsAssignedToMe(employeeEmail);
     }
 
     @ResponseStatus(HttpStatus.OK)
