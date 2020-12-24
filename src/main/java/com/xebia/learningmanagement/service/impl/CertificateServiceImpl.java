@@ -1,6 +1,7 @@
 package com.xebia.learningmanagement.service.impl;
 
 import com.xebia.learningmanagement.dtos.request.CertificateRequest;
+import com.xebia.learningmanagement.dtos.response.CertificateResponse;
 import com.xebia.learningmanagement.entity.Certificate;
 import com.xebia.learningmanagement.repository.CertificateRepository;
 import com.xebia.learningmanagement.service.CertificateService;
@@ -49,12 +50,12 @@ public class CertificateServiceImpl implements CertificateService {
         return certificateRepository.saveAll(certificateList);
     }
 
-    public List<String> fetchCertificate(long learningPathEmployeeId, long employeeId) {
-        List<String> certificateBag = new ArrayList<>();
+    public List<CertificateResponse> fetchCertificate(long learningPathEmployeeId, long employeeId) {
+        List<CertificateResponse> certificateBag = new ArrayList<>();
         List<Certificate> certificates = certificateRepository.findByLearningPathEmployeeIdAndEmployeeId(learningPathEmployeeId, employeeId);
         for (Certificate certificatesObject : certificates) {
             String image = Objects.nonNull(certificatesObject.getCertificate()) ? new String(Base64.encodeBase64(certificatesObject.getCertificate()), StandardCharsets.UTF_8) : "No Certificate Found";
-            certificateBag.add(image);
+            certificateBag.add(new CertificateResponse(image));
         }
         return certificateBag;
     }

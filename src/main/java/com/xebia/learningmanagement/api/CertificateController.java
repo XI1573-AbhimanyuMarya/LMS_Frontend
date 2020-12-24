@@ -1,6 +1,7 @@
 package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.dtos.request.CertificateRequest;
+import com.xebia.learningmanagement.dtos.response.CertificateResponse;
 import com.xebia.learningmanagement.entity.Certificate;
 import com.xebia.learningmanagement.service.CertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class CertificateController {
     }
 
     @GetMapping(value = "/api/v1/get/{learningPathEmployeeId}/{employeeId}")
-    public List< String> fetchImage(@PathVariable long learningPathEmployeeId, @PathVariable long employeeId) {
+    public List<CertificateResponse> fetchImage(@PathVariable long learningPathEmployeeId, @PathVariable long employeeId) {
         return certificateServiceImpl.fetchCertificate(learningPathEmployeeId,employeeId);
     }
 
