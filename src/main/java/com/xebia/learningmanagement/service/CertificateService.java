@@ -9,6 +9,6 @@ import java.util.Map;
 
 public interface CertificateService {
     public List<Certificate> uploadCertificate(CertificateRequest certificateRequest) throws Exception;
-    public List<CertificateResponse> fetchCertificate(long learningPathEmployeeId, long employeeId);
+    public List<String> fetchCertificate(long learningPathEmployeeId, long employeeId);
 
 }

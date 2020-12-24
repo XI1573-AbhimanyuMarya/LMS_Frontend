@@ -1,7 +1,6 @@
 package com.xebia.learningmanagement.service.impl;
 
 import com.xebia.learningmanagement.dtos.request.CertificateRequest;
-import com.xebia.learningmanagement.dtos.response.CertificateResponse;
 import com.xebia.learningmanagement.entity.Certificate;
 import com.xebia.learningmanagement.repository.CertificateRepository;
 import com.xebia.learningmanagement.service.CertificateService;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
 
-    public List<Certificate> uploadCertificate(CertificateRequest certificateRequest) throws Exception {
+    public List<Certificate> uploadCertificate(CertificateRequest certificateRequest) throws IOException {
         List<Certificate> certificateList = new ArrayList<>();
         try {
             for (MultipartFile request : certificateRequest.getCertificate()) {
@@ -44,18 +44,18 @@ public class CertificateServiceImpl implements CertificateService {
                         .build();
                 certificateList.add(certificate);
             }
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        } catch (IOException e) {
+            throw new IOException(e.getMessage());
         }
         return certificateRepository.saveAll(certificateList);
     }
 
-    public List<CertificateResponse> fetchCertificate(long learningPathEmployeeId, long employeeId) {
-        List<CertificateResponse> certificateBag = new ArrayList<>();
+    public List<String> fetchCertificate(long learningPathEmployeeId, long employeeId) {
+        List<String> certificateBag = new ArrayList<>();
         List<Certificate> certificates = certificateRepository.findByLearningPathEmployeeIdAndEmployeeId(learningPathEmployeeId, employeeId);
         for (Certificate certificatesObject : certificates) {
             String image = Objects.nonNull(certificatesObject.getCertificate()) ? new String(Base64.encodeBase64(certificatesObject.getCertificate()), StandardCharsets.UTF_8) : "No Certificate Found";
-            certificateBag.add(new CertificateResponse(image));
+            certificateBag.add(image);
         }
         return certificateBag;
     }

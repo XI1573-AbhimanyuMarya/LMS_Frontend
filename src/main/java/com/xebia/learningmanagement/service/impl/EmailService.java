@@ -28,7 +28,7 @@ public class EmailService {
 		int otp = getRandomNumberUsingNextInt();
 		user.setPassword(String.valueOf(otp));
 		userRepository.save(user);
-		System.out.println(otp);
+
 		setOtpMailPropertiesAndSendEmail(user,otp);
 	}
 

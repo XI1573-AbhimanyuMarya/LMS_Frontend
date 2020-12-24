@@ -44,13 +44,11 @@ public class EmployeeLearningPathController {
         }
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/api/v1/mylearningpaths", consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<EmployeeLearningPathStatisticsDto> getLearningPathsAssignedToMe(@Valid @RequestBody EmployeeEmailRequest employeeEmail) {
         return employeelearningservice.getLearningPathsAssignedToMe(employeeEmail);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/api/v1/update/courseratings", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> addCourseRating(@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest) throws Exception {
         return employeelearningservice.saveOrUpdateCourseRating(courseCompleteRequest);

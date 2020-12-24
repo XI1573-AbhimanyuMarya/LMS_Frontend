@@ -29,7 +29,7 @@ public class CertificateController {
     }
 
     @GetMapping(value = "/api/v1/get/{learningPathEmployeeId}/{employeeId}")
-    public List<CertificateResponse> fetchImage(@PathVariable long learningPathEmployeeId, @PathVariable long employeeId) {
+    public List<String> fetchImage(@PathVariable long learningPathEmployeeId, @PathVariable long employeeId) {
         return certificateServiceImpl.fetchCertificate(learningPathEmployeeId,employeeId);
     }
 
