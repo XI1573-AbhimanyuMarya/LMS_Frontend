@@ -25,6 +25,8 @@ import LearningCoursesTable from '../../../components/Table/LearningCoursesTable
 import ArrowBackIos from '../../../images/ArrowBackIos.svg';
 import Button from '@material-ui/core/Button';
 
+import {BackButton} from '../../../components/Button'; 
+
 const SelectCourses = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -35,7 +37,8 @@ const SelectCourses = () => {
   const loginState = useSelector(res => res.loginState);
   const { mycourses } = learningPathState;
   
-  const [lpId,setLpId]=useState(0);//check
+  const [lpId,setLpId]=useState(0);
+  const [disable,setDisable]=useState(false);
   
   console.log(mycourses, learningPathState, "learn");
   const logoutUser = () => {
@@ -58,6 +61,7 @@ const SelectCourses = () => {
     completed = mycourses.filter(course => course.percentCompleted === 100)
     inprogress = mycourses.filter(course => course.percentCompleted < 100)
     selectedLp=mycourses.find(course=> course.learningPath.learningPathId==lpId);
+    console.log(selectedLp,"selected LP");
   }
 
 
@@ -72,12 +76,14 @@ const SelectCourses = () => {
       ? filteredCoursesList
       : ''
     : courses;
+  const backBtnHandler=()=>{
+    setLpId(0);
+    setDisable(false);
+  }
   const LearningPathDesc=()=>{
     return (
       <>
-        <Button size="small" onClick={()=>setLpId(0)} style={{textTransform:"lowercase",opacity:0.7}} startIcon={<img src={ArrowBackIos}/>}>
-          Back
-        </Button>
+        <BackButton backBtnHandler={backBtnHandler} />
         <div style={{maxWidth:"300px",margin:"10px 0px 0px"}}>
           <LearningPathCard selectedLp={selectedLp} />
         </div>
@@ -85,21 +91,18 @@ const SelectCourses = () => {
     );
   }
   const MyLearningPaths=()=>{
-    console.log(completed,"completedLp");
     return (
       <>
-        <Typography variant="h6" className={classes.headerText}>
-          {LEARNING_PATH_LABELS.COURSE_CATALOG1}
-        </Typography>
+        {typeof completed !== 'undefined' && completed.length!==0 && <Typography variant="h6" className={classes.headerText}>{LEARNING_PATH_LABELS.COURSE_CATALOG1}</Typography>}
         <Box alignItems="center" style={{margin:"10px 50px 0px 0px"}}>
           {isLoading && completedCourse?.length === 0 && <CourseSkelton1 /> && completed?.length}
-          <MyCarosals coursesList={completedCourse} lpList={completed} setLpId={setLpId}/>
+          <MyCarosals coursesList={completedCourse} lpList={completed} setLpId={setLpId} setDisable={setDisable}/>
         </Box>
       </>
     );
   }
   const MyLearningPathTable=()=>{
-    return (<>
+    return typeof inprogress !== 'undefined' && inprogress.length!==0 ? (
       <div className={classes.lptbldiv}>
         <table className={classes.table}>
           <thead className={classes.tblheading}>
@@ -119,7 +122,7 @@ const SelectCourses = () => {
         </table>
       </div>  
       
-    </>);
+    ) : "";
   }
   return (
     <React.Fragment>
@@ -132,7 +135,7 @@ const SelectCourses = () => {
             {lpId!==0 ? <LearningPathDesc/> : <MyLearningPaths/> }
           </Box>
         </div>
-        {lpId!==0 ? <LearningCoursesTable lpId={lpId} withRate={true}/> : <MyLearningPathTable/> }
+        {lpId!==0 ? <LearningCoursesTable lpId={lpId} learningPathEmployeesId={selectedLp.learningPathEmployeesId} withRate={true} disable={disable}/> : <MyLearningPathTable/> }
         <div className="copyright" style={{border:"1px solid #d3d3d3"}}>
           <Copyright />
         </div>

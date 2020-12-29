@@ -8,7 +8,7 @@ import CourseCatalog from '../MyCourseCatalog';
 import { MESSAGES } from '../../../../modules/constants';
 
 const Carosals1 = (props) => {
-	const { lpList,setLpId } = props;
+	const { lpList,setLpId,setDisable } = props;
 	const [activeItemIndex, setActiveItemIndex] = useState(0);
 	const chevronWidth = 40;
   let renderCarousel = "";
@@ -18,7 +18,7 @@ const Carosals1 = (props) => {
     // });
     console.log(lpList);
     const renderCourses=lpList.map((lp)=>{
-      return <CourseCatalog key={lp.learningPath.learningPathId} lp={lp} setLpId={setLpId}/>
+      return <CourseCatalog key={lp.learningPath.learningPathId} lp={lp} setLpId={setLpId} setDisable={setDisable}/>
     });
     //const renderCourses="";
 		renderCarousel = <div>

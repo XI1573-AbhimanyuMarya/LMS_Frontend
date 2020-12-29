@@ -113,6 +113,20 @@ const getApprovalRejects = (reqBody) => ({
   payload: reqBody,
 });
 
+const viewAttachment = (reqBody) => ({
+  type: actionTypes.VIEW_ATTACHMENT,
+  payload: reqBody,
+});
+
+const addCertificate= (files) => ({
+  type: actionTypes.ADD_CERTIFICATE,
+  payload: files
+});
+
+const uploadCertificate=(reqBody)=>({
+  type:actionTypes.UPLOAD_CERTIFICATE,
+  payload:{reqBody}
+});
 export default {
   fetchAllCourses,
   getFilteredCourses,
@@ -142,5 +156,8 @@ export default {
   ApproveModelOpen,
   getPendingForApproval,
   getApprovalRejects,
-  saveCourseRate
+  saveCourseRate,
+  viewAttachment,
+  addCertificate,
+  uploadCertificate
 };

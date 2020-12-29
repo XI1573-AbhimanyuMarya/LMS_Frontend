@@ -24,7 +24,9 @@ export const SERVICE_URLS = {
   LEARNINGPATH_COURSES:`${API_HOST_PATH}/api/learningPath/courses/`,
   PENDING_FOR_APPROVAL: `${API_HOST_PATH}/api/pending/approvals`,
   APPROVAL_REJEACT: `${API_HOST_PATH}/api/review/approvals`,
-  SAVE_COURSE_RATE: `${API_HOST_PATH}/employeelearning/api/v1/update/courseratings`
+  SAVE_COURSE_RATE: `${API_HOST_PATH}/employeelearning/api/v1/update/courseratings`,
+  GET_ATTACHMENT:`${API_HOST_PATH}/certificate/api/v1/get`,
+  UPLOAD_CERTIFICATES:`${API_HOST_PATH}/certificate/api/v1/upload`
 };
 
 export const API_STATUS = {

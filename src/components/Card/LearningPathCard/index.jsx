@@ -7,17 +7,20 @@ import ArrowForwardIos from '../../../images/ArrowForwardIos.svg';
 import GreenChecked from '../../../images/GreenChecked.svg';
 import { useStyles } from './style';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
+import {CourseAssignButton} from '../../Button';
 
 const LearningPathCard = (props) => {
   const [isChecked,setisChecked]=useState(false);
   const classes=useStyles();
   const {selectedLp,onButtonClick}=props;
-  const assignLp=props.assignLp ? props.assignLp :true;
+  const assignLp=props.assignLp ? props.assignLp :false;
   const inlineStyle={
     margin:"0px 25px 25px 0px"
   }
   inlineStyle.border=isChecked ? "1px solid #39b215" : "";
+
   return (
+    <>
     <Card className={classes.root} style={inlineStyle}>
       <CardActionArea>  
         <CardContent style={{minHeight:"143px"}}>
@@ -37,13 +40,12 @@ const LearningPathCard = (props) => {
           <Typography gutterBottom variant="h6" component="h6" className={classes.cardfootertext}>
             Course Assigned
           </Typography>
-          <Button size="small" variant="outlined" className={classes.cardfooterbtn} onClick={onButtonClick}>
-            888
-            {assignLp && <img src={ArrowForwardIos} style={{height:"10px",paddingLeft:"10px"}}/> }
-          </Button>
+          <CourseAssignButton assignLp={assignLp} onButtonClick={onButtonClick}/>
         </CardActions>
       </CardActionArea>
     </Card>
+    
+    </>
   );
 }
 

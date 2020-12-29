@@ -2,8 +2,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { blue, red } from "@material-ui/core/colors";
 export const useStyles = makeStyles((theme) => ({
   root: {
-    width: "1140px",
-    height: "100px",
+    width: "98%",
+    height: "70px",
     margin: "0 0 30px",
     padding: "20px",
     borderRadius: "8px",
@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     [theme.breakpoints.up('md')]: {
-      width: "1140px",
+      //width: "1140px",
     height: "70px",
     margin: "0 0 30px",
     padding: "20px",
@@ -23,8 +23,8 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     },
     [theme.breakpoints.up('lg')]: {
-      width: "1040px",
-    height: "100px",
+      //width: "1040px",
+    height: "80px",
     margin: "0 0 30px",
     padding: "20px",
     borderRadius: "8px",
@@ -67,7 +67,8 @@ export const useStyles = makeStyles((theme) => ({
     lineHeight: "1.23",
     letterSpacing: "normal",
     textAlign: "center",
-    color: "#027aff"
+    color: "#027aff",
+    cursor:"pointer"
   },
   reject: {
     padding: "0 0 0 20px",
