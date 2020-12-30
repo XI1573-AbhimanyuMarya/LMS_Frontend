@@ -47,9 +47,6 @@ const DiscardPopup = (props) => {
   const handleDiscard = () => {
     discardHandler(true);
   }
-  const saveHandler=(files)=>{
-    console.log(files);
-  }
 
   return (
     <div >

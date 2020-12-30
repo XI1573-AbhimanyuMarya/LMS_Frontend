@@ -25,7 +25,8 @@ const initialState = {
   pfApproval:[],
   ApprovedRejected:'',
   attachments:[],
-  certificates:[]
+  certificates:[],
+  selectedLp:{}
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -376,13 +377,11 @@ export const learningPathReducer = (state = initialState, action) => {
           };
   
         case actionTypes.SAVE_COURSE_RATE_SUCCESS:
-          console.log(payload);
           return {
             ...state,
             isLoading: false
           }
         case actionTypes.SAVE_COURSE_RATE_FAILURE:
-          console.log(payload);
           return {
             ...state,
             isLoading: false
@@ -436,6 +435,13 @@ export const learningPathReducer = (state = initialState, action) => {
         isLoading: false,
         certificates:[],
         errorMessage: payload
+      };
+
+      case actionTypes.SELECTED_LEARNING_PATH:
+      return {
+        ...state,
+        isLoading: false,
+        selectedLp:payload
       };
     default: return state;
   }

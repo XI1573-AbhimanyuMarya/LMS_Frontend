@@ -27,7 +27,6 @@ const ManageAssignLearningPath = ({ props }) => {
     (state) => state.loginState
   );
   const { isLoading, assignedCources, deleteStatus, pfApproval } = getAssignedLearningPaths;
-  console.log(pfApproval,"pfApproval")
   const [selectedUsersArr, setSelectedUsersArr] = useState([]);
   useEffect(() => {
     // dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username));
@@ -42,7 +41,6 @@ const ManageAssignLearningPath = ({ props }) => {
   }
   const onDelete = (learningPathId) => {
     dispatch(Actions.learningPathActions.deletePath([learningPathId]))
-    console.log(learningPathId);
   }
 
   const isObject = (data) => {

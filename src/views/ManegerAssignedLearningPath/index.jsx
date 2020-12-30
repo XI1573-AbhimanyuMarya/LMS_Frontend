@@ -40,7 +40,6 @@ const ManageAssignLearningPath = ({ props }) => {
   }
   const onDelete = (learningPathId) => {
     dispatch(Actions.learningPathActions.deletePath([learningPathId]))
-    console.log(learningPathId);
   }
 
   const isObject=(data)=>{

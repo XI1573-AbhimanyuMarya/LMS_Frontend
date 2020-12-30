@@ -46,15 +46,15 @@ const discardModelOpen = (val) => ({
   type: actionTypes.DISCARD_MODEL_OPEN,
   payload: { val },
 });
-const uploadFileModelOpen = (val) => (console.log("val",val),{
+const uploadFileModelOpen = (val) => ({
   type: actionTypes.UPLOADFILE_MODEL_OPEN,
   payload: { val },
 });
-const RejectModelOpen = (val) => (console.log("val",val),{
+const RejectModelOpen = (val) => ({
   type: actionTypes.REJECT,
   payload: { val },
 });
-const ApproveModelOpen = (val) => (console.log("val",val),{
+const ApproveModelOpen = (val) => ({
   type: actionTypes.APPROVE,
   payload: { val },
 });
@@ -127,6 +127,11 @@ const uploadCertificate=(reqBody)=>({
   type:actionTypes.UPLOAD_CERTIFICATE,
   payload:{reqBody}
 });
+
+const selectLearningPath=(reqBody)=>({
+  type:actionTypes.SELECTED_LEARNING_PATH,
+  payload:reqBody
+});
 export default {
   fetchAllCourses,
   getFilteredCourses,
@@ -159,5 +164,6 @@ export default {
   saveCourseRate,
   viewAttachment,
   addCertificate,
-  uploadCertificate
+  uploadCertificate,
+  selectLearningPath
 };

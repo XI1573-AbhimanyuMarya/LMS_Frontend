@@ -67,6 +67,7 @@ const LearningRate=(props)=>{
         onClick={focusHandler} onChange={!disable && changeHandler}
         className={classes.lpInField}
         pattern={"^[1-9][0-9]?$|^100$"}
+
       />
       {
         course.showBtn!=='' && BtnObj[course.showBtn]

@@ -15,7 +15,6 @@ const AssignedCarosals = (props) => {
   const chevronWidth = 40;
   const classes = useStyles();
   let renderCarousel = "";
-  console.log(coursesList,"raghav2")
 	if (coursesList && Array.isArray(coursesList)) {
 		const renderCourses = coursesList.map((course) => {
 			return <CourseCatalog key={course.learningPath.learningPathId} course={course} handleCourseClick={handleCourseClick} />

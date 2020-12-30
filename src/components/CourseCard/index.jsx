@@ -1,15 +1,20 @@
 import React from 'react';
 import { useStyles } from './style';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { SHOW_LEVELS } from '../../modules/constants';
 import {ViewButton,LearningRateButton} from '../Button';
+import Actions from '../../store/actions';
 
 const CourseCard = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const learningPathState = useSelector(state => state.learningPathState);
   const { course, onButtonClick, showButton } = props;
 
   course.progress = '';
-  
+  const btnClick=()=>{
+    dispatch(Actions.learningPathActions.selectLearningPath(course));
+  }
   return (
     <tr className={classes.tblrow}>
       <td> {course.learningPath.name}</td>
@@ -20,7 +25,7 @@ const CourseCard = (props) => {
         <LearningRateButton percentCompleted={course.percentCompleted} />
       </td>
       <td> 
-        <ViewButton onButtonClick={onButtonClick} /> 
+        <ViewButton onButtonClick={btnClick} /> 
       </td>
     </tr>
   );

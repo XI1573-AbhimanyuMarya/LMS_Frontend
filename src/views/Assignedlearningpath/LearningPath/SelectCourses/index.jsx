@@ -22,7 +22,6 @@ const SelectAssignedPath = () => {
   const loginState = useSelector(res => res.loginState);
   const { mycourses } = learningPathState;
 
-  console.log(mycourses, "learn2")
   /**
    * function to fetch all courses initial time
    */

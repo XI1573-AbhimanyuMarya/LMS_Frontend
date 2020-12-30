@@ -65,7 +65,6 @@ export default function EmployeeCardApproval(props) {
   );
 
   const onViewClick = () => {
-    console.log("view clicked")
     dispatch(Actions.learningPathActions.RejectModelOpen(true));
   }
 

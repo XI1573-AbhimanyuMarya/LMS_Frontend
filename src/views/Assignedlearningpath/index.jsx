@@ -42,7 +42,6 @@ const AssignedLearningPathMain = () => {
   };
 
   const discardHandler = (closeMainModel) => {
-    console.log(closeMainModel);
     dispatch(Actions.learningPathActions.discardModelOpen(false));
     if (closeMainModel) {
       dispatch(Actions.learningPathActions.pathModelOpen(false));

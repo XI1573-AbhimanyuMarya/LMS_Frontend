@@ -16,7 +16,6 @@ const Carosals1 = (props) => {
 		// const renderCourses = coursesList.map((course) => {
 		// 	return <CourseCatalog key={course.id} course={course} />
     // });
-    console.log(lpList);
     const renderCourses=lpList.map((lp)=>{
       return <CourseCatalog key={lp.learningPath.learningPathId} lp={lp} setLpId={setLpId} setDisable={setDisable}/>
     });
