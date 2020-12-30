@@ -97,21 +97,12 @@ const SelectAssignedPath = () => {
   return (
    
     <React.Fragment>
-      
-      <Box component='div' display="flex" justifyContent="center">
+      <Box alignItems="flex-start" style={{padding:"5px 10px 10px"}}>
+        <Typography variant="h6" className={classes.head}>
+          {LEARNING_PATH_LABELS.COURSE_CATALOG2}
+        </Typography>
       </Box>
-      <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" >
-        <Box alignItems="flex-start" py={2} pl={5}>
-          <Typography variant="h6" className={classes.head}>
-            {LEARNING_PATH_LABELS.COURSE_CATALOG2}
-          </Typography>
-        </Box>
-        <Box alignItems="center">
-          {isLoading && mycourses?.length === 0 &&  <CourseSkelton />}
-          
-          <Carosals coursesList={allLearningPath} handleCourseClick={(id) => onCourseClickHandler(id)} />
-        </Box>
-      </Box>
+      {isLoading && mycourses?.length === 0 ? <CourseSkelton /> : <Carosals coursesList={allLearningPath} handleCourseClick={(id) => onCourseClickHandler(id)} />}
     </React.Fragment>
   );
 }

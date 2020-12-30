@@ -91,9 +91,8 @@ const AssignedLearningPathMain = () => {
                   </Button>
                 </Box>
                 <Box alignItems="center">
-                  {isLoading && item?.length === 0 && <CourseSkelton />}
+                  {isLoading && item?.length === 0 ? <CourseSkelton /> : <Carosals coursesList={item.courses} handleCourseClick={(id) => onCourseClickHandler(id)} />}
                   {/* <Carosals coursesList={item.courses} /> */}
-                  <Carosals coursesList={item.courses} handleCourseClick={(id) => onCourseClickHandler(id)} />
                 </Box>
               </div>
             ))}

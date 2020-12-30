@@ -114,7 +114,40 @@ const AssignedCreateLearningPath = (props) => {
         {LEARNING_PATH_LABELS.CLICK_OVER_CLOSE_BUTTON}
       </Typography>
     </>;
-
+  const showSteps=()=>{
+    if(activePathStep!==0){
+      return (
+        <Grid container className={classes.stepperContainer}>
+          <Grid item xs={3}>
+          </Grid>
+          <Grid item xs={6}>
+            <Stepper activeStep={activePathStep} connector={<QontoConnector />}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel
+                    StepIconProps={{
+                      classes: {
+                        active: classes.active,
+                        completed: classes.completed
+                      }
+                    }}
+                  >{label}
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Grid>
+          <Grid item xs={3}>
+            <Toolbar className={classes.clrosButton}>
+              <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+          </Grid>
+        </Grid>
+      );
+    }
+  }
   return (
     <React.Fragment>
       <TopNav />
@@ -122,47 +155,7 @@ const AssignedCreateLearningPath = (props) => {
         <div className={classes.toolbar} />
         <div className="container">
           <Box component='div' className={classes.layout}>
-            <Grid container className={classes.stepperContainer}>
-              <Grid item xs={3}>
-              </Grid>
-              <Grid item xs={6}>
-                {/* <Box component='div' className={classes.learningImg} justifyContent="center"> */}
-                  {/* <CardMedia
-                    className={classes.media}
-                    image={AddLearningPath}
-                    title={LEARNING_PATH_LABELS.CREATE_LEARNING_PATH}
-                  /> */}
-                  {/* <Typography component="h3" variant="h6" align="center">
-                    {learningPathName && activePathStep !== 0 ? learningPathName : LEARNING_PATH_LABELS.CREATE_LEARNING_PATH}
-                  </Typography> */}
-                {/* </Box> */}
-                {/* <Typography variant="subtitle2" align="center">
-                  {LEARNING_PATH_LABELS.LEARNING_PATH_DETAILS}
-                </Typography> */}
-                <Stepper activeStep={activePathStep} connector={<QontoConnector />}>
-                  {steps.map((label) => (
-                    <Step key={label}>
-                      <StepLabel
-                        StepIconProps={{
-                          classes: {
-                            active: classes.active,
-                            completed: classes.completed
-                          }
-                        }}
-                      >{label}
-                      </StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
-              </Grid>
-              <Grid item xs={3}>
-                <Toolbar className={classes.clrosButton}>
-                  <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
-                    <CloseIcon />
-                  </IconButton>
-                </Toolbar>
-              </Grid>
-            </Grid>
+            {showSteps()}
             <React.Fragment>
               {activePathStep === steps?.length ? (
                 <React.Fragment>

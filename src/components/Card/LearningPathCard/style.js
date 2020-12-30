@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: "300px",
+    height: "183px",
     borderRadius:"8px",
     boxShadow:"2px 3px 10px 0 rgba(0, 0, 0, 0.18)"
   },
