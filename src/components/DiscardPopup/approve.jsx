@@ -14,7 +14,7 @@ import { useStyles } from './style';
 const DiscardPopup1 = (props) => {
     const classes = useStyles();
     const learningPathState = useSelector(state => state.learningPathState);
-    const { discardModelOpen } = learningPathState;
+    const { approvePopup } = learningPathState;
     const { discardHandler } = props;
     
     /**
@@ -34,7 +34,7 @@ const DiscardPopup1 = (props) => {
         <div>
             <Dialog
                 maxWidth='xs'
-                open={discardModelOpen}
+                open={approvePopup}
                 onClose={handleClose}
                 aria-labelledby="responsive-dialog-title"
             >

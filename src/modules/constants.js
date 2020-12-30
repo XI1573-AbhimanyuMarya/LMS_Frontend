@@ -18,10 +18,14 @@ export const SERVICE_URLS = {
   FETCH_COURSES: `${API_HOST_PATH}/api/getAllCourses`,
   FETCH_USERS: `${API_HOST_PATH}/getAllUsers`,
   CREATE_LEARNING_PATH: `${API_HOST_PATH}/api/learningPath`,
-  ASSIGNED_PATH: `${API_HOST_PATH}/api/getAssignedLearningPaths`,
+  ASSIGNED_PATH: `${API_HOST_PATH}/api/getAssignedLearningPaths`, 
   CREATE_ASSIGNED_PATH: `${API_HOST_PATH}/api/learningPath/assignLearningPaths`,
-  MY_PATH: `${API_HOST_PATH}/employeelearning/myLearningPath`,
+  MY_PATH: `${API_HOST_PATH}/employeelearning/myLearningPath`,            
+  GET_LEARNING_PATH:`${API_HOST_PATH}/api/learningPath/courseDetails`,  //Get List of learning paths
   DELETE_ALL_PATH: `${API_HOST_PATH}/employeelearning/deletelearningpath`,
+  LEARNINGPATH_COURSES:`${API_HOST_PATH}/api/learningPath/courses/`,
+  PENDING_FOR_APPROVAL: `${API_HOST_PATH}/api/pending/approvals`,
+  APPROVAL_REJEACT: `${API_HOST_PATH}/api/review/approvals`
 };
 
 export const API_STATUS = {

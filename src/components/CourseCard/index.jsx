@@ -15,7 +15,7 @@ import Beginner from '../../images/101-Beginner.svg';
 import Intermediate from '../../images/102-Intermediate.svg';
 import Advance from '../../images/103-Advance.svg';
 import Expert from '../../images/104-Expert.svg';
-import UploadFilePopup from '../UploadFilePopup/UploadFilePopup'
+import UploadFilePopup from '../../components/DiscardPopup/draganddrop'
 import { SHOW_LEVELS } from '../../modules/constants';
 //const levels=LEVELS;
 // {
@@ -64,26 +64,22 @@ const CourseCard = (props) => {
   //   darkBar = 3
   // }
   return (
-
-    <>
-        <tr>
-          <td style={{padding:"10px 30px"}}> {course.learningPath.name}</td>
-          {/*<td style={{padding:"10px 30px"}}> {"UI"}</td>*/}
-          <td style={{padding:"10px 25px"}}> <img src={SHOW_LEVELS[course.learningPath.competency.id+"-"+course.learningPath.competency.name]} className={classes.levIcons}/></td>
-          <td style={{padding:"10px 30px"}}>{dateFormat(course.startDate)}</td>
-          <td style={{padding:"10px 30px"}}>{dateFormat(course.endDate)}</td>
-          <td style={{padding:"10px 30px"}}> 
-            <Button variant="outlined" size="small" color="primary" onClick={onViewClick}>
-            {"30"}
-            </Button>
-          <UploadFilePopup discardHandler={discardHandler}/>
-          </td>
-          <td style={{padding:"10px 30px"}}> <Button variant="outlined" size="small" style={{borderColor:"#f07402",color:"#f07402"}}>
-            {"View"}
-            </Button></td>
-        </tr>
-    </>
-
+    <tr className={classes.tblrow}>
+      <td> {course.learningPath.name}</td>
+      <td> <img src={SHOW_LEVELS[course.learningPath.competency.id+"-"+course.learningPath.competency.name]} className={classes[course.learningPath.competency.name]}/></td>
+      <td>{dateFormat(course.startDate)}</td>
+      <td>{dateFormat(course.endDate)}</td>
+      <td> 
+        <Button variant="outlined" size="small" className={classes.avglearningrate} onClick={onViewClick}>
+          {course.percentCompleted ? course.percentCompleted :"30"}{"%"}
+        </Button><UploadFilePopup discardHandler={discardHandler}></UploadFilePopup>
+      </td>
+      <td> 
+        <Button variant="outlined" onClick={onButtonClick} size="small" className={classes.actionbtn}>
+          {"View"}
+        </Button>
+      </td>
+    </tr>
   );
 }
 

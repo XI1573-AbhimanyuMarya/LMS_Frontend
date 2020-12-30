@@ -15,7 +15,7 @@ const SetDuration = () => {
 	const classes = useStyles();
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
- const{courseIdArr,mycourses}= learningPathState;
+ const{courseIdArr,allLearningPath}= learningPathState;
  const[main,setmain]= useState({})
 	const onSliderHandler = (event,val) => {
     
@@ -44,18 +44,18 @@ var tem;
 				<Typography variant="h6" align="center">
 					{LEARNING_PATH_LABELS.SELECT_LEARNING_PATH_DURATION}
       			</Typography>
-            {mycourses.map((item)=>(
-            ( courseIdArr.indexOf(item.learningPath.learningPathId)>-1)?
+            {allLearningPath.map((item)=>(
+            ( courseIdArr.indexOf(item.id)>-1)?
              <>
              
             <Typography variant="h6" align="center" marginTop="5px">
-					   {item.learningPath.name}
+					   {item.name}
            </Typography>
              
               <PrettoSlider
               defaultValue={ 3 }
               valueLabelDisplay="auto"
-              id={item.learningPath.learningPathId}
+              id={item.id}
               step={3}
               min={3}
               max={12}
@@ -66,16 +66,6 @@ var tem;
             /></>:''
              
             ))}	
-            {/* <PrettoSlider
-              defaultValue={ 3 }
-              valueLabelDisplay="auto"
-              step={3}
-              min={3}
-              max={12}
-              aria-labelledby="discrete-slider-custom"
-              marks={marks}
-              onChange={ (e, val) => onSliderHandler(e, val) }
-            /> */}
 			</Container>
 		</React.Fragment>
 	);

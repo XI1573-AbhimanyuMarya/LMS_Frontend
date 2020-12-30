@@ -8,29 +8,34 @@ import CourseCatalog from '../MyCourseCatalog';
 import { MESSAGES } from '../../../../modules/constants';
 
 const Carosals1 = (props) => {
-	const { coursesList } = props;
+	const { lpList,setLpId } = props;
 	const [activeItemIndex, setActiveItemIndex] = useState(0);
 	const chevronWidth = 40;
-	let renderCarousel = "";
-	if (coursesList && Array.isArray(coursesList)) {
-		const renderCourses = coursesList.map((course) => {
-			return <CourseCatalog key={course.id} course={course} />
-		});
-
-		renderCarousel = <div style={{ padding: `0 ${chevronWidth}px` }}>
+  let renderCarousel = "";
+	if (lpList && Array.isArray(lpList)) {
+		// const renderCourses = coursesList.map((course) => {
+		// 	return <CourseCatalog key={course.id} course={course} />
+    // });
+    console.log(lpList);
+    const renderCourses=lpList.map((lp)=>{
+      return <CourseCatalog key={lp.learningPath.learningPathId} lp={lp} setLpId={setLpId}/>
+    });
+    //const renderCourses="";
+		renderCarousel = <div>
 			<ItemsCarousel
 				requestToChangeActive={setActiveItemIndex}
 				activeItemIndex={activeItemIndex}
-				numberOfCards={4}
+				numberOfCards={3}
 				gutter={20}
 				leftChevron={<ArrowBackIosOutlinedIcon />}
 				rightChevron={<ArrowForwardIosOutlinedIcon />}
 				outsideChevron
-				chevronWidth={chevronWidth}
+        chevronWidth={chevronWidth}
+        style={{display:"flex",boxSizing:"border-box",maxHeight:"10vh"}}
 			>
-				{
-					renderCourses[0]
-				}
+        {
+          renderCourses
+        }
 			</ItemsCarousel>
 		</div>
 	}

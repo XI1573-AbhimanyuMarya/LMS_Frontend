@@ -19,7 +19,7 @@ const Carosals = (props) => {
 		const renderCourses = coursesList.map((course) => {
 			return <CourseCard key={course.id} course={course} onButtonClick={handleCourseClick} />
 		});
-
+    //const renderCourses=<CourseCard key={coursesList[0].id} course={coursesList[0]} onButtonClick={handleCourseClick} />;
 		renderCarousel = <div style={{ padding: `0` }}>
 			<ItemsCarousel
 				requestToChangeActive={setActiveItemIndex}

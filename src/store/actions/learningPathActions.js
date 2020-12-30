@@ -34,6 +34,10 @@ const getLearningPathLevel = (pathLevel) => ({
   type: actionTypes.GET_LEARNING_PATH_LEVEL,
   payload: { pathLevel },
 });
+const openBtn = (course) => ({
+  type: actionTypes.SHOW_BUTTON_BASED_ON_RATE,
+  payload: {course}
+});
 const pathModelOpen = (val) => ({
   type: actionTypes.PATH_MODEL_OPEN,
   payload: { val },
@@ -46,12 +50,20 @@ const uploadFileModelOpen = (val) => (console.log("val",val),{
   type: actionTypes.UPLOADFILE_MODEL_OPEN,
   payload: { val },
 });
+const RejectModelOpen = (val) => (console.log("val",val),{
+  type: actionTypes.REJECT,
+  payload: { val },
+});
+const ApproveModelOpen = (val) => (console.log("val",val),{
+  type: actionTypes.APPROVE,
+  payload: { val },
+});
 const createLearningPath = (path) => ({
   type: actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST,
   payload: { path },
 });
-
-const createAssignLearningPath = (path) => (console.log("path in assign",path),{
+//function to assign created learning path to user
+const createAssignLearningPath = (path) => ({
   type: actionTypes.CREATE_ASSIGNED_LEARNING_PATH_CALL_REQUEST,
   payload: {path} ,
 });
@@ -71,7 +83,11 @@ const getMyLearningPath = (employeeEmail) => ({
   type: actionTypes.GET_MY_LEARNING_PATH_REQUEST,
   payload: { employeeEmail },
 });
-
+//get list of created learning path courses 
+const getLearningPath = (assigneeId) =>({             //by hanifa
+type: actionTypes.GET_LEARNING_PATH_REQUEST,
+payload:{ assigneeId }
+})
 const deleteAllPaths = (ids) => ({
   type: actionTypes.DELETE_ALL_PATH,
   payload: {ids},
@@ -80,6 +96,25 @@ const deleteAllPaths = (ids) => ({
 const deletePath = (ids) => ({
   type: actionTypes.DELETE_PATH,
   payload: {ids},
+});
+
+const getLearningPathCourses=(ids)=>({
+  type:actionTypes.GET_LEARNING_PATH_COURSES_REQUEST,
+  payload: {ids}
+});
+
+const changeCourseRate = (changeRate,course) => ({
+  type: actionTypes.CHANGE_COURSE_RATE,
+  payload: {changeRate,course}
+});
+const getPendingForApproval = (managerEmail) => ({
+  type: actionTypes.GET_PENDING_APPROVAL,
+  payload: { managerEmail },
+});
+
+const getApprovalRejects = (learningPathEmployeeId, status) => ({
+  type: actionTypes.GET_APPROVAL_REJECTION,
+  payload: { learningPathEmployeeId, status},
 });
 
 export default {
@@ -93,6 +128,7 @@ export default {
   getLearningPathName,
   getLearningPathDes,
   getLearningPathLevel,
+  openBtn,
   pathModelOpen,
   discardModelOpen,
   createLearningPath,
@@ -101,7 +137,15 @@ export default {
   getActivePathStep,
   getAssignedLearningPath,
   getMyLearningPath,
+  getLearningPath,
   deleteAllPaths,
   deletePath,
-  uploadFileModelOpen
+  getLearningPathCourses,
+  changeCourseRate,
+  uploadFileModelOpen,
+  uploadFileModelOpen,
+  RejectModelOpen,
+  ApproveModelOpen,
+  getPendingForApproval,
+  getApprovalRejects
 };

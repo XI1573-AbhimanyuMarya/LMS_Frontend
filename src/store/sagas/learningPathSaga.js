@@ -29,6 +29,10 @@ export function* learningPathSaga() {
   yield takeLatest(actionTypes.GET_MY_LEARNING_PATH_REQUEST, getMyLearningPath);
   yield takeLatest(actionTypes.DELETE_ALL_PATH, deleteAllPaths);
   yield takeLatest(actionTypes.DELETE_PATH, deletePaths);
+  yield takeLatest(actionTypes.GET_LEARNING_PATH_REQUEST, getLearningPath); //get the list of all learning path created
+  yield takeLatest(actionTypes.GET_LEARNING_PATH_COURSES_REQUEST, getLearningPathCourses);
+  yield takeLatest(actionTypes.GET_PENDING_APPROVAL, getPendingForApproval);
+  yield takeLatest(actionTypes.GET_APPROVAL_REJECTION, getApprovalRejects);
 }
 
 function* fetchCourses() {
@@ -99,11 +103,20 @@ function* getAssignedLearningPaths(action) {
     yield put({ type: actionTypes.GET_ASSIGNED_LEARNING_PATH_FAILURE, payload: error });
   }
 }
+//api call  to the list of all learning path courses assinged to particular users
 const fetchMyPath = async ({ employeeEmail }) => {
   return await axios.post(SERVICE_URLS.MY_PATH, { employeeEmail }, { headers: authHeader() });
 }
 
+//api call to fetch all learning paths
+const fetchLearningPath = async ({ assigneeId }) => {
+  console.log("get learning paths api called", assigneeId)
+  return await axios.get(SERVICE_URLS.GET_LEARNING_PATH+"/"+570, { headers: authHeader() });
+}
+//function to get the list of all learning path courses assinged to particular users
+
 function* getMyLearningPath(action) {
+ 
   try {
     const response = yield call(fetchMyPath, action.payload);
     const { data } = response;
@@ -111,6 +124,19 @@ function* getMyLearningPath(action) {
 
   } catch (error) {
     yield put({ type: actionTypes.GET_MY_LEARNING_PATH_FAILURE, payload: error });
+  }
+}
+
+//function to get the list of all created learning path 
+function* getLearningPath(action) {
+  console.log("action in getallLearningPath",action)
+  try {
+    const response = yield call(fetchLearningPath , action.payload);
+    const { data } = response;
+    yield put({ type: actionTypes.GET_LEARNING_PATH_SUCCESS, payload: data });
+
+  } catch (error) {
+    yield put({ type: actionTypes.GET_LEARNING_PATH_FAILURE, payload: error });
   }
 }
 const deleteAllPath = async ({ ids }) => {
@@ -140,5 +166,51 @@ function* deletePaths(action) {
 
   } catch (error) {
     yield put({ type: actionTypes.DELETE_PATH_FAILURE, payload: error });
+  }
+}
+
+const fetchPathCourses = async ({ ids }) => {
+  return await axios.get(SERVICE_URLS.LEARNINGPATH_COURSES+ids, { headers: authHeader() });
+}
+
+function* getLearningPathCourses(action) {
+  try {
+    const response = yield call(fetchPathCourses, action.payload);
+    const { data } = response;
+    yield put({ type: actionTypes.GET_LEARNING_PATH_COURSES_SUCCESS, payload: data });
+
+  } catch (error) {
+    yield put({ type: actionTypes.GET_LEARNING_PATH_COURSES_FAILURE, payload: error });
+  }
+}
+const getPFApproval = async ({ managerEmail }) => {
+  return await axios.post(SERVICE_URLS.PENDING_FOR_APPROVAL, { managerEmail }, { headers: authHeader() });
+}
+
+function* getPendingForApproval(action) {
+  try {
+    const response = yield call(getPFApproval,action.payload);
+    const { data } = response;
+
+    yield put({ type: actionTypes.FETCH_PENDING_FOR_APPROVAL_SUCCESS, payload: data });
+
+  } catch (error) {
+    yield put({ type: actionTypes.FETCH_PENDING_FOR_APPROVAL_FAILURE, error });
+  }
+}
+
+const getApprovalReject = async ({ learningPathEmployeeId, status }) => {
+  return await axios.put(SERVICE_URLS.APPROVAL_REJEACT, { learningPathEmployeeId, status }, { headers: authHeader() });
+}
+
+function* getApprovalRejects(action) {
+  try {
+    const response = yield call(getApprovalReject,action.payload);
+    const { data } = response;
+
+    yield put({ type: actionTypes.FETCH_APPROVAL_SUCCESS, payload: data });
+
+  } catch (error) {
+    yield put({ type: actionTypes.FETCH_APPROVAL_FAILURE, error });
   }
 }
