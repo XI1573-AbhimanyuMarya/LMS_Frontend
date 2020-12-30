@@ -26,9 +26,9 @@ const SetDuration = () => {
      
       console.log("courseid slected previously", main);
        main[event.currentTarget.id]={"id":val,"name":`${val} month`}
-       let tmp;
-       tmp=JSON.stringify(main)
-       setmain(tmp);
+      //  let tmp;
+      //  tmp=JSON.stringify(main)
+      //  setmain(tmp);
       // console.log("courseid slected", tmp);
       console.log("courseid main", main);
       
