@@ -62,6 +62,11 @@ const createLearningPath = (path) => ({
   type: actionTypes.CREATE_LEARNING_PATH_CALL_REQUEST,
   payload: { path },
 });
+//function to assign created learning path to user
+const createAssignLearningPath = (path) => ({
+  type: actionTypes.CREATE_ASSIGNED_LEARNING_PATH_CALL_REQUEST,
+  payload: {path} ,
+});
 const getFirstNextClicked = (val) => ({
   type: actionTypes.GET_FIRST_NEXT_CLICKED,
   payload: { val },
@@ -78,7 +83,11 @@ const getMyLearningPath = (employeeEmail) => ({
   type: actionTypes.GET_MY_LEARNING_PATH_REQUEST,
   payload: { employeeEmail },
 });
-
+//get list of created learning path courses 
+const getLearningPath = (assigneeId) =>({             //by hanifa
+type: actionTypes.GET_LEARNING_PATH_REQUEST,
+payload:{ assigneeId }
+})
 const deleteAllPaths = (ids) => ({
   type: actionTypes.DELETE_ALL_PATH,
   payload: {ids},
@@ -142,10 +151,12 @@ export default {
   pathModelOpen,
   discardModelOpen,
   createLearningPath,
+  createAssignLearningPath,
   getFirstNextClicked,
   getActivePathStep,
   getAssignedLearningPath,
   getMyLearningPath,
+  getLearningPath,
   deleteAllPaths,
   deletePath,
   getLearningPathCourses,

@@ -10,15 +10,16 @@ import Scrollbars from 'react-custom-scrollbars'
 import { useStyles } from '../CourseCatalog/style';
 
 const AssignedCarosals = (props) => {
-	const { coursesList, handleCourseClick } = props;
+	const { coursesList, handleCourseClick ,allLearningPath} = props;
 	const [activeItemIndex, setActiveItemIndex] = useState(0);
   const chevronWidth = 40;
   const classes = useStyles();
   let renderCarousel = "";
   console.log(coursesList,"raghav2")
+  console.log( allLearningPath ,"raghav2 in card")
 	if (coursesList && Array.isArray(coursesList)) {
 		const renderCourses = coursesList.map((course) => {
-			return <CourseCatalog key={course.learningPath.learningPathId} course={course} handleCourseClick={handleCourseClick} />
+			return <CourseCatalog key={course.id} course={course} handleCourseClick={handleCourseClick} />
 		});
 
 		renderCarousel = <div className={classes.card} style={{ padding: `0 ${chevronWidth}px`, display:"flex", flexWrap:"wrap", overflow:"auto",}}>

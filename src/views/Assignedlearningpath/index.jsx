@@ -29,6 +29,9 @@ const AssignedLearningPathMain = () => {
   //   dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username))
   // }, [])
 
+
+  
+
   const handleClickOpen = () => {
     dispatch(Actions.learningPathActions.pathModelOpen(true));
   };
@@ -90,8 +93,8 @@ const AssignedLearningPathMain = () => {
                 </Box>
                 <Box alignItems="center">
                   {isLoading && item?.length === 0 && <CourseSkelton />}
-                  <Carosals coursesList={item.courses} />
-                  {/* <Carosals coursesList={item.courses} handleCourseClick={(id) => onCourseClickHandler(id)} /> */}
+                  {/* <Carosals coursesList={item.courses} /> */}
+                  <Carosals coursesList={item.courses} handleCourseClick={(id) => onCourseClickHandler(id)} />
                 </Box>
               </div>
             ))}
