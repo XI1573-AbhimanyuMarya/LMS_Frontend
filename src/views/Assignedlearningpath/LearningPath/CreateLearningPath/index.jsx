@@ -51,6 +51,10 @@ const AssignedCreateLearningPath = (props) => {
   const { user } = loginState;
 
   const handleNext = () => {
+    console.log("learningPathState",learningPathState)
+    console.log(" activePathStep in assinged", activePathStep)
+    console.log("learningPathName",learningPathName)
+    console.log("courseIdArr",courseIdArr)
     if (activePathStep === 0 && courseIdArr?.length > 0) {
       setActivePathStep(activePathStep + 1);
     } else if (activePathStep === 0 && courseIdArr?.length === 0) {
@@ -60,16 +64,19 @@ const AssignedCreateLearningPath = (props) => {
     } else if (activePathStep === 1) {
       setActivePathStep(activePathStep + 1);
     } else if (activePathStep === steps?.length - 1) {
+      console.log("service called")
       const path = {
-        name: 'null',
-        madeById: user.id,
-        madeForId: userIdArr,
-        coursesId: courseIdArr,
-        duration: learningPathDuration,
-        description: 'null',
-        competencyLevelId: '101',
+        // name: 'null',
+        // madeById: user.id,
+        "employeeIds": userIdArr,
+       // coursesId: courseIdArr,
+        // duration: learningPathDuration,
+        "learningPathIds":learningPathDuration
+       // description: 'null',
       }
-      dispatch(Actions.learningPathActions.createLearningPath(path));
+      console.log("path",path)
+      // dispatch(Actions.learningPathActions.createLearningPath(path));
+      dispatch(Actions.learningPathActions.createAssignLearningPath(path));
       setTimeout(() => {
         setActivePathStep(activePathStep + 1);
       }, 1000);

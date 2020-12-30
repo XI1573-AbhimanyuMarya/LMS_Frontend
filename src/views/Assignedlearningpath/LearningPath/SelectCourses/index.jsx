@@ -16,21 +16,23 @@ const SelectAssignedPath = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
-  const { courses, filteredCoursesList, isLoading, learningPathName, firstNextClicked, courseIdArr } = learningPathState;
+  const { courses, filteredCoursesList, isLoading, learningPathName, firstNextClicked, allLearningPath } = learningPathState;
+  const { mycourses } = learningPathState;
   const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
   const [touch, setTouch] = useState(false);
   const loginState = useSelector(res => res.loginState);
-  const { mycourses } = learningPathState;
-
   /**
    * function to fetch all courses initial time
    */
   useEffect(() => {
-    dispatch(Actions.learningPathActions.getMyLearningPath(loginState.user.username));
-    if (mycourses !== 0) {
-      // dispatch(Actions.learningPathActions.fetchAllCourses());
+    dispatch(Actions.learningPathActions.getLearningPath(loginState.user.id));
+    console.log("mycourses.length",mycourses.length===0)
+    if (mycourses.length === 0) {
+      console.log("hhhhhhhhhhheyy")
+      dispatch(Actions.learningPathActions.fetchAllCourses());
     } else {
-      setSelectedCoursesArr(mycourses.learningPath.learningPathId)
+      console.log("mycourses",mycourses)
+      setSelectedCoursesArr(mycourses)
     }
   }, []);
 
@@ -55,22 +57,30 @@ const SelectAssignedPath = () => {
    */
   let selectedCourses = [];
   const onCourseClickHandler = (courseId) => {
+    console.log("heyy ia m caled courseId",courseId)
+    console.log("selectedCoursesArr in assinged learning",selectedCoursesArr)
     if (courseId !== "") {
       const idArr = selectedCoursesArr;
       const index = idArr.indexOf(courseId);
+      
       if (index > -1) {
         idArr.splice(index, 1);
+       
       } else {
         idArr.push(courseId);
       }
+      console.log("indez",idArr)
       setSelectedCoursesArr(idArr);
 
-      selectedCourses = courses.map(function (el) {
+      selectedCourses = allLearningPath.map(function (el) {
+        console.log("el",el)
         if (el.id === courseId) {
           !el.selected ? el.selected = true : el.selected = false;
         }
         return el;
       });
+
+      console.log("selected cources in assinged learning path",selectedCourses)
       dispatch(Actions.learningPathActions.getSelectedCourses(selectedCourses, selectedCoursesArr));
     }
   }
@@ -85,7 +95,9 @@ const SelectAssignedPath = () => {
 
 
   return (
+   
     <React.Fragment>
+      
       <Box component='div' display="flex" justifyContent="center">
       </Box>
       <Box className={classes.catalogContainer} display="flex-inline" justifyContent="center" >
@@ -95,8 +107,9 @@ const SelectAssignedPath = () => {
           </Typography>
         </Box>
         <Box alignItems="center">
-          {isLoading && mycourses?.length === 0 && <CourseSkelton />}
-          <Carosals coursesList={mycourses} handleCourseClick={(id) => onCourseClickHandler(id)} />
+          {isLoading && mycourses?.length === 0 &&  <CourseSkelton />}
+          
+          <Carosals coursesList={allLearningPath} handleCourseClick={(id) => onCourseClickHandler(id)} />
         </Box>
       </Box>
     </React.Fragment>

@@ -17,6 +17,8 @@ const initialState = {
   errorMessage: '',
   mycourses: [],
   assignedCources: [],
+  uploadFilePopup:false,
+  learningPathIds:3,
   learningPathCourses:[],
   uploadFilePopup:false,
   uploadFilePopup:false,
@@ -24,6 +26,7 @@ const initialState = {
   approvePopup:false,
   pfApproval:[],
   ApprovedRejected:'',
+  allLearningPath:[],
   attachments:[],
   certificates:[],
   selectedLp:{}
@@ -201,6 +204,13 @@ export const learningPathReducer = (state = initialState, action) => {
         ...state,
         isLoading: true
       }
+      case actionTypes.CREATE_ASSIGNED_LEARNING_PATH_CALL_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      }
+
+
     case actionTypes.CREATE_LEARNING_PATH_CALL_SUCCESS:
       return {
         ...state,
@@ -253,6 +263,27 @@ export const learningPathReducer = (state = initialState, action) => {
         isLoading: true,
         errorMessage: ''
       };
+
+    case actionTypes.GET_LEARNING_PATH_REQUEST:
+      return{
+        ...state,
+        isLoading: true,
+        errorMessage: ''
+        }
+        case actionTypes.GET_LEARNING_PATH_SUCCESS:
+      return{
+        ...state,
+        isLoading: true,
+        errorMessage: '',
+        allLearningPath:payload
+        }
+        case actionTypes.GET_LEARNING_PATH_FAILURE:
+      return{
+        ...state,
+        isLoading: true,
+        errorMessage: '',
+        allLearningPath:payload.error
+        }
     case actionTypes.GET_MY_LEARNING_PATH_SUCCESS:
       return {
         ...state,

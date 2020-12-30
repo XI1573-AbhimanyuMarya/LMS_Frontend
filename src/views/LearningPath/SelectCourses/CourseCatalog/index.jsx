@@ -12,11 +12,14 @@ import { useStyles } from './style';
 
 const CourseCatalog = (props) => {
 	const classes = useStyles();
-	const { course, handleCourseClick } = props;
-	const courseClass = course.selected && course.selected === true ? classes.selected : classes.root;
+  const { course, handleCourseClick } = props;
+  console.log("course in learningpath",course)
+  const courseClass = course.selected && course.selected === true ? classes.selected : classes.root;
+ 
 	return (
 		<Card className={courseClass}>
 			<CardActionArea onClick={() => handleCourseClick(course.id)}>
+        { console.log("course.selected",course.selected)}
 				{course.selected && course.selected === true && <CheckCircleIcon className={classes.checkIcon} />}
 				<CardContent>
 					<Box component="span" className={classes.courseType}>
