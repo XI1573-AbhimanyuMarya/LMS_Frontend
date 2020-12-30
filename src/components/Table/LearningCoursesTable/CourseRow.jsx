@@ -5,15 +5,13 @@ import { useStyles } from './style';
 
 const CourseRow=(props)=>{
   const classes=useStyles();
-  const {course}=props;
+  const {course,withRate,lpId, learningPathEmployeesId ,disable}=props;
   return (
     <tr className={classes.tblrow}>
       <td>{course.name}</td>
       <td>{course.category.name}</td>
       <td><img src={SHOW_LEVELS[course.competency.id+"-"+course.competency.name]} className={classes[course.competency.name]}/></td>
-      <td>
-        <LearningRate key={course.id} course={course}/>
-      </td>
+      {withRate && <td><LearningRate key={course.id} course={course} lpId={lpId} learningPathEmployeesId={learningPathEmployeesId} disable={disable}/></td>}
     </tr> 
   );
 }

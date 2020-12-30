@@ -50,6 +50,7 @@ const DiscardPopup = (props) => {
 					/>
 
             </Dialog>
+
         </div>
     );
 }

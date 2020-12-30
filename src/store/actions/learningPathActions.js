@@ -98,25 +98,44 @@ const deletePath = (ids) => ({
   payload: {ids},
 });
 
-const getLearningPathCourses=(ids)=>({
+const getLearningPathCourses=(empid,ids)=>({
   type:actionTypes.GET_LEARNING_PATH_COURSES_REQUEST,
-  payload: {ids}
+  payload: {ids,empid}
 });
 
 const changeCourseRate = (changeRate,course) => ({
   type: actionTypes.CHANGE_COURSE_RATE,
   payload: {changeRate,course}
 });
+const saveCourseRate = (reqBody) => ({
+  type: actionTypes.SAVE_COURSE_RATE,
+  payload: { reqBody }
+});
+
 const getPendingForApproval = (managerEmail) => ({
   type: actionTypes.GET_PENDING_APPROVAL,
   payload: { managerEmail },
 });
 
-const getApprovalRejects = (learningPathEmployeeId, status) => ({
+const getApprovalRejects = (reqBody) => ({
   type: actionTypes.GET_APPROVAL_REJECTION,
-  payload: { learningPathEmployeeId, status},
+  payload: reqBody,
 });
 
+const viewAttachment = (reqBody) => ({
+  type: actionTypes.VIEW_ATTACHMENT,
+  payload: reqBody,
+});
+
+const addCertificate= (files) => ({
+  type: actionTypes.ADD_CERTIFICATE,
+  payload: files
+});
+
+const uploadCertificate=(reqBody)=>({
+  type:actionTypes.UPLOAD_CERTIFICATE,
+  payload:{reqBody}
+});
 export default {
   fetchAllCourses,
   getFilteredCourses,
@@ -147,5 +166,9 @@ export default {
   RejectModelOpen,
   ApproveModelOpen,
   getPendingForApproval,
-  getApprovalRejects
+  getApprovalRejects,
+  saveCourseRate,
+  viewAttachment,
+  addCertificate,
+  uploadCertificate
 };

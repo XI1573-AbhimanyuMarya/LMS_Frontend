@@ -97,14 +97,14 @@ const ManageAssignLearningPath = ({ props }) => {
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
-          <Box component="div" display="flex" justifyContent="center">
+          {/* <Box component="div" display="flex" justifyContent="center">
             <Grid container className={classes.container}>
               <Grid item xs={2}></Grid>
               <Grid item xs={8}>
               </Grid>
             </Grid>
-          </Box>
-          <Paper className={classes.paper} elevation={1}>
+          </Box> */}
+          {/* <Paper className={classes.paper} elevation={1}> */}
             <div className={classes.cardData}>
               {isLoading && employees.length === 0 && <UserSkelton />}
               {renderUser !== "" ? (
@@ -117,7 +117,7 @@ const ManageAssignLearningPath = ({ props }) => {
                   </div>
                 )}
             </div>
-          </Paper>
+          {/* </Paper> */}
         </div>
       </main>
     </React.Fragment>

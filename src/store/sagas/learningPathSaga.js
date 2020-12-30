@@ -2,7 +2,7 @@ import { takeLatest, call, put } from "redux-saga/effects";
 import axios from 'axios';
 import { actionTypes } from '../types';
 import { SERVICE_URLS } from '../../modules/constants';
-import { authHeader } from '../../modules/authServices';
+import { authHeader } from '../../modules/authServices'; 
 
 const fetchAllCourses = async () => {
   return await axios.get(SERVICE_URLS.FETCH_COURSES, { headers: authHeader() });
@@ -33,6 +33,10 @@ export function* learningPathSaga() {
   yield takeLatest(actionTypes.GET_LEARNING_PATH_COURSES_REQUEST, getLearningPathCourses);
   yield takeLatest(actionTypes.GET_PENDING_APPROVAL, getPendingForApproval);
   yield takeLatest(actionTypes.GET_APPROVAL_REJECTION, getApprovalRejects);
+
+  yield takeLatest(actionTypes.SAVE_COURSE_RATE, saveCourseRate);
+  yield takeLatest(actionTypes.VIEW_ATTACHMENT, getAttachment);
+  yield takeLatest(actionTypes.UPLOAD_CERTIFICATE, uploadCertificates);    
 }
 
 function* fetchCourses() {
@@ -169,8 +173,8 @@ function* deletePaths(action) {
   }
 }
 
-const fetchPathCourses = async ({ ids }) => {
-  return await axios.get(SERVICE_URLS.LEARNINGPATH_COURSES+ids, { headers: authHeader() });
+const fetchPathCourses = async ({ ids,empid }) => {
+  return await axios.get(SERVICE_URLS.LEARNINGPATH_COURSES+ids+'/'+empid, { headers: authHeader() });
 }
 
 function* getLearningPathCourses(action) {
@@ -178,7 +182,6 @@ function* getLearningPathCourses(action) {
     const response = yield call(fetchPathCourses, action.payload);
     const { data } = response;
     yield put({ type: actionTypes.GET_LEARNING_PATH_COURSES_SUCCESS, payload: data });
-
   } catch (error) {
     yield put({ type: actionTypes.GET_LEARNING_PATH_COURSES_FAILURE, payload: error });
   }
@@ -199,18 +202,65 @@ function* getPendingForApproval(action) {
   }
 }
 
-const getApprovalReject = async ({ learningPathEmployeeId, status }) => {
-  return await axios.put(SERVICE_URLS.APPROVAL_REJEACT, { learningPathEmployeeId, status }, { headers: authHeader() });
+const getApprovalReject = async (reqBody) => {
+  
+  return await axios.put(SERVICE_URLS.APPROVAL_REJEACT, reqBody , { headers: authHeader() });
 }
 
 function* getApprovalRejects(action) {
   try {
+  
     const response = yield call(getApprovalReject,action.payload);
     const { data } = response;
-
     yield put({ type: actionTypes.FETCH_APPROVAL_SUCCESS, payload: data });
 
   } catch (error) {
     yield put({ type: actionTypes.FETCH_APPROVAL_FAILURE, error });
+  }
+}
+
+const saveCourseRateRequest = async ({ reqBody }) => {
+  return await axios.post(SERVICE_URLS.SAVE_COURSE_RATE, { ...reqBody }, { headers: authHeader() });
+}
+
+function* saveCourseRate(action) {
+  try {
+    const response = yield call(saveCourseRateRequest,action.payload);
+    const { data } = response;
+
+    yield put({ type: actionTypes.SAVE_COURSE_RATE_SUCCESS, payload: data });
+    yield takeLatest(actionTypes.GET_MY_LEARNING_PATH_REQUEST, getMyLearningPath);
+  } catch (error) {
+    yield put({ type: actionTypes.SAVE_COURSE_RATE_FAILURE, error });
+  }
+}
+
+const getAttachmentRequest = async (reqBody) => {
+  return await axios.get(SERVICE_URLS.GET_ATTACHMENT+'/'+reqBody.lpId+'/'+reqBody.employeeId, { headers: authHeader() });
+}
+
+function* getAttachment(action) {
+  try {
+    const response = yield call(getAttachmentRequest,action.payload);
+    const { data } = response;
+    
+    yield put({ type: actionTypes.VIEW_ATTACHMENT_SUCCESS, payload: data });
+  } catch (error) {
+    yield put({ type: actionTypes.VIEW_ATTACHMENT_FAILURE, error });
+  }
+}
+
+const uploadCertificatesRequest = async ({reqBody}) => {
+  return await axios.post(SERVICE_URLS.UPLOAD_CERTIFICATES,reqBody, { headers: authHeader() });
+}
+
+function* uploadCertificates(action) {
+  try {
+    const response = yield call(uploadCertificatesRequest,action.payload);
+    const { data } = response;
+    
+    yield put({ type: actionTypes.UPLOAD_CERTIFICATE_SUCCESS, payload: data });
+  } catch (error) {
+    yield put({ type: actionTypes.UPLOAD_CERTIFICATE_FAILURE, error });
   }
 }

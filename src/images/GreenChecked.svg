@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#radial-gradient);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="0.28" cy="0.286" r="0.776" gradientTransform="translate(0.267 -0.114) rotate(42.55)" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#39b215"/>
+      <stop offset="1" stop-color="#155c00"/>
+    </radialGradient>
+  </defs>
+  <g id="Group_107" data-name="Group 107" transform="translate(5097 6642)">
+    <circle id="Ellipse_4" data-name="Ellipse 4" class="cls-1" cx="15" cy="15" r="15" transform="translate(-5097 -6642)"/>
+    <path id="Tick" class="cls-2" d="M5.561,15v-.076H0v-3H5.561V0h3V15Z" transform="translate(-5079.393 -6636) rotate(45)"/>
+  </g>
+</svg>

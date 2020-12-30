@@ -70,7 +70,8 @@ export const useStyles = makeStyles((theme) => ({
       '& th':{
         padding: "15px 15px 10px 31px",
         textAlign:"left",
-        fontWeight:"normal"
+        fontWeight:"normal",
+        opacity: "0.7"
       }
     },
     backgroundColor:"white",

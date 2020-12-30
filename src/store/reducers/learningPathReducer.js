@@ -26,8 +26,9 @@ const initialState = {
   approvePopup:false,
   pfApproval:[],
   ApprovedRejected:'',
-  allLearningPath:[]
-
+  allLearningPath:[],
+   attachments:[],
+  certificates:[]
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -119,9 +120,9 @@ export const learningPathReducer = (state = initialState, action) => {
       }
     case actionTypes.SHOW_BUTTON_BASED_ON_RATE:
       let showBtn;
-      if(payload.course.percentageCompleted==100){
+      if(payload.course.percentCompleted==100){
         showBtn="Upload";
-      }else if(payload.course.percentageCompleted<100){
+      }else if(payload.course.percentCompleted<100){
         showBtn="Save";
       }
       let learningPathCourses=state.learningPathCourses.map((elm)=>{
@@ -140,7 +141,7 @@ export const learningPathReducer = (state = initialState, action) => {
     case actionTypes.CHANGE_COURSE_RATE:
       let learningPathCourses1=state.learningPathCourses.map((elm)=>{
         if(elm.id==payload.course.id){
-          elm.percentageCompleted=payload.changeRate;
+          elm.percentCompleted=payload.changeRate;
         }
         return elm;
       });
@@ -269,7 +270,6 @@ export const learningPathReducer = (state = initialState, action) => {
         errorMessage: ''
         }
         case actionTypes.GET_LEARNING_PATH_SUCCESS:
-          console.log("payload in GET_LEARNING_PATH_SUCCESS",payload)
       return{
         ...state,
         isLoading: true,
@@ -344,10 +344,10 @@ export const learningPathReducer = (state = initialState, action) => {
         errorMessage: ''
       };
     case actionTypes.GET_LEARNING_PATH_COURSES_SUCCESS:
-      payload.map((course)=>{
-        course.percentageCompleted=10;
-        return course;
-      });
+      // payload.map((course)=>{
+      //   course.percentageCompleted=10;
+      //   return course;
+      // });
       return {
         ...state,
         learningPathCourses: payload,
@@ -399,7 +399,75 @@ export const learningPathReducer = (state = initialState, action) => {
           isLoading: true,
           errorMessage: ''
         };
+        case actionTypes.SAVE_COURSE_RATE:
+          return {
+            ...state,
+            isLoading: true,
+            errorMessage: ''
+          };
+  
+        case actionTypes.SAVE_COURSE_RATE_SUCCESS:
+          console.log(payload);
+          return {
+            ...state,
+            isLoading: false
+          }
+        case actionTypes.SAVE_COURSE_RATE_FAILURE:
+          console.log(payload);
+          return {
+            ...state,
+            isLoading: false
+          }
 
+        case actionTypes.VIEW_ATTACHMENT:
+          return {
+            ...state,
+            //isLoading: true,
+            errorMessage: ''
+          };
+  
+        case actionTypes.VIEW_ATTACHMENT_SUCCESS:
+          let data=[];
+          payload.forEach(item=>{
+            data.push({src:"data:image/png;base64,"+item});
+          });
+          return {
+            ...state,
+            //isLoading: false,
+            attachments:data
+          }
+        case actionTypes.VIEW_ATTACHMENT_FAILURE:
+          return {
+            ...state,
+            //isLoading: false,
+            attachments:[]
+          }
+      case actionTypes.ADD_CERTIFICATE:
+        return {
+          ...state,
+          certificates:payload,
+          errorMessage: ''
+        };
+      case actionTypes.UPLOAD_CERTIFICATE:
+        return {
+          ...state,
+          isLoading: true,
+          errorMessage: ''
+        };
+      case actionTypes.UPLOAD_CERTIFICATE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        certificates:[],
+        errorMessage: ''
+      };
+      case actionTypes.UPLOAD_CERTIFICATE_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        certificates:[],
+        errorMessage: payload
+      };
     default: return state;
   }
 }

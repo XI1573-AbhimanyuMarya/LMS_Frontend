@@ -13,10 +13,14 @@ import {SHOW_LEVELS} from '../../../../modules/constants';
 
 const CourseCatalog1 = (props) => {
 	const classes = useStyles();
-  const { lp,setLpId } = props;
-	const courseClass = lp.selected && lp.selected === true ? classes.selected : classes.root;
+  const { lp,setLpId,setDisable } = props;
+  const courseClass = lp.selected && lp.selected === true ? classes.selected : classes.root;
+  const viewClickHandler=()=>{
+    setLpId(lp.learningPath.learningPathId);
+    setDisable(true);
+  }
 	return (
-		<Card className={courseClass} style={{border:"1px solid #67b104",maxHeight:"35vh"}}>
+		<Card className={courseClass} style={{border:"1px solid #67b104"}}>
 			<CardActionArea>
 				{/* {course.selected && course.selected === true && <CheckCircleIcon className={classes.checkIcon} />} */}
 				<CardContent>
@@ -30,7 +34,7 @@ const CourseCatalog1 = (props) => {
 						{lp?.learningPath?.description}
 					</Typography>
 				</CardContent>
-					<Box className={classes.view} style={{color:"white", fontFamily:"robot"}} onClick={()=>setLpId(lp.learningPath.learningPathId)}>
+					<Box className={classes.view} style={{color:"white", fontFamily:"robot"}} onClick={viewClickHandler}>
 						{"View"}
 					</Box>
 			</CardActionArea>
