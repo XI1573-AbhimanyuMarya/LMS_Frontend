@@ -289,6 +289,7 @@ public class LearningPathServiceImpl implements LearningPathService {
                 learningPathEmployees.setLearningPath(learningPath);
                 learningPathEmployees.setEmployee(user);
                 learningPathEmployees.setPercentCompleted(0);
+                learningPathEmployees.setApprovalStatus(YTBD);
                 learningPathEmployees.setDuration(duration);
                 learningPathEmployees.setStartDate(LocalDate.now());
                 Integer lpDuration = Integer
