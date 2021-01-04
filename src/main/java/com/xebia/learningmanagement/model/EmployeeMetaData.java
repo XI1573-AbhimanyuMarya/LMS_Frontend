@@ -63,7 +63,7 @@ public class EmployeeMetaData {
     @JsonProperty("Client Location")
     private String clientLocation;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("modifiedTime")
     public String getModifiedTime() {

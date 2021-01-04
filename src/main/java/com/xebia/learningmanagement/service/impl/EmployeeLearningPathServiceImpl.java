@@ -50,19 +50,18 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
                                            LearningPathEmployeesRepository learningPathEmployeesRepository,
                                            EmailSend emailSend,
                                            CourseRatingRepository courseRatingRepository,
-                                           LearningPathRepository learningPathRepository)
-    {
-        this.userRepository=userRepository;
-        this.learningPathEmployeesRepository=learningPathEmployeesRepository;
-        this.emailSend=emailSend;
-        this.courseRatingRepository=courseRatingRepository;
-        this.learningPathRepository=learningPathRepository;
+                                           LearningPathRepository learningPathRepository) {
+        this.userRepository = userRepository;
+        this.learningPathEmployeesRepository = learningPathEmployeesRepository;
+        this.emailSend = emailSend;
+        this.courseRatingRepository = courseRatingRepository;
+        this.learningPathRepository = learningPathRepository;
     }
 
 
     @Override
     public void deleteLearningPath(Map data) throws ErrorResponse {
-        Map<String, String> emailcontent=new HashMap<>();
+        Map<String, String> emailcontent = new HashMap<>();
         List<String> employeeLearningpathids = null;
         LearningPathEmployees learningpathemployees = null;
         try {
@@ -122,7 +121,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     }
 
 
-    public Map<String,String> setMailProperties(LearningPathEmployees learningpathemployees) {
+    public Map<String, String> setMailProperties(LearningPathEmployees learningpathemployees) {
         Map<String, String> emailcontent = new HashMap<>();
         List<Courses> courselist = null;
         StringBuilder courses = new StringBuilder();
@@ -164,7 +163,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         try {
             updateStatusAndLearningRate(courseRating.getEmployeeId(), courseRating.getLearningPathId());
         } catch (Exception e) {
-            throw new Exception("Error updating Employee Update Status And Learning Rate. Reason: "+e.getMessage());
+            throw new Exception("Error updating Employee Update Status And Learning Rate. Reason: " + e.getMessage());
         }
         message.put("message", "Course Rating Succesfully Updated");
         return message;
