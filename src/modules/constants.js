@@ -10,7 +10,8 @@ import OutlinedExpert from '../images/104-OutlinedExpert.svg';
 
 // const API_HOST_PATH = process.env.REACT_APP_BASE_API_URL;
 //'https://learningmanagementxeb.herokuapp.com';
-const API_HOST_PATH =  'http://localhost:8085'
+// const API_HOST_PATH =  'http://localhost:8085'
+const API_HOST_PATH =  'https://xebia-lms.herokuapp.com'
 
 export const SERVICE_URLS = {
 LOGIN: `${API_HOST_PATH}/username`,
