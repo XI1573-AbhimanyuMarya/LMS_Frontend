@@ -1,6 +1,6 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,30 +8,18 @@ import Container from '@material-ui/core/Container';
 import CreateLearningPath from './CreateLearningPath';
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
+import LearningPathDesc from './LearningPathDesc';
+import Actions from '../../../store/actions';
 
 const transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const AssignedLearningPath = (props) => {
-    const learningPathState = useSelector(state => state.learningPathState);
-    const { pathModelOpen } = learningPathState;
-    const { handleClose, handleClosePath } = props;
-    return (
-        <div>
-            <Dialog fullScreen open={pathModelOpen} onClose={handleClose} TransitionComponent={transition}>
-                <CssBaseline />
-                <ReactNotification />
-                <Container maxWidth="xl" disableGutters={true}>
-                    <CreateLearningPath 
-                        handleClose={handleClose} 
-                        handleClosePath={handleClosePath}
-                        pathStore={learningPathState}
-                    />
-                </Container>
-            </Dialog>
-        </div>
-    );
+  const learningPathState = useSelector(state => state.learningPathState);
+  const { pathModelOpen,selectedLp } = learningPathState;
+  const { handleClose, handleClosePath } = props;
+  return (Object.keys(selectedLp).length!==0 && selectedLp.constructor===Object ? <LearningPathDesc selectedLp={selectedLp}/> : <CreateLearningPath />);
 }
 
 AssignedLearningPath.propTypes = {

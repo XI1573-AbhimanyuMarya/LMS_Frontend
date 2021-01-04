@@ -34,7 +34,6 @@ import TopNav from "../../../components/TopNav";
 
 const steps = STEPS;
 const getStepContent = (step) => {
-  console.log("step in create learning path",step)
   switch (step) {
     case 0:
       return <SelectCourses1 />;
@@ -68,10 +67,6 @@ const CreateLearningPath = (props) => {
   const { user } = loginState;
 
   const handleNext = () => {
-
-    console.log(" activePathStep", activePathStep)
-    console.log("learningPathName",learningPathName)
-    console.log("courseIdArr",courseIdArr)
     if (
       activePathStep === 0 &&
       learningPathName !== "" &&

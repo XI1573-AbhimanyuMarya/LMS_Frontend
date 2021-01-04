@@ -50,11 +50,11 @@ const AssignedCreateLearningPath = (props) => {
   const { learningPathName,learningPathDes , courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
   const { user } = loginState;
 
+  const closeHandler=()=>{
+    setActivePathStep(0);
+  }
+
   const handleNext = () => {
-    console.log("learningPathState",learningPathState)
-    console.log(" activePathStep in assinged", activePathStep)
-    console.log("learningPathName",learningPathName)
-    console.log("courseIdArr",courseIdArr)
     if (activePathStep === 0 && courseIdArr?.length > 0) {
       setActivePathStep(activePathStep + 1);
     } else if (activePathStep === 0 && courseIdArr?.length === 0) {
@@ -64,7 +64,6 @@ const AssignedCreateLearningPath = (props) => {
     } else if (activePathStep === 1) {
       setActivePathStep(activePathStep + 1);
     } else if (activePathStep === steps?.length - 1) {
-      console.log("service called")
       const path = {
         // name: 'null',
         // madeById: user.id,
@@ -74,7 +73,6 @@ const AssignedCreateLearningPath = (props) => {
         "learningPathIds":learningPathDuration
        // description: 'null',
       }
-      console.log("path",path)
       // dispatch(Actions.learningPathActions.createLearningPath(path));
       dispatch(Actions.learningPathActions.createAssignLearningPath(path));
       setTimeout(() => {
@@ -117,33 +115,27 @@ const AssignedCreateLearningPath = (props) => {
   const showSteps=()=>{
     if(activePathStep!==0){
       return (
-        <Grid container className={classes.stepperContainer}>
-          <Grid item xs={3}>
-          </Grid>
-          <Grid item xs={6}>
-            <Stepper activeStep={activePathStep} connector={<QontoConnector />}>
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel
-                    StepIconProps={{
-                      classes: {
-                        active: classes.active,
-                        completed: classes.completed
-                      }
-                    }}
-                  >{label}
-                  </StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Grid>
-          <Grid item xs={3}>
-            <Toolbar className={classes.clrosButton}>
-              <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
-                <CloseIcon />
-              </IconButton>
-            </Toolbar>
-          </Grid>
+        <Grid container className={classes.stepperContainer} style={{backgroundColor:"white",display:'flex',justifyContent:"center"}}>
+          <Toolbar className={classes.clrosButton} style={{position:'absolute',right:"0px"}}>
+            <IconButton edge="end" color="inherit" onClick={closeHandler} aria-label="close">
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+          <Stepper activeStep={activePathStep} connector={<QontoConnector />}>
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel
+                      StepIconProps={{
+                        classes: {
+                          active: classes.active,
+                          completed: classes.completed
+                        }
+                      }}
+                    >{label}
+                    </StepLabel>
+                  </Step>
+                ))}
+          </Stepper>
         </Grid>
       );
     }

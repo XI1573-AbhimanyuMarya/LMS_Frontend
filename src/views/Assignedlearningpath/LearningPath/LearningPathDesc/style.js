@@ -3,8 +3,8 @@ import StepConnector from '@material-ui/core/StepConnector';
 
 export const useStyles = makeStyles((theme) => ({
 	layout: {
-		width: '81.5vw',//'76vw',
-    justifyContent: 'center'
+		width: '76vw',
+    justifyContent: 'center',
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -82,26 +82,3 @@ export const useStyles = makeStyles((theme) => ({
   		height: '10vh',
 	}
 }));
-
-export const QontoConnector = withStyles({
-    alternativeLabel: {
-        top: 10,
-        left: 'calc(-50% + 16px)',
-        right: 'calc(50% + 16px)',
-    },
-    active: {
-        '& $line': {
-            borderColor: '#621D58',
-        },
-    },
-    completed: {
-        '& $line': {
-            borderColor: '#621D58',
-        },
-    },
-    line: {
-        borderColor: '#eaeaf0',
-        borderTopWidth: 3,
-        borderRadius: 1,
-    },
-})(StepConnector);

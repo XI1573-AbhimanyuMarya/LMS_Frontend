@@ -20,7 +20,7 @@ const LearningCoursesTable=(props)=>{
     return <CourseRow key={lpcourse.id} course={lpcourse} lpId={props.lpId} learningPathEmployeesId={ props.learningPathEmployeesId } withRate={withRate} disable={disable}/>
   });
   return (
-    <div style={{overflowX:"auto", overflowY:"auto", height:"38vh",margin:"35px 30px 10px 0px"}}>
+    <div style={{overflowX:"auto", overflowY:"auto", height:"38vh",margin:"35px 0px 10px 0px"}}>
       <table className={classes.tbl}>
         <thead className={classes.tblheading}>
           <tr>
