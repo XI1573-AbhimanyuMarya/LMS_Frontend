@@ -1,28 +1,20 @@
 import React from 'react';
-import { useDispatch  } from "react-redux";
-import Button from '@material-ui/core/Button';
 import { useStyles } from './style';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { SHOW_LEVELS } from '../../modules/constants';
-
-const dateFormat=(inputDate) =>{
-  var date = new Date(inputDate);
-  if (!isNaN(date.getTime())) {
-    let mon=parseInt(date.getMonth()) + 1;
-    if(mon<10){
-      mon="0"+mon;
-    }
-    return date.getDate()+ '/' + mon + '/' + date.getFullYear();
-  }
-}
-
+import {ViewButton,LearningRateButton} from '../Button';
+import Actions from '../../store/actions';
 
 const CourseCard = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const learningPathState = useSelector(state => state.learningPathState);
   const { course, onButtonClick, showButton } = props;
 
   course.progress = '';
-  
+  const btnClick=()=>{
+    dispatch(Actions.learningPathActions.selectLearningPath(course));
+  }
   return (
     <tr className={classes.tblrow}>
       <td> {course.learningPath.name}</td>
@@ -30,14 +22,10 @@ const CourseCard = (props) => {
       <td>{course.startDate}</td>
       <td>{course.endDate}</td>
       <td> 
-        <Button variant="outlined" size="small" className={classes.avglearningrate}>
-          {course.percentCompleted ? course.percentCompleted :"30"}{"%"}
-        </Button>
+        <LearningRateButton percentCompleted={course.percentCompleted} />
       </td>
       <td> 
-        <Button variant="outlined" onClick={onButtonClick} size="small" className={classes.actionbtn}>
-          {"View"}
-        </Button>
+        <ViewButton onButtonClick={btnClick} /> 
       </td>
     </tr>
   );

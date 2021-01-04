@@ -6,26 +6,29 @@ import { useStyles } from './style';
 
 const LearningRate=(props)=>{
   const classes=useStyles();
-  //const learningPathState = useSelector(state => state.learningPathState);
+  const learningPathState = useSelector(state => state.learningPathState);
   const loginState = useSelector(res => res.loginState);
-  const {course,lpId}=props;
-  const {percentageCompleted}=course;
+  const {course,lpId, learningPathEmployeesId,disable }=props;
+  const {percentCompleted}=course;
   const dispatch=useDispatch();
   const focusHandler=()=>{
     dispatch(Actions.learningPathActions.openBtn(course));
   };
   const changeHandler=(e)=>{
     const changeRate=e.target.value;
-    dispatch(Actions.learningPathActions.changeCourseRate(changeRate,course));
+    if(changeRate<=100 && changeRate>=0){
+      dispatch(Actions.learningPathActions.changeCourseRate(changeRate,course));
+    }
   }
   const saveRateHandler=()=>{
     let reqBody={
       "employeeId":loginState.user.id,
       "learningPathId":lpId,
       "courseId":course.id,
-      "percentCompleted":parseInt(percentageCompleted)
+      "percentCompleted":parseInt(percentCompleted)
     };
     dispatch(Actions.learningPathActions.saveCourseRate(reqBody));
+    dispatch(Actions.learningPathActions.getMyLearningPath(loginState.user.username));
   }
 
   const onViewClick = () =>{
@@ -36,18 +39,35 @@ const LearningRate=(props)=>{
     dispatch(Actions.learningPathActions.uploadFileModelOpen(false));
   }
 
+  const addImgHandler= files=>{
+    dispatch(Actions.learningPathActions.addCertificate(files));
+  }
+
+  const uploadDocs=()=>{
+    let formData=new FormData();
+    learningPathState.certificates.forEach(file=>{
+      formData.append("certificate",file);
+    });
+    formData.append('employeeId',loginState.user.id);
+    formData.append('learningPathEmployeeId',learningPathEmployeesId);
+    formData.append('courseId',course.id);
+    dispatch(Actions.learningPathActions.uploadCertificate(formData));
+    discardHandler();
+  }
   const BtnObj={
     "Save":<SaveButton saveRateHandler={saveRateHandler}/>,
-    "Upload":<UploadButton onViewClick={onViewClick} discardHandler={discardHandler}/>,
+    "Upload":<UploadButton onViewClick={onViewClick} discardHandler={discardHandler} changeImgHandler={addImgHandler} uploadDocs={uploadDocs}/>,
     "Wait":<WaitForApprovalButton/>,
     "Approved":<ApprovedButton />
   }
   return (
     <>
       <input type="text" 
-        value={percentageCompleted}
-        onFocus={focusHandler} onChange={changeHandler}
+        value={percentCompleted}
+        onClick={focusHandler} onChange={!disable && changeHandler}
         className={classes.lpInField}
+        pattern={"^[1-9][0-9]?$|^100$"}
+
       />
       {
         course.showBtn!=='' && BtnObj[course.showBtn]

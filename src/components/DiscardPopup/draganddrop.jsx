@@ -18,7 +18,7 @@ const DiscardPopup = (props) => {
   const classes = useStyles();
   const learningPathState = useSelector(state => state.learningPathState);
   // const { discardModelOpen } = learningPathState;
-  const { discardHandler } = props;
+  const { discardHandler,changeImgHandler,uploadDocs } = props;
   const { uploadFilePopup } = learningPathState;
 
   const theme = createMuiTheme({
@@ -47,6 +47,7 @@ const DiscardPopup = (props) => {
   const handleDiscard = () => {
     discardHandler(true);
   }
+
   return (
     <div >
       <Dialog
@@ -68,12 +69,12 @@ const DiscardPopup = (props) => {
             previewGridProps={{ container: { spacing: 1, direction: 'row' } }}
             previewChipProps={{ classes: { root: classes.previewChip } }}
             previewText="Selected files"
-            dropzoneParagraphClass={{}}
-
+            onChange={changeImgHandler}
+            showAlerts={false}
           />
           </MuiThemeProvider>
           <DialogActions style={{ display: "flex", justifyContent: "center" }}>
-            <Button autoFocus onClick={handleDiscard} color="primary" variant="contained" className={classes.discardButtonpop}>
+            <Button autoFocus onClick={uploadDocs} color="primary" variant="contained" className={classes.discardButtonpop}>
               Submit
                     </Button>
           </DialogActions>

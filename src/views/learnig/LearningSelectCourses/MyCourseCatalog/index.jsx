@@ -10,11 +10,19 @@ import Box from '@material-ui/core/Box';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { useStyles } from './style';
 import {SHOW_LEVELS} from '../../../../modules/constants';
+import { useSelector, useDispatch } from 'react-redux';
+import Actions from '../../../../store/actions';
 
 const CourseCatalog1 = (props) => {
-	const classes = useStyles();
-  const { lp,setLpId } = props;
-	const courseClass = lp.selected && lp.selected === true ? classes.selected : classes.root;
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const { lp,setLpId,setDisable } = props;
+  const courseClass = lp.selected && lp.selected === true ? classes.selected : classes.root;
+  const viewClickHandler=()=>{
+    //setLpId(lp.learningPath.learningPathId);
+    dispatch(Actions.learningPathActions.selectLearningPath(lp));
+    setDisable(true);
+  }
 	return (
 		<Card className={courseClass} style={{border:"1px solid #67b104"}}>
 			<CardActionArea>
@@ -30,7 +38,7 @@ const CourseCatalog1 = (props) => {
 						{lp?.learningPath?.description}
 					</Typography>
 				</CardContent>
-					<Box className={classes.view} style={{color:"white", fontFamily:"robot"}} onClick={()=>setLpId(lp.learningPath.learningPathId)}>
+					<Box className={classes.view} style={{color:"white", fontFamily:"robot"}} onClick={viewClickHandler}>
 						{"View"}
 					</Box>
 			</CardActionArea>
@@ -39,7 +47,7 @@ const CourseCatalog1 = (props) => {
 }
 
 CourseCatalog1.propTypes = {
-    course: PropTypes.object.isRequired,
+  lp: PropTypes.object.isRequired,
     // handleCourseClick: PropTypes.func.isRequired,
 };
 

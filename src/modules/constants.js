@@ -13,18 +13,21 @@ import OutlinedExpert from '../images/104-OutlinedExpert.svg';
 const API_HOST_PATH =  'http://localhost:8085'
 
 export const SERVICE_URLS = {
-  LOGIN: `${API_HOST_PATH}/username`,
-  VERIFY_OTP: `${API_HOST_PATH}/password`,
-  FETCH_COURSES: `${API_HOST_PATH}/course/api/v1/allcourses`,
-  FETCH_USERS: `${API_HOST_PATH}/user/api/v1/get/all/employees`,
-  CREATE_LEARNING_PATH: `${API_HOST_PATH}/manager/api/v1/create/learningPath`,
-  ASSIGNED_PATH: `${API_HOST_PATH}/manager/api/v1/manage/learningPaths/assigned`,
-  MY_PATH: `${API_HOST_PATH}/employee/api/v1/mylearningpaths`,
-  DELETE_ALL_PATH: `${API_HOST_PATH}/employee/api/v1/delete/learningpath`,
-  LEARNINGPATH_COURSES:`${API_HOST_PATH}/manager/api/v1/learningPath/courses/`,
-  PENDING_FOR_APPROVAL: `${API_HOST_PATH}/manager/api/v1/pending/approvals`,
-  APPROVAL_REJEACT: `${API_HOST_PATH}/manager/api/v1/review/approvals`,
-  SAVE_COURSE_RATE: `${API_HOST_PATH}/employee/api/v1/update/courseratings`
+LOGIN: `${API_HOST_PATH}/username`,
+VERIFY_OTP: `${API_HOST_PATH}/password`,
+FETCH_COURSES: `${API_HOST_PATH}/course/api/v1/allcourses`,
+FETCH_USERS: `${API_HOST_PATH}/user/api/v1/get/all/employees`,
+CREATE_LEARNING_PATH: `${API_HOST_PATH}/manager/api/v1/create/learningPath`,
+ASSIGNED_PATH: `${API_HOST_PATH}/manager/api/v1/manage/learningPaths/assigned`,
+MY_PATH: `${API_HOST_PATH}/employee/api/v1/mylearningpaths`,
+DELETE_ALL_PATH: `${API_HOST_PATH}/employee/api/v1/delete/learningpath`,
+LEARNINGPATH_COURSES:`${API_HOST_PATH}/manager/api/v1/learningPath/courses/`,
+PENDING_FOR_APPROVAL: `${API_HOST_PATH}/manager/api/v1/pending/approvals`,
+APPROVAL_REJEACT: `${API_HOST_PATH}/manager/api/v1/review/approvals`,
+SAVE_COURSE_RATE: `${API_HOST_PATH}/employee/api/v1/update/courseratings`,
+GET_ATTACHMENT:`${API_HOST_PATH}/certificate/api/v1/get`,
+UPLOAD_CERTIFICATES:`${API_HOST_PATH}/certificate/api/v1/upload`
+
 };
 
 export const API_STATUS = {

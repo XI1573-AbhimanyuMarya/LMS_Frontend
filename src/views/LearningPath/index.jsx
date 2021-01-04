@@ -16,7 +16,6 @@ const transition = React.forwardRef(function Transition(props, ref) {
 const LearningPath = (props) => {
     const learningPathState = useSelector(state => state.learningPathState);
     const { pathModelOpen } = learningPathState;
-    console.log("Lear ",pathModelOpen);
     const { handleClose, handleClosePath } = props;
     return (
         <div>

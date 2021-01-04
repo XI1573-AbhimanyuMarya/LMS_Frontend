@@ -26,11 +26,8 @@ export const useStyles = makeStyles((theme) => ({
 		background: '#FFFFFF',
   },
   head:{
-    width: "202px",
     height: "27px",
-    // margin: "0 173px 24px 43px",
-    fontFamily: "ProximaNova",
-    fontSize: "22px",
+    fontSize: "19px",
     fontWeight: "normal",
     fontStretch: "normal",
     fontStyle: "normal",

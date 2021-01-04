@@ -15,9 +15,9 @@ const LearningCoursesTable=(props)=>{
   }, []);
   const { learningPathCourses } = learningPathState;
 
-  const {withRate}=props;
+  const {withRate,disable}=props;
   const renderCourseList=learningPathCourses.map((lpcourse)=>{
-    return <CourseRow key={lpcourse.id} course={lpcourse} lpId={props.lpId} withRate={withRate}/>
+    return <CourseRow key={lpcourse.id} course={lpcourse} lpId={props.lpId} learningPathEmployeesId={ props.learningPathEmployeesId } withRate={withRate} disable={disable}/>
   });
   return (
     <div style={{overflowX:"auto", overflowY:"auto", height:"38vh",margin:"35px 30px 10px 0px"}}>

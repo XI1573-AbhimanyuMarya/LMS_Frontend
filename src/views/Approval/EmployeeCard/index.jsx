@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -19,7 +19,11 @@ import Button from '@material-ui/core/Button';
 import Approve from '../../../components/DiscardPopup/approve'
 import Reject from '../../../components/DiscardPopup/Reject'
 
+import {ApproveButton,RejectButton} from '../../../components/Button'
+
 import { useStyles } from "./style";
+
+import Gallery from 'react-grid-gallery';
 
 const theme = createMuiTheme({
   overrides: {
@@ -36,7 +40,7 @@ const theme = createMuiTheme({
     MuiList: {
       root: {
         paddingTop: "0px",
-        paddingBottom: "0px",
+        paddingBottom: "0px"
       },
     },
     MuiListItemText: {
@@ -45,7 +49,7 @@ const theme = createMuiTheme({
         color: "#282828",
         marginRight: "10px",
       },
-    },
+    }
   },
 });
 
@@ -54,14 +58,13 @@ export default function EmployeeCardApproval(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
-  const { pfApproval } = learningPathState;
+  const { pfApproval,attachments } = learningPathState;
   
   const loginState = useSelector(
     (state) => state.loginState
   );
-console.log(loginState, "pfA")
+
   const onViewClick = () => {
-    console.log("view clicked")
     dispatch(Actions.learningPathActions.RejectModelOpen(true));
   }
 
@@ -89,11 +92,21 @@ console.log(loginState, "pfA")
   }
 
   const discardHandlerApprove = () => {
-    dispatch(Actions.learningPathActions.ApproveModelOpen(false));
-    
+    dispatch(Actions.learningPathActions.ApproveModelOpen(false));  
   }
 
-  console.log(data, 'data')
+  const [show,showGallery]=useState(false);
+
+  const viewAttachmentHandler=()=>{
+    let reqBody={
+      lpId:data.learningPathEmployeesId,
+      employeeId:data.employee.id
+    };
+    dispatch(Actions.learningPathActions.viewAttachment(reqBody));
+    showGallery(true);
+  }
+
+
   return (
     <>
       <div className={classes.root}>
@@ -119,9 +132,10 @@ console.log(loginState, "pfA")
         {/* ))} */}
         </div>
         <div className={classes.head}>
-          <Typography className={classes.view}>View Attachments</Typography>
-          <Button className={classes.approve} onClick={onViewClickApprove}>Approve</Button><Approve discardHandler={discardHandlerApprove}></Approve>
-          <Button className={classes.reject} onClick={onViewClick}>Reject</Button><Reject discardHandler={discardHandler} rejectHandler={rejectHandler}></Reject>
+          <Typography className={classes.view} onClick={viewAttachmentHandler}>View Attachments</Typography>
+          {show && attachments.length!==0 && <Gallery images={attachments} showImageCount={false} showLightboxThumbnails={true} lightboxWidth={600} isOpen={true} lightboxWillClose={()=>showGallery(false)} rowWidth=""/> }
+          <ApproveButton onViewClickApprove={onViewClickApprove}/><Approve discardHandler={discardHandlerApprove}></Approve>
+          <RejectButton onViewClick={onViewClick}/><Reject discardHandler={discardHandler} rejectHandler={rejectHandler}></Reject>
         </div>
       </div>
     </>
