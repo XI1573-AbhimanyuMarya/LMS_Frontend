@@ -9,11 +9,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Builder
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-//@JsonIgnoreProperties(value = "employee")
 public class LearningPathManagerDto {
 
     private Long learningPathEmployeesId;
@@ -21,9 +20,7 @@ public class LearningPathManagerDto {
     private EmployeeDto employee;
     private LearningPathManagerApprovalDto learningPath;
     private DurationDto duration;
-    private LocalDate startDate;
-    private LocalDate endDate;
-//    private Boolean isLearningPathExpired;
-
+    private String startDate;
+    private String endDate;
 
 }

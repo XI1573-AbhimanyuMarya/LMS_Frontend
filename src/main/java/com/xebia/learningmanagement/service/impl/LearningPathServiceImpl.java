@@ -1,6 +1,5 @@
 package com.xebia.learningmanagement.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.CharMatcher;
 import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.dtos.LearningPathDto.Path;
@@ -220,8 +219,6 @@ public class LearningPathServiceImpl implements LearningPathService {
         ApprovalDto approvalDto = new ApprovalDto();
         ModelMapper modelMapper = new ModelMapper();
 
-        ObjectMapper mapper = new ObjectMapper();
-
         approvalDto.setApprovalStatus(employee.getApprovalStatus());
         approvalDto.setLearningPathEmployeesId(employee.getLearningPathEmployeesId());
         approvalDto.setPercentCompleted(employee.getPercentCompleted());
@@ -229,7 +226,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         approvalDto.setEmployee(modelMapper.map(employee.getEmployee(), EmployeeDto.class));
         approvalDto.setStartDate(employee.getStartDate());
         approvalDto.setEndDate(employee.getEndDate());
-        approvalDto.setDuration(mapper.convertValue(employee.getDuration(), DurationDto.class));
+        approvalDto.setDuration(modelMapper.map(employee.getDuration(), DurationDto.class));
         return approvalDto;
 
     }

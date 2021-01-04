@@ -17,32 +17,33 @@ import java.util.Random;
 import static org.springframework.data.crossstore.ChangeSetPersister.*;
 
 @Service
+@Slf4j
 public class EmailService {
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	EmailSend emailSend;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    EmailSend emailSend;
 
-	public void sendEmail(String username) throws Exception {
-		User user = userRepository.findByUsername(username).orElseThrow(NotFoundException::new);
-		int otp = getRandomNumberUsingNextInt();
-		user.setPassword(String.valueOf(otp));
-		userRepository.save(user);
-		System.out.println(otp);
-		setOtpMailPropertiesAndSendEmail(user,otp);
-	}
+    public void sendEmail(String username) throws Exception {
+        User user = userRepository.findByUsername(username).orElseThrow(NotFoundException::new);
+        int otp = getRandomNumberUsingNextInt();
+        user.setPassword(String.valueOf(otp));
+        userRepository.save(user);
+        log.info("OTP : " + otp);
+        setOtpMailPropertiesAndSendEmail(user, otp);
+    }
 
-	private void setOtpMailPropertiesAndSendEmail(User user, int otp) throws Exception {
+    private void setOtpMailPropertiesAndSendEmail(User user, int otp) throws Exception {
 
-		Map<String, String> model = new HashMap<>();
-		model.put("OTP", String.valueOf(otp));
-		model.put("Email", user.getUsername());
-		emailSend.sendEmailMethodUsingTemplate(EmailType.LOGIN_USING_OTP.getValue(), model);
-	}
+        Map<String, String> model = new HashMap<>();
+        model.put("OTP", String.valueOf(otp));
+        model.put("Email", user.getUsername());
+        emailSend.sendEmailMethodUsingTemplate(EmailType.LOGIN_USING_OTP.getValue(), model);
+    }
 
 
-	private int getRandomNumberUsingNextInt() {
-		Random random = new Random();
-		return random.nextInt(999999 - 100000) + 100000;
-	}
+    private int getRandomNumberUsingNextInt() {
+        Random random = new Random();
+        return random.nextInt(999999 - 100000) + 100000;
+    }
 }
