@@ -1,20 +1,15 @@
 package com.xebia.learningmanagement.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Password {
 	private String password;
-
-	public Password() {
-	}
-
-	public Password(String password) {
-		this.password = password;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	private String username;
 }
