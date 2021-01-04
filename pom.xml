@@ -143,6 +143,11 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 
@@ -152,7 +157,50 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-        </plugins>
-    </build>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.7.0.1746</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
+                <configuration>
+                    <excludes>
+                        <exclude>com.xebia.learningmanagement.config</exclude>
+                        <exclude>com.xebia.learningmanagement.model</exclude>
+                        <exclude>com.xebia.learningmanagement.dtos</exclude>
+                        <exclude>com.xebia.learningmanagement.enums</exclude>
+                        <exclude>com.xebia.learningmanagement.repository</exclude>
+                        <exclude>com.xebia.learningmanagement.exception</exclude>
+                         <exclude>com.xebia.learningmanagement.entity</exclude>
+                         <exclude>com.xebia.learningmanagement.filter</exclude>
+                         <exclude>com.xebia.learningmanagement.util</exclude>
+                    </excludes>
+                </configuration>
 
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
 </project>

@@ -27,7 +27,7 @@ public class EmployeeLearningPathController {
 
 
     @PostMapping(value = "/api/v1/delete/learningpath")
-    public ResponseEntity<UserResponse> editLearningPath(@RequestBody final Map userdata) throws LearningPathException {
+    public ResponseEntity<UserResponse> editLearningPath(@RequestBody final Map userdata) throws Exception {
         UserResponse userResponse = new UserResponse();
         try {
             if (userdata.containsKey("ids")) {

@@ -1,9 +1,11 @@
 package com.xebia.learningmanagement.api;
 
+import com.xebia.learningmanagement.dtos.response.LoginResponse;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.Login;
-import com.xebia.learningmanagement.dtos.response.LoginResponse;
-import com.xebia.learningmanagement.model.*;
+import com.xebia.learningmanagement.model.Password;
+import com.xebia.learningmanagement.model.TempUsername;
+import com.xebia.learningmanagement.model.Username;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.UserService;
 import com.xebia.learningmanagement.service.impl.EmailService;
@@ -13,9 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-/*import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;*/
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

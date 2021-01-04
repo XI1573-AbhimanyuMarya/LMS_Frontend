@@ -7,6 +7,7 @@ import com.xebia.learningmanagement.dtos.request.CourseCompletedPercentRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
+import com.xebia.learningmanagement.exception.ErrorResponse;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.repository.CourseRatingRepository;
@@ -33,24 +34,35 @@ import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.YTBD
 @Slf4j
 public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathService {
 
-    @Autowired
+
     private UserRepository userRepository;
-    @Autowired
+
     private LearningPathEmployeesRepository learningPathEmployeesRepository;
-    @Autowired
-    private LearningPathServiceImpl serviceimpl;
-    @Autowired
+
     private EmailSend emailSend;
-    @Autowired
+
     private CourseRatingRepository courseRatingRepository;
 
-    @Autowired
     private LearningPathRepository learningPathRepository;
+
+    @Autowired
+    public EmployeeLearningPathServiceImpl(UserRepository userRepository,
+                                           LearningPathEmployeesRepository learningPathEmployeesRepository,
+                                           EmailSend emailSend,
+                                           CourseRatingRepository courseRatingRepository,
+                                           LearningPathRepository learningPathRepository)
+    {
+        this.userRepository=userRepository;
+        this.learningPathEmployeesRepository=learningPathEmployeesRepository;
+        this.emailSend=emailSend;
+        this.courseRatingRepository=courseRatingRepository;
+        this.learningPathRepository=learningPathRepository;
+    }
 
 
     @Override
-    public void deleteLearningPath(Map data) throws LearningPathException {
-        Map<String, String> emailcontent = new HashMap<>();
+    public void deleteLearningPath(Map data) throws ErrorResponse {
+        Map<String, String> emailcontent=new HashMap<>();
         List<String> employeeLearningpathids = null;
         LearningPathEmployees learningpathemployees = null;
         try {
@@ -73,7 +85,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         } catch (LearningPathException l) {
             throw new LearningPathException(l.getLocalizedMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ErrorResponse(e.getMessage());
         }
     }
 
@@ -89,10 +101,10 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
             if (learningPath.getEndDate().compareTo(LocalDate.now()) == 1) {
                 endDate = learningPath.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             } else {
-                //TODO Days remaining for expiration yet to be implemented
+                //Days remaining for expiration yet to be implemented
                 endDate = "Expired";
             }
-            int percentCompleted = courseCompletionAverage(learningPath.getEmployee().getId(), learningPath.getLearningPath().getId());
+            int percentCompleted = this.courseCompletionAverage(learningPath.getEmployee().getId(), learningPath.getLearningPath().getId());
             EmployeeLearningPathStatisticsDto employeeLearningPathStatisticsDto = EmployeeLearningPathStatisticsDto.builder()
                     .learningPathEmployeesId(learningPath.getLearningPathEmployeesId())
                     .duration(modelMapper.map(learningPath.getDuration(), DurationDto.class))
@@ -110,7 +122,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     }
 
 
-    public Map setMailProperties(LearningPathEmployees learningpathemployees) {
+    public Map<String,String> setMailProperties(LearningPathEmployees learningpathemployees) {
         Map<String, String> emailcontent = new HashMap<>();
         List<Courses> courselist = null;
         StringBuilder courses = new StringBuilder();
@@ -136,7 +148,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     public Map<String, String> saveOrUpdateCourseRating(CourseCompletedPercentRequest courseCompletedPercent) throws Exception {
         Map<String, String> message = new HashMap<>();
         CourseRating recordExists = courseRatingRepository.findByLearningPathIdAndCourseIdAndEmployeeId(courseCompletedPercent.getLearningPathId(), courseCompletedPercent.getCourseId(), courseCompletedPercent.getEmployeeId());
-        CourseRating courseRating = new CourseRating();
+        CourseRating courseRating = null;
         if (Objects.isNull(recordExists)) {
             courseRating = CourseRating.builder()
                     .courseId(courseCompletedPercent.getCourseId())

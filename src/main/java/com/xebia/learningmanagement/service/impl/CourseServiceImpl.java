@@ -15,11 +15,18 @@ import java.util.regex.Pattern;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    @Autowired
+
     private CourseRepository courseRepository;
 
-    @Autowired
+
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    public CourseServiceImpl(CourseRepository courseRepository,CategoryRepository categoryRepository)
+    {
+        this.categoryRepository=categoryRepository;
+        this.courseRepository=courseRepository;
+    }
 
     @Override
     public Set<Courses> getCoursesByKeyword(String keyword) {

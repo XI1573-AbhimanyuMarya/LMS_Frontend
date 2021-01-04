@@ -10,8 +10,14 @@ import java.util.List;
 
 @Service
 public class CompetencyServiceImpl implements CompetencyService {
-    @Autowired
+
     private CompetencyRepository competencyRepository;
+
+    @Autowired
+    public CompetencyServiceImpl(CompetencyRepository competencyRepository)
+    {
+        this.competencyRepository=competencyRepository;
+    }
 
     @Override
     public List<Competency> getCompetencyLevels() {
