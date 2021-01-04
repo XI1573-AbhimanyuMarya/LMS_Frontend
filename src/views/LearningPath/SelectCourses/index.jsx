@@ -69,8 +69,6 @@ const SelectCourses = () => {
 				return el;
       });
       
-      console.log(" selectedCoursesArr", selectedCoursesArr)
-      console.log(" selectedCourses", selectedCourses)
 			dispatch(Actions.learningPathActions.getSelectedCourses(selectedCourses, selectedCoursesArr));
 		}
 	}

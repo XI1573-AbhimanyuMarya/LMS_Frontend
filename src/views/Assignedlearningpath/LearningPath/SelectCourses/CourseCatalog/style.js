@@ -11,13 +11,13 @@ export const useStyles = makeStyles((theme) => ({
     margin: "0 20px 20px 0",
   },
   card:{
-    height:"55vh",
+    height:"65vh",//"55vh",
     [theme.breakpoints.up("md")]: {
       height:"38vh",
       // backgroundColor:"yellow"
     },
     [theme.breakpoints.up("lg")]: {
-      height:"50vh",
+      height:"65vh",//"50vh",
       // backgroundColor:"red"
     },
   },

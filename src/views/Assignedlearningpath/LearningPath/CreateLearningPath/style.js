@@ -3,8 +3,8 @@ import StepConnector from '@material-ui/core/StepConnector';
 
 export const useStyles = makeStyles((theme) => ({
 	layout: {
-		width: '76vw',
-		justifyContent: 'center',
+		width: '81.5vw',//'76vw',
+    justifyContent: 'center'
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,

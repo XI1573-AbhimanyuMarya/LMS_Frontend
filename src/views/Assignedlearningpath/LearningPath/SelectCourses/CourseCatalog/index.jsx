@@ -27,12 +27,10 @@ const levels = {
 const AssignedCourseCatalog = (props) => {
   const classes = useStyles();
   const { course, handleCourseClick } = props;
-  console.log("course in assingedlearningpath coursecatalog",course)
   const courseClass = course.selected && course.selected === true ? classes.selected : classes.root;
   return (
     <Card className={courseClass}>
       <CardActionArea onClick={() => handleCourseClick(course.id)}>
-      { console.log("course.selected in learingpath",course.selected)}
         {course.selected && course.selected === true && <CheckCircleIcon className={classes.checkIcon} />}
         <CardContent style={{ minHeight: "135px", maxHeight: "135px" }}>
           <Typography variant="body1" component="h5" className={classes.courseTitle}>

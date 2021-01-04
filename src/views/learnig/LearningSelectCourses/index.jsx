@@ -112,7 +112,6 @@ const SelectCourses = () => {
       
     ) : "";
   }
-  console.log(selectedLp,"selectedLp");
   return (
     <React.Fragment>
       <TopNav>

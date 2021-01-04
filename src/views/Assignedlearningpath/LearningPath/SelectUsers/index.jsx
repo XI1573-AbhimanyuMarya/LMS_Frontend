@@ -140,7 +140,8 @@ const SelectUsers = () => {
 					className={classes.searchField}  
 					name="searchEmployee" 
 					size="small"
-					onChange={changeHandler}/>
+					onChange={changeHandler}
+          />
 			</Box>
 			<Box className={classes.usersContainer} display="flex" flexDirection="row" flexWrap="wrap"  justifyContent="center" py={3}>
 				{isLoading && usersList?.length === 0 && <UserSkelton />}
