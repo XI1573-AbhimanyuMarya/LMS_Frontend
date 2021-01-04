@@ -138,7 +138,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
             emailcontent.put("madeFor", learningpathemployees.getEmployee().getFullName());
             emailcontent.put("assignedCourse", courses.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         return emailcontent;
     }

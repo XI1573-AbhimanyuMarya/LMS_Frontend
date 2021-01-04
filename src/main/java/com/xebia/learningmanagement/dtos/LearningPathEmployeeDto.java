@@ -16,7 +16,7 @@ public class LearningPathEmployeeDto {
     private String description;
     private Competency competency;
     private EmployeeDto madeBy;
-    public List<CoursesDto> courses;
+    private List<CoursesDto> courses;
 
 
 }
