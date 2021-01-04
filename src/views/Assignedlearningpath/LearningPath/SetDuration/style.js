@@ -7,12 +7,13 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	mainContainer: {
 		width: '100%',
-		height: '100%',
-		alignItems: 'center',
+    height: '100%',
+		//alignItems: 'center',
 		justifyContent: 'center',
-		Display: "flex",
-		flexDirection: "column",
-		marginTop: '10%'
+		display: "flex",
+    flexDirection: "column",
+    padding:"10px 0px"
+		//marginTop: '10%'
 	},
 }));
 
@@ -55,5 +56,19 @@ export const PrettoSlider = withStyles({
 	markActive: {
 		opacity: 1,
 		backgroundColor: 'currentColor',
-	},
+  },
+  mainDiv:{
+    backgroundColor:"white",
+    width:"75vw",
+    minHeight:"55vh",
+    margin:"auto",
+    borderRadius:"8px",
+    overflow:"auto"
+  },
+  heading:{
+    fontWeight:"normal",fontSize:"19px"
+  },
+  mainHeading:{
+    padding:"10px 0px"
+  }
 })(Slider);

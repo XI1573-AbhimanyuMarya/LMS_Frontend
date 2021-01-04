@@ -26,12 +26,9 @@ const SelectAssignedPath = () => {
    */
   useEffect(() => {
     dispatch(Actions.learningPathActions.getLearningPath(loginState.user.id));
-    console.log("mycourses.length",mycourses.length===0)
     if (mycourses.length === 0) {
-      console.log("hhhhhhhhhhheyy")
       dispatch(Actions.learningPathActions.fetchAllCourses());
     } else {
-      console.log("mycourses",mycourses)
       setSelectedCoursesArr(mycourses)
     }
   }, []);
@@ -57,8 +54,6 @@ const SelectAssignedPath = () => {
    */
   let selectedCourses = [];
   const onCourseClickHandler = (courseId) => {
-    console.log("heyy ia m caled courseId",courseId)
-    console.log("selectedCoursesArr in assinged learning",selectedCoursesArr)
     if (courseId !== "") {
       const idArr = selectedCoursesArr;
       const index = idArr.indexOf(courseId);
@@ -69,18 +64,14 @@ const SelectAssignedPath = () => {
       } else {
         idArr.push(courseId);
       }
-      console.log("indez",idArr)
       setSelectedCoursesArr(idArr);
 
       selectedCourses = allLearningPath.map(function (el) {
-        console.log("el",el)
         if (el.id === courseId) {
           !el.selected ? el.selected = true : el.selected = false;
         }
         return el;
       });
-
-      console.log("selected cources in assinged learning path",selectedCourses)
       dispatch(Actions.learningPathActions.getSelectedCourses(selectedCourses, selectedCoursesArr));
     }
   }
@@ -102,7 +93,7 @@ const SelectAssignedPath = () => {
           {LEARNING_PATH_LABELS.COURSE_CATALOG2}
         </Typography>
       </Box>
-      {isLoading && mycourses?.length === 0 ? <CourseSkelton /> : <Carosals coursesList={allLearningPath} handleCourseClick={(id) => onCourseClickHandler(id)} />}
+      <Carosals coursesList={allLearningPath} handleCourseClick={(id) => onCourseClickHandler(id)} />
     </React.Fragment>
   );
 }

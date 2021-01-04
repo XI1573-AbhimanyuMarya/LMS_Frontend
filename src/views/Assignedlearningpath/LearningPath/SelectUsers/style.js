@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { deepOrange, deepPurple, green, yellow, blueGrey, pink } from '@material-ui/core/colors';
+import { Autocomplete } from '@material-ui/lab';
 
 export const useStyles = makeStyles((theme) => ({
 	searchField: {
@@ -48,6 +49,8 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	usersContainer: {
 		background: '#F1F3F7',
-		borderRadius: "0.5%"
+    borderRadius: "0.5%",
+    height:"50vh",
+    overflow:"auto"
 	},
 }));

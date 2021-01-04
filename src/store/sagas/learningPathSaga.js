@@ -114,7 +114,6 @@ const fetchMyPath = async ({ employeeEmail }) => {
 
 //api call to fetch all learning paths
 const fetchLearningPath = async ({ assigneeId }) => {
-  console.log("get learning paths api called", assigneeId)
   return await axios.get(SERVICE_URLS.GET_LEARNING_PATH+"/"+assigneeId, { headers: authHeader() });
 }
 //function to get the list of all learning path courses assinged to particular users
@@ -133,7 +132,6 @@ function* getMyLearningPath(action) {
 
 //function to get the list of all created learning path 
 function* getLearningPath(action) {
-  console.log("action in getallLearningPath",action)
   try {
     const response = yield call(fetchLearningPath , action.payload);
     const { data } = response;
