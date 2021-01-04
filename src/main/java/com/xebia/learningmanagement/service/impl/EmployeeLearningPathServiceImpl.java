@@ -97,7 +97,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         List<LearningPathEmployees> learningPathEmployees = learningPathEmployeesRepository.findByEmployee(user);
         List<EmployeeLearningPathStatisticsDto> employeeLearningPathStatisticsDtoList = new ArrayList<>();
         for (LearningPathEmployees learningPath : learningPathEmployees) {
-            if (learningPath.getEndDate().compareTo(LocalDate.now()) == 1) {
+            if (learningPath.getEndDate().compareTo(LocalDate.now()) > 0) {
                 endDate = learningPath.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             } else {
                 //Days remaining for expiration yet to be implemented
