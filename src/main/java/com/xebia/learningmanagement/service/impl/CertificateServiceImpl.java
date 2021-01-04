@@ -9,8 +9,8 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.Objects;
 public class CertificateServiceImpl implements CertificateService {
 
 
-    private CertificateRepository certificateRepository;
+    private final CertificateRepository certificateRepository;
 
     @Autowired
     public CertificateServiceImpl(CertificateRepository certificateRepository) {
@@ -30,7 +30,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
 
-    public List<Certificate> uploadCertificate(CertificateRequest certificateRequest) throws Exception {
+    public List<Certificate> uploadCertificate(CertificateRequest certificateRequest) throws IOException {
         List<Certificate> certificateList = new ArrayList<>();
         try {
             for (MultipartFile request : certificateRequest.getCertificate()) {
@@ -43,8 +43,8 @@ public class CertificateServiceImpl implements CertificateService {
                         .build();
                 certificateList.add(certificate);
             }
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        } catch (IOException e) {
+            throw new IOException(e.getMessage());
         }
         return certificateRepository.saveAll(certificateList);
     }

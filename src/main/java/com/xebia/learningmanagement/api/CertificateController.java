@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/certificate")
@@ -28,7 +27,7 @@ public class CertificateController {
     }
 
     @GetMapping(value = "/api/v1/get/{learningPathEmployeeId}/{employeeId}")
-    public List< String> fetchImage(@PathVariable long learningPathEmployeeId, @PathVariable long employeeId) {
+    public List<String> fetchImage(@PathVariable long learningPathEmployeeId, @PathVariable long employeeId) {
         return certificateServiceImpl.fetchCertificate(learningPathEmployeeId,employeeId);
     }
 

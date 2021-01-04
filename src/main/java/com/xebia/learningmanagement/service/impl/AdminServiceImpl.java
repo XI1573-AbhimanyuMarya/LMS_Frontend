@@ -20,11 +20,20 @@ import java.util.stream.Collectors;
 @Service
 public class AdminServiceImpl implements AdminService {
 
-    @Autowired
+
     private LearningPathEmployeesRepository employeesRepository;
 
-    @Autowired
+
     private LearningPathRepository learningPathRepository;
+
+    @Autowired
+    public AdminServiceImpl(LearningPathEmployeesRepository employeesRepository,
+                            LearningPathRepository learningPathRepository)
+    {
+        this.employeesRepository= employeesRepository;
+        this.learningPathRepository=learningPathRepository;
+    }
+
 
     @Override
     public List<AdminDashboardDetailsDTO> dashboardDetails() {

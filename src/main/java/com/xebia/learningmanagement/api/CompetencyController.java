@@ -1,7 +1,6 @@
 package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.entity.Competency;
-import com.xebia.learningmanagement.entity.Duration;
 import com.xebia.learningmanagement.service.CompetencyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +13,14 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/competency")
 @Slf4j
 public class CompetencyController {
     @Autowired
     private CompetencyService competencyService;
-    @GetMapping("/competency/levels")
-    public List<Competency> getDurations(){
-        List<Competency> competencyLevels = competencyService.getCompetencyLevels();
-        return competencyLevels;
+
+    @GetMapping("/api/v1/levels")
+    public List<Competency> getDurations() {
+        return competencyService.getCompetencyLevels();
     }
 }

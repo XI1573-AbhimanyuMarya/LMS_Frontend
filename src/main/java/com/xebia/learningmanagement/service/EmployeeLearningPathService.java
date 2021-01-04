@@ -13,9 +13,9 @@ import java.util.Map;
 
 @Service
 public interface EmployeeLearningPathService {
-    void deleteLearningPath(Map data) throws LearningPathException;
+    void deleteLearningPath(Map data) throws Exception;
 
-    List<EmployeeLearningPathStatisticsDto> getMyAssignedLearningPaths(EmployeeEmailRequest employeeEmail) throws LearningPathException;
+    List<EmployeeLearningPathStatisticsDto> getLearningPathsAssignedToMe(EmployeeEmailRequest employeeEmail) throws LearningPathException;
 
     public Map<String, String> saveOrUpdateCourseRating(CourseCompletedPercentRequest courseCompletedPercent) throws Exception;
 }

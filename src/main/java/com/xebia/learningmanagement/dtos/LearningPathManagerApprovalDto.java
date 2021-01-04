@@ -15,7 +15,7 @@ public class LearningPathManagerApprovalDto {
     private String name;
     private String description;
     private Competency competency;
-    public List<CoursesDto> courses;
+    private List<CoursesDto> courses;
 
 
 

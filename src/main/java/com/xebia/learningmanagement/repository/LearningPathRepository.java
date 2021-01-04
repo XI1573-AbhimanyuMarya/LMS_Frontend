@@ -1,19 +1,14 @@
 package com.xebia.learningmanagement.repository;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.xebia.learningmanagement.entity.LearningPath;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.xebia.learningmanagement.entity.LearningPath;
-import com.xebia.learningmanagement.entity.User;
+import java.util.List;
 
 @Repository
 public interface LearningPathRepository extends JpaRepository<LearningPath, Long> {
-	
-    List<LearningPath> findByMadeBy(User user);
 
-	List<LearningPath> findByMadeById(Long assigneeId);
+    List<LearningPath> findByMadeById(Long assigneeId);
 
 }

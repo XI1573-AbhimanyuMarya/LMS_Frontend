@@ -9,12 +9,12 @@ import javax.validation.constraints.Min;
 @Setter
 public class CourseCompletedPercentRequest {
 
-    @Min(value=1)
+    @Min(value=1,message = "Employee Id cannot be null or Empty")
    private long employeeId;
-    @Min(value=1)
+    @Min(value=1,message = "learningPath Id cannot be null or Empty")
    private long learningPathId;
-    @Min(value=1)
+    @Min(value=1,message = "courseId cannot be null or Empty")
     private long courseId;
-    @Min(value=1)
+    @Min(value=1,message = "percentCompleted cannot be null or Empty")
     private int percentCompleted;
 }
