@@ -210,7 +210,7 @@ function* getApprovalRejects(action) {
   
     const response = yield call(getApprovalReject,action.payload);
     const { data } = response;
-    yield put({ type: actionTypes.FETCH_APPROVAL_SUCCESS, payload: data });
+    yield put({ type: actionTypes.FETCH_APPROVAL_SUCCESS, payload: action.payload});//data });
 
   } catch (error) {
     yield put({ type: actionTypes.FETCH_APPROVAL_FAILURE, error });
