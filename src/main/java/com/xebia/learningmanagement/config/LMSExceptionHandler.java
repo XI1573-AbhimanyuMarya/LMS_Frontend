@@ -46,7 +46,7 @@ public class LMSExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
         UserResponse userResponse = new UserResponse();
         userResponse.setStatus("failure");
-        userResponse.setMessage("validation failed");
+        userResponse.setMessage("validation failed : "+ex.getBindingResult().getFieldError().getDefaultMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResponse);
     }
 }
