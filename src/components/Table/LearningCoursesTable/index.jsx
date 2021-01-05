@@ -11,7 +11,12 @@ const LearningCoursesTable=(props)=>{
   const learningPathState = useSelector(state => state.learningPathState);
   const loginState = useSelector(res => res.loginState);
   useEffect(() => {
-    dispatch(Actions.learningPathActions.getLearningPathCourses(loginState.user.id,props.lpId)); 
+    let reqBody={
+      empid:loginState.user.id,
+      ids:props.lpId,
+      learningPathEmployeeId:props.learningPathEmployeesId
+    };
+    dispatch(Actions.learningPathActions.getLearningPathCourses(reqBody)); 
   }, []);
   const { learningPathCourses } = learningPathState;
 

@@ -9,8 +9,8 @@ import OutlinedAdvance from '../images/103-OutlinedAdvance.svg';
 import OutlinedExpert from '../images/104-OutlinedExpert.svg';
 
 
-const API_HOST_PATH =  'http://localhost:8085'
-// const API_HOST_PATH =  'https://xebia-lms.herokuapp.com'
+// const API_HOST_PATH =  'http://localhost:8085'
+const API_HOST_PATH =  'https://xebia-lms.herokuapp.com'
 
 export const SERVICE_URLS = {
 LOGIN: `${API_HOST_PATH}/username`,
@@ -24,6 +24,7 @@ MY_PATH: `${API_HOST_PATH}/employee/api/v1/mylearningpaths`,
 GET_LEARNING_PATH:`${API_HOST_PATH}/manager/api/v1/details/learningPaths`,  //Get List of learning paths
 DELETE_ALL_PATH: `${API_HOST_PATH}/employee/api/v1/delete/learningpath`,
 LEARNINGPATH_COURSES:`${API_HOST_PATH}/manager/api/v1/learningPath/courses/`,
+LEARNINGPATH_COURSES_V2:`${API_HOST_PATH}/manager/api/v2/learningPath/courses/`,
 PENDING_FOR_APPROVAL: `${API_HOST_PATH}/manager/api/v1/pending/approvals`,
 APPROVAL_REJEACT: `${API_HOST_PATH}/manager/api/v1/review/approvals`,
 SAVE_COURSE_RATE: `${API_HOST_PATH}/employee/api/v1/update/courseratings`,

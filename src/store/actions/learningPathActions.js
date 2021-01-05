@@ -98,9 +98,9 @@ const deletePath = (ids) => ({
   payload: {ids},
 });
 
-const getLearningPathCourses=(empid,ids)=>({
+const getLearningPathCourses=(reqBody)=>({
   type:actionTypes.GET_LEARNING_PATH_COURSES_REQUEST,
-  payload: {ids,empid}
+  payload: {...reqBody}
 });
 
 const changeCourseRate = (changeRate,course) => ({
