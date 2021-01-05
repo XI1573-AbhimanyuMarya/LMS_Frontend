@@ -6,6 +6,7 @@ import com.xebia.learningmanagement.dtos.MadeForEmployeeDto;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
+import com.xebia.learningmanagement.repository.LearningPathRepository;
 import com.xebia.learningmanagement.service.AdminService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.APPROVED;
+import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.REJECTED;
+
 @Service
 public class AdminServiceImpl implements AdminService {
 
 
-    private LearningPathEmployeesRepository employeesRepository;
+    private final LearningPathEmployeesRepository employeesRepository;
+    private final LearningPathRepository learningPathRepository;
 
 
     @Autowired
-    public AdminServiceImpl(LearningPathEmployeesRepository employeesRepository) {
+    public AdminServiceImpl(LearningPathEmployeesRepository employeesRepository,LearningPathRepository learningPathRepository) {
         this.employeesRepository = employeesRepository;
+        this.learningPathRepository=learningPathRepository;
 
     }
 
@@ -58,9 +64,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AdminDashboardStatisticsDTO dashboardStatistics() {
-        long totalLearningPathAssigned = employeesRepository.count();
-        long totalLearningPathCompleted = employeesRepository.countByPercentCompleted(100);
-        long totalLearningPathInprogress = employeesRepository.countByPercentCompletedNot(100);
+        long totalLearningPathAssigned = learningPathRepository.count();
+        long totalLearningPathCompleted = employeesRepository.countByPercentCompletedAndApprovalStatus(100,APPROVED);
+        long totalLearningPathInprogress = employeesRepository.countByPercentCompletedNotOrApprovalStatus(100,REJECTED);
         long totalLearningPathExpired = employeesRepository.countByEndDateBefore(LocalDate.now());
 
         return AdminDashboardStatisticsDTO.builder()
