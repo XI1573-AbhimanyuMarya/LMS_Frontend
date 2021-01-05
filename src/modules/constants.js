@@ -23,7 +23,8 @@ export const SERVICE_URLS = {
   MY_PATH: `${API_HOST_PATH}/employeelearning/myLearningPath`,            
   GET_LEARNING_PATH:`${API_HOST_PATH}/api/learningPath/courseDetails`,  //Get List of learning paths
   DELETE_ALL_PATH: `${API_HOST_PATH}/employeelearning/deletelearningpath`,
-  LEARNINGPATH_COURSES:`${API_HOST_PATH}/api/learningPath/courses/`,
+  LEARNINGPATH_COURSES:`${API_HOST_PATH}/api/learningPath/v1/courses/`,
+  LEARNINGPATH_COURSES_V2:`${API_HOST_PATH}/api/learningPath/v2/courses/`,
   PENDING_FOR_APPROVAL: `${API_HOST_PATH}/api/pending/approvals`,
   APPROVAL_REJEACT: `${API_HOST_PATH}/api/review/approvals`,
   SAVE_COURSE_RATE: `${API_HOST_PATH}/employeelearning/api/v1/update/courseratings`,

@@ -42,6 +42,7 @@ const SelectCourses = () => {
     } else {
       setSelectedCoursesArr(courseIdArr)
     }
+    dispatch(Actions.learningPathActions.selectLearningPath({}));
   }, []);
   let completed, inprogress;
   //let selectedLp;

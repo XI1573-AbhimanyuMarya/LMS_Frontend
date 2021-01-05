@@ -171,8 +171,9 @@ function* deletePaths(action) {
   }
 }
 
-const fetchPathCourses = async ({ ids,empid }) => {
-  return await axios.get(SERVICE_URLS.LEARNINGPATH_COURSES+ids+'/'+empid, { headers: authHeader() });
+const fetchPathCourses = async ({ ids,empid,learningPathEmployeeId }) => {
+ const URL=(learningPathEmployeeId!==undefined) ? SERVICE_URLS.LEARNINGPATH_COURSES_V2+ids+'/'+empid+'/'+learningPathEmployeeId : SERVICE_URLS.LEARNINGPATH_COURSES+ids+'/'+empid;
+  return await axios.get(URL, { headers: authHeader() });
 }
 
 function* getLearningPathCourses(action) {
