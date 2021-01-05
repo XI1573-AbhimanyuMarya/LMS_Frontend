@@ -12,6 +12,7 @@ import com.xebia.learningmanagement.exception.*;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
+import com.xebia.learningmanagement.util.MessageBank;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,9 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Autowired
     private CourseRatingRepository courseRatingRepository;
 
+    @Autowired
+    private CertificateRepository certificateRepository;
+
 
     @Override
     public void createLearningPath(LearningPathDto.Path path) throws Exception {
@@ -87,10 +91,6 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setDescription(path.getDescription());
         Competency competencyLevel = competencyRepository.findById(path.getCompetencyLevelId()).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
         learningPath.setCompetency(competencyLevel);
-
-//        Competency competencyLevel1 = competencyRepository.findById((long) 102).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
-//        learningPath.setCompetency(competencyLevel1);
-
         getTemplatePlaceholderValuesAndSaveData(path, learningPath);
 
 //        Save learning Path After the mail & mapping between Learning path : Employee has been saved
@@ -115,7 +115,7 @@ public class LearningPathServiceImpl implements LearningPathService {
 
 
             //TODO : Send Email to concerned User
-            User madeByUser = userRepository.findById(path.getMadeById()).orElseThrow(() -> new NotFoundException());
+            User madeByUser = userRepository.findById(path.getMadeById()).orElseThrow(NotFoundException::new);
             String madeByUserFullName = madeByUser.getFullName().concat(" : " + madeByUser.getEmpID());
 
             //List of courses made for Employee
@@ -165,27 +165,31 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Override
     public Map<Long, List<LearningPathManagerDto>> manageAssignedLearningPaths(ManagerEmailRequest managerEmail) throws LearningPathException {
         ModelMapper modelMapper = new ModelMapper();
-        User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
+        User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException(MessageBank.USERNAME_NOT_FOUND));
         List<LearningPathEmployees> learningPathList = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
         List<LearningPathManagerDto> learningPathManagerDtos = learningPathList.stream().map(a -> modelMapper.map(a, LearningPathManagerDto.class)).collect(Collectors.toList());
         return learningPathManagerDtos.stream().collect(Collectors.groupingBy(a -> a.getEmployee().getId()));
     }
 
     @Override
-    public List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId) {
+    public List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId, Long learningPathEmployeesId) {
         ModelMapper modelMapper = new ModelMapper();
-        LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path Id not found"));
-
+        LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_ID_NOT_FOUND));
+       // LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(learningPathEmployeesId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_EMPLOYEE_ID_NOT_FOUND));
         List<LearningPathCourseDetailsDTO> courseDetailsList = new ArrayList<>();
+        List<Certificate> documentsAlreadyUploaded = new ArrayList<>();
 
         for (Courses singleCourse : learningPath.getCourses()) {
-
+            if (learningPathEmployeesId!=null){
+                documentsAlreadyUploaded = certificateRepository.findByLearningPathEmployeeIdAndEmployeeIdAndCourseId(learningPathEmployeesId, employeeId, singleCourse.getId());
+            }
             LearningPathCourseDetailsDTO singleCourseDetails = LearningPathCourseDetailsDTO.builder()
                     .id(singleCourse.getId())
                     .name(singleCourse.getName())
                     .description(singleCourse.getDescription())
                     .category(modelMapper.map(singleCourse.getCategory(), CategoryDto.class))
                     .competency(singleCourse.getCompetency())
+                    .documentsUploaded(!documentsAlreadyUploaded.isEmpty())
                     .percentCompleted(evaluateCourseCompletionPercentage(learningPath, employeeId, singleCourse.getId())).build();
 
             courseDetailsList.add(singleCourseDetails);
@@ -207,7 +211,6 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     @Override
     public List<ApprovalDto> getPendingApprovals(ManagerEmailRequest managerEmail) {
-        ModelMapper modelMapper = new ModelMapper();
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
         List<LearningPathEmployees> madeByManager = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
         // TODO : Pending approvals must be sorted by some date  : make abstract auditing entity
@@ -233,7 +236,7 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     @Override
     public void approveRequests(LearningPathEmployeeApprovalRequest request) throws Exception {
-        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(request.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException("Learning Path Employee Id not found"));
+        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(request.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException(MessageBank.LEARNING_PATH_EMPLOYEE_ID_NOT_FOUND));
         String reviewMessage;
         if (request.getStatus().equalsIgnoreCase("APPROVED")) {
             learningPathEmployees.setApprovalStatus(APPROVED);

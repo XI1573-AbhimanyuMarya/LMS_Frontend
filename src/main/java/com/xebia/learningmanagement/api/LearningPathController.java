@@ -44,10 +44,19 @@ public class LearningPathController {
         return learningPathService.manageAssignedLearningPaths(managerEmail);
     }
 
+    @GetMapping(value = "/api/v2/learningPath/courses/{learningPathId}/{employeeId}/{learningPathEmployeesId}")
+    public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPathWithDocumentUploaded(@PathVariable("learningPathId") long learningPathId,
+                                                                                                   @PathVariable("employeeId") long employeeId,
+                                                                                                   @PathVariable("learningPathEmployeesId") long learningPathEmployeesId) {
+        log.info("Course Details of  learning Paths with ID-" + learningPathId + " for Employee ID-" + employeeId + " with LearningPath Employee ID " + learningPathEmployeesId);
+        return learningPathService.getCourseDetails(learningPathId, employeeId, learningPathEmployeesId);
+    }
+
     @GetMapping(value = "/api/v1/learningPath/courses/{learningPathId}/{employeeId}")
-    public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") long learningPathId, @PathVariable("employeeId") long employeeId) {
+    public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") long learningPathId,
+                                                                               @PathVariable("employeeId") long employeeId) {
         log.info("Fetching all the courses inside the specific a learning Paths with ID-" + learningPathId + " for employee with ID-" + employeeId);
-        return learningPathService.getCourseDetails(learningPathId, employeeId);
+        return learningPathService.getCourseDetails(learningPathId, employeeId, null);
     }
 
     @PostMapping(value = "/api/v1/pending/approvals")

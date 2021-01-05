@@ -17,12 +17,6 @@ public interface LearningPathService {
 
     void createLearningPath(LearningPathDto.Path path) throws Exception;
 
-    /***
-     *
-     * @param managerEmail
-     * @return
-     * @throws LearningPathException
-     */
     Map<Long, List<LearningPathManagerDto>> manageAssignedLearningPaths(ManagerEmailRequest managerEmail) throws LearningPathException;
 
     List<ApprovalDto> getPendingApprovals(ManagerEmailRequest managerEmailRequest) throws LearningPathException;
@@ -33,5 +27,5 @@ public interface LearningPathService {
 
     void saveAssignLearningPaths(AssignLearningPathRequest request) throws Exception;
 
-    List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId);
+    List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId ,Long learningPathEmployeesId);
 }
