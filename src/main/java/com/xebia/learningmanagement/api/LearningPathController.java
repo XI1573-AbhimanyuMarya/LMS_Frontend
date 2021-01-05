@@ -44,10 +44,12 @@ public class LearningPathController {
         return learningPathService.manageAssignedLearningPaths(managerEmail);
     }
 
-    @GetMapping(value = "/api/v1/learningPath/courses/{learningPathId}/{employeeId}")
-    public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") long learningPathId, @PathVariable("employeeId") long employeeId) {
+    @GetMapping(value = "/api/v1/learningPath/courses/{learningPathId}/{employeeId}/{learningPathEmployeesId}")
+    public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") long learningPathId,
+                                                                               @PathVariable("employeeId") long employeeId,
+                                                                               @PathVariable("learningPathEmployeesId") long learningPathEmployeesId) {
         log.info("Fetching all the courses inside the specific a learning Paths with ID-" + learningPathId + " for employee with ID-" + employeeId);
-        return learningPathService.getCourseDetails(learningPathId, employeeId);
+        return learningPathService.getCourseDetails(learningPathId, employeeId,learningPathEmployeesId);
     }
 
     @PostMapping(value = "/api/v1/pending/approvals")
