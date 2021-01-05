@@ -104,7 +104,7 @@ const ManageAssignLearningPath = ({ props }) => {
           </Box> */}
           {/* <Paper className={classes.paper} elevation={1}> */}
             <div className={classes.cardData}>
-              {isLoading && employees.length === 0 && <UserSkelton />}
+              {/* {isLoading && employees.length === 0 && <UserSkelton />} */}
               {renderUser !== "" ? (
                 renderUser
               ) : (
