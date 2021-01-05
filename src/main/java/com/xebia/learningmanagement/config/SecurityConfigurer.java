@@ -96,7 +96,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(accessDeniedHandler()).and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-       // http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     CorsConfigurationSource corsConfigurationSource() {
@@ -105,7 +104,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         configuration.setAllowedOrigins(allowOrigins);
         configuration.setAllowedMethods(singletonList("*"));
         configuration.setAllowedHeaders(singletonList("*"));
-        //in case authentication is enabled this flag MUST be set, otherwise CORS requests will fail
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
