@@ -93,7 +93,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
     public List<EmployeeLearningPathStatisticsDto> getLearningPathsAssignedToMe(EmployeeEmailRequest employeeEmail) throws LearningPathException {
         ModelMapper modelMapper = new ModelMapper();
         String endDate;
-        User user = userRepository.findByUsername(employeeEmail.getEmployeeEmail()).orElseThrow(() -> new UsernameNotFoundException("UserEmail does not exist"));
+        User user = userRepository.findByUsername(employeeEmail.getEmployeeEmail()).orElseThrow(() -> new UsernameNotFoundException(MessageBank.USERNAME_NOT_FOUND));
         List<LearningPathEmployees> learningPathEmployees = learningPathEmployeesRepository.findByEmployee(user);
         List<EmployeeLearningPathStatisticsDto> employeeLearningPathStatisticsDtoList = new ArrayList<>();
         for (LearningPathEmployees learningPath : learningPathEmployees) {
