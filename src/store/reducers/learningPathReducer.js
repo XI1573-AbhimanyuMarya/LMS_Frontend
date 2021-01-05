@@ -400,6 +400,21 @@ export const learningPathReducer = (state = initialState, action) => {
           isLoading: true,
           errorMessage: ''
         };
+        case actionTypes.FETCH_APPROVAL_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          errorMessage: '',
+          pfApproval:state.pfApproval.filter((item)=>{
+            return item.learningPathEmployeesId!==payload.learningPathEmployeeId;
+          })
+        };
+        case actionTypes.FETCH_APPROVAL_FAILURE:
+        return {
+          ...state,
+          isLoading: false,
+          errorMessage: ''
+        };
         case actionTypes.SAVE_COURSE_RATE:
           return {
             ...state,
@@ -421,7 +436,7 @@ export const learningPathReducer = (state = initialState, action) => {
         case actionTypes.VIEW_ATTACHMENT:
           return {
             ...state,
-            //isLoading: true,
+            isLoading: true,
             errorMessage: ''
           };
   
@@ -432,13 +447,13 @@ export const learningPathReducer = (state = initialState, action) => {
           });
           return {
             ...state,
-            //isLoading: false,
+            isLoading: false,
             attachments:data
           }
         case actionTypes.VIEW_ATTACHMENT_FAILURE:
           return {
             ...state,
-            //isLoading: false,
+            isLoading: false,
             attachments:[]
           }
       case actionTypes.ADD_CERTIFICATE:

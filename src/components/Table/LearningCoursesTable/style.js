@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   tblbody:{
-    fontSize:"10px"
+    fontSize:"12px"//"10px"
   },
   tblheading:{
     '& tr':{
