@@ -15,4 +15,5 @@ public class LearningPathCourseDetailsDTO {
     private CategoryDto category;
     private Competency competency;
     private int percentCompleted;
+    private boolean documentsUploaded;
 }

@@ -51,6 +51,9 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Autowired
     private CourseRatingRepository courseRatingRepository;
 
+    @Autowired
+    private CertificateRepository certificateRepository;
+
 
     @Override
     public void createLearningPath(LearningPathDto.Path path) throws Exception {
@@ -172,20 +175,21 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
     @Override
-    public List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId) {
+    public List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId, Long learningPathEmployeesId) {
         ModelMapper modelMapper = new ModelMapper();
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException("Learning Path Id not found"));
-
+        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(learningPathEmployeesId).orElseThrow(() -> new LearningPathException("Learning Path Employee Id not found"));
         List<LearningPathCourseDetailsDTO> courseDetailsList = new ArrayList<>();
 
         for (Courses singleCourse : learningPath.getCourses()) {
-
+            List<Certificate> documentsAlreadyUploaded = certificateRepository.findByLearningPathEmployeeIdAndEmployeeIdAndCourseId(learningPathEmployeesId, employeeId, singleCourse.getId());
             LearningPathCourseDetailsDTO singleCourseDetails = LearningPathCourseDetailsDTO.builder()
                     .id(singleCourse.getId())
                     .name(singleCourse.getName())
                     .description(singleCourse.getDescription())
                     .category(modelMapper.map(singleCourse.getCategory(), CategoryDto.class))
                     .competency(singleCourse.getCompetency())
+                    .documentsUploaded(!documentsAlreadyUploaded.isEmpty())
                     .percentCompleted(evaluateCourseCompletionPercentage(learningPath, employeeId, singleCourse.getId())).build();
 
             courseDetailsList.add(singleCourseDetails);
