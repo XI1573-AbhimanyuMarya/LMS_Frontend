@@ -27,7 +27,7 @@ const CourseCatalog1 = (props) => {
 		<Card className={courseClass} style={{border:"1px solid #67b104"}}>
 			<CardActionArea>
 				{/* {course.selected && course.selected === true && <CheckCircleIcon className={classes.checkIcon} />} */}
-				<CardContent>
+				<CardContent className={classes.cardcontent}>
 					<div className={classes.cardheader}> 
             <Typography gutterBottom variant="h6" component="h6" className={classes.cardheading}>
               {lp?.learningPath?.name}
@@ -38,7 +38,7 @@ const CourseCatalog1 = (props) => {
 						{lp?.learningPath?.description}
 					</Typography>
 				</CardContent>
-					<Box className={classes.view} style={{color:"white", fontFamily:"robot"}} onClick={viewClickHandler}>
+					<Box className={classes.view} onClick={viewClickHandler}>
 						{"View"}
 					</Box>
 			</CardActionArea>
