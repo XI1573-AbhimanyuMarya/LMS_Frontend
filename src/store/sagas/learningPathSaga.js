@@ -172,7 +172,8 @@ function* deletePaths(action) {
 }
 
 const fetchPathCourses = async ({ ids,empid,learningPathEmployeeId }) => {
- const URL=(learningPathEmployeeId!==undefined) ? SERVICE_URLS.LEARNINGPATH_COURSES_V2+ids+'/'+empid+'/'+learningPathEmployeeId : SERVICE_URLS.LEARNINGPATH_COURSES+ids+'/'+empid;
+  let URL=SERVICE_URLS.LEARNINGPATH_COURSES+ids+'/'+empid;
+  URL+=(learningPathEmployeeId!==undefined) ? '?lpeid='+learningPathEmployeeId : '';
   return await axios.get(URL, { headers: authHeader() });
 }
 
