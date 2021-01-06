@@ -111,6 +111,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
                     .endDate(endDate)
                     .startDate(learningPath.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                     .percentCompleted(percentCompleted)
+                    .approvalStatus(learningPath.getApprovalStatus())
                     .build();
 
             employeeLearningPathStatisticsDtoList.add(employeeLearningPathStatisticsDto);

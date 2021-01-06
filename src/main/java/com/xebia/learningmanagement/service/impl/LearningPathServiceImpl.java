@@ -8,6 +8,7 @@ import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalReq
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
+import com.xebia.learningmanagement.enums.LearningPathApprovalStatus;
 import com.xebia.learningmanagement.exception.*;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
@@ -174,14 +175,17 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Override
     public List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId, Long learningPathEmployeesId) {
         ModelMapper modelMapper = new ModelMapper();
-        LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_ID_NOT_FOUND));
-       // LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(learningPathEmployeesId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_EMPLOYEE_ID_NOT_FOUND));
         List<LearningPathCourseDetailsDTO> courseDetailsList = new ArrayList<>();
-        List<Certificate> documentsAlreadyUploaded = new ArrayList<>();
+        List<Certificate> documentsAlreadyUploaded;
+        boolean uploadedBool = false;
+
+        LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_ID_NOT_FOUND));
+        LearningPathApprovalStatus learningPathStatusForAnEmployee = learningPathEmployeesRepository.findStatusByLearningPathIdAndEmployeeId(learningPathId, employeeId);
 
         for (Courses singleCourse : learningPath.getCourses()) {
-            if (learningPathEmployeesId!=null){
+            if (learningPathEmployeesId != null && !learningPathStatusForAnEmployee.equals(REJECTED)) {
                 documentsAlreadyUploaded = certificateRepository.findByLearningPathEmployeeIdAndEmployeeIdAndCourseId(learningPathEmployeesId, employeeId, singleCourse.getId());
+                uploadedBool = !documentsAlreadyUploaded.isEmpty();
             }
             LearningPathCourseDetailsDTO singleCourseDetails = LearningPathCourseDetailsDTO.builder()
                     .id(singleCourse.getId())
@@ -189,7 +193,7 @@ public class LearningPathServiceImpl implements LearningPathService {
                     .description(singleCourse.getDescription())
                     .category(modelMapper.map(singleCourse.getCategory(), CategoryDto.class))
                     .competency(singleCourse.getCompetency())
-                    .documentsUploaded(!documentsAlreadyUploaded.isEmpty())
+                    .documentsUploaded(uploadedBool)
                     .percentCompleted(evaluateCourseCompletionPercentage(learningPath, employeeId, singleCourse.getId())).build();
 
             courseDetailsList.add(singleCourseDetails);
@@ -287,18 +291,28 @@ public class LearningPathServiceImpl implements LearningPathService {
                 User user = userRepository.findById(employeeId)
                         .orElseThrow(() -> new UserNotFoundException("No such employee : " + employeeId));
 
-                LearningPathEmployees learningPathEmployees = new LearningPathEmployees();
+                LearningPathEmployees learningPathEmployees;
+                LearningPathEmployees recordAlreadyExists = learningPathEmployeesRepository.findByLearningPathIdAndEmployeeId(learningPath.getId(), user.getId());
 
-                learningPathEmployees.setLearningPath(learningPath);
-                learningPathEmployees.setEmployee(user);
-                learningPathEmployees.setPercentCompleted(0);
-                learningPathEmployees.setApprovalStatus(YTBD);
-                learningPathEmployees.setDuration(duration);
-                learningPathEmployees.setStartDate(LocalDate.now());
-                Integer lpDuration = Integer
-                        .valueOf(CharMatcher.inRange('0', '9').retainFrom(duration.getName()));
-                learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
-
+                if (Objects.nonNull(recordAlreadyExists)) {
+                    learningPathEmployees = recordAlreadyExists;
+                    learningPathEmployees.setPercentCompleted(0);
+                    learningPathEmployees.setApprovalStatus(YTBD);
+                    learningPathEmployees.setDuration(duration);
+                    learningPathEmployees.setStartDate(LocalDate.now());
+                    Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(duration.getName()));
+                    learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
+                } else {
+                    learningPathEmployees = new LearningPathEmployees();
+                    learningPathEmployees.setLearningPath(learningPath);
+                    learningPathEmployees.setEmployee(user);
+                    learningPathEmployees.setPercentCompleted(0);
+                    learningPathEmployees.setApprovalStatus(YTBD);
+                    learningPathEmployees.setDuration(duration);
+                    learningPathEmployees.setStartDate(LocalDate.now());
+                    Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(duration.getName()));
+                    learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
+                }
                 try {
 
                     String madeByUserFullName = learningPath.getMadeBy().getFullName() + " : "

@@ -53,22 +53,26 @@ public class UserServiceImpl implements UserService {
 
         return userDtos;
     }
-//    @Scheduled(fixedDelay = 5000)
+
+    //    @Scheduled(fixedDelay = 5000)
 //    @PostConstruct
     public void addNewUsers() {
         int count = 1;
-        if(!roleRepository.findByRoleName("ROLE_ADMIN").isPresent())
-        roleRepository.save(new Role("ROLE_ADMIN"));
-        if(!roleRepository.findByRoleName("ROLE_MANAGER").isPresent())
-        roleRepository.save(new Role("ROLE_MANAGER"));
-        if(!roleRepository.findByRoleName("ROLE_EMPLOYEE").isPresent())
-        roleRepository.save(new Role("ROLE_EMPLOYEE"));
+        if (!roleRepository.findByRoleName("ROLE_ADMIN").isPresent())
+            roleRepository.save(new Role("ROLE_ADMIN"));
+        if (!roleRepository.findByRoleName("ROLE_MANAGER").isPresent())
+            roleRepository.save(new Role("ROLE_MANAGER"));
+        if (!roleRepository.findByRoleName("ROLE_EMPLOYEE").isPresent())
+            roleRepository.save(new Role("ROLE_EMPLOYEE"));
 
         final Role MANAGER_ROLE = roleRepository.findByRoleName("ROLE_MANAGER").get();
         final Role EMPLOYEE_ROLE = roleRepository.findByRoleName("ROLE_EMPLOYEE").get();
-        for (int j = 0; j < 4; j++) {
+        int sIndex = 0;
+        int recLimit = 200;
+        boolean isMoreData = true;
+        while (isMoreData) {
 
-            String uri = "https://people.zoho.com/people/api/forms/P_EmployeeView/records?authtoken=3ab0a1722b48eb4d9db8c69649e73fec&sIndex=" + count;
+            String uri = "https://people.zoho.com/people/api/forms/P_EmployeeView/records?authtoken=3ab0a1722b48eb4d9db8c69649e73fec&sIndex=" + sIndex;
 
             List emp = restTemplate.getForObject(uri, List.class);
 
@@ -76,6 +80,8 @@ public class UserServiceImpl implements UserService {
             List<EmployeeMetaData> emp2 = mapper.convertValue(emp, new TypeReference<List<EmployeeMetaData>>() {
             });
 
+
+            isMoreData = emp2.size() >= 200;
 
             for (int i = 0; i < emp2.size(); i++) {
                 EmployeeMetaData employeeMetaData = emp2.get(i);
@@ -95,7 +101,7 @@ public class UserServiceImpl implements UserService {
                     userRepository.save(user);
                 }
             }
-            count = count + 200;
+            sIndex=sIndex+emp2.size();
         }
     }
 
