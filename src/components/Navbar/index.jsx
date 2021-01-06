@@ -44,47 +44,73 @@ const Navbar = (props) => {
   let extracontent, currentPath;
   currentPath = path;
 
-  const navLinks = [
-    {
-      name: "Dashboard",
-      iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
-      to: "dashboard",
-      isActive: currentPath === "/dashboard",
-      canAccess: true,
-    },
-    {
-      name: "My Learning Path",
-      iconPath:
-        currentPath === "/learningpath" ? LearningPathActive : LearningPath,
-      to: "learningpath",
-      isActive: currentPath === "/learningpath",
-      canAccess: true,
-    },
-    {
-      name: "Assign Learning Path",
-      iconPath: AddLearningPath,
-      to: "assigned",
-      isActive: currentPath === "/assigned",
-      canAccess: true,
-      // canAccess: user.designation !== "Consultant"
-    },
-    {
-      name: "Approvals",
-      iconPath: Approvals,
-      to: "approvals",
-      isActive: currentPath === "/approvals",
-      // canAccess: true
-      canAccess: user.designation !== "Consultant",
-    },
-    {
-      name: "Manage assigned learning",
-      iconPath: DashboardIcon,
-      to: "manage",
-      isActive: currentPath === "/manage",
-      // canAccess: user.designation !== "Consultant"
-      canAccess: true,
-    },
-  ];
+  const userInfo = JSON.parse(localStorage.getItem("USER_INFO"));
+
+  const roleName = userInfo.roles[0].roleName;
+  let navLinks;
+  if (roleName == "ROLE_EMPLOYEE") {
+    navLinks = [
+      {
+        name: "Dashboard",
+        iconPath:
+          currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
+        to: "dashboard",
+        isActive: currentPath === "/dashboard",
+        canAccess: true,
+      },
+      {
+        name: "My Learning Path",
+        iconPath:
+          currentPath === "/learningpath" ? LearningPathActive : LearningPath,
+        to: "learningpath",
+        isActive: currentPath === "/learningpath",
+        canAccess: true,
+      },
+    ];
+  } else {
+    navLinks = [
+      {
+        name: "Dashboard",
+        iconPath:
+          currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
+        to: "dashboard",
+        isActive: currentPath === "/dashboard",
+        canAccess: true,
+      },
+      {
+        name: "My Learning Path",
+        iconPath:
+          currentPath === "/learningpath" ? LearningPathActive : LearningPath,
+        to: "learningpath",
+        isActive: currentPath === "/learningpath",
+        canAccess: true,
+      },
+      {
+        name: "Assign Learning Path",
+        iconPath: AddLearningPath,
+        to: "assigned",
+        isActive: currentPath === "/assigned",
+        canAccess: true,
+        // canAccess: user.designation !== "Consultant"
+      },
+      {
+        name: "Approvals",
+        iconPath: Approvals,
+        to: "approvals",
+        isActive: currentPath === "/approvals",
+        // canAccess: true
+        canAccess: user.designation !== "Consultant",
+      },
+      {
+        name: "Manage assigned learning",
+        iconPath: DashboardIcon,
+        to: "manage",
+        isActive: currentPath === "/manage",
+        // canAccess: user.designation !== "Consultant"
+        canAccess: true,
+      },
+    ];
+  }
   useEffect(() => {
     setPath(location.pathname);
   }, [path]);

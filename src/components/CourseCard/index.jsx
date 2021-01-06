@@ -1,41 +1,53 @@
-import React from 'react';
-import { useStyles } from './style';
-import { useSelector, useDispatch } from 'react-redux';
-import { SHOW_LEVELS } from '../../modules/constants';
-import {ViewButton,LearningRateButton} from '../Button';
-import Actions from '../../store/actions';
+import React from "react";
+import { useStyles } from "./style";
+import { useSelector, useDispatch } from "react-redux";
+import { SHOW_LEVELS } from "../../modules/constants";
+import { ViewButton, LearningRateButton } from "../Button";
+import Actions from "../../store/actions";
 
 const CourseCard = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const learningPathState = useSelector(state => state.learningPathState);
+  const learningPathState = useSelector((state) => state.learningPathState);
   const { course, onButtonClick, showButton } = props;
 
-  course.progress = '';
-  const btnClick=()=>{
+  course.progress = "";
+  const btnClick = () => {
     dispatch(Actions.learningPathActions.selectLearningPath(course));
-  }
+  };
   return (
     <tr className={classes.tblrow}>
       <td> {course.learningPath.name}</td>
-      <td> <img src={SHOW_LEVELS[course.learningPath.competency.id+"-"+course.learningPath.competency.name]} className={classes[course.learningPath.competency.name]}/></td>
+      <td>
+        {" "}
+        <img
+          src={
+            SHOW_LEVELS[
+              course.learningPath.competency.id +
+                "-" +
+                course.learningPath.competency.name
+            ]
+          }
+          className={classes[course.learningPath.competency.name]}
+        />
+      </td>
       <td>{course.startDate}</td>
       <td>{course.endDate}</td>
-      <td> 
+      <td>
         <LearningRateButton percentCompleted={course.percentCompleted} />
       </td>
-      <td> 
-        <ViewButton onButtonClick={btnClick} /> 
+      <td>
+        <ViewButton onButtonClick={btnClick} />
       </td>
     </tr>
   );
-}
-
+};
 
 export default CourseCard;
 
 // <Card className={classes.root} >
-{/* <CardContent>
+{
+  /* <CardContent>
         <Grid container spacing={2} alignContent="space-between" className={classes.header}>
           <Grid item xs >
             <Box component="span" className={classes.courseType}>
@@ -86,5 +98,6 @@ export default CourseCard;
             <Button size="large" className={classes.btn} onClick={onButtonClick}>{btnlabel}</Button>
           </CardActions>
           : ''
-      } */}
-      // </Card>
+      } */
+}
+// </Card>
