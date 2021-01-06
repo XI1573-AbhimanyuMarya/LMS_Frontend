@@ -65,24 +65,21 @@ const Navbar = (props) => {
       iconPath: AddLearningPath,
       to: "assigned",
       isActive: currentPath === "/assigned",
-      canAccess: true,
-      // canAccess: user.designation !== "Consultant"
+      canAccess: user.designation === "Manager"
     },
     {
       name: "Approvals",
       iconPath: Approvals,
       to: "approvals",
       isActive: currentPath === "/approvals",
-      // canAccess: true
-      canAccess: user.designation !== "Consultant",
+      canAccess: user.designation === "Manager"
     },
     {
       name: "Manage assigned learning",
       iconPath: DashboardIcon,
       to: "manage",
       isActive: currentPath === "/manage",
-      // canAccess: user.designation !== "Consultant"
-      canAccess: true,
+      canAccess: user.designation === "Manager"
     },
   ];
   useEffect(() => {
