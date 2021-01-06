@@ -44,19 +44,12 @@ public class LearningPathController {
         return learningPathService.manageAssignedLearningPaths(managerEmail);
     }
 
-    @GetMapping(value = "/api/v2/learningPath/courses/{learningPathId}/{employeeId}/{learningPathEmployeesId}")
-    public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPathWithDocumentUploaded(@PathVariable("learningPathId") long learningPathId,
-                                                                                                   @PathVariable("employeeId") long employeeId,
-                                                                                                   @PathVariable("learningPathEmployeesId") long learningPathEmployeesId) {
-        log.info("Course Details of  learning Paths with ID-" + learningPathId + " for Employee ID-" + employeeId + " with LearningPath Employee ID " + learningPathEmployeesId);
-        return learningPathService.getCourseDetails(learningPathId, employeeId, learningPathEmployeesId);
-    }
-
     @GetMapping(value = "/api/v1/learningPath/courses/{learningPathId}/{employeeId}")
     public List<LearningPathCourseDetailsDTO> getCoursesDetailsForLearningPath(@PathVariable("learningPathId") long learningPathId,
-                                                                               @PathVariable("employeeId") long employeeId) {
-        log.info("Fetching all the courses inside the specific a learning Paths with ID-" + learningPathId + " for employee with ID-" + employeeId);
-        return learningPathService.getCourseDetails(learningPathId, employeeId, null);
+                                                                               @PathVariable("employeeId") long employeeId,
+                                                                               @RequestParam(name = "lpeid", required = false) Long lpeid) {
+        log.info("Course Details for learning Paths with ID-" + learningPathId + " for Employee ID-" + employeeId + " with LearningPath Employee ID - " + lpeid);
+        return learningPathService.getCourseDetails(learningPathId, employeeId, lpeid);
     }
 
     @PostMapping(value = "/api/v1/pending/approvals")

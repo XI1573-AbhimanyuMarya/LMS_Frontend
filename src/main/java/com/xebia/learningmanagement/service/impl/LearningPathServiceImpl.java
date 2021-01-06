@@ -175,7 +175,6 @@ public class LearningPathServiceImpl implements LearningPathService {
     public List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId, Long learningPathEmployeesId) {
         ModelMapper modelMapper = new ModelMapper();
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_ID_NOT_FOUND));
-       // LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(learningPathEmployeesId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_EMPLOYEE_ID_NOT_FOUND));
         List<LearningPathCourseDetailsDTO> courseDetailsList = new ArrayList<>();
         List<Certificate> documentsAlreadyUploaded = new ArrayList<>();
 
