@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"learning_path_id","employee_id"}))
 @Data
 public class LearningPathEmployees {
     @Id
