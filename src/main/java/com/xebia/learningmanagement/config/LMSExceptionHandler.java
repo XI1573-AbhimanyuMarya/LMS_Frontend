@@ -3,6 +3,7 @@ package com.xebia.learningmanagement.config;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
 import com.xebia.learningmanagement.exception.ErrorResponse;
 import com.xebia.learningmanagement.exception.LearningPathException;
+import com.xebia.learningmanagement.exception.UserNotFoundException;
 import com.xebia.learningmanagement.exception.UserNotificationException;
 import com.xebia.learningmanagement.util.MessageBank;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,11 @@ public class LMSExceptionHandler {
     @ExceptionHandler({UserNotificationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public UserResponse handleUserNotificationException(UserNotificationException e) {
+        return new UserResponse(MessageBank.FAILURE, e.getMessage());
+    }
+    @ExceptionHandler({UserNotFoundException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public UserResponse handleUserNotificationException(UserNotFoundException e) {
         return new UserResponse(MessageBank.FAILURE, e.getMessage());
     }
 
