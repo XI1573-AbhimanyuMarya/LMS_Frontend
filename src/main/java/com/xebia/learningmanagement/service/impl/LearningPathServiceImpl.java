@@ -14,6 +14,7 @@ import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
 import com.xebia.learningmanagement.util.MessageBank;
+import com.xebia.learningmanagement.util.UpdateUserNotification;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.*;
+import static com.xebia.learningmanagement.enums.NotificationDescription.LP_CERTIFICATE_APPROVED;
+import static com.xebia.learningmanagement.enums.NotificationDescription.LP_CERTIFICATE_REJECTED;
+import static com.xebia.learningmanagement.enums.NotificationHeader.Certificate_Approved;
+import static com.xebia.learningmanagement.enums.NotificationHeader.Certificate_Rejected;
 import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 @Service
@@ -55,6 +60,9 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     @Autowired
     private CertificateRepository certificateRepository;
+
+    @Autowired
+    protected UpdateUserNotification updateUserNotification;
 
 
     @Override
@@ -90,7 +98,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         learningPath.setName(path.getName());
         learningPath.setCourses(courseRepository.findAllById(path.getCoursesId()));
         learningPath.setDescription(path.getDescription());
-        Competency competencyLevel = competencyRepository.findById(path.getCompetencyLevelId()).orElseThrow(() -> new CompetencyLevelException("Competency Level Id Not found"));
+        Competency competencyLevel = competencyRepository.findById(path.getCompetencyLevelId()).orElseThrow(() -> new LearningPathException("Competency Level Id Not found"));
         learningPath.setCompetency(competencyLevel);
         getTemplatePlaceholderValuesAndSaveData(path, learningPath);
 
@@ -126,8 +134,9 @@ public class LearningPathServiceImpl implements LearningPathService {
             LocalDate startDate = learningPathEmployees.getStartDate();
             LocalDate endDate = learningPathEmployees.getEndDate();
 
-            //todo Set Email Properties
+            // todo Set Email Properties
             try {
+                updateUserNotification.learningPathAssignedNotifications(learningPath, user);
                 setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList, startDate, endDate);
 
             } catch (Exception e) {
@@ -219,10 +228,10 @@ public class LearningPathServiceImpl implements LearningPathService {
         List<LearningPathEmployees> madeByManager = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
         // TODO : Pending approvals must be sorted by some date  : make abstract auditing entity
         List<LearningPathEmployees> needsApprovalEmpList = madeByManager.stream().filter(a -> PENDING.equals(a.getApprovalStatus())).collect(Collectors.toList());
-        return needsApprovalEmpList.stream().map(this::PendingApprovalsListToApprovalDto).collect(Collectors.toList());
+        return needsApprovalEmpList.stream().map(this::pendingApprovalsListToApprovalDto).collect(Collectors.toList());
     }
 
-    public ApprovalDto PendingApprovalsListToApprovalDto(LearningPathEmployees employee) {
+    public ApprovalDto pendingApprovalsListToApprovalDto(LearningPathEmployees employee) {
         ApprovalDto approvalDto = new ApprovalDto();
         ModelMapper modelMapper = new ModelMapper();
 
@@ -240,18 +249,31 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     @Override
     public void approveRequests(LearningPathEmployeeApprovalRequest request) throws Exception {
-        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(request.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException(MessageBank.LEARNING_PATH_EMPLOYEE_ID_NOT_FOUND));
         String reviewMessage;
+        String notificationDescription = null;
+        String notificationHeader = null;
+
+        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(request.getLearningPathEmployeeId()).orElseThrow(() -> new LearningPathEmployeesException(MessageBank.LEARNING_PATH_EMPLOYEE_ID_NOT_FOUND));
+
+        String managerName = learningPathEmployees.getLearningPath().getMadeBy().getFullName();
+        String learningPathName = learningPathEmployees.getLearningPath().getName();
+
         if (request.getStatus().equalsIgnoreCase("APPROVED")) {
             learningPathEmployees.setApprovalStatus(APPROVED);
             reviewMessage = "APPROVED";
+            notificationDescription = "Your " + learningPathName + " " + LP_CERTIFICATE_APPROVED.getDescription() + managerName;
+            notificationHeader = Certificate_Approved.getValue();
+
         } else {
             learningPathEmployees.setApprovalStatus(REJECTED);
             reviewMessage = request.getReviewMessage();
+            notificationDescription = "Your " + learningPathName + " " + LP_CERTIFICATE_REJECTED.getDescription() + managerName;
+            notificationHeader = Certificate_Rejected.getValue();
         }
 
         try {
             setApprovalMailPropertiesAndSendEmail(learningPathEmployees, reviewMessage);
+            updateUserNotification.learningPathReviewNotifications(learningPathEmployees, notificationDescription, notificationHeader);
             learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
         } catch (Exception e) {
             throw new LearningPathEmployeesException("Unable to Send Email & update Status");
@@ -325,9 +347,8 @@ public class LearningPathServiceImpl implements LearningPathService {
                     path.setName(learningPath.getName());
                     path.setDuration(duration.getId());
 
-                    // Sent Email Mail
-                    setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList,
-                            learningPathEmployees.getStartDate(), learningPathEmployees.getEndDate());
+                    updateUserNotification.learningPathAssignedNotifications(learningPathEmployees.getLearningPath(), user);
+                    setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList, learningPathEmployees.getStartDate(), learningPathEmployees.getEndDate());
 
                 } catch (Exception e) {
                     throw new RuntimeException("Unable to send Email & Save data");
