@@ -18,6 +18,7 @@ import com.xebia.learningmanagement.service.EmployeeLearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
 import com.xebia.learningmanagement.util.ErrorBank;
 import com.xebia.learningmanagement.util.MessageBank;
+import com.xebia.learningmanagement.util.UpdateUserNotification;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +36,18 @@ import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.YTBD
 public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathService {
 
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private LearningPathEmployeesRepository learningPathEmployeesRepository;
+    private final LearningPathEmployeesRepository learningPathEmployeesRepository;
 
-    private EmailSend emailSend;
+    private final EmailSend emailSend;
 
-    private CourseRatingRepository courseRatingRepository;
+    private final CourseRatingRepository courseRatingRepository;
 
-    private LearningPathRepository learningPathRepository;
+    private final LearningPathRepository learningPathRepository;
+
+    @Autowired
+    protected UpdateUserNotification updateUserNotification;
 
     @Autowired
     public EmployeeLearningPathServiceImpl(UserRepository userRepository,
@@ -73,6 +77,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
                     if (learningpathemployees != null) {
                         emailcontent = setMailProperties(learningpathemployees);
                         learningPathEmployeesRepository.deleteById(learningpathemployees.getLearningPathEmployeesId());
+                        updateUserNotification.learningPathDeletedNotifications(learningpathemployees);
                         emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_DISCARD.getValue(), emailcontent);
                     } else {
                         throw new LearningPathException(MessageBank.NO_DATA_FOUND);
@@ -188,17 +193,18 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         log.info("Setting course rating for employee with ID " + employeeId + " & Learning Path with ID" + learningPathId);
 
         int percentCompletedCalculation = courseCompletionAverage(employeeId, learningPathId);
-        LearningPathEmployees learningPath = learningPathEmployeesRepository.findByLearningPathIdAndEmployeeId(learningPathId, employeeId);
+        LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findByLearningPathIdAndEmployeeId(learningPathId, employeeId);
 
-        if (percentCompletedCalculation == 100 && learningPath.getApprovalStatus().equals(YTBD)) {
-            learningPath.setApprovalStatus(PENDING);
-            learningPath.setPercentCompleted(percentCompletedCalculation);
-            learningPathEmployeesRepository.saveAndFlush(learningPath);
-            setReviewApprovalMailPropertiesAndSendEmail(learningPath);
+        if (percentCompletedCalculation == 100 && learningPathEmployees.getApprovalStatus().equals(YTBD)) {
+            learningPathEmployees.setApprovalStatus(PENDING);
+            learningPathEmployees.setPercentCompleted(percentCompletedCalculation);
+            learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
+            updateUserNotification.managerApprovalRequiredNotifications(learningPathEmployees);
+            setReviewApprovalMailPropertiesAndSendEmail(learningPathEmployees);
 
-        } else if (percentCompletedCalculation != 100 && learningPath.getApprovalStatus().equals(YTBD)) {
-            learningPath.setPercentCompleted(percentCompletedCalculation);
-            learningPathEmployeesRepository.saveAndFlush(learningPath);
+        } else if (percentCompletedCalculation != 100 && learningPathEmployees.getApprovalStatus().equals(YTBD)) {
+            learningPathEmployees.setPercentCompleted(percentCompletedCalculation);
+            learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
         }
 
     }
