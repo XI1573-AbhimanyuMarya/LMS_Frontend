@@ -60,15 +60,17 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
+    @Override
     public void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/username","/password");
+        web.ignoring().antMatchers("/username", "/password");
     }
 
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         logger.info("inside security config");
         http
@@ -79,14 +81,14 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs",
-                "/configuration/ui",
-                "/addNewUsers",
-                "/swagger-resources/**",
-                "/configuration/security",
-                "/swagger-ui.html",
-                "/username",
-                "/password",
-                "/webjars/**").anonymous()
+                        "/configuration/ui",
+                        "/addNewUsers",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/username",
+                        "/password",
+                        "/webjars/**").anonymous()
                 .antMatchers("**/swagger-ui.html#/").permitAll()
                 .antMatchers("**/addNewUsers").permitAll()
                 .antMatchers("/username").permitAll()
@@ -112,12 +114,12 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AccessDeniedHandler accessDeniedHandler(){
+    public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
 
     @Bean
-    public AuthenticationEntryPoint authenticationEntryPoint(){
+    public AuthenticationEntryPoint authenticationEntryPoint() {
         return new CustomAuthenticationEntryPointHandler();
     }
 

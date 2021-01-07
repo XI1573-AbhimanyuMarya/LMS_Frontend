@@ -1,16 +1,12 @@
 package com.xebia.learningmanagement.entity;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.Getter;
-import lombok.Builder;
+
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
 
 @Builder
 @Getter
@@ -20,7 +16,7 @@ import javax.validation.constraints.Max;
 @Entity
 public class CourseRating {
     @Id
-    @GeneratedValue(strategy = GenerationType. AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private long employeeId;
     private long learningPathId;

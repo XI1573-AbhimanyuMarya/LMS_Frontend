@@ -4,8 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//@Order(1)
-//@Configuration
+
 public class CORSFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
@@ -17,9 +16,4 @@ public class CORSFilter implements Filter {
         chain.doFilter(req, res);
     }
 
-    public void init(FilterConfig filterConfig) {
-    }
-
-    public void destroy() {
-    }
 }

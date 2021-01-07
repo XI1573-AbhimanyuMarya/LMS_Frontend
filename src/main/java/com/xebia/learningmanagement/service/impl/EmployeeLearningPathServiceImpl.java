@@ -136,7 +136,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
             if (courselist != null) {
                 for (int i = 0; i < courselist.size(); i++) {
                     Courses course = courselist.get(i);
-                    courses.append(course.getDescription().toString());
+                    courses.append(course.getDescription());
                 }
             }
             emailcontent.put("Email", learningpathemployees.getEmployee().getUsername());

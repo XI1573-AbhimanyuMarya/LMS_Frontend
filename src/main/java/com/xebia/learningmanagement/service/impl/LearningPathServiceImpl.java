@@ -68,7 +68,6 @@ public class LearningPathServiceImpl implements LearningPathService {
     @Override
     public void createLearningPath(LearningPathDto.Path path) throws Exception {
         LearningPath learningPath = new LearningPath();
-        LearningPathEmployees learningPathEmployees = new LearningPathEmployees();
 
         Optional<Duration> duration = durationRepository.findById(path.getDuration());
         if (!duration.isPresent()) {
@@ -346,7 +345,7 @@ public class LearningPathServiceImpl implements LearningPathService {
                     List<Courses> coursesList = learningPath.getCourses();
                     List<String> stringList = coursesList.stream().map(Courses::getName).map(String::toUpperCase)
                             .collect(Collectors.toList());
-                    LearningPathDto learningDto = new LearningPathDto();// new LearningPathDto.Path();
+                    LearningPathDto learningDto = new LearningPathDto();
                     Path path = learningDto.new Path();
                     path.setName(learningPath.getName());
                     path.setDuration(duration.getId());

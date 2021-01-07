@@ -1,7 +1,9 @@
 package com.xebia.learningmanagement.entity;
 
-import com.xebia.learningmanagement.enums.NotificationRecipient;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
