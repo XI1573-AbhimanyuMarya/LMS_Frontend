@@ -9,7 +9,6 @@ import com.xebia.learningmanagement.repository.NotificationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -42,7 +41,7 @@ public class UpdateUserNotification {
             log.info("Updated Notification Successfully");
 
         } catch (UserNotificationException e) {
-            log.error("Exception :- ", e);
+            log.error("Exception :- "+ e);
             throw new UserNotificationException(ERROR_UPDATING_NOTIFICATION);
         }
 
@@ -63,7 +62,7 @@ public class UpdateUserNotification {
             notificationRepository.saveAndFlush(notification);
             log.info("Notifications for Assigned Learning Path updated Successfully");
         } catch (Exception e) {
-            log.error("Exception :- ", e);
+            log.error("Error :- "+ e);
             throw new UserNotificationException(ERROR_UPDATING_NOTIFICATION);
         }
     }
@@ -109,5 +108,23 @@ public class UpdateUserNotification {
         }
 
 
+    }
+
+    public void learningPathModifiedNotifications(LearningPath learningPath, User employee) {
+        try {
+            Notification notification = Notification.builder().createdAt(LocalDateTime.now())
+                    .isRead(false)
+                    .notificationFor(employee)
+                    .notificationBy(learningPath.getMadeBy())
+                    .learningPath(learningPath)
+                    .notificationHeader(Learning_Path_Modified.getValue())
+                    .notificationDescription(learningPath.getName() + " : " + LP_MODIFIED.getDescription())
+                    .build();
+            notificationRepository.saveAndFlush(notification);
+            log.info("Notifications for Modified Learning Path updated Successfully");
+        } catch (Exception e) {
+            log.error("Exception occured:- "+ e);
+            throw new UserNotificationException(ERROR_UPDATING_NOTIFICATION);
+        }
     }
 }
