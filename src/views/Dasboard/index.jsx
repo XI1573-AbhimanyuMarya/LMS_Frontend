@@ -41,12 +41,14 @@ const Dashboard = () => {
         loginState.user.username
       )
     );
+    dispatch(Actions.learningPathActions.clearCreateLpFormFields());
   }, []);
   /**
    * function to open learning path model
    */
   const handleClickOpen = () => {
     dispatch(Actions.learningPathActions.pathModelOpen(true));
+    dispatch(Actions.learningPathActions.clearCreateLpFormFields());
   };
 
   const closeHandler = () => {

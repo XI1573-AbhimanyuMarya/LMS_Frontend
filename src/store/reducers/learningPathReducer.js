@@ -174,6 +174,21 @@ export const learningPathReducer = (state = initialState, action) => {
           firstNextClicked: false
         }
       }
+    case actionTypes.CLEAR_CREATE_LP_FORM:
+      delete state.filteredUsersList;
+      return {
+        ...state,
+        learningPathDes:'',
+        learningPathName:'',
+        learningPathDuration:3,
+        learningPathLevel:101,
+        courseIdArr:[],
+        userIdArr:[],
+        users:state.users.map(user=>{
+          user.selected=false;
+          return user;
+        })
+      }
     case actionTypes.DISCARD_MODEL_OPEN:
       return {
         ...state,
@@ -216,7 +231,13 @@ export const learningPathReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         message: payload.message,
-        status: payload.status
+        status: payload.status,
+        learningPathDes:'',
+        learningPathName:'',
+        learningPathDuration:3,
+        learningPathLevel:101,
+        courseIdArr:[],
+        userIdArr:[]
       }
     case actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE:
       return {
