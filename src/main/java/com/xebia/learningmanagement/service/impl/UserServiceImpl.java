@@ -65,10 +65,9 @@ public class UserServiceImpl implements UserService {
         if (!roleRepository.findByRoleName("ROLE_EMPLOYEE").isPresent())
             roleRepository.save(new Role("ROLE_EMPLOYEE"));
 
-        final Role MANAGER_ROLE = roleRepository.findByRoleName("ROLE_MANAGER").get();
-        final Role EMPLOYEE_ROLE = roleRepository.findByRoleName("ROLE_EMPLOYEE").get();
+        final Role roleManager = roleRepository.findByRoleName("ROLE_MANAGER").get();
+        final Role roleEmployee = roleRepository.findByRoleName("ROLE_EMPLOYEE").get();
         int sIndex = 0;
-        int recLimit = 200;
         boolean isMoreData = true;
         while (isMoreData) {
 
@@ -97,7 +96,7 @@ public class UserServiceImpl implements UserService {
                     user.setLocation(employeeMetaData.getBaseLocation());
                     user.setActive(true);
                     user.setPassword("lkjbswecbng@#(*^hf%CFGJ");
-                    user.getRoles().add(getRole(MANAGER_ROLE, EMPLOYEE_ROLE, employeeMetaData));
+                    user.getRoles().add(getRole(roleManager, roleEmployee, employeeMetaData));
                     userRepository.save(user);
                 }
             }
@@ -105,8 +104,8 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private Role getRole(Role MANAGER_ROLE, Role EMPLOYEE_ROLE, EmployeeMetaData employeeMetaData) {
-        return employeeMetaData.getDesignation().toLowerCase().contains("manager") ? MANAGER_ROLE : EMPLOYEE_ROLE;
+    private Role getRole(Role managerRole, Role employeeRole, EmployeeMetaData employeeMetaData) {
+        return employeeMetaData.getDesignation().toLowerCase().contains("manager") ? managerRole : employeeRole;
     }
 
 
