@@ -127,7 +127,6 @@ public class LearningPathServiceImpl implements LearningPathService {
             User madeByUser = userRepository.findById(path.getMadeById()).orElseThrow(NotFoundException::new);
             String madeByUserFullName = madeByUser.getFullName().concat(" : " + madeByUser.getEmpID());
 
-            //List of courses made for Employee
             List<Courses> coursesListById = courseRepository.findAllById(path.getCoursesId());
             List<String> stringList = coursesListById.stream().map(Courses::getName).map(String::toUpperCase).collect(Collectors.toList());
 
@@ -324,6 +323,9 @@ public class LearningPathServiceImpl implements LearningPathService {
                     learningPathEmployees.setStartDate(LocalDate.now());
                     Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(duration.getName()));
                     learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
+
+                    updateUserNotification.learningPathModifiedNotifications(learningPath, user);
+
                 } else {
                     learningPathEmployees = new LearningPathEmployees();
                     learningPathEmployees.setLearningPath(learningPath);
@@ -334,6 +336,8 @@ public class LearningPathServiceImpl implements LearningPathService {
                     learningPathEmployees.setStartDate(LocalDate.now());
                     Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(duration.getName()));
                     learningPathEmployees.setEndDate(LocalDate.now().plusMonths(lpDuration));
+
+                    updateUserNotification.learningPathAssignedNotifications(learningPath, user);
                 }
                 try {
 
@@ -347,14 +351,12 @@ public class LearningPathServiceImpl implements LearningPathService {
                     path.setName(learningPath.getName());
                     path.setDuration(duration.getId());
 
-                    updateUserNotification.learningPathAssignedNotifications(learningPathEmployees.getLearningPath(), user);
                     setMailPropertiesAndSendEmail(user, path, madeByUserFullName, stringList, learningPathEmployees.getStartDate(), learningPathEmployees.getEndDate());
 
                 } catch (Exception e) {
                     throw new RuntimeException("Unable to send Email & Save data");
                 }
 
-                // Save Learning path for Employee
                 learningPathEmployeesRepository.save(learningPathEmployees);
 
             });
