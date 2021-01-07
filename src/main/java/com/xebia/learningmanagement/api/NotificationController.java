@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -20,7 +19,7 @@ public class NotificationController {
     private NotificationService notificationService;
 
     @GetMapping("/api/v1/employee")
-    public List<NotificationContentDTO> getUserNotifications(@RequestParam @NotBlank(message = "User ID can not be Blank") Long userId,
+    public List<NotificationContentDTO> getUserNotifications(@RequestParam @NotBlank Long userId,
                                                              @RequestParam(defaultValue = "0") Integer pageNo,
                                                              @RequestParam(defaultValue = "6") Integer pageSize) {
         return notificationService.getUserNotifications(userId, pageNo, pageSize);
@@ -28,7 +27,7 @@ public class NotificationController {
     }
 
     @GetMapping("/api/v1/unread/count")
-    public Integer getUnreadNotificationCount(@RequestParam @NotBlank(message = "User ID can not be Blank") Long userId) {
+    public Integer getUnreadNotificationCount(@RequestParam @NotBlank Long userId) {
         return notificationService.getUnreadNotificationCount(userId);
     }
 
