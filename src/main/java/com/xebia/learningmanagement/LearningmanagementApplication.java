@@ -16,12 +16,6 @@ public class LearningmanagementApplication {
 		return new RestTemplate();
 	}
 
-	@Bean
-	public ObjectMapper getObjectMapper()
-	{
-		return new ObjectMapper();
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(LearningmanagementApplication.class, args);
 	}
