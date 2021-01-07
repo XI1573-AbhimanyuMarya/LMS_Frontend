@@ -80,6 +80,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs",
                 "/configuration/ui",
+                "/addNewUsers",
                 "/swagger-resources/**",
                 "/configuration/security",
                 "/swagger-ui.html",
@@ -87,9 +88,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 "/password",
                 "/webjars/**").anonymous()
                 .antMatchers("**/swagger-ui.html#/").permitAll()
-                .antMatchers("/addNewUsers").permitAll()
+                .antMatchers("**/addNewUsers").permitAll()
                 .antMatchers("/username").permitAll()
-                .antMatchers("/password").permitAll().antMatchers("/api").permitAll()
+                .antMatchers("/password").permitAll().antMatchers("/user/**").permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint())
