@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import static com.xebia.learningmanagement.enums.NotificationDescription.*;
 import static com.xebia.learningmanagement.enums.NotificationHeader.*;
 import static com.xebia.learningmanagement.util.MessageBank.ERROR_UPDATING_NOTIFICATION;
+import static com.xebia.learningmanagement.util.MessageBank.EXECEPTION_OCCURED;
 
 @Component
 @Transactional
@@ -38,10 +39,10 @@ public class UpdateUserNotification {
                     .notificationBy(learningPathEmployees.getLearningPath().getMadeBy())
                     .build();
             notificationRepository.saveAndFlush(notification);
-            log.info("Updated Notification Successfully");
+            log.info("Review Notification updated Successfully");
 
         } catch (UserNotificationException e) {
-            log.error("Exception :- "+ e);
+            log.error(EXECEPTION_OCCURED + e);
             throw new UserNotificationException(ERROR_UPDATING_NOTIFICATION);
         }
 
@@ -62,7 +63,7 @@ public class UpdateUserNotification {
             notificationRepository.saveAndFlush(notification);
             log.info("Notifications for Assigned Learning Path updated Successfully");
         } catch (Exception e) {
-            log.error("Error :- "+ e);
+            log.error(EXECEPTION_OCCURED + e);
             throw new UserNotificationException(ERROR_UPDATING_NOTIFICATION);
         }
     }
@@ -75,7 +76,7 @@ public class UpdateUserNotification {
                     .isRead(false)
                     .learningPath(learningpathemployees.getLearningPath())
                     .notificationHeader(Learning_Path_Deleted.getValue())
-                    .notificationDescription("Learning Path : " + learningpathemployees.getLearningPath().getName() + LP_DELETED.getDescription())
+                    .notificationDescription("Learning Path : " + learningpathemployees.getLearningPath().getName() + " ," + LP_DELETED.getDescription())
                     .notificationBy(learningpathemployees.getLearningPath().getMadeBy())
                     .build();
             notificationRepository.saveAndFlush(notification);
@@ -83,6 +84,7 @@ public class UpdateUserNotification {
 
 
         } catch (UserNotificationException e) {
+            log.error(EXECEPTION_OCCURED + e);
             throw new UserNotificationException(ERROR_UPDATING_NOTIFICATION);
         }
 
@@ -104,6 +106,7 @@ public class UpdateUserNotification {
             log.info("Notifications for required Approval of Learning Path by Manager updated Successfully");
 
         } catch (UserNotificationException e) {
+            log.error(EXECEPTION_OCCURED + e);
             throw new UserNotificationException(ERROR_UPDATING_NOTIFICATION);
         }
 
@@ -123,7 +126,7 @@ public class UpdateUserNotification {
             notificationRepository.saveAndFlush(notification);
             log.info("Notifications for Modified Learning Path updated Successfully");
         } catch (Exception e) {
-            log.error("Exception occured:- "+ e);
+            log.error(EXECEPTION_OCCURED + e);
             throw new UserNotificationException(ERROR_UPDATING_NOTIFICATION);
         }
     }
