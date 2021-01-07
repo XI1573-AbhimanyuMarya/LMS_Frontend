@@ -3,6 +3,7 @@ package com.xebia.learningmanagement.config;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
 import com.xebia.learningmanagement.exception.ErrorResponse;
 import com.xebia.learningmanagement.exception.LearningPathException;
+import com.xebia.learningmanagement.exception.UserNotificationException;
 import com.xebia.learningmanagement.util.MessageBank;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,6 +33,13 @@ public class LMSExceptionHandler {
     public UserResponse handleIdNotFoundException(LearningPathException e) {
         return new UserResponse(MessageBank.FAILURE, e.getMessage());
     }
+
+    @ExceptionHandler({UserNotificationException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public UserResponse handleUserNotificationException(UserNotificationException e) {
+        return new UserResponse(MessageBank.FAILURE, e.getMessage());
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
