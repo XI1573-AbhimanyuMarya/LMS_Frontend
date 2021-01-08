@@ -27,14 +27,7 @@ const LearningPathCard = (props) => {
     handleCourseClick(selectedLp.learningPath.id);
     setisChecked(!isChecked);
   }
-  useEffect(() => {
-    let reqBody={
-      empid:loginState.user.id,
-      ids:props.lpId,
-      learningPathEmployeeId:props.learningPathEmployeesId
-    };
-    dispatch(Actions.learningPathActions.getLearningPathCourses(reqBody)); 
-  }, []);
+  
   const { learningPathCourses } = learningPathState;
   console.log(learningPathCourses,'num')
   return (
