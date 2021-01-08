@@ -42,6 +42,10 @@ const pathModelOpen = (val) => ({
   type: actionTypes.PATH_MODEL_OPEN,
   payload: { val },
 });
+const clearCreateLpFormFields=()=>({
+  type: actionTypes.CLEAR_CREATE_LP_FORM,
+  payload: "",
+});
 const discardModelOpen = (val) => ({
   type: actionTypes.DISCARD_MODEL_OPEN,
   payload: { val },
@@ -176,5 +180,6 @@ export default {
   viewAttachment,
   addCertificate,
   uploadCertificate,
-  selectLearningPath
+  selectLearningPath,
+  clearCreateLpFormFields
 };
