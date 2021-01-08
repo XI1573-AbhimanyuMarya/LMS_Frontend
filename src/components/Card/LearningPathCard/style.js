@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: "300px",
+    height:"183px",
     borderRadius:"8px",
     boxShadow:"2px 3px 10px 0 rgba(0, 0, 0, 0.18)"
   },
@@ -11,7 +12,8 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent:"space-between"
   },
   cardheading:{
-    fontSize:"1rem"
+    fontSize:"1rem",
+    margin:"0 0 0 15px"
   },
   Beginner:{
     width:"80px",
@@ -39,7 +41,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   carddesc:{
     textAlign: "justify",
-    fontSize:"10px"
+    fontSize:"10px",
+    minHeight:"55px"
   },
   cardfooter:{
     backgroundColor:"#f5f5f5",
@@ -54,5 +57,9 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor:"white",
     borderRadius:"21px",
     width:"55px"
+  },
+  checkIcon: {
+    color: "#67B104",
+    float: "right",
   }
 }));

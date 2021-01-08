@@ -41,12 +41,14 @@ const Dashboard = () => {
         loginState.user.username
       )
     );
+    dispatch(Actions.learningPathActions.clearCreateLpFormFields());
   }, []);
   /**
    * function to open learning path model
    */
   const handleClickOpen = () => {
     dispatch(Actions.learningPathActions.pathModelOpen(true));
+    dispatch(Actions.learningPathActions.clearCreateLpFormFields());
   };
 
   const closeHandler = () => {
@@ -94,7 +96,7 @@ const Dashboard = () => {
           <Typography component="h1" variant="h5" gutterBottom>
             Welcome, {userName}
           </Typography>
-          <Typography component="h1" variant="subtitle2">
+          <Typography component="h1" variant="subtitle2" style={{color:"#858585"}} >
             Please assign first learning path to your team
           </Typography>
           <Button

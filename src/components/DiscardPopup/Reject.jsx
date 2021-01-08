@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -16,8 +16,8 @@ const DiscardPopup1 = (props) => {
   const classes = useStyles();
   const learningPathState = useSelector(state => state.learningPathState);
   const { rejectPopup } = learningPathState;
-  const { discardHandler } = props;
-
+  const { discardHandler,rejectHandler } = props;
+  const [ review,setReview ]=useState('');
   /**
    * function to cancel disacrd popup
    */
@@ -28,7 +28,7 @@ const DiscardPopup1 = (props) => {
    * function to agree discard popup 
    */
   const handleDiscard = () => {
-    discardHandler(true);
+    rejectHandler(review);
   }
 
   return (
@@ -49,7 +49,7 @@ const DiscardPopup1 = (props) => {
             Write a reason
                     </DialogContentText>
           <form className={classes.root} noValidate autoComplete="off">
-            <TextField className={classes.text} label="Reason For Decline" variant="outlined"/>
+            <TextField className={classes.text} label="Reason For Decline" variant="outlined" onChange={(e)=>setReview(e.target.value)}/>
           </form>
         </DialogContent>
         <DialogActions style={{ display: "flex", justifyContent: "center", margin: "0 0 20px 0" }}>

@@ -1,83 +1,31 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import { useDispatch  } from "react-redux";
-import Actions from '../../store/actions'
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { Box } from '@material-ui/core';
 import { useStyles } from './style';
-import BarIcon from '../SignalIcon';
-import ProgressBar from '../ProgressBar';
-import Beginner from '../../images/101-Beginner.svg';
-import Intermediate from '../../images/102-Intermediate.svg';
-import Advance from '../../images/103-Advance.svg';
-import Expert from '../../images/104-Expert.svg';
-import UploadFilePopup from '../../components/DiscardPopup/draganddrop'
+import { useSelector, useDispatch } from 'react-redux';
 import { SHOW_LEVELS } from '../../modules/constants';
-//const levels=LEVELS;
-// {
-//   "101-Beginner":Beginner,
-//   "102-Intermediate":Intermediate,
-//   "103-Advance":Advance,
-//   "104-Expert":Expert
-// };
-const dateFormat=(inputDate) =>{
-  var date = new Date(inputDate);
-  if (!isNaN(date.getTime())) {
-    let mon=parseInt(date.getMonth()) + 1;
-    if(mon<10){
-      mon="0"+mon;
-    }
-    return date.getDate()+ '/' + mon + '/' + date.getFullYear();
-  }
-}
-
+import {ViewButton,LearningRateButton} from '../Button';
+import Actions from '../../store/actions';
 
 const CourseCard = (props) => {
-  const dispatch = useDispatch(); 
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const learningPathState = useSelector(state => state.learningPathState);
   const { course, onButtonClick, showButton } = props;
 
-  const onViewClick = () =>{
-    console.log("view clicked")
-    dispatch(Actions.learningPathActions.uploadFileModelOpen(true));
-  }
-
-  const discardHandler = () =>{
-    dispatch(Actions.learningPathActions.uploadFileModelOpen(false));
-  }
   course.progress = '';
-  // let btnlabel = "Let's begin"
-  // if (course?.progress) {
-  //   btnlabel = "Explore"
-  // }
-
-  // let darkBar = 0;
-  // if (course?.competency?.name === "Beginner") {
-  //   darkBar = 1;
-  // } else if (course?.competency?.name === "Intermediate") {
-  //   darkBar = 2
-  // } else if (course?.competency?.name === "Expert") {
-  //   darkBar = 3
-  // }
+  const btnClick=()=>{
+    dispatch(Actions.learningPathActions.selectLearningPath(course));
+  }
   return (
     <tr className={classes.tblrow}>
       <td> {course.learningPath.name}</td>
       <td> <img src={SHOW_LEVELS[course.learningPath.competency.id+"-"+course.learningPath.competency.name]} className={classes[course.learningPath.competency.name]}/></td>
-      <td>{dateFormat(course.startDate)}</td>
-      <td>{dateFormat(course.endDate)}</td>
+      <td>{course.startDate}</td>
+      <td>{course.endDate}</td>
       <td> 
-        <Button variant="outlined" size="small" className={classes.avglearningrate}>
-          {course.percentCompleted ? course.percentCompleted :"30"}{"%"}
-        </Button>
+        <LearningRateButton percentCompleted={course.percentCompleted} />
       </td>
       <td> 
-        <Button variant="outlined" onClick={onButtonClick} size="small" className={classes.actionbtn}>
-          {"View"}
-        </Button>
+        <ViewButton onButtonClick={btnClick} /> 
       </td>
     </tr>
   );

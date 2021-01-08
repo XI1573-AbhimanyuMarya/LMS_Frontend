@@ -41,7 +41,7 @@ const getStepContent = (step) => {
       return <SelectCourses />;
     case 2:
       return <SelectUsers />;
-      case 3:
+    case 3:
       return <SetDuration />;
     default:
       throw new Error(MESSAGES.UNKNOWN_STEP);
@@ -62,7 +62,7 @@ const CreateLearningPath = (props) => {
     learningPathDuration,
     status,
     learningPathDes,
-    learningPathLevel
+    learningPathLevel,
   } = learningPathState;
   const { user } = loginState;
 
@@ -86,8 +86,7 @@ const CreateLearningPath = (props) => {
       setActivePathStep(activePathStep + 1);
     } else if (activePathStep === 2) {
       setActivePathStep(activePathStep + 1);
-    }
-    else if (activePathStep === steps?.length - 1) {
+    } else if (activePathStep === steps?.length - 1) {
       const path = {
         name: learningPathName,
         madeById: user.id,
@@ -95,7 +94,7 @@ const CreateLearningPath = (props) => {
         coursesId: courseIdArr,
         duration: learningPathDuration,
         description: learningPathDes,
-        competencyLevelId: learningPathLevel
+        competencyLevelId: learningPathLevel,
       };
       dispatch(Actions.learningPathActions.createLearningPath(path));
       setTimeout(() => {
@@ -137,7 +136,7 @@ const CreateLearningPath = (props) => {
           </Typography>
         </>
       )
-    ) : (
+    ) : (status && status==="failure" ? (
       <>
         <ErrorIcon className={classes.errorIcon} />
         <Typography variant="h5" align="center" className={classes.errorLabel}>
@@ -147,6 +146,7 @@ const CreateLearningPath = (props) => {
           {LEARNING_PATH_LABELS.CLICK_OVER_CLOSE_BUTTON}
         </Typography>
       </>
+      ): ""
     );
 
   return (
@@ -175,7 +175,7 @@ const CreateLearningPath = (props) => {
                       : LEARNING_PATH_LABELS.CREATE_LEARNING_PATH}
                   </Typography>
                 </Box>
-                <Typography variant="subtitle2" align="center">
+                <Typography variant="subtitle2" align="center" style={{color:"#858585", margin:"0 15px 5px 0", textAlign:"end"}}>
                   {LEARNING_PATH_LABELS.LEARNING_PATH_DETAILS}
                 </Typography>
                 <Stepper

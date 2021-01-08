@@ -44,7 +44,9 @@ export const useStyles = makeStyles((theme) => ({
 		backgroundColor: pink[500],
 	},
 	checkIcon: {
-		color: '#67B104'
+    color: '#67B104',
+    float: 'right',
+    margin:"0 0 0 -24px"
 	},
 	usersContainer: {
 		background: '#F1F3F7',

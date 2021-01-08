@@ -10,14 +10,15 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   tblbody:{
-    fontSize:"10px"
+    fontSize:"12px"//"10px"
   },
   tblheading:{
     '& tr':{
       '& th':{
         padding:"20.9px 15px 10px 31px",
         textAlign:"left",
-        fontWeight:"normal"
+        fontWeight:"normal",
+        opacity: "0.7"
       }
     },
     backgroundColor:"white",

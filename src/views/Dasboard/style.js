@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 'auto'
+    margin: '30vh 0 0 45vh'
   },
   paper: {
     display: 'flex',

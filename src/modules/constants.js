@@ -8,22 +8,28 @@ import OutlinedIntermediate from '../images/102-OutlinedIntermediate.svg';
 import OutlinedAdvance from '../images/103-OutlinedAdvance.svg';
 import OutlinedExpert from '../images/104-OutlinedExpert.svg';
 
-// const API_HOST_PATH = process.env.REACT_APP_BASE_API_URL;
-//'https://learningmanagementxeb.herokuapp.com';
+
+// const API_HOST_PATH =  'http://localhost:8085'
 const API_HOST_PATH =  'https://xebia-lms.herokuapp.com'
 
 export const SERVICE_URLS = {
-  LOGIN: `${API_HOST_PATH}/username`,
-  VERIFY_OTP: `${API_HOST_PATH}/password`,
-  FETCH_COURSES: `${API_HOST_PATH}/api/getAllCourses`,
-  FETCH_USERS: `${API_HOST_PATH}/getAllUsers`,
-  CREATE_LEARNING_PATH: `${API_HOST_PATH}/api/learningPath`,
-  ASSIGNED_PATH: `${API_HOST_PATH}/api/getAssignedLearningPaths`,
-  MY_PATH: `${API_HOST_PATH}/employeelearning/myLearningPath`,
-  DELETE_ALL_PATH: `${API_HOST_PATH}/employeelearning/deletelearningpath`,
-  LEARNINGPATH_COURSES:`${API_HOST_PATH}/api/learningPath/courses/`,
-  PENDING_FOR_APPROVAL: `${API_HOST_PATH}/api/pending/approvals`,
-  APPROVAL_REJEACT: `${API_HOST_PATH}/api/review/approvals`
+LOGIN: `${API_HOST_PATH}/username`,
+VERIFY_OTP: `${API_HOST_PATH}/password`,
+FETCH_COURSES: `${API_HOST_PATH}/course/api/v1/allcourses`,
+FETCH_USERS: `${API_HOST_PATH}/user/api/v1/get/all/employees`,
+CREATE_LEARNING_PATH: `${API_HOST_PATH}/manager/api/v1/create/learningPath`,
+ASSIGNED_PATH: `${API_HOST_PATH}/manager/api/v1/manage/learningPaths/assigned`,
+CREATE_ASSIGNED_PATH: `${API_HOST_PATH}/manager/api/v1/assign/learningPaths`,
+MY_PATH: `${API_HOST_PATH}/employee/api/v1/mylearningpaths`,
+GET_LEARNING_PATH:`${API_HOST_PATH}/manager/api/v1/details/learningPaths`,  //Get List of learning paths
+DELETE_ALL_PATH: `${API_HOST_PATH}/employee/api/v1/delete/learningpath`,
+LEARNINGPATH_COURSES:`${API_HOST_PATH}/manager/api/v1/learningPath/courses/`,
+PENDING_FOR_APPROVAL: `${API_HOST_PATH}/manager/api/v1/pending/approvals`,
+APPROVAL_REJEACT: `${API_HOST_PATH}/manager/api/v1/review/approvals`,
+SAVE_COURSE_RATE: `${API_HOST_PATH}/employee/api/v1/update/courseratings`,
+GET_ATTACHMENT:`${API_HOST_PATH}/certificate/api/v1/get`,
+UPLOAD_CERTIFICATES:`${API_HOST_PATH}/certificate/api/v1/upload`
+
 };
 
 export const API_STATUS = {

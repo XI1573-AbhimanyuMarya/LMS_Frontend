@@ -2,7 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
 	root: {
-		maxWidth: 345,
+    //maxWidth: 345,
+    minWidth:300,
+    height:222,
 		border: '3px solid #67b104',
 		borderRadius: 8
 	},
@@ -82,7 +84,9 @@ export const useStyles = makeStyles(theme => ({
     
 	},
 	selected: {
-		maxWidth: 345,
+    //maxWidth: 345,
+    minWidth:300,
+    height:222,
 		border: '2px solid #67B104',
 		borderRadius: 4
 	},
@@ -95,10 +99,10 @@ export const useStyles = makeStyles(theme => ({
 		height:"40px",
 		display:"flex",
 		justifyContent:"center",
-		alignItems:"center",
+    alignItems:"center",
+    color:"white",
 		// width: '90px',
 		// height: '19px',
-		fontfamily: 'Roboto',
 		fontsize: '16px',
 		fontweight: '500',
 		fontstretch: 'normal',
@@ -158,4 +162,5 @@ export const useStyles = makeStyles(theme => ({
     display:"flex",
     justifyContent:"space-between"
   },
+  cardcontent:{height:"180px",overflow:"auto"}
 }));

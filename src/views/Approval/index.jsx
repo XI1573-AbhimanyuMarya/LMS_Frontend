@@ -27,7 +27,6 @@ const ManageAssignLearningPath = ({ props }) => {
     (state) => state.loginState
   );
   const { isLoading, assignedCources, deleteStatus, pfApproval } = getAssignedLearningPaths;
-  console.log(pfApproval,"pfApproval")
   const [selectedUsersArr, setSelectedUsersArr] = useState([]);
   useEffect(() => {
     // dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username));
@@ -42,7 +41,6 @@ const ManageAssignLearningPath = ({ props }) => {
   }
   const onDelete = (learningPathId) => {
     dispatch(Actions.learningPathActions.deletePath([learningPathId]))
-    console.log(learningPathId);
   }
 
   const isObject = (data) => {
@@ -97,16 +95,16 @@ const ManageAssignLearningPath = ({ props }) => {
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
-          <Box component="div" display="flex" justifyContent="center">
+          {/* <Box component="div" display="flex" justifyContent="center">
             <Grid container className={classes.container}>
               <Grid item xs={2}></Grid>
               <Grid item xs={8}>
               </Grid>
             </Grid>
-          </Box>
-          <Paper className={classes.paper} elevation={1}>
+          </Box> */}
+          {/* <Paper className={classes.paper} elevation={1}> */}
             <div className={classes.cardData}>
-              {isLoading && employees.length === 0 && <UserSkelton />}
+              {/* {isLoading && employees.length === 0 && <UserSkelton />} */}
               {renderUser !== "" ? (
                 renderUser
               ) : (
@@ -117,7 +115,7 @@ const ManageAssignLearningPath = ({ props }) => {
                   </div>
                 )}
             </div>
-          </Paper>
+          {/* </Paper> */}
         </div>
       </main>
     </React.Fragment>

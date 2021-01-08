@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme => ({
 	root: {
 		maxWidth: 345,
-		border: '2px solid #A9A9A9'
+    border: '2px solid #A9A9A9'
+   
 	},
 	courseType: {
 		textTransform: 'capitalize',
@@ -28,15 +29,44 @@ export const useStyles = makeStyles(theme => ({
 		//margin: theme.spacing(1),
 	},
 	courseDesc: {
-		fontSize: 12,
+		fontSize: 10,
 		color: '#858585'
 	},
 	selected: {
 		maxWidth: 345,
-		border: '2px solid #67B104'
+    border: '2px solid #67B104',
+   
 	},
 	checkIcon: {
 		color: '#67B104',
 		float: 'right'
-	}
+  },
+  levIcons: {
+    width: 80,
+    objectFit: "contain",
+  },
+  Beginner:{
+    width:"70px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
+  Intermediate:{
+    width:"90px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
+  Advance:{
+    width:"70px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
+  Expert:{
+    width:"70px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
 }));
