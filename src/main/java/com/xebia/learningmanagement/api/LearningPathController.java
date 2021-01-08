@@ -5,7 +5,7 @@ import com.xebia.learningmanagement.dtos.LearningPathCourseDetailsDTO;
 import com.xebia.learningmanagement.dtos.LearningPathDto;
 import com.xebia.learningmanagement.dtos.LearningPathManagerDto;
 import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
-import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
+import com.xebia.learningmanagement.dtos.request.LearningPathReviewRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
 import com.xebia.learningmanagement.entity.LearningPath;
@@ -58,7 +58,7 @@ public class LearningPathController {
     }
 
     @PutMapping(value = "/api/v1/review/approvals")
-    public ResponseEntity<Object> approveLearningPath(@Valid @RequestBody LearningPathEmployeeApprovalRequest request) throws Exception {
+    public ResponseEntity<Object> approveLearningPath(@Valid @RequestBody LearningPathReviewRequest request) throws Exception {
         learningPathService.approveRequests(request);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Review Successful");
     }
