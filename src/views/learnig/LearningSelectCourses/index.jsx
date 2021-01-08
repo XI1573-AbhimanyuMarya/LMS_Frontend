@@ -59,6 +59,8 @@ const SelectCourses = () => {
       : ''
     : courses;
 
+    
+
   const completedCourse = filteredCoursesList
     ? filteredCoursesList?.length > 0
       ? filteredCoursesList

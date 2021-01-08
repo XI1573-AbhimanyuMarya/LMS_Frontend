@@ -21,15 +21,17 @@ const LearningCoursesTable=(props)=>{
   const { learningPathCourses } = learningPathState;
 
   const {withRate,disable}=props;
+  var count=0;
   const renderCourseList=learningPathCourses.map((lpcourse)=>{
-    return <CourseRow key={lpcourse.id} course={lpcourse} lpId={props.lpId} learningPathEmployeesId={ props.learningPathEmployeesId } withRate={withRate} disable={disable}/>
+    count++
+    return <CourseRow count={count} key={lpcourse.id} course={lpcourse} lpId={props.lpId} learningPathEmployeesId={ props.learningPathEmployeesId } withRate={withRate} disable={disable}/>
   });
   return (
     <div style={{overflowX:"auto", overflowY:"auto", height:"38vh",margin:"35px 0px 10px 0px"}}>
       <table className={classes.tbl}>
         <thead className={classes.tblheading}>
           <tr>
-            <th style={{width:"25%"}}>Course Name</th>
+  <th style={{width:"25%"}}>Course Name </th>
             <th style={{width:"20%"}}>Learning Category</th>
             <th style={{width:withRate ? "20%" : "50%"}}>Level</th>
             { withRate && <th style={{width:"35%"}}>Learning Rate</th> }

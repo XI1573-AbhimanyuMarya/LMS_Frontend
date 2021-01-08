@@ -12,7 +12,8 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent:"space-between"
   },
   cardheading:{
-    fontSize:"1rem"
+    fontSize:"1rem",
+    margin:"0 0 0 15px"
   },
   Beginner:{
     width:"80px",

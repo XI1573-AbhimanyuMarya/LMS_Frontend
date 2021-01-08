@@ -21,6 +21,7 @@ const LearningPathDesc = (props) => {
   const backBtnHandler=()=>{
     dispatch(Actions.learningPathActions.selectLearningPath({}));
   }
+  console.log(selectedLp.learningPath.learningPathId,"length")
   return (
     <React.Fragment>
       <TopNav />

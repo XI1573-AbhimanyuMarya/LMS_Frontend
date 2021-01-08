@@ -111,11 +111,11 @@ export default function EmployeeCardApproval(props) {
     <>
       <div className={classes.root}>
         <ThemeProvider theme={theme}>
-          <CardHeader style={{ minWidth: "250px", maxWidth: "250px" }}
+          <CardHeader style={{ minWidth: "270px", maxWidth: "270px" }}
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar}></Avatar>
             }
-            title={`${data.employee.fullName} (${data.employee.empID})`}
+            title={<Typography style={{display:"flex", fontSize:"15px"}}>{data.employee.fullName}&#160;<Typography style={{fontSize:"13px", color:"rgba(0, 0, 0, 0.54)"}}>({data.employee.empID})</Typography></Typography>}
             subheader={data.employee.designation}
           />
         </ThemeProvider>

@@ -75,11 +75,12 @@ export const LearningRateButton=(props)=>{
 }
 
 export const CourseAssignButton=(props)=>{
-  const {onButtonClick,assignLp}=props;
+  const {onButtonClick,assignLp, count}=props;
   const classes=useStyles();
+  
   return (
     <Button size="small" variant="outlined" className={classes.cardfooterbtn} onClick={onButtonClick}>
-      888
+      {count}
       {assignLp && <img src={ArrowForwardIos} className={classes.arrowfwbtn}/> }
     </Button>
   );
