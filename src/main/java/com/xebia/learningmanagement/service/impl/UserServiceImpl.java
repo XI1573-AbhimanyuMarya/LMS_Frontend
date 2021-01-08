@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     //    @Scheduled(fixedDelay = 5000)
-//    @PostConstruct
+    @Scheduled(cron = "0 1 1 * * ?")
     public void addNewUsers() {
         int count = 1;
         if (!roleRepository.findByRoleName("ROLE_ADMIN").isPresent())
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
                     userRepository.save(user);
                 }
             }
-            sIndex=sIndex+emp2.size();
+            sIndex = sIndex + emp2.size();
         }
     }
 
