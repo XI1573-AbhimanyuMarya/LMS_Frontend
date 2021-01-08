@@ -122,7 +122,7 @@ const Navbar = (props) => {
               className={[
                 classes.navLinks,
                 item.isActive ? classes.active : "",
-                item.canAccess ? "" : classes.disableLink,
+                item.canAccess ? "" : classes.hideLink,
               ].join(" ")}
             >
               <Link to={item.to} key={item.name}>
