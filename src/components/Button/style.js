@@ -14,9 +14,15 @@ export const useStyles = makeStyles((theme) => ({
     fontSize:"10px"
   },
   waitbtn:{
-    color:"green",
-    backgroundColor:"#ffffff",
-    padding:"10px 5px"
+    color:"white",
+    backgroundColor:"#ff9300",
+    padding:"6px 5px",
+    fontSize:"10px",
+    fontWeight:"normal",
+    textTransform: 'capitalize',
+    '&:hover': {
+      backgroundColor: "#ff9300",
+    }
   },
   bckbtn:{
     textTransform:"lowercase",
@@ -68,5 +74,17 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     color:"#ef7200",
     textTransform: 'capitalize'
+  },
+  completed:{
+    color:"#ffffff" ,
+    backgroundColor: "#67b104",
+    padding: "2px 10px",
+    '&:hover': {
+      backgroundColor: "#67b104",
+    }
+  },
+  doneroundedicon:{
+    margin: "0px 0px 3px 7px",
+    fontSize: "19px",
   }
 }));

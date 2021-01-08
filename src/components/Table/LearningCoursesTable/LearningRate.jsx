@@ -8,7 +8,7 @@ const LearningRate=(props)=>{
   const classes=useStyles();
   const learningPathState = useSelector(state => state.learningPathState);
   const loginState = useSelector(res => res.loginState);
-  const {course,lpId, learningPathEmployeesId,disable }=props;
+  const {course,lpId, learningPathEmployeesId }=props;
   const {percentCompleted}=course;
   const dispatch=useDispatch();
   const focusHandler=()=>{
@@ -28,6 +28,7 @@ const LearningRate=(props)=>{
       "percentCompleted":parseInt(percentCompleted)
     };
     dispatch(Actions.learningPathActions.saveCourseRate(reqBody));
+    if(parseInt(percentCompleted)===100) {dispatch(Actions.learningPathActions.openBtn(course));}
     dispatch(Actions.learningPathActions.getMyLearningPath(loginState.user.username));
   }
 
@@ -52,6 +53,7 @@ const LearningRate=(props)=>{
     formData.append('learningPathEmployeeId',learningPathEmployeesId);
     formData.append('courseId',course.id);
     dispatch(Actions.learningPathActions.uploadCertificate(formData));
+    dispatch(Actions.learningPathActions.changeDocUploadedStatusForCourse(course.id));
     discardHandler();
   }
   const BtnObj={
@@ -64,10 +66,9 @@ const LearningRate=(props)=>{
     <>
       <input type="text" 
         value={percentCompleted}
-        onClick={focusHandler} onChange={!disable && changeHandler}
+        onClick={focusHandler} onChange={changeHandler}
         className={classes.lpInField}
         pattern={"^[1-9][0-9]?$|^100$"}
-
       />
       {
         course.showBtn!=='' && BtnObj[course.showBtn]
