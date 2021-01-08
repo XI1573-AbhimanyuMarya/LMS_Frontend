@@ -15,6 +15,7 @@ import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
 
 import DiscardPopup from "../../components/DiscardPopup/draganddrop";
 import AddLearningPath from "../../images/AddLearningPath.svg";
+import group2 from "../../images/group2.png";
 import LearningPath from "../LearningPath/index";
 import { useStyles } from "./style";
 import WithLoading from "../../hoc/WithLoading";
@@ -31,9 +32,11 @@ const Dashboard = () => {
   const userName = getOr("User Name", "user.fullName", loginState);
   const { assignedCources, pathModelOpen } = learningPathState;
 
-  const showDashboard = (assignedCources.assignedLearningPaths
-    && assignedCources.assignedLearningPaths.length ?
-    true : false);
+  const showDashboard =
+    assignedCources.assignedLearningPaths &&
+    assignedCources.assignedLearningPaths.length
+      ? true
+      : false;
 
   useEffect(() => {
     dispatch(
@@ -88,27 +91,42 @@ const Dashboard = () => {
         <div className={classes.paper}>
           <CardMedia
             className={classes.media}
-            image={AddLearningPath}
+            image={
+              loginState.user.designation.toLowerCase() != "manager"
+                ? group2
+                : AddLearningPath
+            }
             title="add learning path"
           />
           <Typography component="h1" variant="h5" gutterBottom>
             Welcome, {userName}
           </Typography>
           <Typography component="h1" variant="subtitle2">
-            Please assign first learning path to your team
+            {loginState.user.designation.toLowerCase() != "manager" ? (
+              <div class={classes.employeeViewText}>
+                There is no course assigned to you , request your manager for
+                further learning.
+              </div>
+            ) : (
+              <div>Please assign first learning path to your team</div>
+            )}
           </Typography>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            className={classes.submit}
-            onClick={handleClickOpen}
-            startIcon={
-              <AddCircleOutlineOutlinedIcon style={{ fontSize: 40 }} />
-            }
-          >
-            Create Learning Path
-          </Button>
+          {loginState.user.designation.toLowerCase() == "manager" ? (
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              className={classes.submit}
+              onClick={handleClickOpen}
+              startIcon={
+                <AddCircleOutlineOutlinedIcon style={{ fontSize: 40 }} />
+              }
+            >
+              Create Learning Path
+            </Button>
+          ) : (
+            <></>
+          )}
         </div>
       </Container>
       <LearningPath
@@ -127,8 +145,8 @@ const Dashboard = () => {
           {showDashboard && !pathModelOpen ? (
             <DashboardDetail />
           ) : (
-              renderWelcome
-            )}
+            renderWelcome
+          )}
         </div>
         <div className="copyright">
           <Copyright />
