@@ -4,7 +4,7 @@ import com.google.common.base.CharMatcher;
 import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.dtos.LearningPathDto.Path;
 import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
-import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
+import com.xebia.learningmanagement.dtos.request.LearningPathReviewRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
@@ -246,7 +246,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
     @Override
-    public void approveRequests(LearningPathEmployeeApprovalRequest request) throws Exception {
+    public void approveRequests(LearningPathReviewRequest request) throws Exception {
         String reviewMessage;
         String notificationDescription = null;
         String notificationHeader = null;
