@@ -2,10 +2,10 @@ package com.xebia.learningmanagement.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xebia.learningmanagement.dtos.UserDto;
 import com.xebia.learningmanagement.entity.Role;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.EmployeeMetaData;
-import com.xebia.learningmanagement.dtos.UserDto;
 import com.xebia.learningmanagement.repository.RoleRepository;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.UserService;
@@ -14,9 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +55,6 @@ public class UserServiceImpl implements UserService {
     //    @Scheduled(fixedDelay = 5000)
     @Scheduled(cron = "0 1 1 * * ?")
     public void addNewUsers() {
-        int count = 1;
         if (!roleRepository.findByRoleName("ROLE_ADMIN").isPresent())
             roleRepository.save(new Role("ROLE_ADMIN"));
         if (!roleRepository.findByRoleName("ROLE_MANAGER").isPresent())
@@ -85,8 +82,7 @@ public class UserServiceImpl implements UserService {
             for (int i = 0; i < emp2.size(); i++) {
                 EmployeeMetaData employeeMetaData = emp2.get(i);
                 Optional<User> user2 = userRepository.findByUsername(employeeMetaData.getXebiaEmailID());
-                if (user2.isPresent()) {
-                } else {
+                if (!user2.isPresent()) {
                     User user = new User();
                     user.setUsername(employeeMetaData.getXebiaEmailID());
                     user.setFullName(employeeMetaData.getFullName());
