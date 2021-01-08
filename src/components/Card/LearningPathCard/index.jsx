@@ -36,7 +36,7 @@ const LearningPathCard = (props) => {
     dispatch(Actions.learningPathActions.getLearningPathCourses(reqBody)); 
   }, []);
   const { learningPathCourses } = learningPathState;
-  console.log(learningPathCourses.length,'num')
+  console.log(learningPathCourses,'num')
   return (
     <>
     <Card className={classes.root} style={inlineStyle}>
@@ -60,7 +60,7 @@ const LearningPathCard = (props) => {
           <Typography gutterBottom variant="h6" component="h6" className={classes.cardfootertext}>
             Course Assigned
           </Typography>
-          <CourseAssignButton count={learningPathCourses.length} assignLp={assignLp} onButtonClick={onButtonClick}/>
+          <CourseAssignButton count={selectedLp.learningPath.courses.length} assignLp={assignLp} onButtonClick={onButtonClick}/>
         </CardActions>
       </CardActionArea>
     </Card>
