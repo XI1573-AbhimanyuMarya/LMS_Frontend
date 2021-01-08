@@ -10,8 +10,6 @@ const CourseRow = (props) => {
   const { course, withRate, lpId, learningPathEmployeesId, completed ,selectedLp} = props;
 
   const showRate=()=>{
-    console.log(selectedLp.approvalStatus,"Status");
-    console.log(course.percentCompleted,course.documentsUploaded);
     if(selectedLp.approvalStatus==="APPROVED"){
       return <CompletedButton/>;
     }else if(course.percentCompleted===100 && course.documentsUploaded){
