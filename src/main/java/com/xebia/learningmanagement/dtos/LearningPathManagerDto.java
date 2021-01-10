@@ -1,13 +1,8 @@
 package com.xebia.learningmanagement.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.xebia.learningmanagement.enums.LearningPathApprovalStatus;
-import lombok.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @NoArgsConstructor
