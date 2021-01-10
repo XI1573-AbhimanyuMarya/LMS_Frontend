@@ -100,8 +100,8 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private Role getRole(Role managerRole, Role employeeRole, EmployeeMetaData employeeMetaData) {
-        return employeeMetaData.getDesignation().toLowerCase().contains("manager") ? managerRole : employeeRole;
+    private Role getRole(Role roleManager, Role roleEmployee, EmployeeMetaData employeeMetaData) {
+        return employeeMetaData.getDesignation().toLowerCase().contains("manager") ? roleManager : roleEmployee;
     }
 
 
