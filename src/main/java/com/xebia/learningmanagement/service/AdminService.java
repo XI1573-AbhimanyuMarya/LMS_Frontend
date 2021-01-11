@@ -10,4 +10,6 @@ public interface AdminService {
     List<AdminDashboardDetailsDTO> dashboardDetails();
     AdminDashboardStatisticsDTO dashboardStatistics();
     List<MadeForEmployeeDto> specificLearningPathDetails(Long learningPathId);
+
+    void dashboardGraphStatistics();
 }

@@ -33,4 +33,10 @@ public class AdminController {
         return adminService.specificLearningPathDetails(learningPathId);
     }
 
+    @GetMapping("/api/v1/dashboard/graph")
+    public void dashboardGraphStatistics() {
+         adminService.dashboardGraphStatistics();
+    }
+
+
 }

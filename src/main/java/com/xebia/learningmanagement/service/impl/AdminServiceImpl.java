@@ -85,4 +85,10 @@ public class AdminServiceImpl implements AdminService {
         List<LearningPathEmployees> learningPathEmployees = employeesRepository.findByLearningPathId(learningPathId);
         return learningPathEmployees.stream().map(a -> modelMapper.map(a, MadeForEmployeeDto.class)).collect(Collectors.toList());
     }
+
+
+    @Override
+    public void dashboardGraphStatistics() {
+
+    }
 }
