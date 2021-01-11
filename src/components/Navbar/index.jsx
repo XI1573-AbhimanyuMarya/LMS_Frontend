@@ -23,7 +23,9 @@ import LearningPath from "../../images/LearningPath.svg";
 import LearningPathActive from "../../images/learningpathActive.svg";
 import Logout from "../../images/Logout.svg";
 import AddLearningPath from "../../images/AddLearningPath.svg";
+import AddLearningPathA from "../../images/AddLearningPathA.svg";
 import Approvals from "../../images/Approvals.svg";
+import ApprovalsA from "../../images/ApprovalsA.svg";
 import { useStyles } from "./style";
 import Actions from "../../store/actions";
 import userIcon from "../../images/Profile.jpg";
@@ -58,7 +60,7 @@ const Navbar = (props) => {
     },
     {
       name: "Assign Learning Path",
-      iconPath: AddLearningPath,
+      iconPath: currentPath === "/assigned" ? AddLearningPathA : AddLearningPath,
       to: "assigned",
       isActive: currentPath === "/assigned",
       canAccess: true,
@@ -66,7 +68,7 @@ const Navbar = (props) => {
     },
     {
       name: "Approvals",
-      iconPath: Approvals,
+      iconPath: currentPath === "/approvals" ? ApprovalsA : Approvals,
       to: "approvals",
       isActive: currentPath === "/approvals",
       // canAccess: true
@@ -74,7 +76,7 @@ const Navbar = (props) => {
     },
     {
       name: "Manage assigned learning",
-      iconPath: DashboardIcon,
+      iconPath: currentPath === "/manage" ? DashboardActive : DashboardIcon,
       to: "manage",
       isActive: currentPath === "/manage",
       // canAccess: user.designation !== "Consultant"
@@ -127,7 +129,7 @@ const Navbar = (props) => {
               <Link to={item.to} key={item.name}>
                 <ListItem button>
                   <ListItemIcon className={classes.MuiListItemIcon}>
-                    <Icon>
+                    <Icon style={{height:"30px"}}>
                       <img src={item.iconPath} className={classes.navIcons} />
                     </Icon>
                   </ListItemIcon>

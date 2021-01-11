@@ -29,7 +29,7 @@ export const useStyles = makeStyles(theme => ({
 		//margin: theme.spacing(1),
 	},
 	courseDesc: {
-		fontSize: 12,
+		fontSize: 10,
 		color: '#858585'
 	},
 	selected: {
@@ -40,5 +40,33 @@ export const useStyles = makeStyles(theme => ({
 	checkIcon: {
 		color: '#67B104',
 		float: 'right'
-	}
+  },
+  levIcons: {
+    width: 80,
+    objectFit: "contain",
+  },
+  Beginner:{
+    width:"70px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
+  Intermediate:{
+    width:"90px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
+  Advance:{
+    width:"70px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
+  Expert:{
+    width:"70px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
+  },
 }));

@@ -145,6 +145,13 @@ const selectLearningPath=(reqBody)=>({
   type:actionTypes.SELECTED_LEARNING_PATH,
   payload:reqBody
 });
+
+const changeDocUploadedStatusForCourse=(courseId)=>({
+  type:actionTypes.CHANGE_DOC_UPLOAD_STATUS_FOR_COURSE,
+  payload:{courseId}
+});
+
+
 export default {
   fetchAllCourses,
   getFilteredCourses,
@@ -181,5 +188,7 @@ export default {
   addCertificate,
   uploadCertificate,
   selectLearningPath,
-  clearCreateLpFormFields
+  clearCreateLpFormFields,
+
+  changeDocUploadedStatusForCourse
 };

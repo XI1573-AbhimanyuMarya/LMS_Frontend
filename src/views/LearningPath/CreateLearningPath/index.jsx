@@ -175,7 +175,7 @@ const CreateLearningPath = (props) => {
                       : LEARNING_PATH_LABELS.CREATE_LEARNING_PATH}
                   </Typography>
                 </Box>
-                <Typography variant="subtitle2" align="center">
+                <Typography variant="subtitle2" align="center" style={{color:"#858585", margin:"0 15px 5px 0", textAlign:"end"}}>
                   {LEARNING_PATH_LABELS.LEARNING_PATH_DETAILS}
                 </Typography>
                 <Stepper

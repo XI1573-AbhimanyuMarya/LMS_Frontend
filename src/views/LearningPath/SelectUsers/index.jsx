@@ -121,30 +121,39 @@ const SelectUsers = () => {
           ? classes.selected
           : classes.box;
       const name = user.fullName.split("  ");
+
+      console.log(user,"user")
       return (
         <Box p={0.5} key={user.id}>
+           {user.selected && user.selected === true && (
+              <CheckCircleIcon className={classes.checkIcon} />
+            )}
           <Card
             className={userClass}
             onClick={() => onUserClickHandler(user.id)}
             onMouseEnter={(e) => handlePopoverOpen(e, user.id)}
             onMouseLeave={handlePopoverClose}
+            style={{flexDirection:"column"}}
           >
-            <ListItem>
+            <ListItem style={{fontSize:"11px"}}>
               <ListItemAvatar>
                 <Avatar className={classes.blueGreyAvtar}>
                   {name[0]?.charAt(0) + name[1]?.charAt(0)}
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={user.fullName}
-                secondary={user.designation}
+                primary={<Typography style={{fontSize:"14px", display:"flex", padding:"0 0 10px 0"}}>{user.fullName}&#160;&#160;<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}>({user.empID})</Typography></Typography>}
+                secondary={<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)"}}>{user.designation}</Typography>}
               />
+            
             </ListItem>
-            {user.selected && user.selected === true && (
-              <CheckCircleIcon className={classes.checkIcon} />
-            )}
+              <Typography variant="body2" color="textSecondary" component="p" style={{fontSize:"11px", margin:"-13px 0 10px 72px"}}>
+              {user.cOEType}
+              <br></br>
+             {user.username}
+             </Typography>
           </Card>
-          <Popover user={user} popoverState={popoverState} />
+          {/* <Popover user={user} popoverState={popoverState} /> */}
         </Box>
       );
     });
