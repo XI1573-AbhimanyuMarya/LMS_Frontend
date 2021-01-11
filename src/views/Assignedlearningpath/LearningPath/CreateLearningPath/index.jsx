@@ -28,6 +28,8 @@ import { error } from '../../../../utils/notifications';
 import TopNav from '../../../../components/TopNav';
 import AssingedCourses from '../../../../images/assignLPsucess.png'
 
+import SucessPage from '../../LearningPath/SucessPage/SucessPage';
+
 const steps = STEPS1;
 const getStepContent = (step) => {
   switch (step) {
@@ -100,12 +102,15 @@ const AssignedCreateLearningPath = (props) => {
         </Typography>
       </>
       : <>
+        {/* <div>
         <Icon>
-        <img src={AssingedCourses} className={classes.navIcons}/>
+        <img src={AssingedCourses} className={classes.combinedshape}/>
         </Icon>
+        </div>
         <Typography variant="h5" align="center" className={classes.assignedLabel}>
           {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED}
-        </Typography>
+        </Typography> */}
+      <SucessPage/>
       </>
     : <>
       <ErrorIcon className={classes.errorIcon} />
