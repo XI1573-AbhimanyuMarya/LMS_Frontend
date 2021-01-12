@@ -116,7 +116,7 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathEmployees.setLearningPath(learningPath);
             learningPathEmployees.setEmployee(user);
             learningPathEmployees.setPercentCompleted(0);
-            learningPathEmployees.setMonthlyProgressUpdateDate(LocalDateTime.now());
+            learningPathEmployees.setMonthlyProgressModifiedDate(LocalDateTime.now());
             learningPathEmployees.setDuration(durationRepository.findById(path.getDuration()).get());
             learningPathEmployees.setStartDate(LocalDate.now());
             Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(learningPathEmployees.getDuration().getName()));
@@ -319,7 +319,7 @@ public class LearningPathServiceImpl implements LearningPathService {
                 if (Objects.nonNull(recordAlreadyExists)) {
                     learningPathEmployees = recordAlreadyExists;
                     learningPathEmployees.setPercentCompleted(0);
-                    learningPathEmployees.setMonthlyProgressUpdateDate(LocalDateTime.now());
+                    learningPathEmployees.setMonthlyProgressModifiedDate(LocalDateTime.now());
                     learningPathEmployees.setApprovalStatus(YTBD);
                     learningPathEmployees.setDuration(duration);
                     learningPathEmployees.setStartDate(LocalDate.now());
@@ -333,7 +333,7 @@ public class LearningPathServiceImpl implements LearningPathService {
                     learningPathEmployees.setLearningPath(learningPath);
                     learningPathEmployees.setEmployee(user);
                     learningPathEmployees.setPercentCompleted(0);
-                    learningPathEmployees.setMonthlyProgressUpdateDate(LocalDateTime.now());
+                    learningPathEmployees.setMonthlyProgressModifiedDate(LocalDateTime.now());
                     learningPathEmployees.setApprovalStatus(YTBD);
                     learningPathEmployees.setDuration(duration);
                     learningPathEmployees.setStartDate(LocalDate.now());

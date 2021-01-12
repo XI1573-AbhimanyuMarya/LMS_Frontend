@@ -37,7 +37,7 @@ public class LearningPathEmployees {
     @Column(name = "end_Date")
     private LocalDate endDate;
 
-    @Column(name = "monthly_progress")
-    private LocalDateTime MonthlyProgressUpdateDate;
+    @Column(name = "modification_time")
+    private LocalDateTime monthlyProgressModifiedDate;
 
 }

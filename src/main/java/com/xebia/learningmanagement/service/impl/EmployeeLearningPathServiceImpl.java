@@ -191,7 +191,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         int percentCompletedCalculation = courseCompletionAverage(employeeId, learningPathId);
         LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findByLearningPathIdAndEmployeeId(learningPathId, employeeId);
         learningPathEmployees.setPercentCompleted(percentCompletedCalculation);
-        learningPathEmployees.setMonthlyProgressUpdateDate(LocalDateTime.now());
+        learningPathEmployees.setMonthlyProgressModifiedDate(LocalDateTime.now());
         learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
 
     }
@@ -204,7 +204,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         if (percentCompletedCalculation == 100 && (learningPathEmployees.getApprovalStatus().equals(YTBD) || learningPathEmployees.getApprovalStatus().equals(REJECTED))) {
             learningPathEmployees.setApprovalStatus(PENDING);
             learningPathEmployees.setPercentCompleted(percentCompletedCalculation);
-            learningPathEmployees.setMonthlyProgressUpdateDate(LocalDateTime.now());
+            learningPathEmployees.setMonthlyProgressModifiedDate(LocalDateTime.now());
             log.info("Sending record for managers approval " + approvalRequest.getEmployeeId() + " & Learning Path with ID" + approvalRequest.getLearningPathId());
             learningPathEmployeesRepository.saveAndFlush(learningPathEmployees);
             updateUserNotification.managerApprovalRequiredNotifications(learningPathEmployees);
