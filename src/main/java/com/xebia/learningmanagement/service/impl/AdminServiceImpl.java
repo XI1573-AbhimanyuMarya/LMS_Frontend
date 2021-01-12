@@ -21,8 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.APPROVED;
-import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.REJECTED;
+import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.*;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -95,6 +94,9 @@ public class AdminServiceImpl implements AdminService {
     public List<DashboardGraphStatisticsDTO> dashboardGraphStatistics(String month) {
         DateFormatSymbols dfs = new DateFormatSymbols();
         List<String> monthsCollection = Arrays.stream(dfs.getMonths()).filter(a -> !a.equals("")).collect(Collectors.toList());
+        long totalCompletedCount = employeesRepository.countByApprovalStatusAndPercentCompleted(APPROVED, 100);
+        long totalInProgressCount = employeesRepository.countByApprovalStatusNotAndPercentCompletedNot(APPROVED, 100);
+        long totalOverdueCount = employeesRepository.countByEndDateBeforeAndApprovalStatus(LocalDate.now(), YTBD);
 
         final List<LearningPathEmployees> learningPathEmployeesList = employeesRepository.findAll();
         final Map<String, Long> completedCount = learningPathEmployeesList.stream().filter(x -> x.getApprovalStatus().equals(APPROVED)).collect(Collectors.groupingBy(a -> a.getMonthlyProgressModifiedDate().getMonth().toString(), Collectors.counting()));
@@ -104,9 +106,9 @@ public class AdminServiceImpl implements AdminService {
         for (String mnth : monthsCollection) {
             DashboardGraphStatisticsDTO graphStatistics = DashboardGraphStatisticsDTO.builder()
                     .month(mnth.toUpperCase())
-                    .employeesCompletedCount(completedCount.getOrDefault(mnth.toUpperCase(), (long) 0))
-                    .employeesInprogressCount(inProgressCount.getOrDefault(mnth.toUpperCase(), (long) 0))
-                    .employeesOverdueCount(overdueCount.getOrDefault(mnth.toUpperCase(), (long) 0))
+                    .employeesCompletedCount((completedCount.getOrDefault(mnth.toUpperCase(), (long) 0)))
+                    .employeesInprogressCount((inProgressCount.getOrDefault(mnth.toUpperCase(), (long) 0)))
+                    .employeesOverdueCount((overdueCount.getOrDefault(mnth.toUpperCase(), (long) 0)))
                     .build();
             graphStatisticsDTOList.add(graphStatistics);
         }
