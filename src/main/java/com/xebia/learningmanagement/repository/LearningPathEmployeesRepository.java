@@ -33,21 +33,17 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
 
     long countByPercentCompletedAndApprovalStatusAndEmployee(int i, LearningPathApprovalStatus approved, User user);
 
-    long countByPercentCompletedNotOrApprovalStatusAndEmployee(int i, LearningPathApprovalStatus rejected, User user);
-
     long countByEndDateBeforeAndEmployee(LocalDate now, User user);
 
     Long countByLearningPathMadeBy(User user);
 
     long countByPercentCompletedAndApprovalStatusAndLearningPathMadeBy(int i, LearningPathApprovalStatus approved, User user);
 
-    long countByPercentCompletedNotOrApprovalStatusAndLearningPathMadeBy(int i, LearningPathApprovalStatus rejected, User user);
-
     long countByEndDateBeforeAndLearningPathMadeBy(LocalDate now, User user);
-
-    long countByPercentCompletedNotOrApprovalStatusNotAndEmployee(int i, LearningPathApprovalStatus rejected, User user);
 
     long countByPercentCompletedNotOrApprovalStatusNotAndLearningPathMadeBy(int i, LearningPathApprovalStatus rejected, User user);
 
     Long countByLearningPath(LearningPath learningPath);
+
+    long countByPercentCompletedNotAndApprovalStatusNotAndEmployee(int i, LearningPathApprovalStatus approved, User user);
 }

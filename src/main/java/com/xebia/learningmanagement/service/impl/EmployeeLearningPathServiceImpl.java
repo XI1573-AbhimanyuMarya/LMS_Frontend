@@ -222,7 +222,7 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
 
         long totalLearningPathAssigned = learningPathEmployeesRepository.countByEmployee(user);
         long totalLearningPathCompleted = learningPathEmployeesRepository.countByPercentCompletedAndApprovalStatusAndEmployee(100,APPROVED,user);
-        long totalLearningPathInprogress = learningPathEmployeesRepository.countByPercentCompletedNotOrApprovalStatusNotAndEmployee(100,REJECTED,user);
+        long totalLearningPathInprogress = learningPathEmployeesRepository.countByPercentCompletedNotAndApprovalStatusNotAndEmployee(100,APPROVED,user);
         long totalLearningPathExpired = learningPathEmployeesRepository.countByEndDateBeforeAndEmployee(LocalDate.now(),user);
 
         return AdminDashboardStatisticsDTO.builder()

@@ -4,7 +4,6 @@ import com.google.common.base.CharMatcher;
 import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.dtos.LearningPathDto.Path;
 import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
-import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
@@ -176,12 +175,12 @@ public class LearningPathServiceImpl implements LearningPathService {
     public List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId, Long learningPathEmployeesId) {
         ModelMapper modelMapper = new ModelMapper();
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_ID_NOT_FOUND));
-       // LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(learningPathEmployeesId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_EMPLOYEE_ID_NOT_FOUND));
+        // LearningPathEmployees learningPathEmployees = learningPathEmployeesRepository.findById(learningPathEmployeesId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_EMPLOYEE_ID_NOT_FOUND));
         List<LearningPathCourseDetailsDTO> courseDetailsList = new ArrayList<>();
         List<Certificate> documentsAlreadyUploaded = new ArrayList<>();
 
         for (Courses singleCourse : learningPath.getCourses()) {
-            if (learningPathEmployeesId!=null){
+            if (learningPathEmployeesId != null) {
                 documentsAlreadyUploaded = certificateRepository.findByLearningPathEmployeeIdAndEmployeeIdAndCourseId(learningPathEmployeesId, employeeId, singleCourse.getId());
             }
             LearningPathCourseDetailsDTO singleCourseDetails = LearningPathCourseDetailsDTO.builder()
@@ -336,9 +335,9 @@ public class LearningPathServiceImpl implements LearningPathService {
 
 
         long totalLearningPathMadeBy = learningPathEmployeesRepository.countByLearningPathMadeBy(user);
-        long totalLearningPathCompleted = learningPathEmployeesRepository.countByPercentCompletedAndApprovalStatusAndLearningPathMadeBy(100,APPROVED,user);
-        long totalLearningPathInprogress = learningPathEmployeesRepository.countByPercentCompletedNotOrApprovalStatusNotAndLearningPathMadeBy(100,REJECTED,user);
-        long totalLearningPathExpired = learningPathEmployeesRepository.countByEndDateBeforeAndLearningPathMadeBy(LocalDate.now(),user);
+        long totalLearningPathCompleted = learningPathEmployeesRepository.countByPercentCompletedAndApprovalStatusAndLearningPathMadeBy(100, APPROVED, user);
+        long totalLearningPathInprogress = learningPathEmployeesRepository.countByPercentCompletedNotOrApprovalStatusNotAndLearningPathMadeBy(100, APPROVED, user);
+        long totalLearningPathExpired = learningPathEmployeesRepository.countByEndDateBeforeAndLearningPathMadeBy(LocalDate.now(), user);
 
         return AdminDashboardStatisticsDTO.builder()
                 .totalLearningPathAssigned(totalLearningPathMadeBy)
@@ -350,35 +349,37 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     @Override
     public Map<LearningPath, Long> dashboardTopTrending(Long assigneeId) {
-        HashMap<LearningPath,Long> learningPathLongHashMap = new HashMap<>();
+        HashMap<LearningPath, Long> learningPathLongHashMap = new HashMap<>();
         List<LearningPath> learningPaths = learningPathRepository.findByMadeById(assigneeId);
-        for(LearningPath learningPath:learningPaths){
-           Long aLong =  learningPathEmployeesRepository.countByLearningPath(learningPath);
-           learningPathLongHashMap.put(learningPath,aLong);
+        for (LearningPath learningPath : learningPaths) {
+            Long aLong = learningPathEmployeesRepository.countByLearningPath(learningPath);
+            learningPathLongHashMap.put(learningPath, aLong);
         }
-        HashMap<LearningPath, Long> sortedMap = sortByValue(learningPathLongHashMap);
-        return  sortedMap;
+        Map<LearningPath, Long> sortedMap = sortByValue(learningPathLongHashMap);
+        Map<LearningPath, Long> myNewMap = sortedMap.entrySet().stream()
+                .limit(5)
+                .collect(LinkedHashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), Map::putAll);
+
+        return myNewMap;
     }
 
 
-    public static HashMap<LearningPath, Long> sortByValue(HashMap<LearningPath, Long> hm)
-    {
+    public static Map<LearningPath, Long> sortByValue(HashMap<LearningPath, Long> hm) {
 
-        List<Map.Entry<LearningPath, Long> > list = new LinkedList<Map.Entry<LearningPath, Long> >(hm.entrySet());
+        List<Map.Entry<LearningPath, Long>> list = new LinkedList<Map.Entry<LearningPath, Long>>(hm.entrySet());
 
 
-        Collections.sort(list, new Comparator<Map.Entry<LearningPath, Long> >() {
+        Collections.sort(list, new Comparator<Map.Entry<LearningPath, Long>>() {
             public int compare(Map.Entry<LearningPath, Long> o1,
-                               Map.Entry<LearningPath, Long> o2)
-            {
+                               Map.Entry<LearningPath, Long> o2) {
                 return (o1.getValue()).compareTo(o2.getValue());
             }
         });
 
 
         // put data from sorted list to hashmap
-        HashMap<LearningPath, Long> returnMap = new LinkedHashMap<LearningPath, Long>();
-        for(int i=list.size();i>0;i--){
+        Map<LearningPath, Long> returnMap = new LinkedHashMap<>();
+        for (int i = list.size() - 1; i >= 0; i--) {
             returnMap.put(list.get(i).getKey(), list.get(i).getValue());
 
         }
