@@ -368,5 +368,62 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     }
 
+    @Override
+    public AdminDashboardStatisticsDTO dashboardStatistics(ManagerEmailRequest managerEmail) {
+
+        User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException(MessageBank.USERNAME_NOT_FOUND));
+
+
+        long totalLearningPathMadeBy = learningPathEmployeesRepository.countByLearningPathMadeBy(user);
+        long totalLearningPathCompleted = learningPathEmployeesRepository.countByPercentCompletedAndApprovalStatusAndLearningPathMadeBy(100, APPROVED, user);
+        long totalLearningPathInprogress = learningPathEmployeesRepository.countByPercentCompletedNotOrApprovalStatusNotAndLearningPathMadeBy(100, APPROVED, user);
+        long totalLearningPathExpired = learningPathEmployeesRepository.countByEndDateBeforeAndLearningPathMadeBy(LocalDate.now(), user);
+
+        return AdminDashboardStatisticsDTO.builder()
+                .totalLearningPathAssigned(totalLearningPathMadeBy)
+                .totalLearningPathCompleted(totalLearningPathCompleted)
+                .totalLearningPathInProgress(totalLearningPathInprogress)
+                .totalLearningPathExpired(totalLearningPathExpired).build();
+
+    }
+
+    @Override
+    public Map<LearningPath, Long> dashboardTopTrending(Long assigneeId) {
+        HashMap<LearningPath, Long> learningPathLongHashMap = new HashMap<>();
+        List<LearningPath> learningPaths = learningPathRepository.findByMadeById(assigneeId);
+        for (LearningPath learningPath : learningPaths) {
+            Long aLong = learningPathEmployeesRepository.countByLearningPath(learningPath);
+            learningPathLongHashMap.put(learningPath, aLong);
+        }
+        Map<LearningPath, Long> sortedMap = sortByValue(learningPathLongHashMap);
+
+        return sortedMap.entrySet().stream()
+                .limit(5)
+                .collect(LinkedHashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), Map::putAll);
+    }
+
+
+    public static Map<LearningPath, Long> sortByValue(Map<LearningPath, Long> hm) {
+
+        List<Map.Entry<LearningPath, Long>> list = new LinkedList<Map.Entry<LearningPath, Long>>(hm.entrySet());
+
+
+        Collections.sort(list, new Comparator<Map.Entry<LearningPath, Long>>() {
+            public int compare(Map.Entry<LearningPath, Long> o1,
+                               Map.Entry<LearningPath, Long> o2) {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+
+
+        // put data from sorted list to hashmap
+        Map<LearningPath, Long> returnMap = new LinkedHashMap<>();
+        for (int i = list.size() - 1; i >= 0; i--) {
+            returnMap.put(list.get(i).getKey(), list.get(i).getValue());
+
+        }
+        return returnMap;
+    }
+
 
 }
