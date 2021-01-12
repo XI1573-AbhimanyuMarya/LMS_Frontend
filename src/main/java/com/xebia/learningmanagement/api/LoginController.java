@@ -66,10 +66,8 @@ public class LoginController {
     public ResponseEntity<LoginResponse> verifyUsername(@RequestBody Username userEmail) throws Exception {
         LoginResponse loginResponse = new LoginResponse();
         try {
-            String username = userEmail.getUsername();
             myUserDetailsService.loadUserByUsername(userEmail.getUsername());
             emailService.sendEmail(userEmail.getUsername());
-            UserDetails userDetails = myUserDetailsService.loadUserByUsername(userEmail.getUsername());
             tempUsername.setUsername(userEmail.getUsername());
             loginResponse.setMessage("user verified and mail send");
             loginResponse.setStatus("success");
@@ -94,7 +92,7 @@ public class LoginController {
                     .loadUserByUsername(tempUsername.getUsername());
 
             final String jwt = jwtUtil.generateToken(userDetails);
-            log.info("Token: "+ jwt);
+            log.info("Token: " + jwt);
             loginResponse.setStatus("success");
             loginResponse.setMessage("Otp verified");
             login.setJwt(jwt);

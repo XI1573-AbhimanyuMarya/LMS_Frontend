@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class LearningPathEmployeeApprovalRequest {
+public class LearningPathReviewRequest {
     @NotNull(message = "Learning Path employee Id can not be Null")
     private Long learningPathEmployeeId;
     @NotBlank(message = "Status can not be blank")

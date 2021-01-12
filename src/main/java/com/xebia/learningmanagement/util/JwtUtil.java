@@ -19,7 +19,7 @@ import java.util.function.Function;
 public class JwtUtil {
     Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-    private String SECRET_KEY = "secret";
+    private  final String secretKey = "secret";
 
     public String extractUsername(String token) {
         logger.info("inside extractUsername");
@@ -40,7 +40,7 @@ public class JwtUtil {
     private Claims extractAllClaims(String token) throws LearningPathException {
         logger.info("extractAllClaims");
 //        throw new LearningPathException(String.format("exception"));
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(String token) {
@@ -59,7 +59,7 @@ public class JwtUtil {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
 //                .setExpiration(new Date(System.currentTimeMillis() + 1000))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+                .signWith(SignatureAlgorithm.HS256, secretKey).compact();
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {

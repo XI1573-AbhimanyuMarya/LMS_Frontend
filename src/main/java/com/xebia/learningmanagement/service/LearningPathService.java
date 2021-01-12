@@ -4,6 +4,7 @@ import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
+import com.xebia.learningmanagement.dtos.request.LearningPathReviewRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.exception.LearningPathException;
@@ -19,7 +20,7 @@ public interface LearningPathService {
 
     List<ApprovalDto> getPendingApprovals(ManagerEmailRequest managerEmailRequest) throws LearningPathException;
 
-    void approveRequests(LearningPathEmployeeApprovalRequest request) throws Exception;
+    void approveRequests(LearningPathReviewRequest request) throws Exception;
 
     List<LearningPath> getLearningPathWithCourse(Long assigneeId);
 

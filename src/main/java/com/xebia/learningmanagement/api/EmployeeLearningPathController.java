@@ -5,6 +5,7 @@ import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
 import com.xebia.learningmanagement.dtos.request.CourseCompletedPercentRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
+import com.xebia.learningmanagement.dtos.request.LearningPathApprovalRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.service.EmployeeLearningPathService;
@@ -52,8 +53,13 @@ public class EmployeeLearningPathController {
     }
 
     @PostMapping(value = "/api/v1/update/courseratings", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> addCourseRating(@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest) throws Exception {
+    public Map<String, String> addCourseRating(@Valid @RequestBody CourseCompletedPercentRequest courseCompleteRequest) {
         return employeelearningservice.saveOrUpdateCourseRating(courseCompleteRequest);
+    }
+
+    @PostMapping(value = "/api/v1/approval/send", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> sendForApproval(@Valid @RequestBody LearningPathApprovalRequest approvalRequest) throws Exception {
+        return employeelearningservice.sendForManagersApproval(approvalRequest);
     }
 
 

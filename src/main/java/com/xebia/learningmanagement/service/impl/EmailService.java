@@ -6,15 +6,13 @@ import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.util.EmailSend;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 
-import static org.springframework.data.crossstore.ChangeSetPersister.*;
+import static org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 @Service
 @Slf4j

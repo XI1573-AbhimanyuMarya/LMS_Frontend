@@ -2,10 +2,10 @@ package com.xebia.learningmanagement.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xebia.learningmanagement.dtos.UserDto;
 import com.xebia.learningmanagement.entity.Role;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.model.EmployeeMetaData;
-import com.xebia.learningmanagement.dtos.UserDto;
 import com.xebia.learningmanagement.repository.RoleRepository;
 import com.xebia.learningmanagement.repository.UserRepository;
 import com.xebia.learningmanagement.service.UserService;
@@ -14,9 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,22 +51,24 @@ public class UserServiceImpl implements UserService {
 
         return userDtos;
     }
-//    @Scheduled(fixedDelay = 5000)
-//    @PostConstruct
+
+    //    @Scheduled(fixedDelay = 5000)
+    @Scheduled(cron = "0 1 1 * * ?")
     public void addNewUsers() {
-        int count = 1;
-        if(!roleRepository.findByRoleName("ROLE_ADMIN").isPresent())
-        roleRepository.save(new Role("ROLE_ADMIN"));
-        if(!roleRepository.findByRoleName("ROLE_MANAGER").isPresent())
-        roleRepository.save(new Role("ROLE_MANAGER"));
-        if(!roleRepository.findByRoleName("ROLE_EMPLOYEE").isPresent())
-        roleRepository.save(new Role("ROLE_EMPLOYEE"));
+        if (!roleRepository.findByRoleName("ROLE_ADMIN").isPresent())
+            roleRepository.save(new Role("ROLE_ADMIN"));
+        if (!roleRepository.findByRoleName("ROLE_MANAGER").isPresent())
+            roleRepository.save(new Role("ROLE_MANAGER"));
+        if (!roleRepository.findByRoleName("ROLE_EMPLOYEE").isPresent())
+            roleRepository.save(new Role("ROLE_EMPLOYEE"));
 
-        final Role MANAGER_ROLE = roleRepository.findByRoleName("ROLE_MANAGER").get();
-        final Role EMPLOYEE_ROLE = roleRepository.findByRoleName("ROLE_EMPLOYEE").get();
-        for (int j = 0; j < 4; j++) {
+        final Role roleManager = roleRepository.findByRoleName("ROLE_MANAGER").get();
+        final Role roleEmployee = roleRepository.findByRoleName("ROLE_EMPLOYEE").get();
+        int sIndex = 0;
+        boolean isMoreData = true;
+        while (isMoreData) {
 
-            String uri = "https://people.zoho.com/people/api/forms/P_EmployeeView/records?authtoken=3ab0a1722b48eb4d9db8c69649e73fec&sIndex=" + count;
+            String uri = "https://people.zoho.com/people/api/forms/P_EmployeeView/records?authtoken=3ab0a1722b48eb4d9db8c69649e73fec&sIndex=" + sIndex;
 
             List emp = restTemplate.getForObject(uri, List.class);
 
@@ -77,11 +77,12 @@ public class UserServiceImpl implements UserService {
             });
 
 
+            isMoreData = emp2.size() >= 200;
+
             for (int i = 0; i < emp2.size(); i++) {
                 EmployeeMetaData employeeMetaData = emp2.get(i);
                 Optional<User> user2 = userRepository.findByUsername(employeeMetaData.getXebiaEmailID());
-                if (user2.isPresent()) {
-                } else {
+                if (!user2.isPresent()) {
                     User user = new User();
                     user.setUsername(employeeMetaData.getXebiaEmailID());
                     user.setFullName(employeeMetaData.getFullName());
@@ -91,16 +92,16 @@ public class UserServiceImpl implements UserService {
                     user.setLocation(employeeMetaData.getBaseLocation());
                     user.setActive(true);
                     user.setPassword("lkjbswecbng@#(*^hf%CFGJ");
-                    user.getRoles().add(getRole(MANAGER_ROLE, EMPLOYEE_ROLE, employeeMetaData));
+                    user.getRoles().add(getRole(roleManager, roleEmployee, employeeMetaData));
                     userRepository.save(user);
                 }
             }
-            count = count + 200;
+            sIndex = sIndex + emp2.size();
         }
     }
 
-    private Role getRole(Role MANAGER_ROLE, Role EMPLOYEE_ROLE, EmployeeMetaData employeeMetaData) {
-        return employeeMetaData.getDesignation().toLowerCase().contains("manager") ? MANAGER_ROLE : EMPLOYEE_ROLE;
+    private Role getRole(Role roleManager, Role roleEmployee, EmployeeMetaData employeeMetaData) {
+        return employeeMetaData.getDesignation().toLowerCase().contains("manager") ? roleManager : roleEmployee;
     }
 
 
