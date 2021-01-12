@@ -16,9 +16,13 @@ const transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const AssignedLearningPath = (props) => {
+  const dispatch=useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
   const { pathModelOpen,selectedLp } = learningPathState;
   const { handleClose, handleClosePath } = props;
+  useEffect(()=>{
+    dispatch(Actions.learningPathActions.selectLearningPath({}));
+  },[]);
   return (Object.keys(selectedLp).length!==0 && selectedLp.constructor===Object ? <LearningPathDesc selectedLp={selectedLp}/> : <CreateLearningPath />);
 }
 

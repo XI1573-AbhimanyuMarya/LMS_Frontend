@@ -58,7 +58,7 @@ export default function EmployeeCardApproval(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
-  const { pfApproval,attachments } = learningPathState;
+  const { pfApproval,attachments,isLoading } = learningPathState;
   
   const loginState = useSelector(
     (state) => state.loginState
@@ -78,7 +78,7 @@ export default function EmployeeCardApproval(props) {
       status:"APPROVED"
     };
     dispatch(Actions.learningPathActions.ApproveModelOpen(true));
-      dispatch(Actions.learningPathActions.getApprovalRejects(reqBody));
+    dispatch(Actions.learningPathActions.getApprovalRejects(reqBody));
   }
 
   const rejectHandler=(reviewMessage)=>{
@@ -111,11 +111,11 @@ export default function EmployeeCardApproval(props) {
     <>
       <div className={classes.root}>
         <ThemeProvider theme={theme}>
-          <CardHeader style={{ minWidth: "250px", maxWidth: "250px" }}
+          <CardHeader style={{ minWidth: "270px", maxWidth: "270px" }}
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar}></Avatar>
             }
-            title={`${data.employee.fullName} (${data.employee.empID})`}
+            title={<Typography style={{display:"flex", fontSize:"15px"}}>{data.employee.fullName}&#160;<Typography style={{fontSize:"13px", color:"rgba(0, 0, 0, 0.54)"}}>({data.employee.empID})</Typography></Typography>}
             subheader={data.employee.designation}
           />
         </ThemeProvider>
@@ -123,7 +123,7 @@ export default function EmployeeCardApproval(props) {
           {/* {data.learningPath.map((data, index) => ( */}
           <CardContent className={classes.learningPath} >
             <ThemeProvider theme={theme}>
-            <Typography aria-label="share" className={classes.listData} style={{minWidth:"50px", maxWidth:"50px"}}>
+            <Typography aria-label="share" className={classes.listData} style={{minWidth:"103px"}}>
               <span className={classes.courseName}>{` ${data.learningPath.name}`}
                    </span>
               </Typography>
@@ -133,7 +133,7 @@ export default function EmployeeCardApproval(props) {
         </div>
         <div className={classes.head}>
           <Typography className={classes.view} onClick={viewAttachmentHandler}>View Attachments</Typography>
-          {show && attachments.length!==0 && <Gallery images={attachments} showImageCount={false} showLightboxThumbnails={true} lightboxWidth={600} isOpen={true} lightboxWillClose={()=>showGallery(false)} rowWidth=""/> }
+          {show && attachments.length!==0 && !isLoading && <Gallery images={attachments} showImageCount={false} showLightboxThumbnails={true} lightboxWidth={600} isOpen={true} lightboxWillClose={()=>showGallery(false)} rowWidth=""/> }
           <ApproveButton onViewClickApprove={onViewClickApprove}/><Approve discardHandler={discardHandlerApprove}></Approve>
           <RejectButton onViewClick={onViewClick}/><Reject discardHandler={discardHandler} rejectHandler={rejectHandler}></Reject>
         </div>

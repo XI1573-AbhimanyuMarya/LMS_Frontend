@@ -232,7 +232,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   tblrow:{
     '& td':{
-      padding:"5px 31px"
+      padding:"5px 31px",
+      fontSize:"12px"
     }
   },
   avglearningrate:{

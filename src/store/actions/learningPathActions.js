@@ -42,6 +42,10 @@ const pathModelOpen = (val) => ({
   type: actionTypes.PATH_MODEL_OPEN,
   payload: { val },
 });
+const clearCreateLpFormFields=()=>({
+  type: actionTypes.CLEAR_CREATE_LP_FORM,
+  payload: "",
+});
 const discardModelOpen = (val) => ({
   type: actionTypes.DISCARD_MODEL_OPEN,
   payload: { val },
@@ -98,9 +102,9 @@ const deletePath = (ids) => ({
   payload: {ids},
 });
 
-const getLearningPathCourses=(empid,ids)=>({
+const getLearningPathCourses=(reqBody)=>({
   type:actionTypes.GET_LEARNING_PATH_COURSES_REQUEST,
-  payload: {ids,empid}
+  payload: {...reqBody}
 });
 
 const changeCourseRate = (changeRate,course) => ({
@@ -141,6 +145,13 @@ const selectLearningPath=(reqBody)=>({
   type:actionTypes.SELECTED_LEARNING_PATH,
   payload:reqBody
 });
+
+const changeDocUploadedStatusForCourse=(courseId)=>({
+  type:actionTypes.CHANGE_DOC_UPLOAD_STATUS_FOR_COURSE,
+  payload:{courseId}
+});
+
+
 export default {
   fetchAllCourses,
   getFilteredCourses,
@@ -176,5 +187,8 @@ export default {
   viewAttachment,
   addCertificate,
   uploadCertificate,
-  selectLearningPath
+  selectLearningPath,
+  clearCreateLpFormFields,
+
+  changeDocUploadedStatusForCourse
 };

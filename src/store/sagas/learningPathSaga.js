@@ -171,8 +171,10 @@ function* deletePaths(action) {
   }
 }
 
-const fetchPathCourses = async ({ ids,empid }) => {
-  return await axios.get(SERVICE_URLS.LEARNINGPATH_COURSES+ids+'/'+empid, { headers: authHeader() });
+const fetchPathCourses = async ({ ids,empid,learningPathEmployeeId }) => {
+  let URL=SERVICE_URLS.LEARNINGPATH_COURSES+ids+'/'+empid;
+  URL+=(learningPathEmployeeId!==undefined) ? '?lpeid='+learningPathEmployeeId : '';
+  return await axios.get(URL, { headers: authHeader() });
 }
 
 function* getLearningPathCourses(action) {
@@ -210,7 +212,7 @@ function* getApprovalRejects(action) {
   
     const response = yield call(getApprovalReject,action.payload);
     const { data } = response;
-    yield put({ type: actionTypes.FETCH_APPROVAL_SUCCESS, payload: data });
+    yield put({ type: actionTypes.FETCH_APPROVAL_SUCCESS, payload: action.payload});//data });
 
   } catch (error) {
     yield put({ type: actionTypes.FETCH_APPROVAL_FAILURE, error });
