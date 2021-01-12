@@ -392,15 +392,14 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathLongHashMap.put(learningPath, aLong);
         }
         Map<LearningPath, Long> sortedMap = sortByValue(learningPathLongHashMap);
-        Map<LearningPath, Long> myNewMap = sortedMap.entrySet().stream()
+
+        return sortedMap.entrySet().stream()
                 .limit(5)
                 .collect(LinkedHashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), Map::putAll);
-
-        return myNewMap;
     }
 
 
-    public static Map<LearningPath, Long> sortByValue(HashMap<LearningPath, Long> hm) {
+    public static Map<LearningPath, Long> sortByValue(Map<LearningPath, Long> hm) {
 
         List<Map.Entry<LearningPath, Long>> list = new LinkedList<Map.Entry<LearningPath, Long>>(hm.entrySet());
 
