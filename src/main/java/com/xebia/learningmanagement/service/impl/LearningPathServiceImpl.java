@@ -4,6 +4,7 @@ import com.google.common.base.CharMatcher;
 import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.dtos.LearningPathDto.Path;
 import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
+import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
@@ -326,6 +327,62 @@ public class LearningPathServiceImpl implements LearningPathService {
 
         });
 
+    }
+
+    @Override
+    public AdminDashboardStatisticsDTO dashboardStatistics(ManagerEmailRequest managerEmail) {
+
+        User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException(MessageBank.USERNAME_NOT_FOUND));
+
+
+        long totalLearningPathMadeBy = learningPathEmployeesRepository.countByLearningPathMadeBy(user);
+        long totalLearningPathCompleted = learningPathEmployeesRepository.countByPercentCompletedAndApprovalStatusAndLearningPathMadeBy(100,APPROVED,user);
+        long totalLearningPathInprogress = learningPathEmployeesRepository.countByPercentCompletedNotOrApprovalStatusNotAndLearningPathMadeBy(100,REJECTED,user);
+        long totalLearningPathExpired = learningPathEmployeesRepository.countByEndDateBeforeAndLearningPathMadeBy(LocalDate.now(),user);
+
+        return AdminDashboardStatisticsDTO.builder()
+                .totalLearningPathAssigned(totalLearningPathMadeBy)
+                .totalLearningPathCompleted(totalLearningPathCompleted)
+                .totalLearningPathInProgress(totalLearningPathInprogress)
+                .totalLearningPathExpired(totalLearningPathExpired).build();
+
+    }
+
+    @Override
+    public Map<LearningPath, Long> dashboardTopTrending(Long assigneeId) {
+        HashMap<LearningPath,Long> learningPathLongHashMap = new HashMap<>();
+        List<LearningPath> learningPaths = learningPathRepository.findByMadeById(assigneeId);
+        for(LearningPath learningPath:learningPaths){
+           Long aLong =  learningPathEmployeesRepository.countByLearningPath(learningPath);
+           learningPathLongHashMap.put(learningPath,aLong);
+        }
+        HashMap<LearningPath, Long> sortedMap = sortByValue(learningPathLongHashMap);
+        return  sortedMap;
+    }
+
+
+    public static HashMap<LearningPath, Long> sortByValue(HashMap<LearningPath, Long> hm)
+    {
+
+        List<Map.Entry<LearningPath, Long> > list = new LinkedList<Map.Entry<LearningPath, Long> >(hm.entrySet());
+
+
+        Collections.sort(list, new Comparator<Map.Entry<LearningPath, Long> >() {
+            public int compare(Map.Entry<LearningPath, Long> o1,
+                               Map.Entry<LearningPath, Long> o2)
+            {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+
+
+        // put data from sorted list to hashmap
+        HashMap<LearningPath, Long> returnMap = new LinkedHashMap<LearningPath, Long>();
+        for(int i=list.size();i>0;i--){
+            returnMap.put(list.get(i).getKey(), list.get(i).getValue());
+
+        }
+        return returnMap;
     }
 
 

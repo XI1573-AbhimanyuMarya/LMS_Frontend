@@ -1,10 +1,8 @@
 package com.xebia.learningmanagement.api;
 
-import com.xebia.learningmanagement.dtos.ApprovalDto;
-import com.xebia.learningmanagement.dtos.LearningPathCourseDetailsDTO;
-import com.xebia.learningmanagement.dtos.LearningPathDto;
-import com.xebia.learningmanagement.dtos.LearningPathManagerDto;
+import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
+import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathEmployeeApprovalRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.dtos.response.UserResponse;
@@ -82,6 +80,16 @@ public class LearningPathController {
         learningPathService.saveAssignLearningPaths(request);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Learning path Assigned Successfully");
 
+    }
+
+    @GetMapping("/api/v1/dashboard/stats")
+    public AdminDashboardStatisticsDTO dashboardStatistics(@Valid @RequestBody ManagerEmailRequest managerEmail) {
+        return learningPathService.dashboardStatistics(managerEmail);
+    }
+
+    @GetMapping("/api/v1/dashboard/top/trending/{assigneeId}")
+    public Map<LearningPath, Long> dashboardTopTrending(@PathVariable("assigneeId") Long assigneeId) {
+        return learningPathService.dashboardTopTrending(assigneeId);
     }
 
 

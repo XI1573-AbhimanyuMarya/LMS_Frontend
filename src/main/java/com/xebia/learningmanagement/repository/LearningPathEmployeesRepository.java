@@ -1,5 +1,6 @@
 package com.xebia.learningmanagement.repository;
 
+import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.enums.LearningPathApprovalStatus;
@@ -27,4 +28,26 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
     long countByPercentCompletedAndApprovalStatus(int percent, LearningPathApprovalStatus approved);
 
     long countByPercentCompletedNotOrApprovalStatus(int percent, LearningPathApprovalStatus rejected);
+
+    long countByEmployee(User user);
+
+    long countByPercentCompletedAndApprovalStatusAndEmployee(int i, LearningPathApprovalStatus approved, User user);
+
+    long countByPercentCompletedNotOrApprovalStatusAndEmployee(int i, LearningPathApprovalStatus rejected, User user);
+
+    long countByEndDateBeforeAndEmployee(LocalDate now, User user);
+
+    Long countByLearningPathMadeBy(User user);
+
+    long countByPercentCompletedAndApprovalStatusAndLearningPathMadeBy(int i, LearningPathApprovalStatus approved, User user);
+
+    long countByPercentCompletedNotOrApprovalStatusAndLearningPathMadeBy(int i, LearningPathApprovalStatus rejected, User user);
+
+    long countByEndDateBeforeAndLearningPathMadeBy(LocalDate now, User user);
+
+    long countByPercentCompletedNotOrApprovalStatusNotAndEmployee(int i, LearningPathApprovalStatus rejected, User user);
+
+    long countByPercentCompletedNotOrApprovalStatusNotAndLearningPathMadeBy(int i, LearningPathApprovalStatus rejected, User user);
+
+    Long countByLearningPath(LearningPath learningPath);
 }
