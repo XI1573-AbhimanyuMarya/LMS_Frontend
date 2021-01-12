@@ -14,6 +14,7 @@ const defaultState = {
   },
   user: {},
   status: null,
+  roles: [],
 };
 
 const userInfo = JSON.parse(sessionStorage.getItem("USER_INFO"));
@@ -23,6 +24,7 @@ const initialState = userInfo
       ...defaultState,
       login: { ...userInfo.login },
       user: { ...userInfo.user },
+      roles: [...userInfo.roles],
     }
   : defaultState;
 
@@ -71,6 +73,7 @@ export const loginReducer = (state = initialState, action) => {
         isValidOtp: true,
         login: { ...payload.login },
         user: { ...payload.user },
+        roles: [...payload.roles],
         status: payload.status,
       };
     case actionTypes.LOGIN_CALL_FAILURE:

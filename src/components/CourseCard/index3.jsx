@@ -12,12 +12,12 @@ import ProgressBar from "../ProgressBar";
 
 const CourseCard = (props) => {
   const classes = useStyles();
-  const { course, onButtonClick, showButton } = props;
-  course.progress = "";
+  const { course = {}, onButtonClick, showButton } = props;
+  // course.progress = "";
   let btnlabel = "Let's begin";
-  if (course?.progress) {
-    btnlabel = "Explore";
-  }
+  // if (course?.progress) {
+  //   btnlabel = "Explore";
+  // }
 
   let darkBar = 0;
   if (course?.competency?.name === "Beginner") {
@@ -37,12 +37,12 @@ const CourseCard = (props) => {
           alignContent="space-between"
           className={classes.header}
         >
-          <Grid item xs>
+          {/* <Grid item xs>
             <Box component="span" className={classes.courseType}>
-              {course.category.name}
+              {course.name}
             </Box>
-          </Grid>
-          <Grid item container xs className={classes.compatency}>
+          </Grid> */}
+          {/* <Grid item container xs className={classes.compatency}>
             <Grid item xs>
               <Box className={classes.bar}>
                 <BarIcon darkBar={darkBar} />
@@ -53,7 +53,7 @@ const CourseCard = (props) => {
                 {course?.competency?.name}
               </Typography>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
         <Grid container spacing={2}>
           <Typography
@@ -91,15 +91,15 @@ const CourseCard = (props) => {
           </Grid>
         </Grid>
       </CardContent>
-      {showButton ? (
-        <CardActions className={classes.action}>
-          <Button size="large" className={classes.btn} onClick={onButtonClick}>
-            {btnlabel}
-          </Button>
-        </CardActions>
-      ) : (
+      {/* {showButton ? ( */}
+      <CardActions className={classes.action}>
+        <Button size="large" className={classes.btn} onClick={onButtonClick}>
+          {btnlabel}
+        </Button>
+      </CardActions>
+      {/* ) : (
         ""
-      )}
+      )} */}
     </Card>
   );
 };

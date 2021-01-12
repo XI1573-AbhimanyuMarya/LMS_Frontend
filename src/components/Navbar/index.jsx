@@ -40,7 +40,7 @@ const Navbar = (props) => {
   let location = useLocation();
   const [path, setPath] = useState("/");
   const loginState = useSelector((res) => res.loginState);
-  const { user } = loginState;
+  const { user, roles } = loginState;
   let extracontent, currentPath;
   currentPath = path;
 
@@ -65,21 +65,21 @@ const Navbar = (props) => {
       iconPath: AddLearningPath,
       to: "assigned",
       isActive: currentPath === "/assigned",
-      canAccess: user.designation === "Manager",
+      canAccess: roles[0].roleName === "ROLE_MANAGER",
     },
     {
       name: "Approvals",
       iconPath: Approvals,
       to: "approvals",
       isActive: currentPath === "/approvals",
-      canAccess: user.designation === "Manager",
+      canAccess: roles[0].roleName === "ROLE_MANAGER",
     },
     {
       name: "Manage assigned learning",
       iconPath: DashboardIcon,
       to: "manage",
       isActive: currentPath === "/manage",
-      canAccess: user.designation === "Manager",
+      canAccess: roles[0].roleName === "ROLE_MANAGER",
     },
   ];
   useEffect(() => {

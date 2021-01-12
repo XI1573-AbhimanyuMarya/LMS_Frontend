@@ -48,6 +48,7 @@ function* fetchOtp(action) {
 function* login(action) {
   try {
     const response = yield call(verifyOtp, action.payload);
+    console.log(response, "response");
     const { data } = response;
 
     yield put({ type: actionTypes.LOGIN_CALL_SUCCESS, payload: data });

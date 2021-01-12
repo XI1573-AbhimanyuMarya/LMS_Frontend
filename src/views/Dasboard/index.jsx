@@ -23,6 +23,7 @@ import Actions from "../../store/actions";
 import DashboardDetail from "../Chart";
 import TopNav from "../../components/TopNav";
 import Copyright from "../../components/Copyright";
+import EmployeeDashboardDetail from "../Chart/EmployeeDashboard";
 
 const Dashboard = () => {
   const classes = useStyles();
@@ -30,7 +31,7 @@ const Dashboard = () => {
   const loginState = useSelector((res) => res.loginState);
   const learningPathState = useSelector((state) => state.learningPathState);
   const userName = getOr("User Name", "user.fullName", loginState);
-  const { assignedCources, pathModelOpen } = learningPathState;
+  const { mycourses, assignedCources, pathModelOpen } = learningPathState;
 
   const showDashboard =
     assignedCources.assignedLearningPaths &&
@@ -38,13 +39,23 @@ const Dashboard = () => {
       ? true
       : false;
 
+  const [manager, setManager] = React.useState(false);
   useEffect(() => {
-    dispatch(
-      Actions.learningPathActions.getAssignedLearningPath(
-        loginState.user.username
-      )
-    );
+    if (loginState.roles[0].roleName != "ROLE_MANAGER") {
+      dispatch(
+        Actions.learningPathActions.getMyLearningPath(loginState.user.username)
+      );
+    } else {
+      setManager(true);
+      dispatch(
+        Actions.learningPathActions.getAssignedLearningPath(
+          loginState.user.username
+        )
+      );
+    }
   }, []);
+  const showMyDashboard =
+    mycourses && !manager && mycourses.length ? true : false;
   /**
    * function to open learning path model
    */
@@ -92,7 +103,7 @@ const Dashboard = () => {
           <CardMedia
             className={classes.media}
             image={
-              loginState.user.designation.toLowerCase() != "manager"
+              loginState.roles[0].roleName != "ROLE_MANAGER"
                 ? group2
                 : AddLearningPath
             }
@@ -102,7 +113,7 @@ const Dashboard = () => {
             Welcome, {userName}
           </Typography>
           <Typography component="h1" variant="subtitle2">
-            {loginState.user.designation.toLowerCase() != "manager" ? (
+            {loginState.roles[0].roleName != "ROLE_MANAGER" ? (
               <div class={classes.employeeViewText}>
                 There is no course assigned to you , request your manager for
                 further learning.
@@ -111,7 +122,7 @@ const Dashboard = () => {
               <div>Please assign first learning path to your team</div>
             )}
           </Typography>
-          {loginState.user.designation.toLowerCase() == "manager" ? (
+          {loginState.roles[0].roleName == "ROLE_MANAGER" ? (
             <Button
               type="button"
               fullWidth
@@ -142,8 +153,10 @@ const Dashboard = () => {
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
-          {showDashboard && !pathModelOpen ? (
+          {!showMyDashboard && manager && showDashboard && !pathModelOpen ? (
             <DashboardDetail />
+          ) : showMyDashboard ? (
+            <EmployeeDashboardDetail />
           ) : (
             renderWelcome
           )}

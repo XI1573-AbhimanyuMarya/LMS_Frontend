@@ -1,7 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { DRAWER_WIDTH } from "../../modules/constants";
 
-const drawerWidth = DRAWER_WIDTH;
 export const useStyles = makeStyles((theme) => ({
   pathName: {
     margin: theme.spacing(2),
@@ -16,10 +14,6 @@ export const useStyles = makeStyles((theme) => ({
     background: "#FFFFFF",
     margin: theme.spacing(2),
   },
-  container: {
-    width: `calc(100% - ${drawerWidth})`,
-    margin: "16px 8px 0px 8px",
-  },
   error: {
     color: "#ff0033",
   },
@@ -32,7 +26,6 @@ export const useStyles = makeStyles((theme) => ({
   pathNameField: {
     background: "#FFFFFF",
   },
-
   logo: {
     height: 30,
     width: 91.5,

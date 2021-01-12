@@ -24,7 +24,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
       .format("HH:mm:ss");
     console.log(hours.split(":")[0], "mananan");
 
-    if (hours.split(":")[0] > 23) {
+    if (hours.split(":")[0] >= 23) {
       dispatch(Actions.loginActions.logout());
     }
   });
