@@ -1,5 +1,6 @@
 package com.xebia.learningmanagement.service.impl;
 
+import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
 import com.xebia.learningmanagement.dtos.DurationDto;
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
 import com.xebia.learningmanagement.dtos.LearningPathEmployeeDto;
@@ -228,5 +229,20 @@ public class EmployeeLearningPathServiceImpl implements EmployeeLearningPathServ
         emailSend.sendEmailMethodUsingTemplate(EmailType.REVIEW_LEARNING_PATH_APPROVAL_REJECTION_MANAGER.getValue(), model);
     }
 
+    @Override
+    public AdminDashboardStatisticsDTO dashboardStatistics(EmployeeEmailRequest employeeEmail) {
 
+        User user = userRepository.findByUsername(employeeEmail.getEmployeeEmail()).orElseThrow(() -> new UsernameNotFoundException(MessageBank.USERNAME_NOT_FOUND));
+
+        long totalLearningPathAssigned = learningPathEmployeesRepository.countByEmployee(user);
+        long totalLearningPathCompleted = learningPathEmployeesRepository.countByPercentCompletedAndApprovalStatusAndEmployee(100, APPROVED, user);
+        long totalLearningPathInprogress = learningPathEmployeesRepository.countByPercentCompletedNotAndApprovalStatusNotAndEmployee(100, APPROVED, user);
+        long totalLearningPathExpired = learningPathEmployeesRepository.countByEndDateBeforeAndEmployee(LocalDate.now(), user);
+
+        return AdminDashboardStatisticsDTO.builder()
+                .totalLearningPathAssigned(totalLearningPathAssigned)
+                .totalLearningPathCompleted(totalLearningPathCompleted)
+                .totalLearningPathInProgress(totalLearningPathInprogress)
+                .totalLearningPathExpired(totalLearningPathExpired).build();
+    }
 }

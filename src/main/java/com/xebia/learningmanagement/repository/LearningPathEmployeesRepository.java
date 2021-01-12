@@ -1,5 +1,6 @@
 package com.xebia.learningmanagement.repository;
 
+import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.enums.LearningPathApprovalStatus;
@@ -31,4 +32,22 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
 
     @Query(nativeQuery = true,value = "SELECT approval_status FROM public.learning_path_employees where learning_path_id= ?1 and employee_id = ?2 ")
     LearningPathApprovalStatus findStatusByLearningPathIdAndEmployeeId(Long learningPathId, Long employeeId);
+
+    long countByEmployee(User user);
+
+    long countByPercentCompletedAndApprovalStatusAndEmployee(int i, LearningPathApprovalStatus approved, User user);
+
+    long countByEndDateBeforeAndEmployee(LocalDate now, User user);
+
+    Long countByLearningPathMadeBy(User user);
+
+    long countByPercentCompletedAndApprovalStatusAndLearningPathMadeBy(int i, LearningPathApprovalStatus approved, User user);
+
+    long countByEndDateBeforeAndLearningPathMadeBy(LocalDate now, User user);
+
+    long countByPercentCompletedNotOrApprovalStatusNotAndLearningPathMadeBy(int i, LearningPathApprovalStatus rejected, User user);
+
+    Long countByLearningPath(LearningPath learningPath);
+
+    long countByPercentCompletedNotAndApprovalStatusNotAndEmployee(int i, LearningPathApprovalStatus approved, User user);
 }

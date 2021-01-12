@@ -1,5 +1,6 @@
 package com.xebia.learningmanagement.service;
 
+import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
 import com.xebia.learningmanagement.dtos.request.CourseCompletedPercentRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
@@ -16,7 +17,9 @@ public interface EmployeeLearningPathService {
 
     List<EmployeeLearningPathStatisticsDto> getLearningPathsAssignedToMe(EmployeeEmailRequest employeeEmail) throws LearningPathException;
 
-    public Map<String, String> saveOrUpdateCourseRating(CourseCompletedPercentRequest courseCompletedPercent) ;
+    AdminDashboardStatisticsDTO dashboardStatistics(EmployeeEmailRequest employeeEmail);
+
+    public Map<String, String> saveOrUpdateCourseRating(CourseCompletedPercentRequest courseCompletedPercent);
 
     Map<String, String> sendForManagersApproval(LearningPathApprovalRequest approvalRequest) throws Exception;
 }

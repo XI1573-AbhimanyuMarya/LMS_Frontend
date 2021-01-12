@@ -1,9 +1,6 @@
 package com.xebia.learningmanagement.service;
 
-import com.xebia.learningmanagement.dtos.ApprovalDto;
-import com.xebia.learningmanagement.dtos.LearningPathCourseDetailsDTO;
-import com.xebia.learningmanagement.dtos.LearningPathDto;
-import com.xebia.learningmanagement.dtos.LearningPathManagerDto;
+import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.dtos.request.AssignLearningPathRequest;
 import com.xebia.learningmanagement.dtos.request.LearningPathReviewRequest;
 import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
@@ -27,5 +24,9 @@ public interface LearningPathService {
 
     void saveAssignLearningPaths(AssignLearningPathRequest request) throws Exception;
 
-    List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId ,Long learningPathEmployeesId);
+    List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId, Long learningPathEmployeesId);
+
+    AdminDashboardStatisticsDTO dashboardStatistics(ManagerEmailRequest managerEmail);
+
+    Map<LearningPath, Long> dashboardTopTrending(Long assigneeId);
 }
