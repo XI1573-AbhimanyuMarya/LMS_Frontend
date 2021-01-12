@@ -7,9 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
-public interface LearningPathEmployeesRepository extends JpaRepository<LearningPathEmployees,Long> {
+public interface LearningPathEmployeesRepository extends JpaRepository<LearningPathEmployees, Long> {
 
     List<LearningPathEmployees> findByLearningPathMadeBy(User user);
 
@@ -29,6 +30,10 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
 
     long countByPercentCompletedNotOrApprovalStatus(int percent, LearningPathApprovalStatus rejected);
 
-    @Query(nativeQuery = true,value = "SELECT approval_status FROM public.learning_path_employees where learning_path_id= ?1 and employee_id = ?2 ")
+    @Query(nativeQuery = true, value = "SELECT approval_status FROM public.learning_path_employees where learning_path_id= ?1 and employee_id = ?2 ")
     LearningPathApprovalStatus findStatusByLearningPathIdAndEmployeeId(Long learningPathId, Long employeeId);
+
+    List<LearningPathEmployees> findByMonthlyProgressModifiedDateBetween(LocalDateTime today, LocalDateTime comparisonDate);
+
+    List<LearningPathEmployees> findByMonthlyProgressModifiedDateBefore(LocalDateTime today);
 }

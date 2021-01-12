@@ -2,6 +2,7 @@ package com.xebia.learningmanagement.service.impl;
 
 import com.xebia.learningmanagement.dtos.AdminDashboardDetailsDTO;
 import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
+import com.xebia.learningmanagement.dtos.DashboardGraphStatisticsDTO;
 import com.xebia.learningmanagement.dtos.MadeForEmployeeDto;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
@@ -12,7 +13,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,9 +33,9 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Autowired
-    public AdminServiceImpl(LearningPathEmployeesRepository employeesRepository,LearningPathRepository learningPathRepository) {
+    public AdminServiceImpl(LearningPathEmployeesRepository employeesRepository, LearningPathRepository learningPathRepository) {
         this.employeesRepository = employeesRepository;
-        this.learningPathRepository=learningPathRepository;
+        this.learningPathRepository = learningPathRepository;
 
     }
 
@@ -65,8 +69,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminDashboardStatisticsDTO dashboardStatistics() {
         long totalLearningPathAssigned = learningPathRepository.count();
-        long totalLearningPathCompleted = employeesRepository.countByPercentCompletedAndApprovalStatus(100,APPROVED);
-        long totalLearningPathInprogress = employeesRepository.countByPercentCompletedNotOrApprovalStatus(100,REJECTED);
+        long totalLearningPathCompleted = employeesRepository.countByPercentCompletedAndApprovalStatus(100, APPROVED);
+        long totalLearningPathInprogress = employeesRepository.countByPercentCompletedNotOrApprovalStatus(100, REJECTED);
         long totalLearningPathExpired = employeesRepository.countByEndDateBefore(LocalDate.now());
 
         return AdminDashboardStatisticsDTO.builder()
@@ -88,7 +92,26 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public void dashboardGraphStatistics() {
+    public List<DashboardGraphStatisticsDTO> dashboardGraphStatistics(String month) {
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        List<String> monthsCollection = Arrays.stream(dfs.getMonths()).filter(a -> !a.equals("")).collect(Collectors.toList());
 
+        final List<LearningPathEmployees> learningPathEmployeesList = employeesRepository.findAll();
+        final Map<String, Long> completedCount = learningPathEmployeesList.stream().filter(x -> x.getApprovalStatus().equals(APPROVED)).collect(Collectors.groupingBy(a -> a.getMonthlyProgressModifiedDate().getMonth().toString(), Collectors.counting()));
+        final Map<String, Long> inProgressCount = learningPathEmployeesList.stream().filter(x -> !x.getApprovalStatus().equals(APPROVED)).collect(Collectors.groupingBy(a -> a.getMonthlyProgressModifiedDate().getMonth().toString(), Collectors.counting()));
+        final Map<String, Long> overdueCount = learningPathEmployeesList.stream().filter(a -> a.getEndDate().compareTo(LocalDate.now()) < 0).collect(Collectors.groupingBy(x -> x.getMonthlyProgressModifiedDate().getMonth().toString(), Collectors.counting()));
+        List<DashboardGraphStatisticsDTO> graphStatisticsDTOList = new ArrayList<>();
+        for (String mnth : monthsCollection) {
+            DashboardGraphStatisticsDTO graphStatistics = DashboardGraphStatisticsDTO.builder()
+                    .month(mnth.toUpperCase())
+                    .employeesCompletedCount(completedCount.getOrDefault(mnth.toUpperCase(), (long) 0))
+                    .employeesInprogressCount(inProgressCount.getOrDefault(mnth.toUpperCase(), (long) 0))
+                    .employeesOverdueCount(overdueCount.getOrDefault(mnth.toUpperCase(), (long) 0))
+                    .build();
+            graphStatisticsDTOList.add(graphStatistics);
+        }
+
+        return graphStatisticsDTOList;
     }
+
 }

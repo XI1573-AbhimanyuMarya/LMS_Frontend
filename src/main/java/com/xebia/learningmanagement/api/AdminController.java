@@ -2,6 +2,7 @@ package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.dtos.AdminDashboardDetailsDTO;
 import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
+import com.xebia.learningmanagement.dtos.DashboardGraphStatisticsDTO;
 import com.xebia.learningmanagement.dtos.MadeForEmployeeDto;
 import com.xebia.learningmanagement.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,9 @@ public class AdminController {
         return adminService.specificLearningPathDetails(learningPathId);
     }
 
-    @GetMapping("/api/v1/dashboard/graph")
-    public void dashboardGraphStatistics() {
-         adminService.dashboardGraphStatistics();
+    @GetMapping("/api/v1/dashboard/graph/data/")
+    public List<DashboardGraphStatisticsDTO> dashboardGraphStatistics(@RequestParam(name = "month", required = false, defaultValue = "6") String month ) {
+        return adminService.dashboardGraphStatistics(month);
     }
 
 
