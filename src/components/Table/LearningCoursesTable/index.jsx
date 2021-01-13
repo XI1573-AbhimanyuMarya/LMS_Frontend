@@ -1,11 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Actions from "../../../store/actions";
 import { useStyles } from "./style";
-
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import CourseRow from "./CourseRow";
+import Gallery from 'react-grid-gallery';
+
+const LowerCaseButton = withStyles({
+  root: {
+    textTransform: 'none'
+  },
+})(Button);
 
 const LearningCoursesTable = (props) => {
+  const data = props;
   const classes = useStyles();
   const dispatch = useDispatch();
   const learningPathState = useSelector((state) => state.learningPathState);
@@ -18,7 +29,7 @@ const LearningCoursesTable = (props) => {
     };
     dispatch(Actions.learningPathActions.getLearningPathCourses(reqBody));
   }, []);
-  const { learningPathCourses,selectedLp } = learningPathState;
+  const { learningPathCourses, selectedLp,attachments ,isLoading} = learningPathState;
 
   const { withRate, disable } = props;
   const renderCourseList = learningPathCourses.map((lpcourse) => {
@@ -34,6 +45,18 @@ const LearningCoursesTable = (props) => {
       />
     );
   });
+
+  const [show,showGallery]=useState(false);
+
+  const viewAttachmentHandler=()=>{
+    let reqBody={
+      lpId:props.lpId,
+      employeeId:props.learningPathEmployeesId
+    };
+    dispatch(Actions.learningPathActions.viewAttachment(reqBody));
+    showGallery(true);
+  }
+  
   return (
     <div
       style={{
@@ -54,6 +77,23 @@ const LearningCoursesTable = (props) => {
         </thead>
         <tbody className={classes.tblbody}>{renderCourseList}</tbody>
       </table>
+      <Divider />
+      <span style={{display:"flex",justifyContent:"center", margin:"20px 0 0 0"}}>
+        <LowerCaseButton
+        
+          type="button"
+          variant="contained"
+          className={classes.navSubmit}
+          >Send for approval</LowerCaseButton>
+            <LowerCaseButton
+          type="button"
+          variant="contained"
+          className={classes.navSubmit1}
+          startIcon={<VisibilityIcon style={{ fontSize: 20 }} />}
+          onClick={viewAttachmentHandler}
+          >View documents</LowerCaseButton>
+          {show && attachments.length!==0 && !isLoading && <Gallery images={attachments} showImageCount={false} showLightboxThumbnails={true} lightboxWidth={600} isOpen={true} lightboxWillClose={()=>showGallery(false)} rowWidth=""/> }
+      </span>
     </div>
   );
 };
