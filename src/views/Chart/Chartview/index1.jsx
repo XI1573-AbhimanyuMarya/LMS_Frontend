@@ -17,14 +17,17 @@ const Carosalschart = (props) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const chevronWidth = 40;
   let renderCarousel = "";
+
   if (coursesList && Array.isArray(coursesList)) {
-    const renderCourses = coursesList.map((course) => {
+    const renderCourses = coursesList.map((course, index) => {
       // return <CourseCatalog key={course.id} course={course} handleCourseClick={handleCourseClick} />
       return (
         <CourseCard
           key={course.id}
           course={course.learningPath}
-          onButtonClick={handleCourseClick}
+          onButtonClick={() => {
+            handleCourseClick(course, index);
+          }}
         />
       );
     });

@@ -61,6 +61,7 @@ const Dashboard = () => {
    */
   const handleClickOpen = () => {
     dispatch(Actions.learningPathActions.pathModelOpen(true));
+    dispatch(Actions.learningPathActions.clearCreateLpFormFields());
   };
 
   const closeHandler = () => {

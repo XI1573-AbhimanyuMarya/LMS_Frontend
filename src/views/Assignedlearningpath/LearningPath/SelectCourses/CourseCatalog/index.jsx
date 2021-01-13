@@ -41,7 +41,7 @@ const AssignedCourseCatalog = (props) => {
                 {course.name}
               </div>
               <div>
-                <img src={levels[course.competency.id + "-" + course.competency.name]} className={classes.levIcons} />
+                 <img src={levels[course.competency.id + "-" + course.competency.name]} className={classes.levIcons} />
               </div>
             </div>
           </Typography>

@@ -26,6 +26,7 @@ export const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   navIcons: {
     width: 20,
+    height: 30,
     objectFit: "contain",
     [theme.breakpoints.up("md")]: {
       width: 22,

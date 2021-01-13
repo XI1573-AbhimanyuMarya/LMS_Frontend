@@ -57,8 +57,12 @@ const SelectCourses = () => {
   let completed, inprogress;
   //let selectedLp;
   if (mycourses && mycourses.length > 0) {
-    completed = mycourses.filter((course) => course.percentCompleted === 100);
-    inprogress = mycourses.filter((course) => course.percentCompleted < 100);
+    completed = mycourses.filter(
+      (course) => course.approvalStatus === "APPROVED"
+    ); //course.percentCompleted === 100)
+    inprogress = mycourses.filter(
+      (course) => course.approvalStatus !== "APPROVED"
+    );
     //selectedLp=mycourses.find(course=> course.learningPath.learningPathId==lpId);
   }
 

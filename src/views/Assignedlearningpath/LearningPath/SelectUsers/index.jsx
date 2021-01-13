@@ -118,12 +118,16 @@ const SelectUsers = () => {
 							<ListItemAvatar>
 								<Avatar className={classes.blueGreyAvtar}>{name[0]?.charAt(0)+name[1]?.charAt(0)}</Avatar>
 							</ListItemAvatar>
-							<ListItemText primary={user.fullName}  secondary={user.designation}/>
+							<ListItemText 
+               primary={<Typography style={{fontSize:"14px", display:"flex", padding:"0 0 10px 0"}}>{user.fullName}&#160;&#160;<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}>({user.empID})</Typography></Typography>}
+               secondary={<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)"}}>{user.designation}<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}>{user.cOEType}</Typography><Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}> {user.username}</Typography></Typography>}
+              />
 							
 						</ListItem>
+            
 						{user.selected && user.selected === true && <CheckCircleIcon className={classes.checkIcon}/>}
 					</Card>
-					<Popover user={user} popoverState={popoverState} />		
+					{/* <Popover user={user} popoverState={popoverState} />		 */}
 				</Box>
 				
 			)	

@@ -1,6 +1,9 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
+
+import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
+
 import GreenCheck from '../../images/greencheck.svg';
 import ArrowBackIos from '../../images/ArrowBackIos.svg';
 import { useStyles } from './style';
@@ -32,9 +35,10 @@ export const UploadButton=(props)=>{
 export const WaitForApprovalButton=()=>{
   const classes=useStyles();
   return (
-    <Button className={classes.waitbtn} size="small">
-      Wait For Approval
-    </Button>
+    <>
+      <Button className={classes.completed}>{`100%`}</Button>
+      <Button className={classes.waitbtn}>{"Wait for approval"}</Button>
+    </>
   );
 }
 
@@ -75,11 +79,12 @@ export const LearningRateButton=(props)=>{
 }
 
 export const CourseAssignButton=(props)=>{
-  const {onButtonClick,assignLp}=props;
+  const {onButtonClick,assignLp, count}=props;
   const classes=useStyles();
+  
   return (
     <Button size="small" variant="outlined" className={classes.cardfooterbtn} onClick={onButtonClick}>
-      888
+      {count}
       {assignLp && <img src={ArrowForwardIos} className={classes.arrowfwbtn}/> }
     </Button>
   );
@@ -98,5 +103,12 @@ export const RejectButton=(props)=>{
   const classes=useStyles();
   return (
     <Button className={classes.reject} onClick={onViewClick}>Reject</Button>
+  );
+}
+
+export const CompletedButton=()=>{
+  const classes=useStyles();
+  return (
+    <Button className={classes.completed}>{`100%`}<DoneRoundedIcon className={classes.doneroundedicon}/></Button>
   );
 }

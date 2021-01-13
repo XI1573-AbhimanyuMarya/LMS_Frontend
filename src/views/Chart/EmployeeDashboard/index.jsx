@@ -9,6 +9,8 @@ import CourseSkelton1 from "../../../components/Skelton/MyCourseSkelton";
 import { useStyles } from "./style";
 import { LEARNING_PATH_LABELS } from "../../../modules/constants";
 import LearningPathCard from "../../../components/Card/LearningPathCard";
+import TotalCard from "../../../components/Card/TotalCard";
+import StatusWiseCard from "../../../components/Card/StatusWiseCard";
 import { BackButton } from "../../../components/Button";
 
 import MyCarosals from "../../learnig/LearningSelectCourses/MyCarosals";
@@ -54,7 +56,13 @@ const EmployeeDashboardDetail = () => {
 
   const [lpId, setLpId] = useState(0);
   const [disable, setDisable] = useState(false);
+  const [selectedProgramToStart, setSelectedProgramToStart] = useState(false);
 
+  const courseClicked = (val, x) => {
+    console.log(val, "val in function", x);
+    setSelectedProgramToStart(val);
+    // console.log(selectedProgramToStart, "SelectedProgramToStart");
+  };
   const coursesList1 = mycourses
     ? mycourses?.length > 0
       ? mycourses
@@ -73,14 +81,18 @@ const EmployeeDashboardDetail = () => {
       : ""
     : courses;
   const backBtnHandler = () => {
+    setSelectedProgramToStart(false);
     setDisable(false);
   };
+
+  console.log(selectedProgramToStart, "manananana");
   const LearningPathDesc = () => {
+    console.log("nswndkwsnkkknjd");
     return (
       <>
         <BackButton backBtnHandler={backBtnHandler} />
         <div style={{ maxWidth: "300px", margin: "10px 0px 0px" }}>
-          <LearningPathCard selectedLp={selectedLp} />
+          <LearningPathCard selectedLp={selectedProgramToStart || selectedLp} />
         </div>
       </>
     );
@@ -88,11 +100,12 @@ const EmployeeDashboardDetail = () => {
   const MyLearningPaths = () => {
     return (
       <>
-        {typeof completed !== "undefined" && completed.length !== 0 && (
-          <Typography variant="h6" className={classes.headerText}>
-            {LEARNING_PATH_LABELS.COURSE_CATALOG1}
-          </Typography>
-        )}
+        {(typeof completed !== "undefined" && completed.length !== 0) ||
+          (!selectedProgramToStart && (
+            <Typography variant="h6" className={classes.headerText}>
+              {LEARNING_PATH_LABELS.COURSE_CATALOG1}
+            </Typography>
+          ))}
         <Box alignItems="center" style={{ margin: "10px 50px 0px 0px" }}>
           {isLoading &&
             completedCourse?.length === 0 && <CourseSkelton1 /> &&
@@ -112,7 +125,10 @@ const EmployeeDashboardDetail = () => {
     <div>
       <div style={{ backgroundColor: "white", borderRadius: "8px" }}>
         <div style={{ display: "flex", height: "20%" }}>
-          <Paper
+          <TotalCard />
+          <StatusWiseCard />
+
+          {/* <Paper
             className={classes.rectangle1}
             style={{ display: "flex", flexDirection: "column" }}
           >
@@ -159,7 +175,7 @@ const EmployeeDashboardDetail = () => {
             >
               Overdue
             </Typography>
-          </Paper>
+          </Paper> */}
         </div>
       </div>
       <Box
@@ -167,40 +183,50 @@ const EmployeeDashboardDetail = () => {
         display="flex-inline"
         justifyContent="center"
       >
-        {completed.length > 0 && (
-          <div>
-            <div className={classes.toolbar} />
-            <div className="container">
-              <Box
-                className={classes.catalogContainer}
-                display="flex-inline"
-                justifyContent="center"
-                style={{ margin: "15px 20px" }}
-              >
-                {Object.keys(selectedLp).length !== 0 &&
-                disable &&
-                selectedLp.constructor === Object ? (
-                  <LearningPathDesc />
-                ) : (
-                  <MyLearningPaths />
-                )}
-              </Box>
-            </div>
+        {completed.length > 0 ||
+          (selectedProgramToStart && (
+            <div>
+              <div className={classes.toolbar} />
+              <div className="container">
+                <Box
+                  className={classes.catalogContainer}
+                  display="flex-inline"
+                  justifyContent="center"
+                  style={{ margin: "15px 20px" }}
+                >
+                  {(Object.keys(selectedLp).length !== 0 &&
+                    disable &&
+                    selectedLp.constructor === Object) ||
+                  selectedProgramToStart ? (
+                    <LearningPathDesc />
+                  ) : (
+                    <MyLearningPaths />
+                  )}
+                </Box>
+              </div>
 
-            {Object.keys(selectedLp).length !== 0 &&
-            selectedLp.constructor === Object &&
-            disable ? (
-              <LearningCoursesTable
-                lpId={selectedLp.learningPath.learningPathId}
-                learningPathEmployeesId={selectedLp.learningPathEmployeesId}
-                withRate={true}
-                disable={disable}
-              />
-            ) : (
-              <></>
-            )}
-          </div>
-        )}
+              {(Object.keys(selectedLp).length !== 0 &&
+                selectedLp.constructor === Object &&
+                disable) ||
+              selectedProgramToStart ? (
+                <LearningCoursesTable
+                  lpId={
+                    selectedProgramToStart.learningPath.learningPathId ||
+                    selectedLp.learningPath.learningPathId
+                  }
+                  learningPathEmployeesId={
+                    selectedProgramToStart.learningPathEmployeesId ||
+                    selectedLp.learningPathEmployeesId
+                  }
+                  withRate={true}
+                  disable={disable}
+                />
+              ) : (
+                <></>
+              )}
+            </div>
+          ))}
+
         <Box alignItems="flex-start" py={2}>
           <Typography
             variant="h6"
@@ -211,7 +237,10 @@ const EmployeeDashboardDetail = () => {
         </Box>
         <Box alignItems="center">
           {isLoading && coursesList1?.length === 0 && <CourseSkelton1 />}
-          <Carosals1 coursesList={coursesList1} />
+          <Carosals1
+            coursesList={coursesList1}
+            handleCourseClick={courseClicked}
+          />
         </Box>
       </Box>
     </div>

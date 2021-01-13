@@ -129,9 +129,14 @@ function EmployeeCard(props) {
                       }`}</span>
                     <span className={classes.courseStatus}>
                       {" "}
-                      {`start- ${data.startDate == null
+                      {`Start- ${data.startDate == null
                         ? "course not started"
                         : data.startDate
+                        }`}
+                          {" "}
+                      {`End- ${data.endDate == null
+                        ? "course not started"
+                        : data.endDate
                         }`}
                     </span>{editOption ?
                       <span

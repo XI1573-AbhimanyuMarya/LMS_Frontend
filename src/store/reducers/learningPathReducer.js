@@ -120,25 +120,35 @@ export const learningPathReducer = (state = initialState, action) => {
         isLoading: false
       }
     case actionTypes.SHOW_BUTTON_BASED_ON_RATE:
-      let showBtn;
-      if(payload.course.percentCompleted==100){
-        showBtn="Upload";
-      }else if(payload.course.percentCompleted<100){
-        showBtn="Save";
-      }
-      let learningPathCourses=state.learningPathCourses.map((elm)=>{
-        if(elm.id==payload.course.id){
-          elm.showBtn=showBtn;
-        }else{
-          elm.showBtn='';
-        }
-        return elm;
-      });
       return {
         ...state,
-        learningPathCourses: learningPathCourses,
+        learningPathCourses: state.learningPathCourses.map((elm)=>{
+          if(elm.id==payload.course.id){
+            if(payload.course.percentCompleted==100){
+              elm.showBtn="Upload";
+            }else if(payload.course.percentCompleted<100){
+              elm.showBtn="Save";
+            }
+          }else{
+            elm.showBtn='';
+          }
+          return elm;
+        }),
         isLoading: false
       }
+
+    case actionTypes.CHANGE_DOC_UPLOAD_STATUS_FOR_COURSE:
+      return {
+        ...state,
+        learningPathCourses: state.learningPathCourses.map((elm)=>{
+          if(elm.id==payload.courseId){
+            elm.documentsUploaded=true;
+          }
+          return elm;
+        }),
+        isLoading: false
+      }
+
     case actionTypes.CHANGE_COURSE_RATE:
       let learningPathCourses1=state.learningPathCourses.map((elm)=>{
         if(elm.id==payload.course.id){
@@ -173,6 +183,21 @@ export const learningPathReducer = (state = initialState, action) => {
           activePathStep: '',
           firstNextClicked: false
         }
+      }
+    case actionTypes.CLEAR_CREATE_LP_FORM:
+      delete state.filteredUsersList;
+      return {
+        ...state,
+        learningPathDes:'',
+        learningPathName:'',
+        learningPathDuration:3,
+        learningPathLevel:101,
+        courseIdArr:[],
+        userIdArr:[],
+        users:state.users.map(user=>{
+          user.selected=false;
+          return user;
+        })
       }
     case actionTypes.DISCARD_MODEL_OPEN:
       return {
@@ -216,7 +241,13 @@ export const learningPathReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         message: payload.message,
-        status: payload.status
+        status: payload.status,
+        learningPathDes:'',
+        learningPathName:'',
+        learningPathDuration:3,
+        learningPathLevel:101,
+        courseIdArr:[],
+        userIdArr:[]
       }
     case actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE:
       return {
