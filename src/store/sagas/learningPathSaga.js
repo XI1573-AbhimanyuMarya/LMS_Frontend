@@ -36,7 +36,10 @@ export function* learningPathSaga() {
 
   yield takeLatest(actionTypes.SAVE_COURSE_RATE, saveCourseRate);
   yield takeLatest(actionTypes.VIEW_ATTACHMENT, getAttachment);
-  yield takeLatest(actionTypes.UPLOAD_CERTIFICATE, uploadCertificates);    
+  yield takeLatest(actionTypes.UPLOAD_CERTIFICATE, uploadCertificates);
+  
+  yield takeLatest(actionTypes.MANAGER_DASHBOARD_STATS_REQUEST, getManagerStats);
+  yield takeLatest(actionTypes.POPULAR_STUFF_REQUEST, getManagerPopularStuff);
 }
 
 function* fetchCourses() {
@@ -262,5 +265,35 @@ function* uploadCertificates(action) {
     yield put({ type: actionTypes.UPLOAD_CERTIFICATE_SUCCESS, payload: data });
   } catch (error) {
     yield put({ type: actionTypes.UPLOAD_CERTIFICATE_FAILURE, error });
+  }
+}
+
+const fetchManagerStats = async (payload) => {
+  return await axios.post(SERVICE_URLS.FETCH_MANAGER_STATS, payload , { headers: authHeader() });
+}
+
+function* getManagerStats(action){
+  try{
+    const response = yield call(fetchManagerStats,action.payload);
+    const { data } = response;
+    
+    yield put({ type: actionTypes.MANAGER_DASHBOARD_STATS_SUCCESS, payload: data });
+  } catch(error) {
+    yield put({ type: actionTypes.MANAGER_DASHBOARD_STATS_FAILURE, error });
+  }
+}
+
+const fetchManagerPopularStuff = async (payload) => {
+  return await axios.get(`${SERVICE_URLS.FETCH_MANAGER_POPULAR_STUFF}/${payload.assigneeId}` , { headers: authHeader() });
+}
+
+function* getManagerPopularStuff(action){
+  try{
+    const response = yield call(fetchManagerPopularStuff,action.payload);
+    const { data } = response;
+    
+    yield put({ type: actionTypes.POPULAR_STUFF_SUCCESS, payload: data });
+  } catch(error) {
+    yield put({ type: actionTypes.POPULAR_STUFF_FAILURE, error });
   }
 }

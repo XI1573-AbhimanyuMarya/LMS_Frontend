@@ -151,6 +151,15 @@ const changeDocUploadedStatusForCourse=(courseId)=>({
   payload:{courseId}
 });
 
+const getManagerStats=(managerEmail)=>({
+  type:actionTypes.MANAGER_DASHBOARD_STATS_REQUEST,
+  payload:{managerEmail}
+});
+
+const getPopularStuff=(assigneeId)=>({
+  type:actionTypes.POPULAR_STUFF_REQUEST,
+  payload:{assigneeId}
+});
 
 export default {
   fetchAllCourses,
@@ -190,5 +199,8 @@ export default {
   selectLearningPath,
   clearCreateLpFormFields,
 
-  changeDocUploadedStatusForCourse
+  changeDocUploadedStatusForCourse,
+
+  getManagerStats,
+  getPopularStuff
 };

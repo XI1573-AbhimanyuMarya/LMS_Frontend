@@ -6,15 +6,16 @@ import { useStyles } from './style';
 
 const TotalCard = (props) => {
   const classes=useStyles();
+  const {heading,Total}=props;
   return (
     <Card
       className={classes.Rectangle}
     >
       <div 
       className={classes.TotalLearningPath}
-      >{"Total Learning Path"}</div>
+      >{heading}</div>
       <div  
-      className={classes.TotalLearningPathNum}>{"888"}</div>
+      className={classes.TotalLearningPathNum}>{Total}</div>
     </Card>
   );
 };
