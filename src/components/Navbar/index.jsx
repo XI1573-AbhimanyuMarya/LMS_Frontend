@@ -50,9 +50,9 @@ const Navbar = (props) => {
     {
       name: "Dashboard",
       iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
-      to: "dashboard",
+      to: user.designation !== "HR" || user.designation !== "Admin" ?"dashboard" : "dashboard-private",
       isActive: currentPath === "/dashboard",
-      canAccess: true,
+      canAccess: true
     },
     {
       name: "My Learning Path",
