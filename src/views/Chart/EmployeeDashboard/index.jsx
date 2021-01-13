@@ -75,9 +75,9 @@ const EmployeeDashboardDetail = () => {
     completed = mycourses.filter((course) => course.percentCompleted === 100);
   }
 
-  const completedCourse = filteredCoursesList
-    ? filteredCoursesList?.length > 0
-      ? filteredCoursesList
+  const completedCourse = mycourses
+    ? mycourses?.length > 0
+      ? mycourses
       : ""
     : courses;
   const backBtnHandler = () => {
@@ -87,7 +87,7 @@ const EmployeeDashboardDetail = () => {
 
   console.log(selectedProgramToStart, "manananana");
   const LearningPathDesc = () => {
-    console.log("nswndkwsnkkknjd");
+    console.log("not completed");
     return (
       <>
         <BackButton backBtnHandler={backBtnHandler} />
@@ -125,8 +125,17 @@ const EmployeeDashboardDetail = () => {
     <div>
       <div style={{ backgroundColor: "white", borderRadius: "8px" }}>
         <div style={{ display: "flex", height: "20%" }}>
-          <TotalCard />
-          <StatusWiseCard />
+          {(Object.keys(selectedLp).length !== 0 &&
+            disable &&
+            selectedLp.constructor === Object) ||
+          selectedProgramToStart ? (
+            <></>
+          ) : (
+            <>
+              <TotalCard />
+              <StatusWiseCard />
+            </>
+          )}
 
           {/* <Paper
             className={classes.rectangle1}
@@ -183,49 +192,48 @@ const EmployeeDashboardDetail = () => {
         display="flex-inline"
         justifyContent="center"
       >
-        {completed.length > 0 ||
-          (selectedProgramToStart && (
-            <div>
-              <div className={classes.toolbar} />
-              <div className="container">
-                <Box
-                  className={classes.catalogContainer}
-                  display="flex-inline"
-                  justifyContent="center"
-                  style={{ margin: "15px 20px" }}
-                >
-                  {(Object.keys(selectedLp).length !== 0 &&
-                    disable &&
-                    selectedLp.constructor === Object) ||
-                  selectedProgramToStart ? (
-                    <LearningPathDesc />
-                  ) : (
-                    <MyLearningPaths />
-                  )}
-                </Box>
-              </div>
-
-              {(Object.keys(selectedLp).length !== 0 &&
-                selectedLp.constructor === Object &&
-                disable) ||
-              selectedProgramToStart ? (
-                <LearningCoursesTable
-                  lpId={
-                    selectedProgramToStart.learningPath.learningPathId ||
-                    selectedLp.learningPath.learningPathId
-                  }
-                  learningPathEmployeesId={
-                    selectedProgramToStart.learningPathEmployeesId ||
-                    selectedLp.learningPathEmployeesId
-                  }
-                  withRate={true}
-                  disable={disable}
-                />
-              ) : (
-                <></>
-              )}
+        {(completed.length > 0 || selectedProgramToStart) && (
+          <div>
+            <div className={classes.toolbar} />
+            <div className="container">
+              <Box
+                className={classes.catalogContainer}
+                display="flex-inline"
+                justifyContent="center"
+                style={{ margin: "15px 20px" }}
+              >
+                {(Object.keys(selectedLp).length !== 0 &&
+                  disable &&
+                  selectedLp.constructor === Object) ||
+                selectedProgramToStart ? (
+                  <LearningPathDesc />
+                ) : (
+                  <MyLearningPaths />
+                )}
+              </Box>
             </div>
-          ))}
+
+            {(Object.keys(selectedLp).length !== 0 &&
+              selectedLp.constructor === Object &&
+              disable) ||
+            selectedProgramToStart ? (
+              <LearningCoursesTable
+                lpId={
+                  selectedProgramToStart.learningPath.learningPathId ||
+                  selectedLp.learningPath.learningPathId
+                }
+                learningPathEmployeesId={
+                  selectedProgramToStart.learningPathEmployeesId ||
+                  selectedLp.learningPathEmployeesId
+                }
+                withRate={true}
+                disable={disable}
+              />
+            ) : (
+              <></>
+            )}
+          </div>
+        )}
 
         <Box alignItems="flex-start" py={2}>
           <Typography
