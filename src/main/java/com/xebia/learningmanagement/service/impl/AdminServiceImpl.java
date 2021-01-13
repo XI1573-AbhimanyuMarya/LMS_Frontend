@@ -76,8 +76,8 @@ public class AdminServiceImpl implements AdminService {
 
         return AdminDashboardStatisticsDTO.builder()
                 .totalLearningPathAssigned(totalLearningPathAssigned )
-                .totalLearningPathCompleted((int)Math.ceil((double) totalLearningPathCompleted/totalEmployeeRecords * 100))
-                .totalLearningPathInProgress((int)Math.ceil((double)totalLearningPathInprogress/totalEmployeeRecords * 100))
+                .totalLearningPathCompleted((int)Math.round((double) totalLearningPathCompleted/totalEmployeeRecords * 100))
+                .totalLearningPathInProgress((int)Math.round((double)totalLearningPathInprogress/totalEmployeeRecords * 100))
                 .totalLearningPathExpired((int)Math.ceil((double)totalLearningPathExpired/totalEmployeeRecords * 100)).build();
 
     }
