@@ -78,7 +78,7 @@ public class AdminServiceImpl implements AdminService {
                 .totalLearningPathAssigned(totalLearningPathAssigned )
                 .totalLearningPathCompleted((int)Math.round((double) totalLearningPathCompleted/totalEmployeeRecords * 100))
                 .totalLearningPathInProgress((int)Math.round((double)totalLearningPathInprogress/totalEmployeeRecords * 100))
-                .totalLearningPathExpired((int)Math.ceil((double)totalLearningPathExpired/totalEmployeeRecords * 100)).build();
+                .totalLearningPathExpired((int)Math.round((double)totalLearningPathExpired/totalEmployeeRecords * 100)).build();
 
     }
 
