@@ -30,7 +30,6 @@ const LearningCoursesTable = (props) => {
     dispatch(Actions.learningPathActions.getLearningPathCourses(reqBody));
   }, []);
   const { learningPathCourses, selectedLp,attachments ,isLoading} = learningPathState;
-
   const { withRate, disable } = props;
   const renderCourseList = learningPathCourses.map((lpcourse) => {
     return (
@@ -50,13 +49,24 @@ const LearningCoursesTable = (props) => {
 
   const viewAttachmentHandler=()=>{
     let reqBody={
-      lpId:props.lpId,
-      employeeId:props.learningPathEmployeesId
+      lpId:props.learningPathEmployeesId,
+      employeeId:loginState.user.id
     };
+    
     dispatch(Actions.learningPathActions.viewAttachment(reqBody));
     showGallery(true);
   }
   
+  const sendForApprovalHandler=()=>{
+    let reqBody1={
+      employeeId:loginState.user.id,
+      learningPathId:props.lpId,
+      
+    };
+    console.log(reqBody1,"1")
+    dispatch(Actions.learningPathActions.sendForApproval(reqBody1));
+  }
+
   return (
     <div
       style={{
@@ -84,6 +94,7 @@ const LearningCoursesTable = (props) => {
           type="button"
           variant="contained"
           className={classes.navSubmit}
+          onClick={sendForApprovalHandler}
           >Send for approval</LowerCaseButton>
             <LowerCaseButton
           type="button"
@@ -91,7 +102,7 @@ const LearningCoursesTable = (props) => {
           className={classes.navSubmit1}
           startIcon={<VisibilityIcon style={{ fontSize: 20 }} />}
           onClick={viewAttachmentHandler}
-          >View documents</LowerCaseButton>
+          >View attachments</LowerCaseButton>
           {show && attachments.length!==0 && !isLoading && <Gallery images={attachments} showImageCount={false} showLightboxThumbnails={true} lightboxWidth={600} isOpen={true} lightboxWillClose={()=>showGallery(false)} rowWidth=""/> }
       </span>
     </div>

@@ -151,6 +151,11 @@ const changeDocUploadedStatusForCourse=(courseId)=>({
   payload:{courseId}
 });
 
+const sendForApproval = (reqBody) => ({
+  type: actionTypes.SEND_APPROVAL,
+  payload: reqBody,
+});
+
 
 export default {
   fetchAllCourses,
@@ -189,6 +194,7 @@ export default {
   uploadCertificate,
   selectLearningPath,
   clearCreateLpFormFields,
+  sendForApproval,
 
   changeDocUploadedStatusForCourse
 };

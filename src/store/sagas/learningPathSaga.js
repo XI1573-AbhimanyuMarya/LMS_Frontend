@@ -36,7 +36,8 @@ export function* learningPathSaga() {
 
   yield takeLatest(actionTypes.SAVE_COURSE_RATE, saveCourseRate);
   yield takeLatest(actionTypes.VIEW_ATTACHMENT, getAttachment);
-  yield takeLatest(actionTypes.UPLOAD_CERTIFICATE, uploadCertificates);    
+  yield takeLatest(actionTypes.UPLOAD_CERTIFICATE, uploadCertificates);   
+  yield takeLatest(actionTypes.SEND_APPROVAL, sendForApproval); 
 }
 
 function* fetchCourses() {
@@ -262,5 +263,20 @@ function* uploadCertificates(action) {
     yield put({ type: actionTypes.UPLOAD_CERTIFICATE_SUCCESS, payload: data });
   } catch (error) {
     yield put({ type: actionTypes.UPLOAD_CERTIFICATE_FAILURE, error });
+  }
+}
+
+const sendForApprovalRequest = async (reqBody) => {
+  return await axios.post(SERVICE_URLS.SEND_APPROVAL,reqBody, { headers: authHeader() });
+}
+
+function* sendForApproval(action) {
+  try {
+    const response = yield call(sendForApprovalRequest,action.payload);
+    const { data } = response;
+    
+    yield put({ type: actionTypes.SEND_APPROVAL_SUCCESS, payload: data });
+  } catch (error) {
+    yield put({ type: actionTypes.SEND_APPROVAL_FAILURE, error });
   }
 }

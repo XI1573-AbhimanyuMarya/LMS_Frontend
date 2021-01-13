@@ -29,7 +29,8 @@ const initialState = {
   allLearningPath:[],
   attachments:[],
   certificates:[],
-  selectedLp:{}
+  selectedLp:{},
+  Approval:{},
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -519,6 +520,25 @@ export const learningPathReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         selectedLp:payload
+      };
+
+      case actionTypes.SEND_APPROVAL:
+        return {
+          ...state,
+          isLoading: true,
+          errorMessage: ''
+        };
+      case actionTypes.SEND_APPROVAL_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: ''
+      };
+      case actionTypes.SEND_APPROVAL_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: payload
       };
     default: return state;
   }
