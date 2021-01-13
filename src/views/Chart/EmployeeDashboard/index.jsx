@@ -236,22 +236,27 @@ const EmployeeDashboardDetail = () => {
             )}
           </div>
         )}
-
-        <Box alignItems="flex-start" py={2}>
-          <Typography
-            variant="h6"
-            style={{ color: "#621d58", fontSize: "18px" }}
-          >
-            {LEARNING_PATH_LABELS.LEARNING_PATH_TAKEN}
-          </Typography>
-        </Box>
-        <Box alignItems="center">
-          {isLoading && coursesList1?.length === 0 && <CourseSkelton1 />}
-          <Carosals1
-            coursesList={coursesList1}
-            handleCourseClick={courseClicked}
-          />
-        </Box>
+        {!selectedProgramToStart && !disable ? (
+          <>
+            <Box alignItems="flex-start" py={2}>
+              <Typography
+                variant="h6"
+                style={{ color: "#621d58", fontSize: "18px" }}
+              >
+                {LEARNING_PATH_LABELS.LEARNING_PATH_TAKEN}
+              </Typography>
+            </Box>
+            <Box alignItems="center">
+              {isLoading && coursesList1?.length === 0 && <CourseSkelton1 />}
+              <Carosals1
+                coursesList={coursesList1}
+                handleCourseClick={courseClicked}
+              />
+            </Box>
+          </>
+        ) : (
+          <></>
+        )}
       </Box>
     </div>
   );
