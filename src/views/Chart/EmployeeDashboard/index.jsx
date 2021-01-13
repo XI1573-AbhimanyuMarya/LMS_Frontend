@@ -219,12 +219,14 @@ const EmployeeDashboardDetail = () => {
             selectedProgramToStart ? (
               <LearningCoursesTable
                 lpId={
-                  selectedProgramToStart.learningPath.learningPathId ||
-                  selectedLp.learningPath.learningPathId
+                  selectedProgramToStart.learningPath
+                    ? selectedProgramToStart.learningPath.learningPathId
+                    : selectedLp.learningPath.learningPathId
                 }
                 learningPathEmployeesId={
-                  selectedProgramToStart.learningPathEmployeesId ||
-                  selectedLp.learningPathEmployeesId
+                  selectedProgramToStart.learningPathEmployeesId
+                    ? selectedProgramToStart.learningPathEmployeesId
+                    : selectedLp.learningPathEmployeesId
                 }
                 withRate={true}
                 disable={disable}
