@@ -100,12 +100,12 @@ const EmployeeDashboardDetail = () => {
   const MyLearningPaths = () => {
     return (
       <>
-        {(typeof completed !== "undefined" && completed.length !== 0) ||
-          (!selectedProgramToStart && (
-            <Typography variant="h6" className={classes.headerText}>
-              {LEARNING_PATH_LABELS.COURSE_CATALOG1}
-            </Typography>
-          ))}
+        {((typeof completed !== "undefined" && completed.length !== 0) ||
+          !selectedProgramToStart) && (
+          <Typography variant="h6" className={classes.headerText}>
+            {LEARNING_PATH_LABELS.COURSE_CATALOG1}
+          </Typography>
+        )}
         <Box alignItems="center" style={{ margin: "10px 50px 0px 0px" }}>
           {isLoading &&
             completedCourse?.length === 0 && <CourseSkelton1 /> &&
