@@ -65,18 +65,20 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
+
     @Override
     public AdminDashboardStatisticsDTO dashboardStatistics() {
         long totalLearningPathAssigned = learningPathRepository.count();
+        long totalEmployeeRecords = employeesRepository.count();
         long totalLearningPathCompleted = employeesRepository.countByPercentCompletedAndApprovalStatus(100, APPROVED);
         long totalLearningPathInprogress = employeesRepository.countByPercentCompletedNotOrApprovalStatus(100, REJECTED);
         long totalLearningPathExpired = employeesRepository.countByEndDateBefore(LocalDate.now());
 
         return AdminDashboardStatisticsDTO.builder()
-                .totalLearningPathAssigned(totalLearningPathAssigned)
-                .totalLearningPathCompleted(totalLearningPathCompleted)
-                .totalLearningPathInProgress(totalLearningPathInprogress)
-                .totalLearningPathExpired(totalLearningPathExpired).build();
+                .totalLearningPathAssigned(totalLearningPathAssigned )
+                .totalLearningPathCompleted(Math.ceil((double) totalLearningPathCompleted/totalEmployeeRecords * 100))
+                .totalLearningPathInProgress(Math.ceil((double)totalLearningPathInprogress/totalEmployeeRecords * 100))
+                .totalLearningPathExpired(Math.ceil((double)totalLearningPathExpired/totalEmployeeRecords * 100)).build();
 
     }
 
