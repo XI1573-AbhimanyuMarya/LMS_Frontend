@@ -30,8 +30,8 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   CardRoot: {
-    width: "255px", //"340px",
-    height: "150px",
+    minWidth: 275,
+    minHeight: 225.5,
     margin: "8.5px 10px 0 0.5px",
     padding: "10px", //"12px 20px",
     borderRadius: "8px",
@@ -39,6 +39,7 @@ export const useStyles = makeStyles((theme) => ({
     border: "none",
     boxShadow: "none",
   },
+
   cardheading: {
     fontSize: "1rem",
     margin: "0 0 0 15px",
@@ -117,6 +118,7 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   courseDesc: {
+    minHeight: 51,
     fontSize: 12,
     padding: "10px 0px",
     color: "#858585",
@@ -131,6 +133,8 @@ export const useStyles = makeStyles((theme) => ({
     display: "none",
   },
   action: {
+    display: "flex",
+    justifyContent: "space-between",
     marginTop: "auto",
     [theme.breakpoints.up("md")]: {
       marginTop: "-36px",
@@ -288,6 +292,7 @@ export const useStyles = makeStyles((theme) => ({
     height: "38px",
   },
   CardDesc: {
+    minHeight: 51,
     width: "220",
     margin: "16.5px 17.6px 0 0",
     fontSize: "13px",

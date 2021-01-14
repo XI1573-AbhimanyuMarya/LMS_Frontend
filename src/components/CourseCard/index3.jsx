@@ -113,14 +113,18 @@ const CourseCard = (props) => {
   return (
     <>
       <Card className={classes.CardRoot}>
-        <div style={{ display: "flex" }}>
-          <div className={classes.CardHeading}>{props.heading}</div>
-          <img
-            src={SHOW_LEVELS[`${props.levelId}-${props.levelName}`]}
-            className={classes[`${props.levelName}`]}
-          />
-        </div>
-        <div className={classes.CardDesc}>{props.desc}</div>
+        <CardContent className={classes.CardContent}>
+          <div style={{ display: "flex" }}>
+            <div className={classes.CardHeading}>{props.heading}</div>
+            <img
+              src={SHOW_LEVELS[`${props.levelId}-${props.levelName}`]}
+              className={classes[`${props.levelName}`]}
+            />
+          </div>
+          <div style={{ minHeight: "52px" }} className={classes.CardDesc}>
+            {props.desc}
+          </div>
+        </CardContent>
 
         <CardActions className={classes.action}>
           <Button

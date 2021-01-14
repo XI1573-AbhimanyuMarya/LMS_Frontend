@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ItemsCarousel from "react-items-carousel";
 import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
+import ArrowForwardIos from "../../../images/ArrowForwardIos.svg";
 import Typography from "@material-ui/core/Typography";
 import CourseCatalog from "../ChartViewCatalog";
 import { MESSAGES } from "../../../modules/constants";
@@ -76,10 +77,13 @@ const Carosalschart = (props) => {
             marginBottom: "-10",
           }}
         >
-          {/* <div className={classes.PopularStuffText}>
-          Popular Stuff{" "}
-          <img src={ArrowForwardIos} className={classes.PopularStuffArrowFwd} />
-        </div> */}
+          <div className={classes.PopularStuffText}>
+            Popular Stuff{" "}
+            <img
+              src={ArrowForwardIos}
+              className={classes.PopularStuffArrowFwd}
+            />
+          </div>
           <div style={{ marginRight: 10, marginTop: "-10px" }}>
             {activeItemIndex > 0 ? (
               <img
