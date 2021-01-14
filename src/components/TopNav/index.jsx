@@ -1,13 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Badge from '@material-ui/core/Badge';
 import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
+
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
-import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
 
+import NotificationTray from "./NotificationTray";
 import XebiaLogo from "../../images/Logo.svg";
 import { DRAWER_WIDTH } from '../../modules/constants';
 
@@ -63,8 +62,6 @@ export const useStyles = makeStyles((theme) => ({
 
 const TopNav = (props) => {
   const classes = useStyles();
-  let notification = 1;
-  let notifLabel = `show ${notification} new notifications"`;
   let { title } = props;
   return (
     <AppBar position="fixed" className={classes.appBar} color="transparent">
@@ -80,17 +77,7 @@ const TopNav = (props) => {
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>
           {props.children}
-          <IconButton aria-label={notifLabel} color="inherit">
-            <Badge
-              badgeContent={notification}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              color="secondary">
-              <NotificationsOutlinedIcon className={classes.notification} />
-            </Badge>
-          </IconButton>
+          <NotificationTray></NotificationTray>
         </div>
       </Toolbar>
     </AppBar>

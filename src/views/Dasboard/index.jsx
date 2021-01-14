@@ -13,7 +13,7 @@ import Box from "@material-ui/core/Box";
 import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
 
-import DiscardPopup from "../../components/DiscardPopup/draganddrop";
+import DiscardPopup from "../../components/DiscardPopup/index";
 import AddLearningPath from "../../images/AddLearningPath.svg";
 import group2 from "../../images/group2.png";
 import LearningPath from "../LearningPath/index";
@@ -25,19 +25,42 @@ import TopNav from "../../components/TopNav";
 import Copyright from "../../components/Copyright";
 import EmployeeDashboardDetail from "../Chart/EmployeeDashboard";
 
+import DashboardMatrix from "../../components/Dashboard/DashboardMatrix";
+import PopularStuff from "../../components/Carousel/PopularStuff";
+
 const Dashboard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loginState = useSelector((res) => res.loginState);
   const learningPathState = useSelector((state) => state.learningPathState);
   const userName = getOr("User Name", "user.fullName", loginState);
-  const { mycourses, assignedCources, pathModelOpen } = learningPathState;
+  const {
+    mycourses,
+    assignedCources,
+    pathModelOpen,
+    managerDashStats,
+    managerPopularStuff,
+    isLoading,
+  } = learningPathState;
 
   const showDashboard =
     assignedCources.assignedLearningPaths &&
     assignedCources.assignedLearningPaths.length
       ? true
       : false;
+  // const { assignedCources, pathModelOpen,managerDashStats,managerPopularStuff,isLoading } = learningPathState;
+
+  // const showDashboard = (assignedCources.assignedLearningPaths
+  //   && assignedCources.assignedLearningPaths.length ?
+  //   true : false);
+  // var showDashboard = false;
+
+  // for (var i in managerDashStats) {
+  //   if (managerDashStats[i] !== 0) {
+  //     showDashboard = true;
+  //     break;
+  //   }
+  // }
 
   const [manager, setManager] = React.useState(false);
   useEffect(() => {
@@ -148,6 +171,33 @@ const Dashboard = () => {
       <DiscardPopup discardHandler={discardHandler} />
     </Box>
   );
+
+  const DashData = () => {
+    const data = {
+      totalCardDetail: {
+        heading: "Assigned Learning Path",
+        Total: managerDashStats.totalLearningPathAssigned,
+      },
+      Completed: managerDashStats.totalLearningPathCompleted,
+      Inprogress: managerDashStats.totalLearningPathExpired,
+      Overdue: managerDashStats.totalLearningPathInProgress,
+    };
+    return (
+      <>
+        <DashboardMatrix data={data} />
+        <div
+          style={{
+            width: "1060px",
+            height: "180px",
+            margin: "20px",
+          }}
+        >
+          <PopularStuff managerPopularStuff={managerPopularStuff} />
+        </div>
+      </>
+    );
+  };
+
   return (
     <div>
       <TopNav>{showDashboard ? modalBtn : ""}</TopNav>

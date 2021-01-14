@@ -12,7 +12,7 @@ const CourseRow = (props) => {
   const showRate=()=>{
     if(selectedLp.approvalStatus==="APPROVED"){
       return <CompletedButton/>;
-    }else if(course.percentCompleted===100 && course.documentsUploaded){
+    }else if(course.percentCompleted===100 && course.documentsUploaded && selectedLp.approvalStatus==="PENDING"){
       return <WaitForApprovalButton/>;
     }else{
       return <LearningRate
