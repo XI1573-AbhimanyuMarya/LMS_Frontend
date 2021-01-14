@@ -13,6 +13,8 @@ import { SHOW_LEVELS } from "../../../../modules/constants";
 import { useSelector, useDispatch } from "react-redux";
 import Actions from "../../../../store/actions";
 
+import Button from "@material-ui/core/Button";
+
 const CourseCatalog1 = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -25,22 +27,14 @@ const CourseCatalog1 = (props) => {
     setDisable(true);
   };
   return (
-    <Card
-      className={courseClass}
-      style={{ margin: 0, border: "1px solid #67b104" }}
-    >
-      <CardActionArea>
-        {/* {course.selected && course.selected === true && <CheckCircleIcon className={classes.checkIcon} />} */}
+    <div>
+      <Card
+        style={{ margin: 0, border: "1px solid #67b104" }}
+        className={classes.CardRoot}
+      >
         <CardContent className={classes.cardcontent}>
-          <div className={classes.cardheader}>
-            <Typography
-              gutterBottom
-              variant="h6"
-              component="h6"
-              className={classes.cardheading}
-            >
-              {lp?.learningPath?.name}
-            </Typography>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div className={classes.cardheader}>{lp?.learningPath?.name}</div>
             <img
               src={
                 SHOW_LEVELS[
@@ -52,6 +46,7 @@ const CourseCatalog1 = (props) => {
               className={classes[lp.learningPath.competency.name]}
             />
           </div>
+
           <Typography
             variant="body2"
             color="textSecondary"
@@ -61,11 +56,12 @@ const CourseCatalog1 = (props) => {
             {lp?.learningPath?.description}
           </Typography>
         </CardContent>
+
         <Box className={classes.view} onClick={viewClickHandler}>
           {"View"}
         </Box>
-      </CardActionArea>
-    </Card>
+      </Card>
+    </div>
   );
 };
 

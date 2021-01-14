@@ -73,4 +73,7 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: 28,
   },
   graph: {},
+  root: {
+    flexGrow: 1,
+  },
 }));

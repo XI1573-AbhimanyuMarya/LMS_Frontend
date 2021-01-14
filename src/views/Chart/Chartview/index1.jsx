@@ -26,17 +26,6 @@ const Carosalschart = (props) => {
 
   if (coursesList && Array.isArray(coursesList)) {
     const renderCourses = coursesList.map((course, index) => {
-      // return <CourseCatalog key={course.id} course={course} handleCourseClick={handleCourseClick} />
-
-      // return (
-      //   <LearningPathCardWOAction
-      //     key={course.id}
-      //     heading={course.learningPath.name}
-      //     levelId={course.learningPath.competency.id}
-      //     levelName={course.learningPath.competency.name}
-      //     desc={course.learningPath.description}
-      //   />
-      // );
       return (
         <CourseCard
           course={course.learningPath}
@@ -69,10 +58,11 @@ const Carosalschart = (props) => {
     };
 
     renderCarousel = (
-      <>
+      <div>
         <div
           style={{
             display: "flex",
+            width: "98%",
             justifyContent: "space-between",
             marginBottom: "-10",
           }}
@@ -111,33 +101,73 @@ const Carosalschart = (props) => {
             )}
           </div>
         </div>
+
         <ItemsCarousel
+          requestToChangeActive={setActiveItemIndex}
           activeItemIndex={activeItemIndex}
           numberOfCards={4}
+          gutter={20}
+          leftChevron={<ArrowBackIosOutlinedIcon />}
+          rightChevron={<ArrowForwardIosOutlinedIcon />}
           outsideChevron
-          chevronWidth={20}
-          className={classes.CarouselRoot}
+          chevronWidth={chevronWidth}
+          style={{ display: "flex", boxSizing: "border-box" }}
         >
           {renderCourses}
         </ItemsCarousel>
-      </>
-      // <div>
+      </div>
+      // <>
+      //   <div
+      //     style={{
+      //       display: "flex",
+      //       justifyContent: "space-between",
+      //       marginBottom: "-10",
+      //     }}
+      //   >
+      //     <div className={classes.PopularStuffText}>
+      //       Learning Path You're Taking{" "}
+      //       <img
+      //         src={ArrowForwardIos}
+      //         className={classes.PopularStuffArrowFwd}
+      //       />
+      //     </div>
+      //     <div style={{ marginRight: "10px", marginTop: "-10px" }}>
+      //       {activeItemIndex > 0 ? (
+      //         <img
+      //           src={LeftActiveCarousel}
+      //           style={{ height: "30px", widht: "30px" }}
+      //           onClick={LeftHandler}
+      //         />
+      //       ) : (
+      //         <img
+      //           src={LeftDisableCarousel}
+      //           style={{ height: "30px", widht: "30px" }}
+      //         />
+      //       )}
+      //       {activeItemIndex < Math.floor(coursesList.length / 4) ? (
+      //         <img
+      //           src={RightActiveCarousel}
+      //           style={{ height: "30px", widht: "30px" }}
+      //           onClick={RightHandler}
+      //         />
+      //       ) : (
+      //         <img
+      //           src={RightDisableCarousel}
+      //           style={{ height: "30px", widht: "30px" }}
+      //         />
+      //       )}
+      //     </div>
+      //   </div>
       //   <ItemsCarousel
-      //     requestToChangeActive={setActiveItemIndex}
       //     activeItemIndex={activeItemIndex}
       //     numberOfCards={4}
-      //     gutter={10}
-      //     leftChevron={<ArrowBackIosOutlinedIcon className={classes.left} />}
-      //     rightChevron={
-      //       <ArrowForwardIosOutlinedIcon className={classes.right} />
-      //     }
-      //     alwaysShowChevrons={true}
-      //     chevronWidth={chevronWidth}
-      //     outsideChevron={true}
+      //     outsideChevron
+      //     chevronWidth={20}
+      //     className={classes.CarouselRoot}
       //   >
       //     {renderCourses}
       //   </ItemsCarousel>
-      // </div>
+      // </>
     );
   }
   return (
@@ -157,6 +187,5 @@ const Carosalschart = (props) => {
 
 Carosalschart.propTypes = {
   coursesList: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  // handleCourseClick: PropTypes.func.isRequired,
 };
 export default Carosalschart;

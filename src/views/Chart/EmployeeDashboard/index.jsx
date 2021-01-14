@@ -12,7 +12,7 @@ import LearningPathCard from "../../../components/Card/LearningPathCard";
 import TotalCard from "../../../components/Card/TotalCard";
 import StatusWiseCard from "../../../components/Card/StatusWiseCard";
 import { BackButton } from "../../../components/Button";
-
+import Grid from "@material-ui/core/Grid";
 import MyCarosals from "../../learnig/LearningSelectCourses/MyCarosals";
 import LearningCoursesTable from "../../../components/Table/LearningCoursesTable";
 const DataCard = (props) => {
@@ -100,12 +100,12 @@ const EmployeeDashboardDetail = () => {
   const MyLearningPaths = () => {
     return (
       <>
-        {((typeof completed !== "undefined" && completed.length !== 0) ||
+        {/* {((typeof completed !== "undefined" && completed.length !== 0) ||
           !selectedProgramToStart) && (
           <Typography variant="h6" className={classes.headerText}>
             {LEARNING_PATH_LABELS.COURSE_CATALOG1}
           </Typography>
-        )}
+        )} */}
         <Box alignItems="center" style={{ margin: "10px 50px 0px 0px" }}>
           {isLoading &&
             completedCourse?.length === 0 && <CourseSkelton1 /> &&
@@ -122,9 +122,16 @@ const EmployeeDashboardDetail = () => {
   };
 
   return (
-    <div>
-      <div style={{ backgroundColor: "white", borderRadius: "8px" }}>
-        <div style={{ display: "flex", height: "20%" }}>
+    <div className={classes.catalogContainer}>
+      <div>
+        <div
+          style={{
+            display: "flex",
+            height: "20%",
+            marginLeft: "30px",
+            width: "90%",
+          }}
+        >
           {(Object.keys(selectedLp).length !== 0 &&
             disable &&
             selectedLp.constructor === Object) ||
@@ -132,8 +139,12 @@ const EmployeeDashboardDetail = () => {
             <></>
           ) : (
             <>
-              <TotalCard />
-              <StatusWiseCard />
+              <div className={classes.root}>
+                <Grid container direction="row">
+                  <TotalCard />
+                  <StatusWiseCard />
+                </Grid>
+              </div>
             </>
           )}
 
@@ -187,17 +198,12 @@ const EmployeeDashboardDetail = () => {
           </Paper> */}
         </div>
       </div>
-      <Box
-        className={classes.catalogContainer}
-        display="flex-inline"
-        justifyContent="center"
-      >
+      <Box display="flex-inline" justifyContent="center">
         {(completed.length > 0 || selectedProgramToStart) && (
           <div>
             <div className={classes.toolbar} />
-            <div className="container">
+            <div style={{ paddingTop: "1px" }} className="container">
               <Box
-                className={classes.catalogContainer}
                 display="flex-inline"
                 justifyContent="center"
                 style={{ margin: "15px 20px" }}
@@ -237,23 +243,29 @@ const EmployeeDashboardDetail = () => {
           </div>
         )}
         {!selectedProgramToStart && !disable ? (
-          <Box style={{ margin: "15px 30px" }}>
-            {/* <Box alignItems="flex-start" py={2}>
-              <Typography
-                variant="h6"
-                style={{ color: "#621d58", fontSize: "18px" }}
+          <div>
+            <div className={classes.toolbar} />
+            <div style={{ paddingBottom: "10px" }} className="container">
+              <Box
+                display="flex-inline"
+                justifyContent="center"
+                style={{ margin: "15px 20px" }}
               >
-                {LEARNING_PATH_LABELS.LEARNING_PATH_TAKEN}
-              </Typography>
-            </Box> */}
-            <Box alignItems="center">
-              {isLoading && coursesList1?.length === 0 && <CourseSkelton1 />}
-              <Carosals1
-                coursesList={coursesList1}
-                handleCourseClick={courseClicked}
-              />
-            </Box>
-          </Box>
+                <Box
+                  style={{ margin: "10px 50px 0px 0px" }}
+                  alignItems="center"
+                >
+                  {isLoading && coursesList1?.length === 0 && (
+                    <CourseSkelton1 />
+                  )}
+                  <Carosals1
+                    coursesList={coursesList1}
+                    handleCourseClick={courseClicked}
+                  />
+                </Box>
+              </Box>
+            </div>
+          </div>
         ) : (
           <></>
         )}

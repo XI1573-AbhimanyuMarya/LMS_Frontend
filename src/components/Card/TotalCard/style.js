@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
   Rectangle: {
-    width: "200px", //"263px",
+    // width: "200px", //"263px",
     height: "100px", //"150px",
     textAlign: "center",
     boxShadow: "4px 5px 10px 0 rgba(0, 0, 0, 0.08)",
@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: "11.6px 0px 14.6px", //"23.6px 33px 14.6px"
   },
   TotalLearningPath: {
-    width: "197px",
+    // width: "197px",
     height: "29px",
     margin: "0 0 8.7px",
     fontSize: "18px", //"22px",
@@ -23,7 +23,7 @@ export const useStyles = makeStyles((theme) => ({
     color: "#000000",
   },
   TotalLearningPathNum: {
-    width: "145px",
+    // width: "145px",
     height: "74px",
     margin: "8.7px 26px 0 26px",
     fontSize: "35px", //"56px",
@@ -34,5 +34,13 @@ export const useStyles = makeStyles((theme) => ({
     letterSpacing: "normal",
     textAlign: "center",
     color: "#621d58",
+  },
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
   },
 }));
