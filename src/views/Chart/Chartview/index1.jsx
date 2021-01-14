@@ -78,13 +78,13 @@ const Carosalschart = (props) => {
           }}
         >
           <div className={classes.PopularStuffText}>
-            Popular Stuff{" "}
+            Learning Path You're Taking{" "}
             <img
               src={ArrowForwardIos}
               className={classes.PopularStuffArrowFwd}
             />
           </div>
-          <div style={{ marginRight: 10, marginTop: "-10px" }}>
+          <div style={{ marginRight: "10px", marginTop: "-10px" }}>
             {activeItemIndex > 0 ? (
               <img
                 src={LeftActiveCarousel}

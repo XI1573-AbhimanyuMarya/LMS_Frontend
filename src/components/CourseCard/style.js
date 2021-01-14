@@ -40,9 +40,19 @@ export const useStyles = makeStyles((theme) => ({
     boxShadow: "none",
   },
 
-  cardheading: {
-    fontSize: "1rem",
-    margin: "0 0 0 15px",
+  CardHeading: {
+    width: "200.9px",
+    height: "15px",
+    margin: "2px 4.9px 18.5px 0",
+    //fontFamily: "Roboto",
+    fontSize: "16px", //"18px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.32",
+    letterSpacing: "normal",
+    textAlign: "left",
+    color: "#000000",
   },
   header: {
     margin: "-8px 0px 10px 0px",
