@@ -110,7 +110,9 @@ const SelectCourses = () => {
             {isLoading && !inprogress && <CourseSkelton />}
             <Carosals coursesList={inprogress} setLpId={setLpId} />
           </tbody>
+          
         </table>
+        
       </div>  
       
     ) : "";

@@ -28,8 +28,11 @@ PENDING_FOR_APPROVAL: `${API_HOST_PATH}/manager/api/v1/pending/approvals`,
 APPROVAL_REJEACT: `${API_HOST_PATH}/manager/api/v1/review/approvals`,
 SAVE_COURSE_RATE: `${API_HOST_PATH}/employee/api/v1/update/courseratings`,
 GET_ATTACHMENT:`${API_HOST_PATH}/certificate/api/v1/get`,
-UPLOAD_CERTIFICATES:`${API_HOST_PATH}/certificate/api/v1/upload`
+UPLOAD_CERTIFICATES:`${API_HOST_PATH}/certificate/api/v1/upload`,
+SEND_APPROVAL:`${API_HOST_PATH}/employee/api/v1/approval/send`,
 
+FETCH_MANAGER_STATS:`${API_HOST_PATH}/manager/api/v1/dashboard/stats`,
+FETCH_MANAGER_POPULAR_STUFF:`${API_HOST_PATH}/manager/api/v1/dashboard/top/trending`
 };
 
 export const API_STATUS = {

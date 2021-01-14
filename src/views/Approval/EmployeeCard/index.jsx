@@ -96,6 +96,7 @@ export default function EmployeeCardApproval(props) {
   }
 
   const [show,showGallery]=useState(false);
+  console.log(data,"reqBody")
 
   const viewAttachmentHandler=()=>{
     let reqBody={
@@ -104,6 +105,7 @@ export default function EmployeeCardApproval(props) {
     };
     dispatch(Actions.learningPathActions.viewAttachment(reqBody));
     showGallery(true);
+    
   }
 
 

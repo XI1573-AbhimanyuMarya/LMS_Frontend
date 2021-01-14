@@ -1,0 +1,20 @@
+<svg id="Group_190" data-name="Group 190" xmlns="http://www.w3.org/2000/svg" width="52" height="40" viewBox="0 0 52 40">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #ebebeb;
+      }
+
+      .cls-3 {
+        fill: #858585;
+      }
+    </style>
+  </defs>
+  <path id="Rectangle" class="cls-1" d="M20,0h0A20,20,0,0,1,40,20V52a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V20A20,20,0,0,1,20,0Z" transform="translate(0 40) rotate(-90)"/>
+  <circle id="Oval" class="cls-2" cx="17" cy="17" r="17" transform="translate(4 3)"/>
+  <path id="Path_3_Copy" data-name="Path 3 Copy" class="cls-3" d="M7.092,2.013,1.487,7,0,6.005,7.092,0,14,6.005,12.7,7Z" transform="translate(17.5 26.5) rotate(-90)"/>
+</svg>
