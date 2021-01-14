@@ -151,6 +151,20 @@ const changeDocUploadedStatusForCourse=(courseId)=>({
   payload:{courseId}
 });
 
+const sendForApproval = (reqBody) => ({
+  type: actionTypes.SEND_APPROVAL,
+  payload: reqBody,
+});
+
+const getManagerStats=(managerEmail)=>({
+  type:actionTypes.MANAGER_DASHBOARD_STATS_REQUEST,
+  payload:{managerEmail}
+});
+
+const getPopularStuff=(assigneeId)=>({
+  type:actionTypes.POPULAR_STUFF_REQUEST,
+  payload:{assigneeId}
+});
 
 export default {
   fetchAllCourses,
@@ -178,7 +192,7 @@ export default {
   getLearningPathCourses,
   changeCourseRate,
   uploadFileModelOpen,
-  uploadFileModelOpen,
+  // uploadFileModelOpen,
   RejectModelOpen,
   ApproveModelOpen,
   getPendingForApproval,
@@ -189,6 +203,10 @@ export default {
   uploadCertificate,
   selectLearningPath,
   clearCreateLpFormFields,
+  sendForApproval,
 
-  changeDocUploadedStatusForCourse
+  changeDocUploadedStatusForCourse,
+
+  getManagerStats,
+  getPopularStuff
 };

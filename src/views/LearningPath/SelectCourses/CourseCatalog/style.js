@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme => ({
 	root: {
 		maxWidth: 345,
-    border: '2px solid #A9A9A9'
+    border: '1px solid #A9A9A9'
    
 	},
 	courseType: {

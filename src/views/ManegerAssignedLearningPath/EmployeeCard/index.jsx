@@ -1,6 +1,6 @@
 import React from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { useDispatch , useSelector, connect } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -52,10 +52,10 @@ function EmployeeCard(props) {
   const data = props.data;
   const { onDeleteAll, onDelete } = props;
   const classes = useStyles();
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const [expanded, setExpanded] = React.useState(false);
   const [editOption, setEditOption] = React.useState(false);
-  const [discardOption,setDiscardOption] = React.useState(false)
+  const [discardOption, setDiscardOption] = React.useState(false)
   const learningPathState = useSelector((state) => state.learningPathState);
 
   const discardHandler = (closeMainModel) => {
@@ -65,7 +65,7 @@ function EmployeeCard(props) {
     dispatch(Actions.learningPathActions.discardModelOpen(false));
   };
 
-  const  handleDiscardClick = () =>{
+  const handleDiscardClick = () => {
     dispatch(Actions.learningPathActions.discardModelOpen(true));
   }
 
@@ -75,7 +75,7 @@ function EmployeeCard(props) {
   };
   const handleEditClick = () => {
     setEditOption(!editOption);
-    setExpanded(expanded && editOption? false : true);
+    setExpanded(expanded && editOption ? false : true);
   };
 
 
@@ -101,8 +101,8 @@ function EmployeeCard(props) {
             className={classes.delete}
             action={
               <IconButton aria-label="settings"  >
-                <DeleteIcon className={classes.deleteIcon} onClick={handleDiscardClick} /> 
-                <DiscardPopup discardHandler={discardHandler}/>                     
+                <DeleteIcon className={classes.deleteIcon} onClick={handleDiscardClick} />
+                <DiscardPopup discardHandler={discardHandler} />
               </IconButton>
             }
             subheader={data.employee.location}
@@ -121,24 +121,47 @@ function EmployeeCard(props) {
             </IconButton>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <table className={classes.courseStatus1}>
+                    <thead className={classes.listData1}>
+                      <tr>
+                        <th style={{width:"40%",textAlign:"left",padding:"0 0 5px 15px"}}>Learning Path Name</th>
+                        <th style={{width:"19%",textAlign:"left",padding:"0 0 5px 0"}}>Start Date</th>
+                        <th style={{width:"21%",textAlign:"left",padding:"0 0 5px 0"}}>End Date</th>
+                        <th style={{width:"10%"}}></th>
+                      </tr>
+                    </thead>
+                  </table>
+                  {console.log(data.learningPath,"data.learningPath")}
             {data.learningPath.map((data, index) => (
               <CardContent key={index} className={classes.learningPath}>
                 <ThemeProvider theme={theme}>
                   <Typography aria-label="share" className={classes.listData}>
                     <span className={classes.courseName}>{`${index + 1}. ${data.name
                       }`}</span>
-                    <span className={classes.courseStatus}>
+                    <span className={classes.courseName1} style={{display:"flex", justifyContent:"space-between"}}>
+                      <span>
                       {" "}
-                      {`Start- ${data.startDate == null
+                      {`${data.startDate == null
                         ? "course not started"
                         : data.startDate
                         }`}
-                          {" "}
-                      {`End- ${data.endDate == null
+                        </span>
+                        <span>
+                      {" "}
+                      {`${data.endDate == null
                         ? "course not started"
                         : data.endDate
                         }`}
-                    </span>{editOption ?
+                        </span>
+                    </span>
+                    <span className={classes.percent}>
+                    {" "}
+                      {`${data.completed == null
+                        ? "course not started"
+                        : data.completed
+                        }%`}
+                        </span>
+                    {editOption ?
                       <span
                         className={classes.deleteButton}
                         onClick={() => onDelete(data.learningPathEmployeesId)}
@@ -156,7 +179,7 @@ function EmployeeCard(props) {
 }
 
 
-const mapStateToProps =(state)=> {
+const mapStateToProps = (state) => {
   const { learningPathState } = state
   return { discardModelOpen: learningPathState.discardModelOpen }
 }

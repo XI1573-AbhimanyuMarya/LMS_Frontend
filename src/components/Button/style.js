@@ -20,6 +20,8 @@ export const useStyles = makeStyles((theme) => ({
     fontSize:"10px",
     fontWeight:"normal",
     textTransform: 'capitalize',
+    height: '28px',
+    borderRadius: "1px",
     '&:hover': {
       backgroundColor: "#ff9300",
     }
@@ -79,6 +81,8 @@ export const useStyles = makeStyles((theme) => ({
     color:"#ffffff" ,
     backgroundColor: "#67b104",
     padding: "2px 10px",
+    boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
+    borderRadius: "1px",
     '&:hover': {
       backgroundColor: "#67b104",
     }

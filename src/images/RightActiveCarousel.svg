@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="52" height="40" viewBox="0 0 52 40">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #ebebeb;
+      }
+
+      .cls-3 {
+        fill: #858585;
+      }
+    </style>
+  </defs>
+  <g id="Group_189" data-name="Group 189" transform="translate(-280 -451)">
+    <path id="Rectangle" class="cls-1" d="M0,0H40a0,0,0,0,1,0,0V32A20,20,0,0,1,20,52h0A20,20,0,0,1,0,32V0A0,0,0,0,1,0,0Z" transform="translate(280 491) rotate(-90)"/>
+    <circle id="Oval" class="cls-2" cx="17" cy="17" r="17" transform="translate(294 454)"/>
+    <path id="Path_3_Copy" data-name="Path 3 Copy" class="cls-3" d="M7.092,4.987,1.487,0,0,.995,7.092,7,14,.995,12.7,0Z" transform="translate(307.5 477.5) rotate(-90)"/>
+  </g>
+</svg>
