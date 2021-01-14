@@ -32,7 +32,7 @@ const Dashboard = () => {
   const loginState = useSelector((res) => res.loginState);
   const learningPathState = useSelector((state) => state.learningPathState);
   const userName = getOr("User Name", "user.fullName", loginState);
-  const { assignedCources, pathModelOpen,managerDashStats,managerPopularStuff } = learningPathState;
+  const { assignedCources, pathModelOpen,managerDashStats,managerPopularStuff,isLoading } = learningPathState;
 
   // const showDashboard = (assignedCources.assignedLearningPaths
   //   && assignedCources.assignedLearningPaths.length ?
@@ -155,7 +155,7 @@ const Dashboard = () => {
           style={{
             width: "1060px",
             height: "180px",
-            margin: "0 20px 25px",
+            margin: "20px",
           }}
         >
           <PopularStuff managerPopularStuff={managerPopularStuff}/>
