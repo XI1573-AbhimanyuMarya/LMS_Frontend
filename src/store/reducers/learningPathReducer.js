@@ -36,6 +36,7 @@ const initialState = {
 }
 
 export const learningPathReducer = (state = initialState, action) => {
+ 
   const { payload } = action;
   switch (action.type) {
     case actionTypes.FETCH_COURSES_REQUEST:
@@ -209,6 +210,13 @@ export const learningPathReducer = (state = initialState, action) => {
         isLoading: false
       }
 
+      case actionTypes.SET_DELETED_EMP:
+        return {
+          ...state,
+          deletedEmpData: payload.val,
+          isLoading: false
+        }
+
       case actionTypes.UPLOADFILE_MODEL_OPEN:
         return {
           ...state,
@@ -252,6 +260,23 @@ export const learningPathReducer = (state = initialState, action) => {
         courseIdArr:[],
         userIdArr:[]
       }
+
+      case actionTypes.CREATE_ASSIGNED_LEARNING_PATH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        message: payload.data,
+        status: payload.status,
+        userIdArr:[]
+      }
+
+      case actionTypes.CREATE_ASSIGNED_LEARNING_PATH_FAILURE:
+        return {
+          ...state,
+          isLoading: false,
+          message: payload.message,
+          status: payload.status
+        }
     case actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE:
       return {
         ...state,

@@ -87,7 +87,8 @@ function* createAssignLearning(action)
   try{
     const response = yield call(createAssignLearningPath,action.payload);
     const {data} = response;
-    yield put({ type: actionTypes.CREATE_ASSIGNED_LEARNING_PATH_SUCCESS, payload: data })
+    console.log("responsee",response)
+    yield put({ type: actionTypes.CREATE_ASSIGNED_LEARNING_PATH_SUCCESS, payload: response })
 
   } catch(error)
   {

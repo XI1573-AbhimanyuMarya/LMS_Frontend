@@ -12,9 +12,9 @@ import Dashboard from "../views/Dasboard/index";
 import CourseCatalog from "../views/learnig/LearningSelectCourses";
 // import Chart from '../views/Chart';
 import Assigned from "../views/Assignedlearningpath/LearningPath";//CreateLearningPath";
-import NoCourse from "../views/LearningPath/NoCourse";
 import ManageAssignLearningPath from "../views/ManegerAssignedLearningPath";
 import Approval from "../views/Approval";
+
 
 const Routers = () => {
   return (

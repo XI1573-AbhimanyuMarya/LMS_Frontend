@@ -26,6 +26,7 @@ const SelectUsers = () => {
 	 * function to fetch all users initial time
 	 */
 	useEffect(() => {
+		dispatch(Actions.learningPathActions.getFilteredUsers(undefined));
 		if(userIdArr?.length === 0) {
 			dispatch(Actions.learningPathActions.fetchAllUsers());
 		} else {
@@ -101,7 +102,7 @@ const SelectUsers = () => {
 							? filteredUsersList?.slice(0, 16)
 							: ''
 						: users?.slice(0, 16);
-	let renderUsers	= "";				
+	let renderUsers	= "";
 	if (usersList && Array.isArray(usersList)) {
 		renderUsers = usersList.map((user) => {
 			const userClass = user.selected && user.selected === true ? classes.selected : classes.box;

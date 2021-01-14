@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import Icon from "@material-ui/core/Icon";
 import CloseIcon from '@material-ui/icons/Close';
 import CardMedia from '@material-ui/core/CardMedia';
 import Box from '@material-ui/core/Box';
@@ -25,6 +26,9 @@ import { STEPS1, MESSAGES, LEARNING_PATH_LABELS, BUTTONS } from '../../../../mod
 import WithLoading from '../../../../hoc/WithLoading';
 import { error } from '../../../../utils/notifications';
 import TopNav from '../../../../components/TopNav';
+import AssingedCourses from '../../../../images/assignLPsucess.png'
+
+import SucessPage from '../../LearningPath/SucessPage/SucessPage';
 
 const steps = STEPS1;
 const getStepContent = (step) => {
@@ -86,10 +90,10 @@ const AssignedCreateLearningPath = (props) => {
     setActivePathStep(activePathStep - 1);
   };
 
-  const renderFinalPage = status && status === 'success'
+  const renderFinalPage = status && status === 202
     ? userIdArr?.length > 0
       ? <>
-        <CheckCircleIcon className={classes.checkIcon} />
+          <CheckCircleIcon className={classes.checkIcon} />
         <Typography variant="h5" align="center" className={classes.assignedLabel}>
           {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED_AND_ASSIGNED}
         </Typography>
@@ -98,10 +102,15 @@ const AssignedCreateLearningPath = (props) => {
         </Typography>
       </>
       : <>
-        <CheckCircleIcon className={classes.checkIcon} />
+        {/* <div>
+        <Icon>
+        <img src={AssingedCourses} className={classes.combinedshape}/>
+        </Icon>
+        </div>
         <Typography variant="h5" align="center" className={classes.assignedLabel}>
           {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED}
-        </Typography>
+        </Typography> */}
+      <SucessPage/>
       </>
     : <>
       <ErrorIcon className={classes.errorIcon} />
@@ -152,7 +161,8 @@ const AssignedCreateLearningPath = (props) => {
               {activePathStep === steps?.length ? (
                 <React.Fragment>
                   <Container component="main" maxWidth="xs" className={classes.successContainer}>
-
+                  {console.log("status",status)}
+                  {console.log("usrIdarr",userIdArr)}
                     {renderFinalPage}
 
                     <Button

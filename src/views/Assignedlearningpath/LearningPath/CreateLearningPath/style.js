@@ -47,8 +47,16 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	assignedLabel: {
 		color: '#67B104'
-	},
-	errorLabel: {
+  },
+  combinedshape: {
+    width: '74px',
+    height: '77px',
+    margin: '0 6.6px 1.6px 0',
+    padding: '1px 3.5px 13px 12px',
+ 
+  },
+
+  errorLabel: {
 		color: '#E03A3E'
 	},
 	learningImg: {
