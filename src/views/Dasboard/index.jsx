@@ -145,8 +145,8 @@ const Dashboard = () => {
         Total:managerDashStats.totalLearningPathAssigned
       },
       Completed:managerDashStats.totalLearningPathCompleted,
-      Inprogress:managerDashStats.totalLearningPathExpired,
-      Overdue:managerDashStats.totalLearningPathInProgress
+      Inprogress:managerDashStats.totalLearningPathInProgress,
+      Overdue:managerDashStats.totalLearningPathExpired
     };
     return (
       <>

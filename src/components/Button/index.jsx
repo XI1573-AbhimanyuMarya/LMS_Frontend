@@ -112,3 +112,10 @@ export const CompletedButton=()=>{
     <Button className={classes.completed}>{`100%`}<DoneRoundedIcon className={classes.doneroundedicon}/></Button>
   );
 }
+
+export const ViewDetails=()=>{
+  const classes=useStyles();
+  return (
+    <Button className={classes.viewDtl}>View Details</Button>
+  );
+}
