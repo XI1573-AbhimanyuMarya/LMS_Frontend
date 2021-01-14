@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
-import LearningPathCardWOAction from "../../Card/LearningPathCardWOAction";
+import LearningPathCardWOAction from "../../../components/Card/LearningPathCardWOAction";
 import ArrowForwardIos from "../../../images/ArrowForwardIos.svg";
 import ItemsCarousel from "react-items-carousel";
 import { useStyles } from "./style";

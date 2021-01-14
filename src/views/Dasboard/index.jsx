@@ -205,7 +205,7 @@ const Dashboard = () => {
         <div className={classes.toolbar} />
         <div className="container">
           {!showMyDashboard && manager && showDashboard && !pathModelOpen ? (
-            <DashboardDetail />
+            <DashData />
           ) : showMyDashboard ? (
             <EmployeeDashboardDetail />
           ) : (

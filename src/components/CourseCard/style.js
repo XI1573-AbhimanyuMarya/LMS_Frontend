@@ -29,7 +29,20 @@ export const useStyles = makeStyles((theme) => ({
       borderRadius: 4,
     },
   },
-
+  CardRoot: {
+    width: "255px", //"340px",
+    height: "150px",
+    margin: "8.5px 10px 0 0.5px",
+    padding: "10px", //"12px 20px",
+    borderRadius: "8px",
+    backgroundColor: "#ffffff",
+    border: "none",
+    boxShadow: "none",
+  },
+  cardheading: {
+    fontSize: "1rem",
+    margin: "0 0 0 15px",
+  },
   header: {
     margin: "-8px 0px 10px 0px",
     marginLeft: "-15px",
@@ -273,6 +286,24 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: "-5px",
     marginBottom: "10px",
     height: "38px",
+  },
+  CardDesc: {
+    width: "220",
+    margin: "16.5px 17.6px 0 0",
+    fontSize: "13px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.33",
+    letterSpacing: "normal",
+    textAlign: "left",
+    color: "#858585",
+    textAlign: "justify",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    "-webkit-line-clamp": "3",
+    "-webkit-box-orient": "vertical",
   },
   tblrow: {
     "& td": {
