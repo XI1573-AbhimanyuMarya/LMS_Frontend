@@ -31,6 +31,8 @@ const initialState = {
   certificates:[],
   selectedLp:{},
   Approval:{},
+  managerDashStats:{},
+  managerPopularStuff:[]
 }
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -540,6 +542,44 @@ export const learningPathReducer = (state = initialState, action) => {
         isLoading: false,
         errorMessage: payload
       };
+      case actionTypes.MANAGER_DASHBOARD_STATS_REQUEST:
+        return {
+          ...state,
+          isLoading:true,
+          errorMessage:''
+        };
+      case actionTypes.MANAGER_DASHBOARD_STATS_SUCCESS:
+        return {
+          ...state,
+          isLoading:false,
+          managerDashStats:payload,
+          errorMessage:''
+        };
+      case actionTypes.MANAGER_DASHBOARD_STATS_FAILURE:
+        return {
+          ...state,
+          isLoading:false,
+          errorMessage:payload
+        };
+        case actionTypes.POPULAR_STUFF_REQUEST:
+          return {
+            ...state,
+            isLoading:true,
+            errorMessage:''
+          };
+        case actionTypes.POPULAR_STUFF_SUCCESS:
+          return {
+            ...state,
+            isLoading:false,
+            managerPopularStuff:payload,
+            errorMessage:''
+          };
+        case actionTypes.POPULAR_STUFF_FAILURE:
+          return {
+            ...state,
+            isLoading:false,
+            errorMessage:payload
+          };
     default: return state;
   }
 }

@@ -23,17 +23,28 @@ import DashboardDetail from "../Chart";
 import TopNav from "../../components/TopNav";
 import Copyright from "../../components/Copyright";
 
+import DashboardMatrix from "../../components/Dashboard/DashboardMatrix";
+import PopularStuff from "../../components/Carousel/PopularStuff";
+
 const Dashboard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loginState = useSelector((res) => res.loginState);
   const learningPathState = useSelector((state) => state.learningPathState);
   const userName = getOr("User Name", "user.fullName", loginState);
-  const { assignedCources, pathModelOpen } = learningPathState;
+  const { assignedCources, pathModelOpen,managerDashStats,managerPopularStuff } = learningPathState;
 
-  const showDashboard = (assignedCources.assignedLearningPaths
-    && assignedCources.assignedLearningPaths.length ?
-    true : false);
+  // const showDashboard = (assignedCources.assignedLearningPaths
+  //   && assignedCources.assignedLearningPaths.length ?
+  //   true : false);
+  var showDashboard = false;
+
+  for (var i in managerDashStats) {
+      if (managerDashStats[i] !== 0) {
+        showDashboard = true;
+        break;
+      }
+  }
 
   useEffect(() => {
     dispatch(
@@ -42,6 +53,8 @@ const Dashboard = () => {
       )
     );
     dispatch(Actions.learningPathActions.clearCreateLpFormFields());
+    dispatch(Actions.learningPathActions.getManagerStats(loginState.user.username));
+    dispatch(Actions.learningPathActions.getPopularStuff(loginState.user.id));
   }, []);
   /**
    * function to open learning path model
@@ -96,7 +109,11 @@ const Dashboard = () => {
           <Typography component="h1" variant="h5" gutterBottom>
             Welcome, {userName}
           </Typography>
-          <Typography component="h1" variant="subtitle2" style={{color:"#858585"}} >
+          <Typography
+            component="h1"
+            variant="subtitle2"
+            style={{ color: "#858585" }}
+          >
             Please assign first learning path to your team
           </Typography>
           <Button
@@ -120,6 +137,33 @@ const Dashboard = () => {
       <DiscardPopup discardHandler={discardHandler} />
     </Box>
   );
+
+  const DashData = () => {
+    const data={
+      totalCardDetail:{
+        heading:"Assigned Learning Path",
+        Total:managerDashStats.totalLearningPathAssigned
+      },
+      Completed:managerDashStats.totalLearningPathCompleted,
+      Inprogress:managerDashStats.totalLearningPathExpired,
+      Overdue:managerDashStats.totalLearningPathInProgress
+    };
+    return (
+      <>
+        <DashboardMatrix data={data} />
+        <div
+          style={{
+            width: "1060px",
+            height: "180px",
+            margin: "0 20px 25px",
+          }}
+        >
+          <PopularStuff managerPopularStuff={managerPopularStuff}/>
+        </div>
+      </>
+    );
+  };
+
   return (
     <div>
       <TopNav>{showDashboard ? modalBtn : ""}</TopNav>
@@ -127,10 +171,11 @@ const Dashboard = () => {
         <div className={classes.toolbar} />
         <div className="container">
           {showDashboard && !pathModelOpen ? (
-            <DashboardDetail />
+            // <DashboardDetail />
+            <DashData />
           ) : (
-              renderWelcome
-            )}
+            renderWelcome
+          )}
         </div>
         <div className="copyright">
           <Copyright />
