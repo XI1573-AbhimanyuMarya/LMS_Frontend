@@ -13,7 +13,8 @@ const SucessPage = () => {
   let history = useHistory();
   const handleClosePath = () => {
     console.log("handleclose");
-    history.push("/home");
+    history.push("/assigned");
+    window.location.reload();
   };
   return (
     <React.Fragment>

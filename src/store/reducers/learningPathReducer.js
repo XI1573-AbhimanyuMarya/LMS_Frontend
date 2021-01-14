@@ -210,6 +210,13 @@ export const learningPathReducer = (state = initialState, action) => {
         isLoading: false
       }
 
+      case actionTypes.SET_DELETED_EMP:
+        return {
+          ...state,
+          deletedEmpData: payload.val,
+          isLoading: false
+        }
+
       case actionTypes.UPLOADFILE_MODEL_OPEN:
         return {
           ...state,

@@ -17,6 +17,7 @@ import DiscardPopup from "../../../components/DiscardPopup/index1";
 import Actions from '../../../store/actions';
 
 import { useStyles } from "./style";
+import { ListItemAvatar } from "@material-ui/core";
 
 const theme = createMuiTheme({
   overrides: {
@@ -60,12 +61,13 @@ function EmployeeCard(props) {
 
   const discardHandler = (closeMainModel) => {
     if (closeMainModel) {
-      onDeleteAll(data.empID);
+      onDeleteAll(learningPathState.deletedEmpData.empID);
     }
     dispatch(Actions.learningPathActions.discardModelOpen(false));
   };
 
-  const handleDiscardClick = () => {
+  const handleDiscardClick = (data) => {
+    dispatch(Actions.learningPathActions.setDeletedEmp(data));
     dispatch(Actions.learningPathActions.discardModelOpen(true));
   }
 
@@ -101,8 +103,9 @@ function EmployeeCard(props) {
             className={classes.delete}
             action={
               <IconButton aria-label="settings"  >
-                <DeleteIcon className={classes.deleteIcon} onClick={handleDiscardClick} />
-                <DiscardPopup discardHandler={discardHandler} />
+                <DeleteIcon className={classes.deleteIcon} onClick={(e) => 
+                  handleDiscardClick(data)} />
+                <DiscardPopup discardHandler = {discardHandler} />
               </IconButton>
             }
             subheader={data.employee.location}

@@ -50,6 +50,10 @@ const discardModelOpen = (val) => ({
   type: actionTypes.DISCARD_MODEL_OPEN,
   payload: { val },
 });
+const setDeletedEmp = (val) => ({
+  type: actionTypes.SET_DELETED_EMP,
+  payload: { val },
+});
 const uploadFileModelOpen = (val) => ({
   type: actionTypes.UPLOADFILE_MODEL_OPEN,
   payload: { val },
@@ -180,6 +184,7 @@ export default {
   openBtn,
   pathModelOpen,
   discardModelOpen,
+  setDeletedEmp,
   createLearningPath,
   createAssignLearningPath,
   getFirstNextClicked,
