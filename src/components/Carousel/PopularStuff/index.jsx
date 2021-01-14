@@ -41,16 +41,13 @@ const PopularStuffCarousel = (props) => {
   }
   return (
     <>
-    <div style={{display:"flex",justifyContent:"space-between",marginBottom:-10}}>
+    <div style={{display:"flex",justifyContent:"space-between",marginBottom:"-10"}}>
       <div className={classes.PopularStuffText}>
         Popular Stuff <img src={ArrowForwardIos} className={classes.PopularStuffArrowFwd}/>
       </div>
-      {/* <img src={RightActiveCarousel} style={{height:"30px",widht:"30px"}}/> */}
-      <div style={{marginRight:10}}>
-        {activeItemIndex>0 ? <img src={LeftActiveCarousel} style={{height:"25px",widht:"30px"}} onClick={LeftHandler}/> : <img src={LeftDisableCarousel} style={{height:"25px",widht:"30px"}}/> }
-        {activeItemIndex<Math.floor(managerPopularStuff.length/4) ? <img src={RightActiveCarousel} style={{height:"25px",widht:"30px"}} onClick={RightHandler}/> : <img src={RightDisableCarousel} style={{height:"25px",widht:"30px"}}/>}
-        {/* <ArrowBackIosOutlinedIcon onClick={LeftHandler}/>
-        <ArrowForwardIosOutlinedIcon onClick={RightHandler}/> */}
+      <div style={{marginRight:10,marginTop:"-10px"}}>
+        {activeItemIndex>0 ? <img src={LeftActiveCarousel} style={{height:"30px",widht:"30px"}} onClick={LeftHandler}/> : <img src={LeftDisableCarousel} style={{height:"30px",widht:"30px"}}/> }
+        {activeItemIndex<Math.floor(managerPopularStuff.length/4) ? <img src={RightActiveCarousel} style={{height:"30px",widht:"30px"}} onClick={RightHandler}/> : <img src={RightDisableCarousel} style={{height:"30px",widht:"30px"}}/>}
       </div>
     </div>
       <ItemsCarousel

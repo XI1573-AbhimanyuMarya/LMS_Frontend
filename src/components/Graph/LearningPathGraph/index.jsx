@@ -34,6 +34,16 @@ const options = {
       return monthNames[value-1];
     }, 
   }
+  },
+  yaxis:{
+    tickAmount:4,
+    min:0,
+    max:100,
+    labels:{
+      formatter: function(val, index) {
+        return `${val}%`;
+      }
+    }
   }
 };
 const  series= [
@@ -56,8 +66,8 @@ const LearningPathGraph=()=>{
       options={options}
       series={series}
       type="area"
-      width="950"
-      height="200"
+      width="980"
+      height="184.3"
     />
   );
 }
