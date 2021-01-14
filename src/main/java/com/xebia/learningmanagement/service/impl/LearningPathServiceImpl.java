@@ -320,7 +320,6 @@ public class LearningPathServiceImpl implements LearningPathService {
 
                 if (Objects.nonNull(recordAlreadyExists)) {
                     learningPathEmployees = recordAlreadyExists;
-                    learningPathEmployees.setPercentCompleted(0);
                     learningPathEmployees.setMonthlyProgressModifiedDate(LocalDateTime.now());
                     learningPathEmployees.setApprovalStatus(YTBD);
                     learningPathEmployees.setDuration(duration);
