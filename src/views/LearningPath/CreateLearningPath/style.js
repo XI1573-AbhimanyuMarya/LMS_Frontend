@@ -3,7 +3,7 @@ import StepConnector from "@material-ui/core/StepConnector";
 
 export const useStyles = makeStyles((theme) => ({
   layout: {
-    width: "76vw",
+    width: "80vw",
     justifyContent: "center",
     background: "white",
   },

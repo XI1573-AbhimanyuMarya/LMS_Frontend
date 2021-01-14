@@ -17,10 +17,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 import Avatar from "@material-ui/core/Avatar";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
-
-import XebiaLogo from "../../images/Logo.svg";
 import DashboardIcon from "../../images/dashboard.svg";
 import DashboardActive from "../../images/dashboardActive.svg";
 import LearningPath from "../../images/LearningPath.svg";

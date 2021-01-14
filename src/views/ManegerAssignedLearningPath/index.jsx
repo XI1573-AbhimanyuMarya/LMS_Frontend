@@ -27,17 +27,19 @@ const ManageAssignLearningPath = ({ props }) => {
     (state) => state.loginState
   );
   const { isLoading, assignedCources, deleteStatus } = getAssignedLearningPaths;
+
   const [selectedUsersArr, setSelectedUsersArr] = useState([]);
   useEffect(() => {
     dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username));
 
   }, [deleteStatus]);
+
   const onDeleteAll = (employeeId) => {
     const employeeData = employees.find(emp => (emp.empID === employeeId))
     const ids = employeeData.learningPath.map(path => (path.learningPathEmployeesId))
     dispatch(Actions.learningPathActions.deleteAllPaths(ids))
-
   }
+
   const onDelete = (learningPathId) => {
     dispatch(Actions.learningPathActions.deletePath([learningPathId]))
   }

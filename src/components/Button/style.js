@@ -20,6 +20,8 @@ export const useStyles = makeStyles((theme) => ({
     fontSize:"10px",
     fontWeight:"normal",
     textTransform: 'capitalize',
+    height: '28px',
+    borderRadius: "1px",
     '&:hover': {
       backgroundColor: "#ff9300",
     }
@@ -79,6 +81,8 @@ export const useStyles = makeStyles((theme) => ({
     color:"#ffffff" ,
     backgroundColor: "#67b104",
     padding: "2px 10px",
+    boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
+    borderRadius: "1px",
     '&:hover': {
       backgroundColor: "#67b104",
     }
@@ -86,5 +90,16 @@ export const useStyles = makeStyles((theme) => ({
   doneroundedicon:{
     margin: "0px 0px 3px 7px",
     fontSize: "19px",
+  },
+  viewDtl:{
+    width: "100px",
+    height: "30px",
+    margin: "10px 0px",
+    borderRadius: "4px",
+    border: "solid 1px #027aff",
+    backgroundColor: "#ffffff",
+    textTransform: 'capitalize',
+    color: "#027aff",
+    fontSize:12
   }
 }));
