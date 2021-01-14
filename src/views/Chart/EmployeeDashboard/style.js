@@ -21,6 +21,7 @@ export const useStyles = makeStyles((theme) => ({
     background: "#F1F3F7",
     borderRadius: "0.5%",
     width: "100%",
+    paddingBottom: "10px",
     // margin: "auto"
   },
   pathNameField: {

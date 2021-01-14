@@ -237,7 +237,7 @@ const EmployeeDashboardDetail = () => {
           </div>
         )}
         {!selectedProgramToStart && !disable ? (
-          <>
+          <Box style={{ margin: "15px 20px" }}>
             <Box alignItems="flex-start" py={2}>
               <Typography
                 variant="h6"
@@ -253,7 +253,7 @@ const EmployeeDashboardDetail = () => {
                 handleCourseClick={courseClicked}
               />
             </Box>
-          </>
+          </Box>
         ) : (
           <></>
         )}
