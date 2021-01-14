@@ -68,11 +68,12 @@ const LearningCoursesTable = (props) => {
   }
 
   return (
+    <>
     <div
       style={{
         overflowX: "auto",
         overflowY: "auto",
-        height: "38vh",
+        height: "35vh",
         margin: "35px 0px 10px 0px",
       }}
     >
@@ -87,8 +88,9 @@ const LearningCoursesTable = (props) => {
         </thead>
         <tbody className={classes.tblbody}>{renderCourseList}</tbody>
       </table>
-      <Divider />
-      <span style={{display:"flex",justifyContent:"center", margin:"20px 0 0 0"}}>
+    </div>
+    <Divider />
+      <span style={{display:"flex",justifyContent:"center", margin:"5px 0 0 0"}}>
         <LowerCaseButton
         
           type="button"
@@ -105,7 +107,8 @@ const LearningCoursesTable = (props) => {
           >View attachments</LowerCaseButton>
           {show && attachments.length!==0 && !isLoading && <Gallery images={attachments} showImageCount={false} showLightboxThumbnails={true} lightboxWidth={600} isOpen={true} lightboxWillClose={()=>showGallery(false)} rowWidth=""/> }
       </span>
-    </div>
+    
+    </>
   );
 };
 
