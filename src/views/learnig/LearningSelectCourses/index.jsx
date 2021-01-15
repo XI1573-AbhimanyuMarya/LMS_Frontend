@@ -57,6 +57,7 @@ const SelectCourses = () => {
   let completed, inprogress;
   //let selectedLp;
   if (mycourses && mycourses.length > 0) {
+    debugger;
     completed = mycourses.filter(
       (course) => course.approvalStatus === "APPROVED"
     ); //course.percentCompleted === 100)
@@ -155,7 +156,9 @@ const SelectCourses = () => {
             selectedLp.constructor === Object ? (
               <LearningPathDesc />
             ) : (
-              <MyLearningPaths />
+              <div>
+                <MyLearningPaths />
+              </div>
             )}
           </Box>
         </div>

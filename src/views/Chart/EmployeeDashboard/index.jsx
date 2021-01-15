@@ -13,7 +13,7 @@ import TotalCard from "../../../components/Card/TotalCard";
 import StatusWiseCard from "../../../components/Card/StatusWiseCard";
 import { BackButton } from "../../../components/Button";
 import Grid from "@material-ui/core/Grid";
-import MyCarosals from "../../learnig/LearningSelectCourses/MyCarosals";
+import MyCarosals from "../../learnig/LearningSelectCourses/MyCarosals/index1";
 import LearningCoursesTable from "../../../components/Table/LearningCoursesTable";
 const DataCard = (props) => {
   const classes = useStyles();
