@@ -96,7 +96,7 @@ export const useStyles = makeStyles((theme) => ({
     "-webkit-box-orient": "vertical",
   },
   CardRoot: {
-    width: "255px",//"340px",
+    width: "calc((20vw) - 16px)",//"255px",//"340px",
     height: "150px",
     margin: "8.5px 10px 0 0.5px",
     padding: "10px",//"12px 20px",
