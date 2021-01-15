@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   Rectangle:{
-    width: "1050px",
+    width: "calc((100vw - 26%) - 16px)",//"1050px",
     height: "330px",//"360px",
     margin: "0 20px 10px",
     padding: "20px 40px 15px",
