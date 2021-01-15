@@ -132,7 +132,7 @@ const EmployeeDashboardDetail = () => {
             display: "flex",
             height: "20%",
             marginLeft: "30px",
-            // width: "90%",
+            width: coursesList1.length < 4 ? "90%" : "98%",
           }}
         >
           {(Object.keys(selectedLp).length !== 0 &&
