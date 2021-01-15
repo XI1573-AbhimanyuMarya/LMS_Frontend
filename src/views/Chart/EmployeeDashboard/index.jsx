@@ -32,7 +32,7 @@ const DataCard = (props) => {
   );
 };
 
-const EmployeeDashboardDetail = () => {
+const EmployeeDashboardDetail = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const learningPathState = useSelector((state) => state.learningPathState);
@@ -52,6 +52,8 @@ const EmployeeDashboardDetail = () => {
     } else {
       setSelectedCoursesArr(courseIdArr);
     }
+
+    console.log(props.statsData, "totalStat");
   }, []);
 
   const [lpId, setLpId] = useState(0);
@@ -144,8 +146,12 @@ const EmployeeDashboardDetail = () => {
             <>
               <div className={classes.root}>
                 <Grid container direction="row">
-                  <TotalCard />
-                  <StatusWiseCard />
+                  <TotalCard Total={props.statsData["totalCardDetail"].Total} />
+                  <StatusWiseCard
+                    Completed={props.statsData.Completed}
+                    Inprogress={props.statsData.Inprogress}
+                    Overdue={props.statsData.Overdue}
+                  />
                 </Grid>
               </div>
             </>

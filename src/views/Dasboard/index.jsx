@@ -48,22 +48,35 @@ const Dashboard = () => {
     assignedCources.assignedLearningPaths.length
       ? true
       : false;
+  const statsData = {
+    totalCardDetail: {
+      heading: "Assigned Learning Path",
+      Total: managerDashStats.totalLearningPathAssigned,
+    },
+    Completed: managerDashStats.totalLearningPathCompleted,
+    Inprogress: managerDashStats.totalLearningPathExpired,
+    Overdue: managerDashStats.totalLearningPathInProgress,
+  };
   // const { assignedCources, pathModelOpen,managerDashStats,managerPopularStuff,isLoading } = learningPathState;
 
   // const showDashboard = (assignedCources.assignedLearningPaths
   //   && assignedCources.assignedLearningPaths.length ?
   //   true : false);
   // var showDashboard = false;
+  let showDashboardStats = false;
+  for (var i in managerDashStats) {
+    if (managerDashStats[i] !== 0) {
+      showDashboardStats = true;
 
-  // for (var i in managerDashStats) {
-  //   if (managerDashStats[i] !== 0) {
-  //     showDashboard = true;
-  //     break;
-  //   }
-  // }
+      break;
+    }
+  }
 
   const [manager, setManager] = React.useState(false);
   useEffect(() => {
+    dispatch(
+      Actions.learningPathActions.getManagerStats(loginState.user.username)
+    );
     if (loginState.roles[0].roleName != "ROLE_MANAGER") {
       dispatch(
         Actions.learningPathActions.getMyLearningPath(loginState.user.username)
@@ -207,7 +220,7 @@ const Dashboard = () => {
           {!showMyDashboard && manager && showDashboard && !pathModelOpen ? (
             <DashData />
           ) : showMyDashboard ? (
-            <EmployeeDashboardDetail />
+            <EmployeeDashboardDetail statsData={statsData} />
           ) : (
             renderWelcome
           )}
