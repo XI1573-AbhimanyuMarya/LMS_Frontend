@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
     color: "#ff0033",
   },
   catalogContainer: {
-    background: "#F1F3F7",
+    // background: "#F1F3F7",
     borderRadius: "0.5%",
     width: "100%",
     // margin: "auto"

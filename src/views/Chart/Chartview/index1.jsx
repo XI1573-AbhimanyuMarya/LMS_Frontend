@@ -107,8 +107,8 @@ const Carosalschart = (props) => {
           activeItemIndex={activeItemIndex}
           numberOfCards={4}
           gutter={20}
-          leftChevron={<ArrowBackIosOutlinedIcon />}
-          rightChevron={<ArrowForwardIosOutlinedIcon />}
+          // leftChevron={<ArrowBackIosOutlinedIcon />}
+          // rightChevron={<ArrowForwardIosOutlinedIcon />}
           outsideChevron
           chevronWidth={chevronWidth}
           style={{ display: "flex", boxSizing: "border-box" }}

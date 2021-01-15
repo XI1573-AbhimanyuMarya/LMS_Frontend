@@ -106,7 +106,10 @@ const EmployeeDashboardDetail = () => {
             {LEARNING_PATH_LABELS.COURSE_CATALOG1}
           </Typography>
         )} */}
-        <Box alignItems="center" style={{ margin: "10px 50px 0px 0px" }}>
+        <Box
+          alignItems="center"
+          style={{ width: "92%", margin: "10px 50px 0px 0px" }}
+        >
           {isLoading &&
             completedCourse?.length === 0 && <CourseSkelton1 /> &&
             completed?.length}
@@ -129,7 +132,7 @@ const EmployeeDashboardDetail = () => {
             display: "flex",
             height: "20%",
             marginLeft: "30px",
-            width: "90%",
+            // width: "90%",
           }}
         >
           {(Object.keys(selectedLp).length !== 0 &&
@@ -252,7 +255,7 @@ const EmployeeDashboardDetail = () => {
                 style={{ margin: "15px 20px" }}
               >
                 <Box
-                  style={{ margin: "10px 50px 0px 0px" }}
+                  style={{ width: "92%", margin: "10px 50px 0px 0px" }}
                   alignItems="center"
                 >
                   {isLoading && coursesList1?.length === 0 && (
