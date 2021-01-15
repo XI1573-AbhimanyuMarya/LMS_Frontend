@@ -66,7 +66,7 @@ const LearningPathGraph=()=>{
       options={options}
       series={series}
       type="area"
-      width="980"
+      width="100%"
       height="184.3"
     />
   );

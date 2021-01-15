@@ -10,5 +10,5 @@ export const useStyles = makeStyles((theme) => ({
     boxShadow: "2px 6px 16px 0 rgba(0, 0, 0, 0.04)",
     backgroundColor: "#ffffff"
   },
-  CardContainer:{display:"flex",marginBottom:"15px"}
+  CardContainer:{display:"flex",marginBottom:"15px",width:"calc((100vw - 40%) - 16px)"}
 }));
