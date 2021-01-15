@@ -97,7 +97,7 @@ const LearningCoursesTable = (props) => {
           variant="contained"
           className={classes.navSubmit}
           onClick={sendForApprovalHandler}
-          >Send for approval</LowerCaseButton>
+          disabled={selectedLp.approvalStatus==="PENDING" ? true : false}>Send for approval</LowerCaseButton>
             <LowerCaseButton
           type="button"
           variant="contained"
