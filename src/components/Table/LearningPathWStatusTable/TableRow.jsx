@@ -1,6 +1,5 @@
 import React from "react";
 import { useStyles } from "./style";
-
 import { ViewDetails } from "../../Button";
 
 const TableRow = (props) => {
@@ -13,7 +12,7 @@ const TableRow = (props) => {
       <td>{lp.employeesCompletedCount}</td>
       <td>{lp.employeesInprogressCount}</td>
       <td style={{color:"#e76600"}}>{lp.employeesOverdueCount}</td>
-      <td><ViewDetails/></td>
+      <td><ViewDetails learningPathId={lp.learningPathId}/></td>
     </tr>
   );
 };

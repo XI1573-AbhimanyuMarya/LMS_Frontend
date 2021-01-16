@@ -43,10 +43,17 @@ const Navbar = (props) => {
   currentPath = path;
 
   const navLinks = [
+    // {
+    //   name: "Dashboard",
+    //   iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
+    //   to: user.designation === "HR" || user.designation === "Admin" ? "dashboard" : "dashboard-admin",
+    //   isActive: currentPath === "/dashboard",
+    //   canAccess: true
+    // },
     {
       name: "Dashboard",
       iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
-      to: user.designation !== "HR" || user.designation !== "Admin" ?"dashboard" : "dashboard-private",
+      to: "dashboard",
       isActive: currentPath === "/dashboard",
       canAccess: true
     },
@@ -56,7 +63,7 @@ const Navbar = (props) => {
         currentPath === "/learningpath" ? LearningPathActive : LearningPath,
       to: "learningpath",
       isActive: currentPath === "/learningpath",
-      canAccess: true,
+      canAccess: user.designation !== "Admin" || user.designation !== "Hr",
     },
     {
       name: "Assign Learning Path",
