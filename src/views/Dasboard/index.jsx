@@ -42,11 +42,48 @@ const Dashboard = () => {
     adminDashStats,
   } = learningPathState;
 
-  const showDashboard =
-    assignedCources.assignedLearningPaths &&
-    assignedCources.assignedLearningPaths.length
-      ? true
-      : false;
+  const isObject = (data) => {
+    return typeof data === "object" && data !== null;
+  };
+  const learningpathPrepareData = (elm) => {
+    return {
+      name: elm.learningPath.name,
+      learningPathId: elm.learningPath.learningPathId,
+      startDate: elm.startDate,
+      endDate: elm.endDate,
+      hasExpired: elm.isLearningPathExpired,
+      learningPathEmployeesId: elm.learningPathEmployeesId,
+      completed: elm.percentCompleted,
+    };
+  };
+
+  const prepareData = (data) => {
+    let employees = [];
+    if (isObject(data)) {
+      let learningDetails;
+      let tempEmployee;
+      for (var key in data) {
+        learningDetails = [];
+        if (data.hasOwnProperty(key)) {
+          if (data[key].length > 0) {
+            data[key].forEach((elm) => {
+              tempEmployee = elm.employee;
+              learningDetails.push(learningpathPrepareData(elm));
+            });
+            employees.push({
+              empID: tempEmployee.id,
+              employee: tempEmployee,
+              learningPath: learningDetails,
+            });
+          }
+        }
+      }
+    }
+    return employees;
+  };
+  const employees = prepareData(assignedCources);
+
+  const showDashboard = employees && employees.length ? true : false;
   const statsData = {
     totalCardDetail: {
       heading: "Assigned Learning Path",
@@ -68,6 +105,7 @@ const Dashboard = () => {
       showDashboardStats = true;
     }
   }
+
   // const {  } = learningPathState;
   // const showDashboard = (assignedCources.assignedLearningPaths
   //   && assignedCources.assignedLearningPaths.length ?
@@ -101,12 +139,16 @@ const Dashboard = () => {
       setManager(true);
       console.log(manager, "man");
     }
-    // dispatch(Actions.learningPathActions.clearCreateLpFormFields());
-    // dispatch(Actions.learningPathActions.getAdminStats(userRole === 'Manager'
-    //   ? 'MANAGER_DASHBOARD_STATS_REQUEST' : 'ADMIN_DASHBOARD_STATS_REQUEST'
-    // ));
-    // dispatch(Actions.learningPathActions.getAdminLearningPathDetails());
-    // dispatch(Actions.learningPathActions.getPopularStuff(loginState.user.id));
+    dispatch(Actions.learningPathActions.clearCreateLpFormFields());
+    dispatch(
+      Actions.learningPathActions.getAdminStats(
+        userRole === "Manager"
+          ? "MANAGER_DASHBOARD_STATS_REQUEST"
+          : "ADMIN_DASHBOARD_STATS_REQUEST"
+      )
+    );
+    dispatch(Actions.learningPathActions.getAdminLearningPathDetails());
+    dispatch(Actions.learningPathActions.getPopularStuff(loginState.user.id));
   }, []);
   const showMyDashboard =
     mycourses && !manager && mycourses.length ? true : false;
