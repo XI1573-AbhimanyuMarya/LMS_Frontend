@@ -52,7 +52,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   notification_desc:{
     width: "318px",
-    height: "16px",
+    height: "25px",
     fontFamily: "Roboto",
     fontSize: "11px",
     fontWeight: "normal",

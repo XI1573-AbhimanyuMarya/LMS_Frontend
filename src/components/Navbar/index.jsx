@@ -17,10 +17,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 import Avatar from "@material-ui/core/Avatar";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
-
-import XebiaLogo from "../../images/Logo.svg";
 import DashboardIcon from "../../images/dashboard.svg";
 import DashboardActive from "../../images/dashboardActive.svg";
 import LearningPath from "../../images/LearningPath.svg";
@@ -47,12 +43,19 @@ const Navbar = (props) => {
   currentPath = path;
 
   const navLinks = [
+    // {
+    //   name: "Dashboard",
+    //   iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
+    //   to: user.designation === "HR" || user.designation === "Admin" ? "dashboard" : "dashboard-admin",
+    //   isActive: currentPath === "/dashboard",
+    //   canAccess: true
+    // },
     {
       name: "Dashboard",
       iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
       to: "dashboard",
       isActive: currentPath === "/dashboard",
-      canAccess: true,
+      canAccess: true
     },
     {
       name: "My Learning Path",
@@ -60,7 +63,7 @@ const Navbar = (props) => {
         currentPath === "/learningpath" ? LearningPathActive : LearningPath,
       to: "learningpath",
       isActive: currentPath === "/learningpath",
-      canAccess: true,
+      canAccess: user.designation !== "Admin" || user.designation !== "Hr",
     },
     {
       name: "Assign Learning Path",

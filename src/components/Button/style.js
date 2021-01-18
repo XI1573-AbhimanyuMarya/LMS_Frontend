@@ -90,5 +90,16 @@ export const useStyles = makeStyles((theme) => ({
   doneroundedicon:{
     margin: "0px 0px 3px 7px",
     fontSize: "19px",
+  },
+  viewDtl:{
+    width: "100px",
+    height: "30px",
+    margin: "10px 0px",
+    borderRadius: "4px",
+    border: "solid 1px #027aff",
+    backgroundColor: "#ffffff",
+    textTransform: 'capitalize',
+    color: "#027aff",
+    fontSize:12
   }
 }));

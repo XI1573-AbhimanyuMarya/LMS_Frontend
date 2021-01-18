@@ -38,9 +38,11 @@ export function* learningPathSaga() {
   yield takeLatest(actionTypes.VIEW_ATTACHMENT, getAttachment);
   yield takeLatest(actionTypes.UPLOAD_CERTIFICATE, uploadCertificates);   
   yield takeLatest(actionTypes.SEND_APPROVAL, sendForApproval); 
-  yield takeLatest(actionTypes.UPLOAD_CERTIFICATE, uploadCertificates);
   
   yield takeLatest(actionTypes.MANAGER_DASHBOARD_STATS_REQUEST, getManagerStats);
+  yield takeLatest(actionTypes.ADMIN_DASHBOARD_STATS_REQUEST, getAdminStats);
+  yield takeLatest(actionTypes.ADMIN_LEARNING_PATH_DETAILS_REQUEST, getAdminLearningPathDetails);
+  yield takeLatest(actionTypes.ADMIN_DETAILS_REQUEST, getAdminDetails);
   yield takeLatest(actionTypes.POPULAR_STUFF_REQUEST, getManagerPopularStuff);
 }
 
@@ -87,7 +89,7 @@ function* createAssignLearning(action)
   try{
     const response = yield call(createAssignLearningPath,action.payload);
     const {data} = response;
-    yield put({ type: actionTypes.CREATE_ASSIGNED_LEARNING_PATH_SUCCESS, payload: data })
+    yield put({ type: actionTypes.CREATE_ASSIGNED_LEARNING_PATH_SUCCESS, payload: response })
 
   } catch(error)
   {
@@ -289,7 +291,18 @@ function* sendForApproval(action) {
 const fetchManagerStats = async (payload) => {
   return await axios.post(SERVICE_URLS.FETCH_MANAGER_STATS, payload , { headers: authHeader() });
 }
-  
+
+const fetchAdminStats = async () => {
+  return await axios.get(SERVICE_URLS.FETCH_ADMIN_STATS , { headers: authHeader() });
+}
+
+const fetchAdminLearningPathDetails = async () => {
+  return await axios.get(SERVICE_URLS.FETCH_ADMIN_LEARNING_PATH_DETAILS , { headers: authHeader() });
+}
+
+const fetchAdminDetails = async (id) => {
+  return await axios.get(SERVICE_URLS.FETCH_ADMIN_DETAILS+`?learningPathId=`+id.empId, { headers: authHeader()});
+}
 
 function* getManagerStats(action){
   try{
@@ -299,6 +312,36 @@ function* getManagerStats(action){
     yield put({ type: actionTypes.MANAGER_DASHBOARD_STATS_SUCCESS, payload: data });
   } catch(error) {
     yield put({ type: actionTypes.MANAGER_DASHBOARD_STATS_FAILURE, error });
+  }
+}
+
+function* getAdminStats(action){
+  try{
+    const response = yield call(fetchAdminStats,action.payload);
+    const { data } = response;
+    yield put({ type: actionTypes.ADMIN_DASHBOARD_STATS_SUCCESS, payload: data });
+  } catch(error) {
+    yield put({ type: actionTypes.ADMIN_DASHBOARD_STATS_FAILURE, error });
+  }
+}
+
+function* getAdminLearningPathDetails(action){
+  try{
+    const response = yield call(fetchAdminLearningPathDetails,action.payload);
+    const { data } = response;
+    yield put({ type: actionTypes.ADMIN_LEARNING_PATH_DETAILS_SUCCESS, payload: data });
+  } catch(error) {
+    yield put({ type: actionTypes.ADMIN_LEARNING_PATH_DETAILS_FAILURE, error });
+  }
+}
+
+function* getAdminDetails(action){
+  try{
+    const response = yield call(fetchAdminDetails,action.payload);
+    const { data } = response;
+    yield put({ type: actionTypes.ADMIN_DETAILS_SUCCESS, payload: data });
+  } catch(error) {
+    yield put({ type: actionTypes.ADMIN_DETAILS_FAILURE, error });
   }
 }
 

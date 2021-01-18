@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import getOr from "lodash/fp/getOr";
-import ItemsCarousel from "react-items-carousel";
-
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
@@ -10,9 +8,6 @@ import Container from "@material-ui/core/Container";
 import CardMedia from "@material-ui/core/CardMedia";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import Box from "@material-ui/core/Box";
-import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
-import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
-
 import DiscardPopup from "../../components/DiscardPopup/index";
 import AddLearningPath from "../../images/AddLearningPath.svg";
 import group2 from "../../images/group2.png";
@@ -20,13 +15,14 @@ import LearningPath from "../LearningPath/index";
 import { useStyles } from "./style";
 import WithLoading from "../../hoc/WithLoading";
 import Actions from "../../store/actions";
-import DashboardDetail from "../Chart";
 import TopNav from "../../components/TopNav";
 import Copyright from "../../components/Copyright";
 import EmployeeDashboardDetail from "../Chart/EmployeeDashboard";
 
+import LearningPathWStatusTable from "../../components/Table/LearningPathWStatusTable";
 import DashboardMatrix from "../../components/Dashboard/DashboardMatrix";
 import PopularStuff from "../../components/Carousel/PopularStuff";
+import LearnerTable from "../../components/Table/LearnersTable";
 
 const Dashboard = () => {
   const classes = useStyles();
@@ -38,9 +34,11 @@ const Dashboard = () => {
     mycourses,
     assignedCources,
     pathModelOpen,
-    managerDashStats,
+    managerDashStats={},
     managerPopularStuff,
     isLoading,
+    dashStats, 
+    adminDashStats
   } = learningPathState;
 
   const showDashboard =
@@ -67,28 +65,51 @@ const Dashboard = () => {
   for (var i in managerDashStats) {
     if (managerDashStats[i] !== 0) {
       showDashboardStats = true;
-
-      break;
     }
   }
+  // const {  } = learningPathState;
+  // const showDashboard = (assignedCources.assignedLearningPaths
+  //   && assignedCources.assignedLearningPaths.length ?
+  //   true : false);
+  // var showDashboard = false;
+  // let statsData = {};
 
-  const [manager, setManager] = React.useState(false);
+  // for (var i in adminDashStats) {
+  //   if (adminDashStats[i] !== 0) {
+  //     showDashboard = true;
+  //     break;
+    // }
+  // }
+
+  const [manager, setManager] = useState(false);
   useEffect(() => {
+    const userRole = loginState.user.designation;
     dispatch(
       Actions.learningPathActions.getManagerStats(loginState.user.username)
     );
-    if (loginState.roles[0].roleName != "ROLE_MANAGER") {
+    if (loginState.roles[0].roleName !== "ROLE_MANAGER") {
       dispatch(
         Actions.learningPathActions.getMyLearningPath(loginState.user.username)
       );
     } else {
-      setManager(true);
+      debugger
       dispatch(
         Actions.learningPathActions.getAssignedLearningPath(
           loginState.user.username
         )
-      );
+        );
+      console.log(manager,"man")
+      setManager(true);
+      console.log(manager,"man")
+     
+    
     }
+    // dispatch(Actions.learningPathActions.clearCreateLpFormFields());
+    // dispatch(Actions.learningPathActions.getAdminStats(userRole === 'Manager'
+    //   ? 'MANAGER_DASHBOARD_STATS_REQUEST' : 'ADMIN_DASHBOARD_STATS_REQUEST'
+    // ));
+    // dispatch(Actions.learningPathActions.getAdminLearningPathDetails());
+    // dispatch(Actions.learningPathActions.getPopularStuff(loginState.user.id));
   }, []);
   const showMyDashboard =
     mycourses && !manager && mycourses.length ? true : false;
@@ -175,6 +196,37 @@ const Dashboard = () => {
           ) : (
             <></>
           )}
+          {/* {
+            loginState.user.designation !== "Admin" || 
+            loginState.user.designation !== "Hr" ?
+            <>
+              <Typography
+                component="h1"
+                variant="subtitle2"
+                style={{ color: "#858585" }}
+              >
+                Please assign first learning path to your team
+              </Typography>
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                className={classes.submit}
+                onClick={handleClickOpen}
+                startIcon={
+                  <AddCircleOutlineOutlinedIcon style={{ fontSize: 40 }} />
+                }
+              >
+                Create Learning Path
+              </Button>
+            </> : 
+            <Typography
+              component="h1"
+              variant="subtitle2"
+              style={{ color: "#858585" }}>
+                Hello World
+            </Typography>
+          } */}
         </div>
       </Container>
       <LearningPath
@@ -186,45 +238,81 @@ const Dashboard = () => {
   );
 
   const DashData = () => {
-    const data = {
-      totalCardDetail: {
-        heading: "Assigned Learning Path",
-        Total: managerDashStats.totalLearningPathAssigned,
-      },
-      Completed: managerDashStats.totalLearningPathCompleted,
-      Inprogress: managerDashStats.totalLearningPathExpired,
-      Overdue: managerDashStats.totalLearningPathInProgress,
-    };
+    // const data = {
+    //   totalCardDetail: {
+    //     heading: "Assigned Learning Path",
+    //     Total: managerDashStats.totalLearningPathAssigned,
+    //   },
+    //   Completed: managerDashStats.totalLearningPathCompleted,
+    //   Inprogress: managerDashStats.totalLearningPathExpired,
+    //   Overdue: managerDashStats.totalLearningPathInProgress,
+    // };
+    // return (
+    //   <>
+    //     <DashboardMatrix data={data} />
+        
+    //     <div
+    //       style={{
+    //         width: "calc((100vw - 25%) - 16px)",
+    //         height: "180px",
+    //         margin: "20px",
+    //       }}
+    //     >
+    //       <PopularStuff managerPopularStuff={managerPopularStuff} />
+    //     </div>
+    if (dashStats) {
+      var data = {
+        totalCardDetail: {
+          heading: "Assigned Learning Path",
+          Total: dashStats.totalLearningPathAssigned
+        },
+        Completed: dashStats.totalLearningPathCompleted,
+        Inprogress: dashStats.totalLearningPathInProgress,
+        Overdue: dashStats.totalLearningPathExpired
+      };
+    }
     return (
       <>
-        <DashboardMatrix data={data} />
-        
-        <div
-          style={{
-            width: "calc((100vw - 25%) - 16px)",
-            height: "180px",
-            margin: "20px",
-          }}
-        >
-          <PopularStuff managerPopularStuff={managerPopularStuff} />
-        </div>
+      <Box>
+        {learningPathState.openDetailOfEnp && learningPathState.openDetailOfEnp.empStatus ?
+        <LearnerTable /> :
+        <>
+          {dashStats &&
+          <DashboardMatrix data={data} />}
+          <div
+            style={{
+              width: "1060px",
+              height: "180px",
+              margin: "20px",
+            }}
+          >
+          { loginState.user.designation !== "Admin" || 
+          loginState.user.designation !== "Hr" ?
+            <PopularStuff managerPopularStuff={managerPopularStuff} /> :
+            <LearningPathWStatusTable />
+          }
+          </div>
+        </>
+        }
+      </Box>
       </>
     );
   };
-
+console.log(showDashboard,showMyDashboard,manager,pathModelOpen,"result")
   return (
     <div>
-      <TopNav>{showDashboard ? modalBtn : ""}</TopNav>
+      <TopNav></TopNav>
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
-          {!showMyDashboard && manager && showDashboard && !pathModelOpen ? (
+          {!showMyDashboard && manager && showDashboard && !pathModelOpen ? 
+            // <DashboardDetail />
             <DashData />
-          ) : showMyDashboard ? (
+           : showMyDashboard ? (
             <EmployeeDashboardDetail statsData={statsData} />
           ) : (
             renderWelcome
-          )}
+            )}
         </div>
         <div className="copyright">
           <Copyright />
@@ -233,5 +321,6 @@ const Dashboard = () => {
     </div>
   );
 };
+
 
 export default WithLoading(Dashboard);

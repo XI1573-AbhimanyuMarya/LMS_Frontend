@@ -31,11 +31,12 @@ const initialState = {
   certificates:[],
   selectedLp:{},
   Approval:{},
-  managerDashStats:{},
+  dashStats:{},
   managerPopularStuff:[]
 }
 
 export const learningPathReducer = (state = initialState, action) => {
+ 
   const { payload } = action;
   switch (action.type) {
     case actionTypes.FETCH_COURSES_REQUEST:
@@ -208,6 +209,18 @@ export const learningPathReducer = (state = initialState, action) => {
         discardModelOpen: payload.val,
         isLoading: false
       }
+      case actionTypes.OPEN_DETAIL_EMP:
+        return {
+          ...state,
+          openDetailOfEnp: {empStatus: payload.val, empID: payload.id},
+          isLoading: false
+        }
+      case actionTypes.SET_DELETED_EMP:
+        return {
+          ...state,
+          deletedEmpData: payload.val,
+          isLoading: false
+        }
 
       case actionTypes.UPLOADFILE_MODEL_OPEN:
         return {
@@ -252,6 +265,23 @@ export const learningPathReducer = (state = initialState, action) => {
         courseIdArr:[],
         userIdArr:[]
       }
+
+      case actionTypes.CREATE_ASSIGNED_LEARNING_PATH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        message: payload.data,
+        status: payload.status,
+        userIdArr:[]
+      }
+
+      case actionTypes.CREATE_ASSIGNED_LEARNING_PATH_FAILURE:
+        return {
+          ...state,
+          isLoading: false,
+          message: payload.message,
+          status: payload.status
+        }
     case actionTypes.CREATE_LEARNING_PATH_CALL_FAILURE:
       return {
         ...state,
@@ -548,11 +578,71 @@ export const learningPathReducer = (state = initialState, action) => {
           isLoading:true,
           errorMessage:''
         };
+      case actionTypes.ADMIN_DASHBOARD_STATS_REQUEST:
+        return {
+          ...state,
+          isLoading: true,
+          errorMessage: ''
+        }
+      case actionTypes.ADMIN_DASHBOARD_STATS_SUCCESS:
+        return {
+          ...state,
+          isLoading:false,
+          dashStats:payload,
+          errorMessage:''
+        };
+      case actionTypes.ADMIN_DASHBOARD_STATS_FAILURE:
+        return {
+          ...state,
+          isLoading:false,
+          errorMessage:payload
+        };
+
+      case actionTypes.ADMIN_DETAILS_REQUEST:
+        return {
+          ...state,
+          isLoading: true,
+          errorMessage: ''
+        }
+      case actionTypes.ADMIN_LEARNING_PATH_DETAILS_SUCCESS:
+        return {
+          ...state,
+          isLoading:false,
+          adminLearningPathDetails:payload,
+          errorMessage:''
+        };
+      case actionTypes.ADMIN_LEARNING_PATH_DETAILS_FAILURE:
+        return {
+          ...state,
+          isLoading:false,
+          errorMessage:''
+        };
+
+        case actionTypes.ADMIN_DETAILS_REQUEST:
+          return {
+            ...state,
+            isLoading: true,
+            errorMessage: ''
+          }
+        case actionTypes.ADMIN_DETAILS_SUCCESS:
+          return {
+            ...state,
+            isLoading:false,
+            adminDetails:payload,
+            errorMessage:''
+          };
+        case actionTypes.ADMIN_DETAILS_FAILURE:
+          return {
+            ...state,
+            isLoading:false,
+            errorMessage:''
+          };
+      
       case actionTypes.MANAGER_DASHBOARD_STATS_SUCCESS:
         return {
           ...state,
           isLoading:false,
-          managerDashStats:payload,
+          dashStats:payload,
           errorMessage:''
         };
       case actionTypes.MANAGER_DASHBOARD_STATS_FAILURE:

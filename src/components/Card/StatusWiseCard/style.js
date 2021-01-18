@@ -2,15 +2,16 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
   MainRectangle: {
-    width: "940px", //"1077px",
-    height: "100px", //"150px",
+    width: "calc((55vw) - 16px)",//"740px",//"1077px",
+    height: "100px",//"150px",
     margin: "0 0 0 20px",
     padding: "0 20px 0 20px", //"0 93px 0 70px",
     borderRadius: "8px",
     boxShadow: "2px 6px 16px 0 rgba(0, 0, 0, 0.08)",
     backgroundColor: "#ffffff",
-    display: "flex",
-    alignItems: "center",
+    display:"flex",
+    alignItems:"center",
+    wordWrap: "break-word"
   },
   CompletedNum: {
     width: "50px", //"64px",

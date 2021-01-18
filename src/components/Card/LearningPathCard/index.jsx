@@ -29,7 +29,6 @@ const LearningPathCard = (props) => {
   }
   
   const { learningPathCourses } = learningPathState;
-  console.log(learningPathCourses,'num')
   return (
     <>
     <Card className={classes.root} style={inlineStyle}>

@@ -73,10 +73,7 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   disableLink: {
-    pointerEvents: "none",
-  },
-  hideLink: {
-    display: "none",
+    display: 'none'
   },
 
   active: {

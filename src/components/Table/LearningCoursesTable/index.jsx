@@ -8,6 +8,7 @@ import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CourseRow from "./CourseRow";
 import Gallery from 'react-grid-gallery';
+import { useLocation } from 'react-router-dom'  
 
 const LowerCaseButton = withStyles({
   root: {
@@ -46,6 +47,7 @@ const LearningCoursesTable = (props) => {
   });
 
   const [show,showGallery]=useState(false);
+  const location = useLocation();
 
   const viewAttachmentHandler=()=>{
     let reqBody={
@@ -68,11 +70,12 @@ const LearningCoursesTable = (props) => {
   }
 
   return (
+    <>
     <div
       style={{
         overflowX: "auto",
         overflowY: "auto",
-        height: "38vh",
+        height: "35vh",
         margin: "35px 0px 10px 0px",
       }}
     >
@@ -87,15 +90,17 @@ const LearningCoursesTable = (props) => {
         </thead>
         <tbody className={classes.tblbody}>{renderCourseList}</tbody>
       </table>
-      <Divider />
-      <span style={{display:"flex",justifyContent:"center", margin:"20px 0 0 0"}}>
+    </div>
+    {location.pathname === "/learningpath" ? 
+    <>
+    <Divider />
+      <span style={{display:"flex",justifyContent:"center", margin:"5px 0 0 0"}} >
         <LowerCaseButton
-        
           type="button"
           variant="contained"
           className={classes.navSubmit}
           onClick={sendForApprovalHandler}
-          >Send for approval</LowerCaseButton>
+          disabled={selectedLp.approvalStatus==="PENDING" ? true : false}>Send for approval</LowerCaseButton>
             <LowerCaseButton
           type="button"
           variant="contained"
@@ -105,7 +110,10 @@ const LearningCoursesTable = (props) => {
           >View attachments</LowerCaseButton>
           {show && attachments.length!==0 && !isLoading && <Gallery images={attachments} showImageCount={false} showLightboxThumbnails={true} lightboxWidth={600} isOpen={true} lightboxWillClose={()=>showGallery(false)} rowWidth=""/> }
       </span>
-    </div>
+      </>
+       : "" }
+    
+    </>
   );
 };
 

@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
-  Rectangle: {
-    // width: "200px", //"263px",
-    height: "100px", //"150px",
+  Rectangle:{
+    width: "calc((16vw) - 16px)",//"200px",//"263px",
+    height: "100px",//"150px",
     textAlign: "center",
     boxShadow: "4px 5px 10px 0 rgba(0, 0, 0, 0.08)",
     borderRadius: "8px",
