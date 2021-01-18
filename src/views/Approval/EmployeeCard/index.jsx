@@ -136,7 +136,7 @@ export default function EmployeeCardApproval(props) {
         <div className={classes.head}>
           <Typography className={classes.view} onClick={viewAttachmentHandler}>View Attachments</Typography>
           {show && attachments.length!==0 && !isLoading && <Gallery images={attachments} showImageCount={false} showLightboxThumbnails={true} lightboxWidth={600} isOpen={true} lightboxWillClose={()=>showGallery(false)} rowWidth=""/> }
-          <ApproveButton onViewClickApprove={onViewClickApprove}/><Approve discardHandler={discardHandlerApprove}></Approve>
+          <ApproveButton onViewClickApprove={onViewClickApprove}/><Approve discardHandler={discardHandlerApprove} data={data}></Approve>
           <RejectButton onViewClick={onViewClick}/><Reject discardHandler={discardHandler} rejectHandler={rejectHandler}></Reject>
         </div>
       </div>
