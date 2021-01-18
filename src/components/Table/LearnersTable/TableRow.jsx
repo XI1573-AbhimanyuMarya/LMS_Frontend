@@ -6,8 +6,8 @@ const TableRow = (props) => {
   const { lp } = props;
   return (
     <tr className={classes.tblrow}>
-      <td>{lp.learnerName}</td>
-      <td>{lp.level}</td>
+      <td>{lp.employee.fullName}</td>
+      <td>{lp.duration.name}</td>
       <td>{lp.startDate}</td>
       <td>{lp.endDate}</td>
       <td>{lp.percentCompleted}</td>

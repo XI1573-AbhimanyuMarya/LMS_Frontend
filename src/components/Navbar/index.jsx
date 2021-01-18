@@ -43,12 +43,19 @@ const Navbar = (props) => {
   currentPath = path;
 
   const navLinks = [
+    // {
+    //   name: "Dashboard",
+    //   iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
+    //   to: user.designation === "HR" || user.designation === "Admin" ? "dashboard" : "dashboard-admin",
+    //   isActive: currentPath === "/dashboard",
+    //   canAccess: true
+    // },
     {
       name: "Dashboard",
       iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
       to: "dashboard",
       isActive: currentPath === "/dashboard",
-      canAccess: true,
+      canAccess: true
     },
     {
       name: "My Learning Path",
@@ -56,31 +63,28 @@ const Navbar = (props) => {
         currentPath === "/learningpath" ? LearningPathActive : LearningPath,
       to: "learningpath",
       isActive: currentPath === "/learningpath",
-      canAccess: true,
+      canAccess: user.designation !== "Admin" || user.designation !== "Hr",
     },
     {
       name: "Assign Learning Path",
       iconPath: currentPath === "/assigned" ? AddLearningPathA : AddLearningPath,
       to: "assigned",
       isActive: currentPath === "/assigned",
-      canAccess: true,
-      // canAccess: user.designation !== "Consultant"
+      canAccess: user.designation === "Manager"
     },
     {
       name: "Approvals",
       iconPath: currentPath === "/approvals" ? ApprovalsA : Approvals,
       to: "approvals",
       isActive: currentPath === "/approvals",
-      // canAccess: true
-      canAccess: user.designation !== "Consultant",
+      canAccess: user.designation === "Manager"
     },
     {
       name: "Manage assigned learning",
       iconPath: currentPath === "/manage" ? DashboardActive : DashboardIcon,
       to: "manage",
       isActive: currentPath === "/manage",
-      // canAccess: user.designation !== "Consultant"
-      canAccess: true,
+      canAccess: user.designation === "Manager"
     },
   ];
   useEffect(() => {

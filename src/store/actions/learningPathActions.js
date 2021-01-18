@@ -50,6 +50,10 @@ const discardModelOpen = (val) => ({
   type: actionTypes.DISCARD_MODEL_OPEN,
   payload: { val },
 });
+const openDetails = (val, learningId) => ({
+  type: actionTypes.OPEN_DETAIL_EMP,
+  payload: { val, id: learningId },
+});
 const setDeletedEmp = (val) => ({
   type: actionTypes.SET_DELETED_EMP,
   payload: { val },
@@ -165,6 +169,19 @@ const getManagerStats=(managerEmail)=>({
   payload:{managerEmail}
 });
 
+const getAdminStats=(userRole)=>({
+  type:userRole
+});
+
+const getAdminLearningPathDetails = () => ({
+  type:actionTypes.ADMIN_LEARNING_PATH_DETAILS_REQUEST
+})
+
+const getAdminDetails = (empId) => ({
+  type:actionTypes.ADMIN_DETAILS_REQUEST,
+  payload: {empId}
+})
+
 const getPopularStuff=(assigneeId)=>({
   type:actionTypes.POPULAR_STUFF_REQUEST,
   payload:{assigneeId}
@@ -184,6 +201,7 @@ export default {
   openBtn,
   pathModelOpen,
   discardModelOpen,
+  openDetails,
   setDeletedEmp,
   createLearningPath,
   createAssignLearningPath,
@@ -213,5 +231,8 @@ export default {
   changeDocUploadedStatusForCourse,
 
   getManagerStats,
+  getAdminStats,
+  getAdminLearningPathDetails,
+  getAdminDetails,
   getPopularStuff
 };
