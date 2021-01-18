@@ -42,6 +42,7 @@ const Navbar = (props) => {
   let extracontent, currentPath;
   currentPath = path;
 
+  console.log(roles, "roless");
   const navLinks = [
     // {
     //   name: "Dashboard",
@@ -55,7 +56,7 @@ const Navbar = (props) => {
       iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
       to: "dashboard",
       isActive: currentPath === "/dashboard",
-      canAccess: true
+      canAccess: true,
     },
     {
       name: "My Learning Path",
@@ -63,11 +64,12 @@ const Navbar = (props) => {
         currentPath === "/learningpath" ? LearningPathActive : LearningPath,
       to: "learningpath",
       isActive: currentPath === "/learningpath",
-      canAccess: user.designation !== "Admin" || user.designation !== "Hr",
+      canAccess: roles[0].roleName !== "Admin" || roles[0].roleName !== "Hr",
     },
     {
       name: "Assign Learning Path",
-      iconPath: currentPath === "/assigned" ? AddLearningPathA : AddLearningPath,
+      iconPath:
+        currentPath === "/assigned" ? AddLearningPathA : AddLearningPath,
       to: "assigned",
       isActive: currentPath === "/assigned",
       canAccess: roles[0].roleName === "ROLE_MANAGER",
@@ -133,7 +135,7 @@ const Navbar = (props) => {
               <Link to={item.to} key={item.name}>
                 <ListItem button>
                   <ListItemIcon className={classes.MuiListItemIcon}>
-                    <Icon style={{height:"30px"}}>
+                    <Icon style={{ height: "30px" }}>
                       <img src={item.iconPath} className={classes.navIcons} />
                     </Icon>
                   </ListItemIcon>

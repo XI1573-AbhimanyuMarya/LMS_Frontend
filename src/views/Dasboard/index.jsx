@@ -50,11 +50,11 @@ const Dashboard = () => {
   const statsData = {
     totalCardDetail: {
       heading: "Assigned Learning Path",
-      Total: managerDashStats.totalLearningPathAssigned,
+      Total: dashStats.totalLearningPathAssigned,
     },
-    Completed: managerDashStats.totalLearningPathCompleted,
-    Inprogress: managerDashStats.totalLearningPathExpired,
-    Overdue: managerDashStats.totalLearningPathInProgress,
+    Completed: dashStats.totalLearningPathCompleted,
+    Inprogress: dashStats.totalLearningPathExpired,
+    Overdue: dashStats.totalLearningPathInProgress,
   };
   // const { assignedCources, pathModelOpen,managerDashStats,managerPopularStuff,isLoading } = learningPathState;
 
