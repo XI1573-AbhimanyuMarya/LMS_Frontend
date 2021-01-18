@@ -39,6 +39,7 @@ const Navbar = (props) => {
   const [path, setPath] = useState("/");
   const loginState = useSelector((res) => res.loginState);
   const { user } = loginState;
+  const userRole = JSON.parse(localStorage.getItem('USER_INFO')).roles[0].roleName;
   let extracontent, currentPath;
   currentPath = path;
 
@@ -63,28 +64,28 @@ const Navbar = (props) => {
         currentPath === "/learningpath" ? LearningPathActive : LearningPath,
       to: "learningpath",
       isActive: currentPath === "/learningpath",
-      canAccess: user.designation !== "Admin" || user.designation !== "Hr",
+      canAccess: userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR",
     },
     {
       name: "Assign Learning Path",
       iconPath: currentPath === "/assigned" ? AddLearningPathA : AddLearningPath,
       to: "assigned",
       isActive: currentPath === "/assigned",
-      canAccess: user.designation === "Manager"
+      canAccess: userRole === "ROLE_MANAGER"
     },
     {
       name: "Approvals",
       iconPath: currentPath === "/approvals" ? ApprovalsA : Approvals,
       to: "approvals",
       isActive: currentPath === "/approvals",
-      canAccess: user.designation === "Manager"
+      canAccess: userRole === "ROLE_MANAGER"
     },
     {
       name: "Manage assigned learning",
       iconPath: currentPath === "/manage" ? DashboardActive : DashboardIcon,
       to: "manage",
       isActive: currentPath === "/manage",
-      canAccess: user.designation === "Manager"
+      canAccess: userRole === "ROLE_MANAGER"
     },
   ];
   useEffect(() => {
