@@ -15,7 +15,7 @@ const DiscardPopup1 = (props) => {
     const classes = useStyles();
     const learningPathState = useSelector(state => state.learningPathState);
     const { approvePopup } = learningPathState;
-    const { discardHandler } = props;
+    const { discardHandler,data } = props;
     
     /**
      * function to cancel disacrd popup
@@ -46,7 +46,7 @@ const DiscardPopup1 = (props) => {
                     Approved
                     </DialogContentText>
                     <DialogContentText style={{textAlign:"center", fontSize:"12px"}}>
-                    You have Approved the course “Course Name” for “username”
+                    {`You have Approved the course “${data.learningPath.name}” for “${data.employee.fullName}”`}
                     </DialogContentText>
                 </DialogContent>
                 {/* <Divider variant="middle" /> */}

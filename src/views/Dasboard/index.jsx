@@ -29,6 +29,8 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((res) => res.loginState);
   const learningPathState = useSelector((state) => state.learningPathState);
+  const userRole = JSON.parse(localStorage.getItem("USER_INFO")).roles[0]
+    .roleName;
   const userName = getOr("User Name", "user.fullName", loginState);
   const [manager, setManager] = useState(false);
   const {
@@ -121,7 +123,6 @@ const Dashboard = () => {
   // }
 
   useEffect(() => {
-    const userRole = loginState.user.designation;
     dispatch(
       Actions.learningPathActions.getManagerStats(loginState.user.username)
     );
@@ -263,7 +264,7 @@ const Dashboard = () => {
               component="h1"
               variant="subtitle2"
               style={{ color: "#858585" }}>
-                Hello World
+                Hello Admin/HR
             </Typography>
           } */}
         </div>
