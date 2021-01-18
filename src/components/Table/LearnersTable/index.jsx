@@ -1,92 +1,19 @@
 import React from "react";
 import { useStyles } from "./style";
+import { useSelector, useDispatch } from "react-redux";
 import TableRow from "./TableRow";
+import Button from '@material-ui/core/Button';
+import Actions from "../../../store/actions";
+import { BUTTONS } from "../../../modules/constants";
 
 const LearnerTable = (props) => {
   const classes = useStyles();
-  const data =props.data!==undefined ? props.data :  [
-    {
-      learnerNameId: 1,
-      learnerName: "Ashok Tiwari",
-      level: "Advance",
-      startDate: "dd/mm/yy",
-      endDate: "dd/mm/yy",
-      percentCompleted: "88%",
-    },
-    {
-      learnerNameId: 2,
-      learnerName: "Rajveer Shirkhe",
-      level: "Advance",
-      startDate: "dd/mm/yy",
-      endDate: "dd/mm/yy",
-      percentCompleted: "14%",
-    },
-    {
-      learnerNameId: 3,
-      learnerName: "Faizan Aalam",
-      level: "Advance",
-      startDate: "dd/mm/yy",
-      endDate: "dd/mm/yy",
-      percentCompleted: "88%",
-    },
-    {
-      learnerNameId: 4,
-      learnerName: "Khursheed Shaikh",
-      level: "Advance",
-      startDate: "dd/mm/yy",
-      endDate: "dd/mm/yy",
-      percentCompleted: "50%",
-    },
-    {
-      learnerNameId: 5,
-      learnerName: "Pradeep Pandya",
-      level: "Advance",
-      startDate: "dd/mm/yy",
-      endDate: "dd/mm/yy",
-      percentCompleted: "38%",
-    },
-    {
-      learnerNameId: 6,
-      learnerName: "Ashok Tiwari",
-      level: "Advance",
-      startDate: "dd/mm/yy",
-      endDate: "dd/mm/yy",
-      percentCompleted: "88%",
-    },
-    {
-      learnerNameId: 7,
-      learnerName: "Khursheed Shaikh",
-      level: "Advance",
-      startDate: "dd/mm/yy",
-      endDate: "dd/mm/yy",
-      percentCompleted: "24%",
-    },
-    {
-      learnerNameId: 8,
-      learnerName: "Khursheed Shaikh",
-      level: "Advance",
-      startDate: "dd/mm/yy",
-      endDate: "dd/mm/yy",
-      percentCompleted: "83%",
-    },
-    {
-      learnerNameId: 9,
-      learnerName: "Rajveer Shirkhe",
-      level: "Advance",
-      startDate: "dd/mm/yy",
-      endDate: "dd/mm/yy",
-      percentCompleted: "58%",
-    },
-    {
-      learnerNameId: 10,
-      learnerName: "Ashok Tiwari",
-      level: "Advance",
-      startDate: "dd/mm/yy",
-      endDate: "dd/mm/yy",
-      percentCompleted: "8%",
-    },
-  ];
-  const renderCourseList = data.map((lp) => {
+  const dispatch = useDispatch();
+  const learningPathState = useSelector((state) => state.learningPathState);
+  const handleBack = () => {
+    dispatch(Actions.learningPathActions.openDetails(false, 0));
+  };
+  const renderCourseList = learningPathState.adminDetails && learningPathState.adminDetails.map((lp) => {
     return <TableRow key={lp.learningPathId} lp={lp} />;
   });
   return (
@@ -98,6 +25,9 @@ const LearnerTable = (props) => {
         width: "82vw",
       }}
     >
+      <Button onClick={handleBack} className={classes.button}>
+        {BUTTONS.BACK}
+      </Button>
       <table className={classes.tbl}>
         <thead className={classes.tblheading}>
           <tr>

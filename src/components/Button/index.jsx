@@ -1,18 +1,21 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
-
 import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
-
+import { useHistory } from "react-router-dom";
 import GreenCheck from '../../images/greencheck.svg';
 import ArrowBackIos from '../../images/ArrowBackIos.svg';
 import { useStyles } from './style';
 import UploadFilePopup from '../DiscardPopup/draganddrop';
 import ArrowForwardIos from '../../images/ArrowForwardIos.svg';
+import { useDispatch } from "react-redux";
+import Actions from "../../store/actions";
+
 
 export const SaveButton=(props)=>{
   const {saveRateHandler}=props;
   const classes=useStyles();
+
   return (
       <Button className={classes.savebtn} onClick={saveRateHandler} size="small" startIcon={<img src={GreenCheck} />}>
         Save
@@ -113,9 +116,14 @@ export const CompletedButton=()=>{
   );
 }
 
-export const ViewDetails=()=>{
-  const classes=useStyles();
+export const ViewDetails=(props)=>{
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const onViewDetailsClick = () => {
+    dispatch(Actions.learningPathActions.openDetails(true, props.learningPathId));
+    dispatch(Actions.learningPathActions.getAdminDetails(props.learningPathId));
+  }
   return (
-    <Button className={classes.viewDtl}>View Details</Button>
+    <Button className={classes.viewDtl} onClick={onViewDetailsClick}>View Details</Button>
   );
 }
