@@ -38,7 +38,6 @@ export function* learningPathSaga() {
   yield takeLatest(actionTypes.VIEW_ATTACHMENT, getAttachment);
   yield takeLatest(actionTypes.UPLOAD_CERTIFICATE, uploadCertificates);   
   yield takeLatest(actionTypes.SEND_APPROVAL, sendForApproval); 
-  yield takeLatest(actionTypes.UPLOAD_CERTIFICATE, uploadCertificates);
   
   yield takeLatest(actionTypes.MANAGER_DASHBOARD_STATS_REQUEST, getManagerStats);
   yield takeLatest(actionTypes.ADMIN_DASHBOARD_STATS_REQUEST, getAdminStats);
