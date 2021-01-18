@@ -30,15 +30,16 @@ const Dashboard = () => {
   const loginState = useSelector((res) => res.loginState);
   const learningPathState = useSelector((state) => state.learningPathState);
   const userName = getOr("User Name", "user.fullName", loginState);
+  const [manager, setManager] = useState(false);
   const {
     mycourses,
     assignedCources,
     pathModelOpen,
-    managerDashStats={},
+    managerDashStats = {},
     managerPopularStuff,
     isLoading,
-    dashStats, 
-    adminDashStats
+    dashStats,
+    adminDashStats,
   } = learningPathState;
 
   const showDashboard =
@@ -78,10 +79,9 @@ const Dashboard = () => {
   //   if (adminDashStats[i] !== 0) {
   //     showDashboard = true;
   //     break;
-    // }
+  // }
   // }
 
-  const [manager, setManager] = useState(false);
   useEffect(() => {
     const userRole = loginState.user.designation;
     dispatch(
@@ -92,17 +92,14 @@ const Dashboard = () => {
         Actions.learningPathActions.getMyLearningPath(loginState.user.username)
       );
     } else {
-      debugger
       dispatch(
         Actions.learningPathActions.getAssignedLearningPath(
           loginState.user.username
         )
-        );
-      console.log(manager,"man")
+      );
+      console.log(manager, "man");
       setManager(true);
-      console.log(manager,"man")
-     
-    
+      console.log(manager, "man");
     }
     // dispatch(Actions.learningPathActions.clearCreateLpFormFields());
     // dispatch(Actions.learningPathActions.getAdminStats(userRole === 'Manager'
@@ -250,7 +247,7 @@ const Dashboard = () => {
     // return (
     //   <>
     //     <DashboardMatrix data={data} />
-        
+
     //     <div
     //       style={{
     //         width: "calc((100vw - 25%) - 16px)",
@@ -264,55 +261,63 @@ const Dashboard = () => {
       var data = {
         totalCardDetail: {
           heading: "Assigned Learning Path",
-          Total: dashStats.totalLearningPathAssigned
+          Total: dashStats.totalLearningPathAssigned,
         },
         Completed: dashStats.totalLearningPathCompleted,
         Inprogress: dashStats.totalLearningPathInProgress,
-        Overdue: dashStats.totalLearningPathExpired
+        Overdue: dashStats.totalLearningPathExpired,
       };
     }
     return (
       <>
-      <Box>
-        {learningPathState.openDetailOfEnp && learningPathState.openDetailOfEnp.empStatus ?
-        <LearnerTable /> :
-        <>
-          {dashStats &&
-          <DashboardMatrix data={data} />}
-          <div
-            style={{
-              width: "1060px",
-              height: "180px",
-              margin: "20px",
-            }}
-          >
-          { loginState.user.designation !== "Admin" || 
-          loginState.user.designation !== "Hr" ?
-            <PopularStuff managerPopularStuff={managerPopularStuff} /> :
-            <LearningPathWStatusTable />
-          }
-          </div>
-        </>
-        }
-      </Box>
+        <Box>
+          {learningPathState.openDetailOfEnp &&
+          learningPathState.openDetailOfEnp.empStatus ? (
+            <LearnerTable />
+          ) : (
+            <>
+              {dashStats && <DashboardMatrix data={data} />}
+              <div
+                style={{
+                  width: "1060px",
+                  height: "180px",
+                  margin: "20px",
+                }}
+              >
+                {loginState.user.designation !== "Admin" ||
+                loginState.user.designation !== "Hr" ? (
+                  <PopularStuff managerPopularStuff={managerPopularStuff} />
+                ) : (
+                  <LearningPathWStatusTable />
+                )}
+              </div>
+            </>
+          )}
+        </Box>
       </>
     );
   };
-console.log(showDashboard,showMyDashboard,manager,pathModelOpen,"result")
+  console.log(
+    showDashboard,
+    !showMyDashboard,
+    manager,
+    !pathModelOpen,
+    "result"
+  );
   return (
     <div>
       <TopNav></TopNav>
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
-          {!showMyDashboard && manager && showDashboard && !pathModelOpen ? 
+          {!showMyDashboard && manager && showDashboard && !pathModelOpen ? (
             // <DashboardDetail />
             <DashData />
-           : showMyDashboard ? (
+          ) : showMyDashboard ? (
             <EmployeeDashboardDetail statsData={statsData} />
           ) : (
             renderWelcome
-            )}
+          )}
         </div>
         <div className="copyright">
           <Copyright />
@@ -321,6 +326,5 @@ console.log(showDashboard,showMyDashboard,manager,pathModelOpen,"result")
     </div>
   );
 };
-
 
 export default WithLoading(Dashboard);
