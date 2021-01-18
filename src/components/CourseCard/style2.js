@@ -4,6 +4,13 @@ export const useStyles = makeStyles((theme) => ({
   courseDesc: {
     fontSize: 12,
     color: "#858585",
+
+    textAlign: "justify",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    "-webkit-line-clamp": "3",
+    "-webkit-box-orient": "vertical",
     [theme.breakpoints.up("md")]: {
       fontSize: 10,
       color: "#858585",
@@ -42,7 +49,14 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
-  cardcontent: { height: "180px", overflow: "auto" },
+
+  cardcontent: {
+    height: "150px",
+    overflow: "auto",
+    [theme.breakpoints.between("sm", "md")]: {
+      height: "150px",
+    },
+  },
   btn: {
     borderRadius: "8px",
     border: "solid 1px #f07301",

@@ -343,5 +343,5 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
-  cardcontent: { height: "180px", overflow: "auto" },
+  cardcontent: { height: "150px", overflow: "auto" },
 }));
