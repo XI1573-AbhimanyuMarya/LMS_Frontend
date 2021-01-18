@@ -26,6 +26,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((res) => res.loginState);
   const learningPathState = useSelector((state) => state.learningPathState);
+  const userRole = JSON.parse(localStorage.getItem('USER_INFO')).roles[0].roleName;
   const userName = getOr("User Name", "user.fullName", loginState);
   const { assignedCources, pathModelOpen, dashStats, adminDashStats, managerPopularStuff, isLoading } = learningPathState;
   // const showDashboard = (assignedCources.assignedLearningPaths
@@ -42,15 +43,13 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    const userRole = loginState.user.designation;
     dispatch(
       Actions.learningPathActions.getAssignedLearningPath(
         loginState.user.username
       )
     );
     dispatch(Actions.learningPathActions.clearCreateLpFormFields());
-    dispatch(Actions.learningPathActions.getAdminStats(userRole === 'Manager'
-      ? 'MANAGER_DASHBOARD_STATS_REQUEST' : 'ADMIN_DASHBOARD_STATS_REQUEST'
+    dispatch(Actions.learningPathActions.getAdminStats(userRole === 'ROLE_MANAGER' ? 'MANAGER_DASHBOARD_STATS_REQUEST' : 'ADMIN_DASHBOARD_STATS_REQUEST'
     ));
     dispatch(Actions.learningPathActions.getAdminLearningPathDetails());
     dispatch(Actions.learningPathActions.getPopularStuff(loginState.user.id));
@@ -109,8 +108,7 @@ const Dashboard = () => {
             Welcome, {userName}
           </Typography>
           {
-            loginState.user.designation !== "Admin" || 
-            loginState.user.designation !== "Hr" ?
+            userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR" ?
             <>
               <Typography
                 component="h1"
@@ -136,7 +134,7 @@ const Dashboard = () => {
               component="h1"
               variant="subtitle2"
               style={{ color: "#858585" }}>
-                Hello World
+                Hello Admin/HR
             </Typography>
           }
         </div>
@@ -176,8 +174,7 @@ const Dashboard = () => {
               margin: "20px",
             }}
           >
-          { loginState.user.designation !== "Admin" || 
-          loginState.user.designation !== "Hr" ?
+          { userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR" ?
             <PopularStuff managerPopularStuff={managerPopularStuff} /> :
             <LearningPathWStatusTable />
           }
