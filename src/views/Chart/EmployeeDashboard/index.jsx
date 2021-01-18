@@ -211,7 +211,7 @@ const EmployeeDashboardDetail = (props) => {
         {(completed.length > 0 || selectedProgramToStart) && (
           <div>
             <div className={classes.toolbar} />
-            <div style={{ paddingTop: "1px" }} className="container">
+            <div className="container">
               <Box
                 display="flex-inline"
                 justifyContent="center"
