@@ -20,9 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.xebia.learningmanagement.enums.NotificationRecipient.EMPLOYEE;
-import static com.xebia.learningmanagement.enums.NotificationRecipient.MANAGER;
-
 @Service
 @Transactional
 public class NotificationServiceImpl implements NotificationService {
@@ -47,6 +44,15 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Integer getUnreadNotificationCount(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(MessageBank.USERNAME_NOT_FOUND));
-       return notificationRepository.countByNotificationForAndIsRead(user, false);
+        return notificationRepository.countByNotificationForAndIsRead(user, false);
     }
+
+    @Override
+    public void markAllAsRead(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(MessageBank.USERNAME_NOT_FOUND));
+        List<Notification> unreadNotifications = notificationRepository.findByNotificationForAndIsRead(user, false);
+        List<Long> notificationIds = unreadNotifications.stream().map(Notification::getNotificationId).collect(Collectors.toList());
+        notificationIds.forEach(notification -> notificationRepository.notificationIsReadToTrue(notification));
+    }
+
 }
