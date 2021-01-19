@@ -113,7 +113,7 @@ public class AdminServiceImpl implements AdminService {
         statusGraphList.add(employeesCompletedCount);
 
 //---------------------
-        List<Object> inProgressObjectList = employeesRepository.countByApprovalStatusNotApprovedAndPercentCompletedGroupedByYearMonth(APPROVED.toString(), 100);
+        List<Object> inProgressObjectList = employeesRepository.countByApprovalStatusNotApprovedAndPercentCompletedGroupedByYearMonth(APPROVED.toString());
 
         for (Object object : inProgressObjectList) {
             Object[] objectArray = (Object[]) object;

@@ -62,8 +62,8 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
     List<Object> countByApprovalStatusAndPercentCompletedGroupedByYearMonth(String approved, int percent);
 
 
-    @Query(value = "select to_char(modification_time,'YYYY-Month') as year_month ,count(id) as total from learning_path_employees where approval_status != ?1 and percent_completed= ?2 group by year_month ", nativeQuery = true)
-    List<Object> countByApprovalStatusNotApprovedAndPercentCompletedGroupedByYearMonth(String approved, int percent);
+    @Query(value = "select to_char(modification_time,'YYYY-Month') as year_month ,count(id) as total from learning_path_employees where approval_status != ?1 and percent_completed > 0 group by year_month ", nativeQuery = true)
+    List<Object> countByApprovalStatusNotApprovedAndPercentCompletedGroupedByYearMonth(String approved);
 
     @Query(value = "select to_char(modification_time,'YYYY-Month') as year_month ,count(id) as total from learning_path_employees where approval_status = ?1 and ( end_date < now() ) group by year_month ", nativeQuery = true)
     List<Object> countByOverdueAndPercentCompletedGroupedByYearMonth(String ytbd);
