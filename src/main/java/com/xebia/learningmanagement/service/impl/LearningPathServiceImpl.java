@@ -20,7 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -115,6 +118,7 @@ public class LearningPathServiceImpl implements LearningPathService {
             learningPathEmployees.setLearningPath(learningPath);
             learningPathEmployees.setEmployee(user);
             learningPathEmployees.setPercentCompleted(0);
+            learningPathEmployees.setMonthlyProgressModifiedDate(LocalDateTime.now());
             learningPathEmployees.setDuration(durationRepository.findById(path.getDuration()).get());
             learningPathEmployees.setStartDate(LocalDate.now());
             Integer lpDuration = Integer.valueOf(CharMatcher.inRange('0', '9').retainFrom(learningPathEmployees.getDuration().getName()));
@@ -316,7 +320,7 @@ public class LearningPathServiceImpl implements LearningPathService {
 
                 if (Objects.nonNull(recordAlreadyExists)) {
                     learningPathEmployees = recordAlreadyExists;
-                    learningPathEmployees.setPercentCompleted(0);
+                    learningPathEmployees.setMonthlyProgressModifiedDate(LocalDateTime.now());
                     learningPathEmployees.setApprovalStatus(YTBD);
                     learningPathEmployees.setDuration(duration);
                     learningPathEmployees.setStartDate(LocalDate.now());
@@ -330,6 +334,7 @@ public class LearningPathServiceImpl implements LearningPathService {
                     learningPathEmployees.setLearningPath(learningPath);
                     learningPathEmployees.setEmployee(user);
                     learningPathEmployees.setPercentCompleted(0);
+                    learningPathEmployees.setMonthlyProgressModifiedDate(LocalDateTime.now());
                     learningPathEmployees.setApprovalStatus(YTBD);
                     learningPathEmployees.setDuration(duration);
                     learningPathEmployees.setStartDate(LocalDate.now());
@@ -384,25 +389,19 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
     @Override
-    public Map<LearningPath, Long> dashboardTopTrending(Long assigneeId) {
+    public List<LearningPath> dashboardTopTrending(Long assigneeId) {
         HashMap<LearningPath, Long> learningPathLongHashMap = new HashMap<>();
         List<LearningPath> learningPaths = learningPathRepository.findByMadeById(assigneeId);
         for (LearningPath learningPath : learningPaths) {
             Long aLong = learningPathEmployeesRepository.countByLearningPath(learningPath);
             learningPathLongHashMap.put(learningPath, aLong);
         }
-        Map<LearningPath, Long> sortedMap = sortByValue(learningPathLongHashMap);
-
-        return sortedMap.entrySet().stream()
-                .limit(5)
-                .collect(LinkedHashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), Map::putAll);
+        List<LearningPath> sortedList = sortByValue(learningPathLongHashMap);
+        return sortedList.stream().limit(5).collect(Collectors.toList());
     }
 
-
-    public static Map<LearningPath, Long> sortByValue(Map<LearningPath, Long> hm) {
-
+    public static List<LearningPath> sortByValue(Map<LearningPath, Long> hm) {
         List<Map.Entry<LearningPath, Long>> list = new LinkedList<Map.Entry<LearningPath, Long>>(hm.entrySet());
-
 
         Collections.sort(list, new Comparator<Map.Entry<LearningPath, Long>>() {
             public int compare(Map.Entry<LearningPath, Long> o1,
@@ -411,15 +410,29 @@ public class LearningPathServiceImpl implements LearningPathService {
             }
         });
 
-
-        // put data from sorted list to hashmap
-        Map<LearningPath, Long> returnMap = new LinkedHashMap<>();
+        // put data from sorted list to a new list
+        List<LearningPath> returnList = new LinkedList<>();
         for (int i = list.size() - 1; i >= 0; i--) {
-            returnMap.put(list.get(i).getKey(), list.get(i).getValue());
-
+            returnList.add(list.get(i).getKey());
         }
-        return returnMap;
+        return returnList;
     }
 
 
+    @Override
+    public List<DashboardGraphStatisticsDTO> dashboardGraphStatistics(long uid) {
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime comparisonDate = LocalDateTime.of((today.getYear() - 1), today.getMonth(), (today.getDayOfMonth() - 1), 1, 1, 1);
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        List<String> monthsCollection = Arrays.stream(dfs.getMonths()).filter(a -> !a.equals("")).collect(Collectors.toList());
+
+        User user = userRepository.findById(uid).orElseThrow(() -> new UserNotFoundException(MessageBank.USERNAME_NOT_FOUND));
+        List<LearningPathEmployees> learningPathMadeByManager = learningPathEmployeesRepository.findByLearningPathMadeBy(user);
+        int totalRecordCount = learningPathMadeByManager.size();
+        Map<Month, Long> completedCount = learningPathMadeByManager.stream().filter(a -> a.getApprovalStatus().equals(APPROVED)).collect(Collectors.groupingBy(z -> z.getMonthlyProgressModifiedDate().getMonth(), Collectors.counting()));
+        Map<Month, Long> inprogressCount = learningPathMadeByManager.stream().filter(a -> !a.getApprovalStatus().equals(APPROVED)).collect(Collectors.groupingBy(z -> z.getMonthlyProgressModifiedDate().getMonth(), Collectors.counting()));
+        Map<Month, Long> overdueCount = learningPathMadeByManager.stream().filter(a -> a.getEndDate().compareTo(LocalDate.now()) < 0).filter(a -> a.getApprovalStatus().equals(YTBD)).collect(Collectors.groupingBy(a -> a.getMonthlyProgressModifiedDate().getMonth(), Collectors.counting()));
+       // TODO YET TO BE DECIDED
+        return null;
+    }
 }

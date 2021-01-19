@@ -11,6 +11,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
@@ -22,4 +24,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     Page<Notification> findByNotificationFor(User user, Pageable page);
 
     Integer countByNotificationForAndIsRead(User user, boolean isRead);
+
+    List<Notification> findByNotificationForAndIsRead(User user, boolean b);
 }

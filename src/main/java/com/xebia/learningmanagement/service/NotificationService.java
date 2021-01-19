@@ -9,4 +9,6 @@ public interface NotificationService {
     List<NotificationContentDTO> getUserNotifications(Long userId, Integer pageNo, Integer pageSize);
 
     Integer getUnreadNotificationCount(Long userId);
+
+    void markAllAsRead(Long userId);
 }

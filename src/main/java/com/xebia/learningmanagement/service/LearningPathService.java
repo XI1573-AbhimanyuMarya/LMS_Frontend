@@ -28,5 +28,7 @@ public interface LearningPathService {
 
     AdminDashboardStatisticsDTO dashboardStatistics(ManagerEmailRequest managerEmail);
 
-    Map<LearningPath, Long> dashboardTopTrending(Long assigneeId);
+    List<LearningPath> dashboardTopTrending(Long assigneeId);
+
+    List<DashboardGraphStatisticsDTO> dashboardGraphStatistics(long uid);
 }

@@ -1,8 +1,6 @@
 package com.xebia.learningmanagement.service.impl;
 
-import com.xebia.learningmanagement.dtos.AdminDashboardDetailsDTO;
-import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
-import com.xebia.learningmanagement.dtos.MadeForEmployeeDto;
+import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
@@ -12,13 +10,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.APPROVED;
-import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.REJECTED;
+import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.*;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -29,9 +27,9 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Autowired
-    public AdminServiceImpl(LearningPathEmployeesRepository employeesRepository,LearningPathRepository learningPathRepository) {
+    public AdminServiceImpl(LearningPathEmployeesRepository employeesRepository, LearningPathRepository learningPathRepository) {
         this.employeesRepository = employeesRepository;
-        this.learningPathRepository=learningPathRepository;
+        this.learningPathRepository = learningPathRepository;
 
     }
 
@@ -65,15 +63,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminDashboardStatisticsDTO dashboardStatistics() {
         long totalLearningPathAssigned = learningPathRepository.count();
-        long totalLearningPathCompleted = employeesRepository.countByPercentCompletedAndApprovalStatus(100,APPROVED);
-        long totalLearningPathInprogress = employeesRepository.countByPercentCompletedNotOrApprovalStatus(100,REJECTED);
+        long totalEmployeeRecords = employeesRepository.count();
+        long totalLearningPathCompleted = employeesRepository.countByPercentCompletedAndApprovalStatus(100, APPROVED);
+        long totalLearningPathInprogress = employeesRepository.countByPercentCompletedNotOrApprovalStatus(100, REJECTED);
         long totalLearningPathExpired = employeesRepository.countByEndDateBefore(LocalDate.now());
 
         return AdminDashboardStatisticsDTO.builder()
                 .totalLearningPathAssigned(totalLearningPathAssigned)
-                .totalLearningPathCompleted(totalLearningPathCompleted)
-                .totalLearningPathInProgress(totalLearningPathInprogress)
-                .totalLearningPathExpired(totalLearningPathExpired).build();
+                .totalLearningPathCompleted((int) Math.round((double) totalLearningPathCompleted / totalEmployeeRecords * 100))
+                .totalLearningPathInProgress((int) Math.round((double) totalLearningPathInprogress / totalEmployeeRecords * 100))
+                .totalLearningPathExpired((int) Math.round((double) totalLearningPathExpired / totalEmployeeRecords * 100)).build();
 
     }
 
@@ -85,4 +84,75 @@ public class AdminServiceImpl implements AdminService {
         List<LearningPathEmployees> learningPathEmployees = employeesRepository.findByLearningPathId(learningPathId);
         return learningPathEmployees.stream().map(a -> modelMapper.map(a, MadeForEmployeeDto.class)).collect(Collectors.toList());
     }
+
+
+    @Override
+    public List<DashboardGraphStatisticsStatusDTO> dashboardGraphStatistics() {
+        List<DashboardGraphStatisticsDTO> graphListForApproved = new ArrayList<>();
+        List<DashboardGraphStatisticsDTO> graphListForInProgress = new ArrayList<>();
+        List<DashboardGraphStatisticsDTO> graphListForOverdue= new ArrayList<>();
+        List<DashboardGraphStatisticsStatusDTO> statusGraphList = new ArrayList<>();
+        long totalCount= employeesRepository.count();
+
+        List<Object> approvedObjectList = employeesRepository.countByApprovalStatusAndPercentCompletedGroupedByYearMonth(APPROVED.toString(), 100);
+
+        for (Object object : approvedObjectList) {
+            Object[] objectArray = (Object[]) object;
+            DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
+                    .month(objectArray[0].toString())
+                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount * 100) )
+                    .build();
+            graphListForApproved.add(graphStatisticsDTO);
+        }
+
+        DashboardGraphStatisticsStatusDTO employeesCompletedCount = DashboardGraphStatisticsStatusDTO.builder()
+                .status("COMPLETED")
+                .dashboardGraphStatistics(graphListForApproved)
+                .build();
+
+        statusGraphList.add(employeesCompletedCount);
+
+//---------------------
+        List<Object> inProgressObjectList = employeesRepository.countByApprovalStatusNotApprovedAndPercentCompletedGroupedByYearMonth(APPROVED.toString(), 100);
+
+        for (Object object : inProgressObjectList) {
+            Object[] objectArray = (Object[]) object;
+            DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
+                    .month(objectArray[0].toString())
+                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount* 100))
+                    .build();
+            graphListForInProgress.add(graphStatisticsDTO);
+        }
+
+        DashboardGraphStatisticsStatusDTO employeesInProgressCount = DashboardGraphStatisticsStatusDTO.builder()
+                .status("IN-PROGRESS")
+                .dashboardGraphStatistics(graphListForInProgress)
+                .build();
+
+        statusGraphList.add(employeesInProgressCount);
+
+//---------------------
+        List<Object> overDueObjectList = employeesRepository.countByOverdueAndPercentCompletedGroupedByYearMonth(YTBD.toString());
+
+        for (Object object : overDueObjectList) {
+            Object[] objectArray = (Object[]) object;
+            DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
+                    .month(objectArray[0].toString())
+                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount* 100))
+                    .build();
+            graphListForOverdue.add(graphStatisticsDTO);
+        }
+
+        DashboardGraphStatisticsStatusDTO employeesOverdueCount = DashboardGraphStatisticsStatusDTO.builder()
+                .status("OVERDUE")
+                .dashboardGraphStatistics(graphListForOverdue)
+                .build();
+
+        statusGraphList.add(employeesOverdueCount);
+
+
+
+        return statusGraphList;
+    }
+
 }

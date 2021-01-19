@@ -4,6 +4,7 @@ import com.xebia.learningmanagement.dtos.NotificationContentDTO;
 import com.xebia.learningmanagement.service.NotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
@@ -29,6 +30,12 @@ public class NotificationController {
     @GetMapping("/api/v1/unread/count")
     public Integer getUnreadNotificationCount(@RequestParam @NotBlank Long userId) {
         return notificationService.getUnreadNotificationCount(userId);
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping("/api/v1/mark/read")
+    public void markAllAsRead(@RequestParam @NotBlank Long userId) {
+        notificationService.markAllAsRead(userId);
     }
 
 

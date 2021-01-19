@@ -1,8 +1,6 @@
 package com.xebia.learningmanagement.api;
 
-import com.xebia.learningmanagement.dtos.AdminDashboardDetailsDTO;
-import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
-import com.xebia.learningmanagement.dtos.MadeForEmployeeDto;
+import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +30,11 @@ public class AdminController {
     public List<MadeForEmployeeDto> specificLearningPathDetails(@RequestParam @NotBlank Long learningPathId) {
         return adminService.specificLearningPathDetails(learningPathId);
     }
+
+    @GetMapping("/api/v1/dashboard/graph/data/")
+    public List<DashboardGraphStatisticsStatusDTO> dashboardGraphStatistics() {
+        return adminService.dashboardGraphStatistics();
+    }
+
 
 }

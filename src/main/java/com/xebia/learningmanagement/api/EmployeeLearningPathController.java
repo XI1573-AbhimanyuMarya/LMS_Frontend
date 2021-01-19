@@ -63,7 +63,7 @@ public class EmployeeLearningPathController {
     }
 
 
-    @GetMapping("/api/v1/dashboard/stats")
+    @PostMapping("/api/v1/dashboard/stats")
     public AdminDashboardStatisticsDTO dashboardStatistics(@Valid @RequestBody EmployeeEmailRequest employeeEmail) {
         return employeelearningservice.dashboardStatistics(employeeEmail);
     }

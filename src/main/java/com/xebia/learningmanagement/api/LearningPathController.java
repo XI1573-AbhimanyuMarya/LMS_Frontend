@@ -74,14 +74,19 @@ public class LearningPathController {
 
     }
 
-    @GetMapping("/api/v1/dashboard/stats")
+    @PostMapping("/api/v1/dashboard/stats")
     public AdminDashboardStatisticsDTO dashboardStatistics(@Valid @RequestBody ManagerEmailRequest managerEmail) {
         return learningPathService.dashboardStatistics(managerEmail);
     }
 
     @GetMapping("/api/v1/dashboard/top/trending/{assigneeId}")
-    public Map<LearningPath, Long> dashboardTopTrending(@PathVariable("assigneeId") Long assigneeId) {
+    public List<LearningPath> dashboardTopTrending(@PathVariable("assigneeId") Long assigneeId) {
         return learningPathService.dashboardTopTrending(assigneeId);
+    }
+
+    @GetMapping("/api/v1/dashboard/graph/data/{uid}")
+    public List<DashboardGraphStatisticsDTO> dashboardGraphStatistics(@PathVariable(name = "uid") long uid ) {
+        return learningPathService.dashboardGraphStatistics(uid);
     }
 
 

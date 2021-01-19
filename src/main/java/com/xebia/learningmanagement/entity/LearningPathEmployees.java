@@ -7,9 +7,10 @@ import org.hibernate.validator.constraints.Range;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"learning_path_id","employee_id"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"learning_path_id", "employee_id"}))
 @Data
 public class LearningPathEmployees {
     @Id
@@ -35,5 +36,8 @@ public class LearningPathEmployees {
 
     @Column(name = "end_Date")
     private LocalDate endDate;
+
+    @Column(name = "modification_time")
+    private LocalDateTime monthlyProgressModifiedDate;
 
 }
