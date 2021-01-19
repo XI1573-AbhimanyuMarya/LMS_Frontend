@@ -10,18 +10,19 @@ import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOut
 import Box from "@material-ui/core/Box";
 import DiscardPopup from "../../components/DiscardPopup/index";
 import AddLearningPath from "../../images/AddLearningPath.svg";
+import group2 from "../../images/group2.png";
 import LearningPath from "../LearningPath/index";
 import { useStyles } from "./style";
 import WithLoading from "../../hoc/WithLoading";
 import Actions from "../../store/actions";
 import TopNav from "../../components/TopNav";
 import Copyright from "../../components/Copyright";
+import EmployeeDashboardDetail from "../Chart/EmployeeDashboard";
+
 import LearningPathWStatusTable from "../../components/Table/LearningPathWStatusTable";
 import DashboardMatrix from "../../components/Dashboard/DashboardMatrix";
 import PopularStuff from "../../components/Carousel/PopularStuff";
 import LearnerTable from "../../components/Table/LearnersTable";
-import group2 from "../../images/group2.png";
-import EmployeeDashboardDetail from "../Chart/EmployeeDashboard";
 
 const Dashboard = () => {
   const classes = useStyles();
@@ -36,15 +37,12 @@ const Dashboard = () => {
     mycourses,
     assignedCources,
     pathModelOpen,
-    dashStats,
-    adminDashStats,
+    managerDashStats = {},
     managerPopularStuff,
     isLoading,
+    dashStats,
+    adminDashStats,
   } = learningPathState;
-
-  /*
-manan's start
-*/
 
   const isObject = (data) => {
     return typeof data === "object" && data !== null;
@@ -87,87 +85,74 @@ manan's start
   };
   const employees = prepareData(assignedCources);
 
-  const showDashboard = employees && employees.length ? true : false; // manan's
+  const showDashboard = employees && employees.length ? true : false;
   const statsData = {
     totalCardDetail: {
       heading: "Assigned Learning Path",
       Total: dashStats.totalLearningPathAssigned,
     },
     Completed: dashStats.totalLearningPathCompleted,
-    Inprogress: dashStats.totalLearningPathInProgress,
-    Overdue: dashStats.totalLearningPathExpired,
+    Inprogress: dashStats.totalLearningPathExpired,
+    Overdue: dashStats.totalLearningPathInProgress,
   };
+  // const { assignedCources, pathModelOpen,managerDashStats,managerPopularStuff,isLoading } = learningPathState;
 
-  /*
-manan's end
-*/
-
-  /*
-raghav's start
-*/
-
-  var showManagerButton = false;
-  // let statsData = {};
-
-  for (var i in adminDashStats) {
-    if (adminDashStats[i] !== 0) {
-      showManagerButton = true;
-      break;
+  // const showDashboard = (assignedCources.assignedLearningPaths
+  //   && assignedCources.assignedLearningPaths.length ?
+  //   true : false);
+  // var showDashboard = false;
+  let showDashboardStats = false;
+  for (var i in managerDashStats) {
+    if (managerDashStats[i] !== 0) {
+      showDashboardStats = true;
     }
   }
 
-  /*
-raghav's end
-*/
-  useEffect(() => {
-    if (userRole == "ROLE_ADMIN" || userRole == "ROLE_HR") {
-      dispatch(
-        Actions.learningPathActions.getAdminStats(
-          "ADMIN_DASHBOARD_STATS_REQUEST"
-        )
-      );
-    } else {
-      dispatch(
-        Actions.learningPathActions.getManagerStats(
-          loginState.roles[0],
-          loginState.user.username
-        )
-      );
-    }
+  // const {  } = learningPathState;
+  // const showDashboard = (assignedCources.assignedLearningPaths
+  //   && assignedCources.assignedLearningPaths.length ?
+  //   true : false);
+  // var showDashboard = false;
+  // let statsData = {};
 
+  // for (var i in adminDashStats) {
+  //   if (adminDashStats[i] !== 0) {
+  //     showDashboard = true;
+  //     break;
+  // }
+  // }
+
+  useEffect(() => {
+    dispatch(
+      Actions.learningPathActions.getManagerStats(loginState.user.username)
+    );
     if (loginState.roles[0].roleName !== "ROLE_MANAGER") {
       dispatch(
         Actions.learningPathActions.getMyLearningPath(loginState.user.username)
       );
-    } else if (userRole === "ROLE_MANAGER") {
+    } else {
       dispatch(
         Actions.learningPathActions.getAssignedLearningPath(
           loginState.user.username
         )
       );
-      dispatch(
-        Actions.learningPathActions.getManagerStats(
-          loginState.roles[0],
-          loginState.user.username
-        )
-      );
+      console.log(manager, "man");
       setManager(true);
+      console.log(manager, "man");
     }
-
     dispatch(Actions.learningPathActions.clearCreateLpFormFields());
-
+    dispatch(
+      Actions.learningPathActions.getAdminStats(
+        userRole === "ROLE_MANAGER"
+          ? "MANAGER_DASHBOARD_STATS_REQUEST"
+          : "ADMIN_DASHBOARD_STATS_REQUEST"
+      )
+    );
     dispatch(Actions.learningPathActions.getAdminLearningPathDetails());
     dispatch(Actions.learningPathActions.getPopularStuff(loginState.user.id));
   }, []);
-
   const showMyDashboard =
-    mycourses &&
-    !manager &&
-    userRole !== "ROLE_ADMIN" &&
-    userRole !== "ROLE_HR" &&
-    mycourses.length
-      ? true
-      : false;
+    mycourses && !manager && mycourses.length ? true : false;
   /**
    * function to open learning path model
    */
@@ -251,6 +236,37 @@ raghav's end
           ) : (
             <></>
           )}
+          {/* {
+            loginState.user.designation !== "Admin" || 
+            loginState.user.designation !== "Hr" ?
+            <>
+              <Typography
+                component="h1"
+                variant="subtitle2"
+                style={{ color: "#858585" }}
+              >
+                Please assign first learning path to your team
+              </Typography>
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                className={classes.submit}
+                onClick={handleClickOpen}
+                startIcon={
+                  <AddCircleOutlineOutlinedIcon style={{ fontSize: 40 }} />
+                }
+              >
+                Create Learning Path
+              </Button>
+            </> : 
+            <Typography
+              component="h1"
+              variant="subtitle2"
+              style={{ color: "#858585" }}>
+                Hello Admin/HR
+            </Typography>
+          } */}
         </div>
       </Container>
       <LearningPath
@@ -262,6 +278,28 @@ raghav's end
   );
 
   const DashData = () => {
+    // const data = {
+    //   totalCardDetail: {
+    //     heading: "Assigned Learning Path",
+    //     Total: managerDashStats.totalLearningPathAssigned,
+    //   },
+    //   Completed: managerDashStats.totalLearningPathCompleted,
+    //   Inprogress: managerDashStats.totalLearningPathExpired,
+    //   Overdue: managerDashStats.totalLearningPathInProgress,
+    // };
+    // return (
+    //   <>
+    //     <DashboardMatrix data={data} />
+
+    //     <div
+    //       style={{
+    //         width: "calc((100vw - 25%) - 16px)",
+    //         height: "180px",
+    //         margin: "20px",
+    //       }}
+    //     >
+    //       <PopularStuff managerPopularStuff={managerPopularStuff} />
+    //     </div>
     if (dashStats) {
       var data = {
         totalCardDetail: {
@@ -289,7 +327,7 @@ raghav's end
                   margin: "20px",
                 }}
               >
-                {userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR" ? (
+                {userRole !== "ROLE_ADMIN" || userRole !== "ROLE_HR" ? (
                   <PopularStuff managerPopularStuff={managerPopularStuff} />
                 ) : (
                   <LearningPathWStatusTable />
@@ -301,22 +339,20 @@ raghav's end
       </>
     );
   };
-
   console.log(
+    showDashboard,
     !showMyDashboard,
     manager,
-    showDashboard,
     !pathModelOpen,
     "result"
   );
-
   return (
     <div>
-      <TopNav>{userRole === "ROLE_MANAGER" ? modalBtn : ""}</TopNav>
+      <TopNav></TopNav>
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
-          {!showMyDashboard && !pathModelOpen ? (
+          {!showMyDashboard && manager && showDashboard && !pathModelOpen ? (
             // <DashboardDetail />
             <DashData />
           ) : showMyDashboard ? (

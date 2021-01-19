@@ -38,11 +38,19 @@ const Navbar = (props) => {
   let location = useLocation();
   const [path, setPath] = useState("/");
   const loginState = useSelector((res) => res.loginState);
-  const { user } = loginState;
+  const { user, roles } = loginState;
   let extracontent, currentPath;
   currentPath = path;
 
+  console.log(roles, "roless");
   const navLinks = [
+    // {
+    //   name: "Dashboard",
+    //   iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
+    //   to: user.designation === "HR" || user.designation === "Admin" ? "dashboard" : "dashboard-admin",
+    //   isActive: currentPath === "/dashboard",
+    //   canAccess: true
+    // },
     {
       name: "Dashboard",
       iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
@@ -56,31 +64,30 @@ const Navbar = (props) => {
         currentPath === "/learningpath" ? LearningPathActive : LearningPath,
       to: "learningpath",
       isActive: currentPath === "/learningpath",
-      canAccess: true,
+      canAccess:
+        roles[0].roleName !== "ROLE_ADMIN" && roles[0].roleName !== "ROLE_HR",
     },
     {
       name: "Assign Learning Path",
-      iconPath: currentPath === "/assigned" ? AddLearningPathA : AddLearningPath,
+      iconPath:
+        currentPath === "/assigned" ? AddLearningPathA : AddLearningPath,
       to: "assigned",
       isActive: currentPath === "/assigned",
-      canAccess: true,
-      // canAccess: user.designation !== "Consultant"
+      canAccess: roles[0].roleName === "ROLE_MANAGER",
     },
     {
       name: "Approvals",
       iconPath: currentPath === "/approvals" ? ApprovalsA : Approvals,
       to: "approvals",
       isActive: currentPath === "/approvals",
-      // canAccess: true
-      canAccess: user.designation !== "Consultant",
+      canAccess: roles[0].roleName === "ROLE_MANAGER",
     },
     {
       name: "Manage assigned learning",
       iconPath: currentPath === "/manage" ? DashboardActive : DashboardIcon,
       to: "manage",
       isActive: currentPath === "/manage",
-      // canAccess: user.designation !== "Consultant"
-      canAccess: true,
+      canAccess: roles[0].roleName === "ROLE_MANAGER",
     },
   ];
   useEffect(() => {
@@ -123,13 +130,13 @@ const Navbar = (props) => {
               className={[
                 classes.navLinks,
                 item.isActive ? classes.active : "",
-                item.canAccess ? "" : classes.disableLink,
+                item.canAccess ? "" : classes.hideLink,
               ].join(" ")}
             >
               <Link to={item.to} key={item.name}>
                 <ListItem button>
                   <ListItemIcon className={classes.MuiListItemIcon}>
-                    <Icon style={{height:"30px"}}>
+                    <Icon style={{ height: "30px" }}>
                       <img src={item.iconPath} className={classes.navIcons} />
                     </Icon>
                   </ListItemIcon>
@@ -145,7 +152,11 @@ const Navbar = (props) => {
         <div className={classes.grow} />
         <ListItem
           button
-          onClick={() => dispatch(Actions.loginActions.logout())}
+          onClick={() => {
+            sessionStorage.clear();
+            dispatch(Actions.loginActions.logout());
+            dispatch(Actions.learningPathActions.logout());
+          }}
           className={classes.navLinks}
         >
           <ListItemIcon className={classes.MuiListItemIcon}>
