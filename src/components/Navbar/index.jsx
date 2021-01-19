@@ -38,11 +38,11 @@ const Navbar = (props) => {
   let location = useLocation();
   const [path, setPath] = useState("/");
   const loginState = useSelector((res) => res.loginState);
-  const { user } = loginState;
-  const userRole = JSON.parse(localStorage.getItem('USER_INFO')).roles[0].roleName;
+  const { user, roles } = loginState;
   let extracontent, currentPath;
   currentPath = path;
 
+  console.log(roles, "roless");
   const navLinks = [
     // {
     //   name: "Dashboard",
@@ -56,7 +56,7 @@ const Navbar = (props) => {
       iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
       to: "dashboard",
       isActive: currentPath === "/dashboard",
-      canAccess: true
+      canAccess: true,
     },
     {
       name: "My Learning Path",
@@ -64,28 +64,30 @@ const Navbar = (props) => {
         currentPath === "/learningpath" ? LearningPathActive : LearningPath,
       to: "learningpath",
       isActive: currentPath === "/learningpath",
-      canAccess: userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR",
+      canAccess:
+        roles[0].roleName !== "ROLE_ADMIN" && roles[0].roleName !== "ROLE_HR",
     },
     {
       name: "Assign Learning Path",
-      iconPath: currentPath === "/assigned" ? AddLearningPathA : AddLearningPath,
+      iconPath:
+        currentPath === "/assigned" ? AddLearningPathA : AddLearningPath,
       to: "assigned",
       isActive: currentPath === "/assigned",
-      canAccess: userRole === "ROLE_MANAGER"
+      canAccess: roles[0].roleName === "ROLE_MANAGER",
     },
     {
       name: "Approvals",
       iconPath: currentPath === "/approvals" ? ApprovalsA : Approvals,
       to: "approvals",
       isActive: currentPath === "/approvals",
-      canAccess: userRole === "ROLE_MANAGER"
+      canAccess: roles[0].roleName === "ROLE_MANAGER",
     },
     {
       name: "Manage assigned learning",
       iconPath: currentPath === "/manage" ? DashboardActive : DashboardIcon,
       to: "manage",
       isActive: currentPath === "/manage",
-      canAccess: userRole === "ROLE_MANAGER"
+      canAccess: roles[0].roleName === "ROLE_MANAGER",
     },
   ];
   useEffect(() => {
@@ -128,13 +130,13 @@ const Navbar = (props) => {
               className={[
                 classes.navLinks,
                 item.isActive ? classes.active : "",
-                item.canAccess ? "" : classes.disableLink,
+                item.canAccess ? "" : classes.hideLink,
               ].join(" ")}
             >
               <Link to={item.to} key={item.name}>
                 <ListItem button>
                   <ListItemIcon className={classes.MuiListItemIcon}>
-                    <Icon style={{height:"30px"}}>
+                    <Icon style={{ height: "30px" }}>
                       <img src={item.iconPath} className={classes.navIcons} />
                     </Icon>
                   </ListItemIcon>

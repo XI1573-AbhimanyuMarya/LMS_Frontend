@@ -1,14 +1,16 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
+    minWidth: 300,
+    height: 250,
     width: "100%",
-    height: "100%",
+    // height: "100%",
     backgroundColor: "#ffffff",
     display: "flex",
     flexDirection: "column",
-    borderRadius: 4,
-    [theme.breakpoints.up('md')]: {
+    borderRadius: 8,
+    [theme.breakpoints.up("md")]: {
       // backgroundColor: "blue",
       width: "100%",
       height: "100%",
@@ -17,7 +19,7 @@ export const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       borderRadius: 4,
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       // backgroundColor: "red",
       width: "100%",
       height: "100%",
@@ -26,105 +28,130 @@ export const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       borderRadius: 4,
     },
+  },
+  CardRoot: {
+    minWidth: 275,
+    minHeight: 225.5,
+    margin: "8.5px 10px 0 0.5px",
+    padding: "10px", //"12px 20px",
+    borderRadius: "8px",
+    backgroundColor: "#ffffff",
+    border: "none",
+    boxShadow: "none",
+  },
 
+  CardHeading: {
+    width: "200.9px",
+    height: "15px",
+    margin: "2px 4.9px 18.5px 0",
+    //fontFamily: "Roboto",
+    fontSize: "16px", //"18px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.32",
+    letterSpacing: "normal",
+    textAlign: "left",
+    color: "#000000",
   },
   header: {
     margin: "-8px 0px 10px 0px",
     marginLeft: "-15px",
     flexWrap: "wrap",
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       // margin: "10px 0px",
       marginLeft: "-15px",
       flexWrap: "wrap",
-    }
-
+    },
   },
   compatency: {
     textAlign: "center",
   },
   courseType: {
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
     fontSize: 14,
     fontWeight: "normal",
     padding: "2px 10px 2px 10px",
     borderRadius: 13,
-    color: '#4a90e2',
-    border: '1px solid #4a90e2',
-    [theme.breakpoints.up('md')]: {
-      textTransform: 'capitalize',
+    color: "#4a90e2",
+    border: "1px solid #4a90e2",
+    [theme.breakpoints.up("md")]: {
+      textTransform: "capitalize",
       fontSize: 10,
       fontWeight: "normal",
       padding: "2px 10px 2px 10px",
       borderRadius: 13,
       // color: 'green',
-      border: '1px solid #4a90e2',
-      margin:"0 10px 0 0"
+      border: "1px solid #4a90e2",
+      margin: "0 10px 0 0",
     },
-    [theme.breakpoints.up('lg')]: {
-      textTransform: 'capitalize',
+    [theme.breakpoints.up("lg")]: {
+      textTransform: "capitalize",
       fontSize: 10,
       fontWeight: "normal",
       padding: "2px 10px 2px 10px",
       borderRadius: 13,
-      color: '#4a90e2',
-      border: '1px solid #4a90e2',
-    }
+      color: "#4a90e2",
+      border: "1px solid #4a90e2",
+    },
   },
   courseLevel: {
     fontSize: 18,
     fontWeight: "normal",
-    color: '#858585',
-    [theme.breakpoints.up('md')]: {
+    color: "#858585",
+    [theme.breakpoints.up("md")]: {
       fontSize: 10,
-    fontWeight: "normal",
-    color: '#858585',
-    margin:"0 -10px 0 0"
+      fontWeight: "normal",
+      color: "#858585",
+      margin: "0 -10px 0 0",
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       fontSize: 14,
-    fontWeight: "normal",
-    color: '#858585',
-    margin: 0
+      fontWeight: "normal",
+      color: "#858585",
+      margin: 0,
     },
-    
   },
   courseTitle: {
     fontSize: "16px",
     padding: "10px 0px",
     color: "#000000",
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       fontSize: "11px",
-    padding: "10px 0px",
-    color: "#000000",
+      padding: "10px 0px",
+      color: "#000000",
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       fontSize: "15px",
       padding: "10px 0px",
       color: "#000000",
     },
   },
   courseDesc: {
+    minHeight: 51,
     fontSize: 12,
     padding: "10px 0px",
-    color: '#858585',
-    [theme.breakpoints.up('md')]: {
+    color: "#858585",
+    [theme.breakpoints.up("md")]: {
       fontSize: "10px",
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       fontSize: "12px",
     },
   },
   displayNone: {
-    display: "none"
+    display: "none",
   },
-  action:{
+  action: {
+    display: "flex",
+    justifyContent: "space-between",
     marginTop: "auto",
-    [theme.breakpoints.up('md')]: {
-      marginTop:"-36px"
+    [theme.breakpoints.up("md")]: {
+      marginTop: "-36px",
     },
-    [theme.breakpoints.up('lg')]: {
-      marginTop:"-4px"
-    }
+    [theme.breakpoints.up("lg")]: {
+      marginTop: "-4px",
+    },
   },
   btn: {
     borderRadius: "8px",
@@ -136,117 +163,185 @@ export const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: "#f07402",
     marginTop: "auto",
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       borderRadius: "8px",
-    border: "solid 1px #f07301",
-    backgroundColor: "white",
-    width: "100%",
-    height:"70%",
-    fontSize: "13px",
-    fontWeight: 500,
-    textAlign: "center",
-    color: "#f07402",
-    // marginTop: "auto",
+      border: "solid 1px #f07301",
+      backgroundColor: "white",
+      width: "100%",
+      height: "70%",
+      fontSize: "13px",
+      fontWeight: 500,
+      textAlign: "center",
+      color: "#f07402",
+      // marginTop: "auto",
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       borderRadius: "8px",
-    border: "solid 1px #f07301",
-    backgroundColor: "white",
-    width: "100%",
-    fontSize: "16px",
-    fontWeight: 500,
-    textAlign: "center",
-    color: "#f07402",
-    marginTop: "auto",
+      border: "solid 1px #f07301",
+      backgroundColor: "white",
+      width: "100%",
+      fontSize: "16px",
+      fontWeight: 500,
+      textAlign: "center",
+      color: "#f07402",
+      marginTop: "auto",
     },
   },
   row1: {
-    width:"220px",
-    fontWeight:"500",
-    fontfamily: 'Roboto',
+    width: "220px",
+    fontWeight: "500",
+    fontfamily: "Roboto",
   },
   row2: {
-    width:"150px",
-    fontWeight:"500",
-    fontfamily: 'Roboto',
-    margin: "0 20px 0 0"
+    width: "150px",
+    fontWeight: "500",
+    fontfamily: "Roboto",
+    margin: "0 20px 0 0",
   },
   row3: {
-    width:"160px",
-    fontWeight:"500",
-    fontfamily: 'Roboto',
-    color:"#621d58",
+    width: "160px",
+    fontWeight: "500",
+    fontfamily: "Roboto",
+    color: "#621d58",
   },
   row4: {
-    width:"120px",
-    fontWeight:"500",
-    fontfamily: 'Roboto',
+    width: "120px",
+    fontWeight: "500",
+    fontfamily: "Roboto",
   },
   row5: {
-    width:"120px",
-    fontWeight:"500",
-    fontfamily: 'Roboto',
-    
+    width: "120px",
+    fontWeight: "500",
+    fontfamily: "Roboto",
   },
   row6: {
-    width:"68px",
-    display:"flex",
-    border:"1px solid #c2c2c2",
-    justifyContent:"center",
-    margin:"0 50px 0 0",
-    color:"#007aff",
-    borderRadius:"4px",
-    fontfamily: 'Roboto',
-
+    width: "68px",
+    display: "flex",
+    border: "1px solid #c2c2c2",
+    justifyContent: "center",
+    margin: "0 50px 0 0",
+    color: "#007aff",
+    borderRadius: "4px",
+    fontfamily: "Roboto",
   },
   row7: {
-   width:"100px",
-    display:"flex",
-    border:"1px solid #f07301",
-    justifyContent:"center",
-    color:"#f07402",
-    fontWeight:"500",
-    borderRadius:"4px",
-    fontfamily: 'Roboto',
-    
+    width: "100px",
+    display: "flex",
+    border: "1px solid #f07301",
+    justifyContent: "center",
+    color: "#f07402",
+    fontWeight: "500",
+    borderRadius: "4px",
+    fontfamily: "Roboto",
   },
   levIcons: {
     width: 80,
-    objectFit: "contain"
+    objectFit: "contain",
+  },
+  view: {
+    background: "#67b104",
+    height: "40px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "white",
+    // width: '90px',
+    // height: '19px',
+    fontsize: "16px",
+    fontweight: "500",
+    fontstretch: "normal",
+    fontstyle: "normal",
+    lineheight: "normal",
+    letterspacing: "normal",
+    textalign: "center",
+    color: "#ffffff",
+    [theme.breakpoints.up("md")]: {
+      background: "#67b104",
+      height: "25px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      // width: '90px',
+      // height: '19px',
+      fontfamily: "Roboto",
+      fontsize: "12px",
+      fontweight: "500",
+      fontstretch: "normal",
+      fontstyle: "normal",
+      lineheight: "normal",
+      letterspacing: "normal",
+      textalign: "center",
+      color: "#ffffff",
+    },
+    [theme.breakpoints.up("lg")]: {
+      height: "40px",
+    },
   },
   Beginner: {
-    width: 80,
-    height:48
+    width: "80px",
+    marginRight: "-5px",
+    marginBottom: "10px",
+    height: "38px",
   },
   Intermediate: {
-    width: 100,
-    height:48
+    width: "100px",
+    marginRight: "-5px",
+    marginBottom: "10px",
+    height: "38px",
   },
   Advance: {
-    width: 80,
-    height:48
+    width: "80px",
+    marginRight: "-5px",
+    marginBottom: "10px",
+    height: "38px",
   },
   Expert: {
-    width: 80,
-    height:48
+    width: "80px",
+    marginRight: "-5px",
+    marginBottom: "10px",
+    height: "38px",
   },
-  tblrow:{
-    '& td':{
-      padding:"5px 31px",
-      fontSize:"12px"
-    }
+  CardDesc: {
+    minHeight: 51,
+    width: "220",
+    margin: "16.5px 17.6px 0 0",
+    fontSize: "13px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.33",
+    letterSpacing: "normal",
+    textAlign: "left",
+    color: "#858585",
+    textAlign: "justify",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    "-webkit-line-clamp": "3",
+    "-webkit-box-orient": "vertical",
   },
-  avglearningrate:{
-    color:"#007aff" ,
+  tblrow: {
+    "& td": {
+      padding: "5px 31px",
+      fontSize: "12px",
+    },
+  },
+  avglearningrate: {
+    color: "#007aff",
     backgroundColor: "#ffffff",
-    fontSize:"10px",
-    padding: "5px 20px"
+    fontSize: "10px",
+    padding: "5px 20px",
   },
-  actionbtn:{
-    borderColor:"#f07402",
-    color:"#f07402" ,
+  actionbtn: {
+    borderColor: "#f07402",
+    color: "#f07402",
     backgroundColor: "#ffffff",
-    fontSize:"9px",
-    padding: "5px 20px"
-  }
+    fontSize: "9px",
+    padding: "5px 20px",
+  },
+  cardheader: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  cardcontent: { height: "150px", overflow: "auto" },
 }));

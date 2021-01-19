@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { DRAWER_WIDTH } from "../../modules/constants";
+import { DRAWER_WIDTH } from "../../../modules/constants";
 
 const drawerWidth = DRAWER_WIDTH;
 export const useStyles = makeStyles((theme) => ({
@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
     color: "#ff0033",
   },
   catalogContainer: {
-    background: "#F1F3F7",
+    // background: "#F1F3F7",
     borderRadius: "0.5%",
     width: "100%",
     // margin: "auto"
@@ -73,4 +73,7 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: 28,
   },
   graph: {},
+  root: {
+    flexGrow: 1,
+  },
 }));

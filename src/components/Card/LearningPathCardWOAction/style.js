@@ -1,63 +1,63 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: "300px",
-    height:"183px",
-    borderRadius:"8px",
-    boxShadow:"2px 3px 10px 0 rgba(0, 0, 0, 0.18)",
-    padding:"10px 20px"
+    height: "183px",
+    borderRadius: "8px",
+    boxShadow: "2px 3px 10px 0 rgba(0, 0, 0, 0.18)",
+    padding: "10px 20px",
   },
-  cardheader:{
-    display:"flex",
-    justifyContent:"space-between"
+  cardheader: {
+    display: "flex",
+    justifyContent: "space-between",
   },
-  cardheading:{
-    fontSize:"1rem",
-    margin:"0 0 0 15px"
+  cardheading: {
+    fontSize: "1rem",
+    margin: "0 0 0 15px",
   },
-  Beginner:{
-    width:"80px",
-    marginRight:"-5px",
+  Beginner: {
+    width: "80px",
+    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px"
+    height: "38px",
   },
-  Intermediate:{
-    width:"100px",
-    marginRight:"-5px",
+  Intermediate: {
+    width: "100px",
+    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px"
+    height: "38px",
   },
-  Advance:{
-    width:"80px",
-    marginRight:"-5px",
+  Advance: {
+    width: "80px",
+    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px"
+    height: "38px",
   },
-  Expert:{
-    width:"80px",
-    marginRight:"-5px",
+  Expert: {
+    width: "80px",
+    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px"
+    height: "38px",
   },
-  carddesc:{
+  carddesc: {
     textAlign: "justify",
-    fontSize:"10px",
-    minHeight:"55px"
+    fontSize: "10px",
+    minHeight: "55px",
   },
-  cardfooter:{
-    backgroundColor:"#f5f5f5",
-    padding:"5px 16px",
-    display:"flex",
-    justifyContent:"space-between"
+  cardfooter: {
+    backgroundColor: "#f5f5f5",
+    padding: "5px 16px",
+    display: "flex",
+    justifyContent: "space-between",
   },
-  cardfootertext:{
-    fontSize:"0.70rem"
+  cardfootertext: {
+    fontSize: "0.70rem",
   },
-  cardfooterbtn:{
-    backgroundColor:"white",
-    borderRadius:"21px",
-    width:"55px"
+  cardfooterbtn: {
+    backgroundColor: "white",
+    borderRadius: "21px",
+    width: "55px",
   },
   checkIcon: {
     color: "#67B104",
@@ -68,16 +68,16 @@ export const useStyles = makeStyles((theme) => ({
     height: "15px",
     margin: "2px 4.9px 18.5px 0",
     //fontFamily: "Roboto",
-    fontSize: "16px",//"18px",
+    fontSize: "16px", //"18px",
     fontWeight: "normal",
     fontStretch: "normal",
     fontStyle: "normal",
     lineHeight: "1.32",
     letterSpacing: "normal",
     textAlign: "left",
-    color: "#000000"
+    color: "#000000",
   },
-  CardDesc:{
+  CardDesc: {
     width: "220",
     margin: "16.5px 17.6px 0 0",
     fontSize: "13px",
@@ -99,13 +99,13 @@ export const useStyles = makeStyles((theme) => ({
     width: "calc((20vw) - 16px)",//"255px",//"340px",
     height: "150px",
     margin: "8.5px 10px 0 0.5px",
-    padding: "10px",//"12px 20px",
+    padding: "10px", //"12px 20px",
     borderRadius: "8px",
     backgroundColor: "#ffffff",
-    border:"none",
-    boxShadow: "none"
+    border: "none",
+    boxShadow: "none",
   },
-  PopularStuff:{
+  PopularStuff: {
     width: "215px",
     height: "27px",
     margin: "13px 108.5px 18.2px 0",
@@ -118,5 +118,5 @@ export const useStyles = makeStyles((theme) => ({
     letterSpacing: "normal",
     textAlign: "left",
     color: "#621d58",
-  }
+  },
 }));

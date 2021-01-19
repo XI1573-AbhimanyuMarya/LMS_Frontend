@@ -36,13 +36,13 @@ const getLearningPathLevel = (pathLevel) => ({
 });
 const openBtn = (course) => ({
   type: actionTypes.SHOW_BUTTON_BASED_ON_RATE,
-  payload: {course}
+  payload: { course },
 });
 const pathModelOpen = (val) => ({
   type: actionTypes.PATH_MODEL_OPEN,
   payload: { val },
 });
-const clearCreateLpFormFields=()=>({
+const clearCreateLpFormFields = () => ({
   type: actionTypes.CLEAR_CREATE_LP_FORM,
   payload: "",
 });
@@ -77,7 +77,7 @@ const createLearningPath = (path) => ({
 //function to assign created learning path to user
 const createAssignLearningPath = (path) => ({
   type: actionTypes.CREATE_ASSIGNED_LEARNING_PATH_CALL_REQUEST,
-  payload: {path} ,
+  payload: { path },
 });
 const getFirstNextClicked = (val) => ({
   type: actionTypes.GET_FIRST_NEXT_CLICKED,
@@ -95,33 +95,34 @@ const getMyLearningPath = (employeeEmail) => ({
   type: actionTypes.GET_MY_LEARNING_PATH_REQUEST,
   payload: { employeeEmail },
 });
-//get list of created learning path courses 
-const getLearningPath = (assigneeId) =>({             //by hanifa
-type: actionTypes.GET_LEARNING_PATH_REQUEST,
-payload:{ assigneeId }
-})
+//get list of created learning path courses
+const getLearningPath = (assigneeId) => ({
+  //by hanifa
+  type: actionTypes.GET_LEARNING_PATH_REQUEST,
+  payload: { assigneeId },
+});
 const deleteAllPaths = (ids) => ({
   type: actionTypes.DELETE_ALL_PATH,
-  payload: {ids},
+  payload: { ids },
 });
 
 const deletePath = (ids) => ({
   type: actionTypes.DELETE_PATH,
-  payload: {ids},
+  payload: { ids },
 });
 
-const getLearningPathCourses=(reqBody)=>({
-  type:actionTypes.GET_LEARNING_PATH_COURSES_REQUEST,
-  payload: {...reqBody}
+const getLearningPathCourses = (reqBody) => ({
+  type: actionTypes.GET_LEARNING_PATH_COURSES_REQUEST,
+  payload: { ...reqBody },
 });
 
-const changeCourseRate = (changeRate,course) => ({
+const changeCourseRate = (changeRate, course) => ({
   type: actionTypes.CHANGE_COURSE_RATE,
-  payload: {changeRate,course}
+  payload: { changeRate, course },
 });
 const saveCourseRate = (reqBody) => ({
   type: actionTypes.SAVE_COURSE_RATE,
-  payload: { reqBody }
+  payload: { reqBody },
 });
 
 const getPendingForApproval = (managerEmail) => ({
@@ -139,24 +140,24 @@ const viewAttachment = (reqBody) => ({
   payload: reqBody,
 });
 
-const addCertificate= (files) => ({
+const addCertificate = (files) => ({
   type: actionTypes.ADD_CERTIFICATE,
-  payload: files
+  payload: files,
 });
 
-const uploadCertificate=(reqBody)=>({
-  type:actionTypes.UPLOAD_CERTIFICATE,
-  payload:{reqBody}
+const uploadCertificate = (reqBody) => ({
+  type: actionTypes.UPLOAD_CERTIFICATE,
+  payload: { reqBody },
 });
 
-const selectLearningPath=(reqBody)=>({
-  type:actionTypes.SELECTED_LEARNING_PATH,
-  payload:reqBody
+const selectLearningPath = (reqBody) => ({
+  type: actionTypes.SELECTED_LEARNING_PATH,
+  payload: reqBody,
 });
 
-const changeDocUploadedStatusForCourse=(courseId)=>({
-  type:actionTypes.CHANGE_DOC_UPLOAD_STATUS_FOR_COURSE,
-  payload:{courseId}
+const changeDocUploadedStatusForCourse = (courseId) => ({
+  type: actionTypes.CHANGE_DOC_UPLOAD_STATUS_FOR_COURSE,
+  payload: { courseId },
 });
 
 const sendForApproval = (reqBody) => ({
@@ -164,27 +165,27 @@ const sendForApproval = (reqBody) => ({
   payload: reqBody,
 });
 
-const getManagerStats=(managerEmail)=>({
-  type:actionTypes.MANAGER_DASHBOARD_STATS_REQUEST,
-  payload:{managerEmail}
+const getManagerStats = (managerEmail) => ({
+  type: actionTypes.MANAGER_DASHBOARD_STATS_REQUEST,
+  payload: { managerEmail },
 });
 
-const getAdminStats=(userRole)=>({
-  type:userRole
+const getAdminStats = (userRole) => ({
+  type: userRole,
 });
 
 const getAdminLearningPathDetails = () => ({
-  type:actionTypes.ADMIN_LEARNING_PATH_DETAILS_REQUEST
-})
+  type: actionTypes.ADMIN_LEARNING_PATH_DETAILS_REQUEST,
+});
 
 const getAdminDetails = (empId) => ({
-  type:actionTypes.ADMIN_DETAILS_REQUEST,
-  payload: {empId}
-})
+  type: actionTypes.ADMIN_DETAILS_REQUEST,
+  payload: { empId },
+});
 
-const getPopularStuff=(assigneeId)=>({
-  type:actionTypes.POPULAR_STUFF_REQUEST,
-  payload:{assigneeId}
+const getPopularStuff = (assigneeId) => ({
+  type: actionTypes.POPULAR_STUFF_REQUEST,
+  payload: { assigneeId },
 });
 
 export default {
@@ -234,5 +235,5 @@ export default {
   getAdminStats,
   getAdminLearningPathDetails,
   getAdminDetails,
-  getPopularStuff
+  getPopularStuff,
 };
