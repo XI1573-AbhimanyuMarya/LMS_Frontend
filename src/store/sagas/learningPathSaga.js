@@ -384,7 +384,6 @@ function* sendForApproval(action) {
 }
 
 const fetchManagerStats = async (role, payload) => {
-  debugger;
   return await axios.post(
     role.roleName == "ROLE_EMPLOYEE"
       ? SERVICE_URLS.FETCH_EMPLOYEE_STATS
