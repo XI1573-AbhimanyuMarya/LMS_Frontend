@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class DashboardGraphStatisticsDTO {
     private String month;
-    private Long count;
+    private int count;
 }

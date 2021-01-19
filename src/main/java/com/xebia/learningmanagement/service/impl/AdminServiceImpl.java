@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.util.*;
@@ -91,10 +92,7 @@ public class AdminServiceImpl implements AdminService {
         List<DashboardGraphStatisticsDTO> graphListForInProgress = new ArrayList<>();
         List<DashboardGraphStatisticsDTO> graphListForOverdue= new ArrayList<>();
         List<DashboardGraphStatisticsStatusDTO> statusGraphList = new ArrayList<>();
-
-        long totalCompletedCount = employeesRepository.countByApprovalStatusAndPercentCompleted(APPROVED, 100);
-        long totalInProgressCount = employeesRepository.countByApprovalStatusNotAndPercentCompletedNot(APPROVED, 100);
-        long totalOverdueCount = employeesRepository.countByEndDateBeforeAndApprovalStatus(LocalDate.now(), YTBD);
+        long totalCount= employeesRepository.count();
 
         List<Object> approvedObjectList = employeesRepository.countByApprovalStatusAndPercentCompletedGroupedByYearMonth(APPROVED.toString(), 100);
 
@@ -102,7 +100,7 @@ public class AdminServiceImpl implements AdminService {
             Object[] objectArray = (Object[]) object;
             DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
                     .month(objectArray[0].toString())
-                    .count(new Long(objectArray[1].toString()))
+                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount * 100) )
                     .build();
             graphListForApproved.add(graphStatisticsDTO);
         }
@@ -121,7 +119,7 @@ public class AdminServiceImpl implements AdminService {
             Object[] objectArray = (Object[]) object;
             DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
                     .month(objectArray[0].toString())
-                    .count(new Long(objectArray[1].toString()))
+                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount* 100))
                     .build();
             graphListForInProgress.add(graphStatisticsDTO);
         }
@@ -140,7 +138,7 @@ public class AdminServiceImpl implements AdminService {
             Object[] objectArray = (Object[]) object;
             DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
                     .month(objectArray[0].toString())
-                    .count(new Long(objectArray[1].toString()))
+                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount* 100))
                     .build();
             graphListForOverdue.add(graphStatisticsDTO);
         }
