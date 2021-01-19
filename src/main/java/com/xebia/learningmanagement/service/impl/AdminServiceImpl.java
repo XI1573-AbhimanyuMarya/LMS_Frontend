@@ -1,9 +1,6 @@
 package com.xebia.learningmanagement.service.impl;
 
-import com.xebia.learningmanagement.dtos.AdminDashboardDetailsDTO;
-import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
-import com.xebia.learningmanagement.dtos.DashboardGraphStatisticsDTO;
-import com.xebia.learningmanagement.dtos.MadeForEmployeeDto;
+import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
@@ -15,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.*;
@@ -65,7 +59,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-
     @Override
     public AdminDashboardStatisticsDTO dashboardStatistics() {
         long totalLearningPathAssigned = learningPathRepository.count();
@@ -75,10 +68,10 @@ public class AdminServiceImpl implements AdminService {
         long totalLearningPathExpired = employeesRepository.countByEndDateBefore(LocalDate.now());
 
         return AdminDashboardStatisticsDTO.builder()
-                .totalLearningPathAssigned(totalLearningPathAssigned )
-                .totalLearningPathCompleted((int)Math.round((double) totalLearningPathCompleted/totalEmployeeRecords * 100))
-                .totalLearningPathInProgress((int)Math.round((double)totalLearningPathInprogress/totalEmployeeRecords * 100))
-                .totalLearningPathExpired((int)Math.round((double)totalLearningPathExpired/totalEmployeeRecords * 100)).build();
+                .totalLearningPathAssigned(totalLearningPathAssigned)
+                .totalLearningPathCompleted((int) Math.round((double) totalLearningPathCompleted / totalEmployeeRecords * 100))
+                .totalLearningPathInProgress((int) Math.round((double) totalLearningPathInprogress / totalEmployeeRecords * 100))
+                .totalLearningPathExpired((int) Math.round((double) totalLearningPathExpired / totalEmployeeRecords * 100)).build();
 
     }
 
@@ -93,29 +86,75 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public List<DashboardGraphStatisticsDTO> dashboardGraphStatistics(String month) {
-        DateFormatSymbols dfs = new DateFormatSymbols();
-        List<String> monthsCollection = Arrays.stream(dfs.getMonths()).filter(a -> !a.equals("")).collect(Collectors.toList());
+    public List<DashboardGraphStatisticsStatusDTO> dashboardGraphStatistics() {
+        List<DashboardGraphStatisticsDTO> graphListForApproved = new ArrayList<>();
+        List<DashboardGraphStatisticsDTO> graphListForInProgress = new ArrayList<>();
+        List<DashboardGraphStatisticsDTO> graphListForOverdue= new ArrayList<>();
+        List<DashboardGraphStatisticsStatusDTO> statusGraphList = new ArrayList<>();
+
         long totalCompletedCount = employeesRepository.countByApprovalStatusAndPercentCompleted(APPROVED, 100);
         long totalInProgressCount = employeesRepository.countByApprovalStatusNotAndPercentCompletedNot(APPROVED, 100);
         long totalOverdueCount = employeesRepository.countByEndDateBeforeAndApprovalStatus(LocalDate.now(), YTBD);
 
-        final List<LearningPathEmployees> learningPathEmployeesList = employeesRepository.findAll();
-        final Map<String, Long> completedCount = learningPathEmployeesList.stream().filter(x -> x.getApprovalStatus().equals(APPROVED)).collect(Collectors.groupingBy(a -> a.getMonthlyProgressModifiedDate().getMonth().toString(), Collectors.counting()));
-        final Map<String, Long> inProgressCount = learningPathEmployeesList.stream().filter(x -> !x.getApprovalStatus().equals(APPROVED)).collect(Collectors.groupingBy(a -> a.getMonthlyProgressModifiedDate().getMonth().toString(), Collectors.counting()));
-        final Map<String, Long> overdueCount = learningPathEmployeesList.stream().filter(a -> a.getEndDate().compareTo(LocalDate.now()) < 0).collect(Collectors.groupingBy(x -> x.getMonthlyProgressModifiedDate().getMonth().toString(), Collectors.counting()));
-        List<DashboardGraphStatisticsDTO> graphStatisticsDTOList = new ArrayList<>();
-        for (String mnth : monthsCollection) {
-            DashboardGraphStatisticsDTO graphStatistics = DashboardGraphStatisticsDTO.builder()
-                    .month(mnth.toUpperCase())
-                    .employeesCompletedCount((completedCount.getOrDefault(mnth.toUpperCase(), (long) 0)))
-                    .employeesInprogressCount((inProgressCount.getOrDefault(mnth.toUpperCase(), (long) 0)))
-                    .employeesOverdueCount((overdueCount.getOrDefault(mnth.toUpperCase(), (long) 0)))
+        List<Object> approvedObjectList = employeesRepository.countByApprovalStatusAndPercentCompletedGroupedByYearMonth(APPROVED.toString(), 100);
+
+        for (Object object : approvedObjectList) {
+            Object[] objectArray = (Object[]) object;
+            DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
+                    .month(objectArray[0].toString())
+                    .count(new Long(objectArray[1].toString()))
                     .build();
-            graphStatisticsDTOList.add(graphStatistics);
+            graphListForApproved.add(graphStatisticsDTO);
         }
 
-        return graphStatisticsDTOList;
+        DashboardGraphStatisticsStatusDTO employeesCompletedCount = DashboardGraphStatisticsStatusDTO.builder()
+                .status("COMPLETED")
+                .dashboardGraphStatistics(graphListForApproved)
+                .build();
+
+        statusGraphList.add(employeesCompletedCount);
+
+//---------------------
+        List<Object> inProgressObjectList = employeesRepository.countByApprovalStatusNotApprovedAndPercentCompletedGroupedByYearMonth(APPROVED.toString(), 100);
+
+        for (Object object : inProgressObjectList) {
+            Object[] objectArray = (Object[]) object;
+            DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
+                    .month(objectArray[0].toString())
+                    .count(new Long(objectArray[1].toString()))
+                    .build();
+            graphListForInProgress.add(graphStatisticsDTO);
+        }
+
+        DashboardGraphStatisticsStatusDTO employeesInProgressCount = DashboardGraphStatisticsStatusDTO.builder()
+                .status("IN-PROGRESS")
+                .dashboardGraphStatistics(graphListForInProgress)
+                .build();
+
+        statusGraphList.add(employeesInProgressCount);
+
+//---------------------
+        List<Object> overDueObjectList = employeesRepository.countByOverdueAndPercentCompletedGroupedByYearMonth(YTBD.toString());
+
+        for (Object object : overDueObjectList) {
+            Object[] objectArray = (Object[]) object;
+            DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
+                    .month(objectArray[0].toString())
+                    .count(new Long(objectArray[1].toString()))
+                    .build();
+            graphListForOverdue.add(graphStatisticsDTO);
+        }
+
+        DashboardGraphStatisticsStatusDTO employeesOverdueCount = DashboardGraphStatisticsStatusDTO.builder()
+                .status("OVERDUE")
+                .dashboardGraphStatistics(graphListForOverdue)
+                .build();
+
+        statusGraphList.add(employeesOverdueCount);
+
+
+
+        return statusGraphList;
     }
 
 }
