@@ -1,6 +1,5 @@
 package com.xebia.learningmanagement.repository;
 
-import com.xebia.learningmanagement.dtos.response.YearMonthDTO;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.entity.User;
@@ -10,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 public interface LearningPathEmployeesRepository extends JpaRepository<LearningPathEmployees, Long> {
 
@@ -60,13 +58,13 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
     long countByEndDateBeforeAndApprovalStatus(LocalDate now, LearningPathApprovalStatus ytbd);
 
 
-    @Query(value = "select to_char(modification_time,'YYYY-Month') as year_month ,count(id) as total from learning_path_employees where approval_status= ?1 and percent_completed= ?2 group by year_month ",nativeQuery = true)
+    @Query(value = "select to_char(modification_time,'YYYY-Month') as year_month ,count(id) as total from learning_path_employees where approval_status= ?1 and percent_completed= ?2 group by year_month ", nativeQuery = true)
     List<Object> countByApprovalStatusAndPercentCompletedGroupedByYearMonth(String approved, int percent);
 
 
-    @Query(value = "select to_char(modification_time,'YYYY-Month') as year_month ,count(id) as total from learning_path_employees where approval_status != ?1 and percent_completed= ?2 group by year_month ",nativeQuery = true)
+    @Query(value = "select to_char(modification_time,'YYYY-Month') as year_month ,count(id) as total from learning_path_employees where approval_status != ?1 and percent_completed= ?2 group by year_month ", nativeQuery = true)
     List<Object> countByApprovalStatusNotApprovedAndPercentCompletedGroupedByYearMonth(String approved, int percent);
 
-    @Query(value = "select to_char(modification_time,'YYYY-Month') as year_month ,count(id) as total from learning_path_employees where approval_status = ?1 and ( end_date < now() ) group by year_month ",nativeQuery = true)
+    @Query(value = "select to_char(modification_time,'YYYY-Month') as year_month ,count(id) as total from learning_path_employees where approval_status = ?1 and ( end_date < now() ) group by year_month ", nativeQuery = true)
     List<Object> countByOverdueAndPercentCompletedGroupedByYearMonth(String ytbd);
 }

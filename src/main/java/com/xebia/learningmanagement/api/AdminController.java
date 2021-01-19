@@ -32,7 +32,7 @@ public class AdminController {
     }
 
     @GetMapping("/api/v1/dashboard/graph/data/")
-    public List<DashboardGraphStatisticsStatusDTO> dashboardGraphStatistics() ) {
+    public List<DashboardGraphStatisticsStatusDTO> dashboardGraphStatistics() {
         return adminService.dashboardGraphStatistics();
     }
 
