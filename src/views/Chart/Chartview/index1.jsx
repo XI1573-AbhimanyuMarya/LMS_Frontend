@@ -28,6 +28,7 @@ const Carosalschart = (props) => {
     const renderCourses = coursesList.map((course, index) => {
       return (
         <CourseCard
+          allCourses={course}
           course={course.learningPath}
           key={course.id}
           heading={course.learningPath.name}

@@ -5,6 +5,9 @@ const getFilteredCourses = (list) => ({
   type: actionTypes.GET_FILTERED_COURSES,
   payload: { list },
 });
+const logout = () => ({
+  type: actionTypes.LOGOUT,
+});
 const getSelectedCourses = (list, courseIdArr) => ({
   type: actionTypes.GET_SELECTED_COURSES,
   payload: { list, courseIdArr },
@@ -165,9 +168,10 @@ const sendForApproval = (reqBody) => ({
   payload: reqBody,
 });
 
-const getManagerStats = (managerEmail) => ({
+const getManagerStats = (role, managerEmail) => ({
   type: actionTypes.MANAGER_DASHBOARD_STATS_REQUEST,
   payload: { managerEmail },
+  role: role,
 });
 
 const getAdminStats = (userRole) => ({
@@ -189,6 +193,7 @@ const getPopularStuff = (assigneeId) => ({
 });
 
 export default {
+  logout,
   fetchAllCourses,
   getFilteredCourses,
   getSelectedCourses,

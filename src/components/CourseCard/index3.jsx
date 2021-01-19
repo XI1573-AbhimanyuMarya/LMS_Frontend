@@ -7,13 +7,16 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 const CourseCard = (props) => {
+  console.log(props, "propsss");
   const classes = useStyles();
-  const { course = {}, onButtonClick, showButton } = props;
+  const { allCourses, course = {}, onButtonClick, showButton } = props;
   // course.progress = "";
+  let buttonColor = 0;
   let btnlabel = "Let's begin";
-  // if (course?.progress) {
-  //   btnlabel = "Explore";
-  // }
+  if (allCourses.percentCompleted > 0) {
+    buttonColor = 1;
+    btnlabel = "Explore";
+  }
 
   let darkBar = 0;
   if (course?.competency?.name === "Beginner") {

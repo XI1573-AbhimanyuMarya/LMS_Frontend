@@ -22,6 +22,7 @@ const setUserData = (userData) => {
 };
 
 const logout = () => {
+  localStorage.clear();
   sessionStorage.removeItem("USER_INFO");
   sessionStorage.removeItem("USER_LOGIN_TIME");
 };
