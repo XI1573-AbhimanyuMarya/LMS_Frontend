@@ -389,25 +389,19 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
     @Override
-    public Map<LearningPath, Long> dashboardTopTrending(Long assigneeId) {
+    public List<LearningPath> dashboardTopTrending(Long assigneeId) {
         HashMap<LearningPath, Long> learningPathLongHashMap = new HashMap<>();
         List<LearningPath> learningPaths = learningPathRepository.findByMadeById(assigneeId);
         for (LearningPath learningPath : learningPaths) {
             Long aLong = learningPathEmployeesRepository.countByLearningPath(learningPath);
             learningPathLongHashMap.put(learningPath, aLong);
         }
-        Map<LearningPath, Long> sortedMap = sortByValue(learningPathLongHashMap);
-
-        return sortedMap.entrySet().stream()
-                .limit(5)
-                .collect(LinkedHashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), Map::putAll);
+        List<LearningPath> sortedList = sortByValue(learningPathLongHashMap);
+        return sortedList.stream().limit(5).collect(Collectors.toList());
     }
 
-
-    public static Map<LearningPath, Long> sortByValue(Map<LearningPath, Long> hm) {
-
+    public static List<LearningPath> sortByValue(Map<LearningPath, Long> hm) {
         List<Map.Entry<LearningPath, Long>> list = new LinkedList<Map.Entry<LearningPath, Long>>(hm.entrySet());
-
 
         Collections.sort(list, new Comparator<Map.Entry<LearningPath, Long>>() {
             public int compare(Map.Entry<LearningPath, Long> o1,
@@ -416,14 +410,12 @@ public class LearningPathServiceImpl implements LearningPathService {
             }
         });
 
-
-        // put data from sorted list to hashmap
-        Map<LearningPath, Long> returnMap = new LinkedHashMap<>();
+        // put data from sorted list to a new list
+        List<LearningPath> returnList = new LinkedList<>();
         for (int i = list.size() - 1; i >= 0; i--) {
-            returnMap.put(list.get(i).getKey(), list.get(i).getValue());
-
+            returnList.add(list.get(i).getKey());
         }
-        return returnMap;
+        return returnList;
     }
 
 
