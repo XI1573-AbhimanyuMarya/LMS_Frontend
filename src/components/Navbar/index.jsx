@@ -64,7 +64,8 @@ const Navbar = (props) => {
         currentPath === "/learningpath" ? LearningPathActive : LearningPath,
       to: "learningpath",
       isActive: currentPath === "/learningpath",
-      canAccess: roles[0].roleName !== "Admin" || roles[0].roleName !== "Hr",
+      canAccess:
+        roles[0].roleName !== "ROLE_ADMIN" && roles[0].roleName !== "ROLE_HR",
     },
     {
       name: "Assign Learning Path",
