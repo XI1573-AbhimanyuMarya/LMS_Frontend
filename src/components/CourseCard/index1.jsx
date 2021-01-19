@@ -15,7 +15,8 @@ const CourseCard = (props) => {
   const { course, onButtonClick, showButton } = props;
   course.progress = "";
   let btnlabel = "Let's begin";
-  if (course?.progress) {
+
+  if (course?.percentCompleted > 0) {
     btnlabel = "Explore";
   }
 

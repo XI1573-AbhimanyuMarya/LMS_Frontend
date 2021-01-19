@@ -94,8 +94,8 @@ manan's start
       Total: dashStats.totalLearningPathAssigned,
     },
     Completed: dashStats.totalLearningPathCompleted,
-    Inprogress: dashStats.totalLearningPathExpired,
-    Overdue: dashStats.totalLearningPathInProgress,
+    Inprogress: dashStats.totalLearningPathInProgress,
+    Overdue: dashStats.totalLearningPathExpired,
   };
 
   /*
@@ -120,9 +120,21 @@ raghav's start
 raghav's end
 */
   useEffect(() => {
-    dispatch(
-      Actions.learningPathActions.getManagerStats(loginState.user.username)
-    );
+    if (userRole == "ROLE_ADMIN" || userRole == "ROLE_HR") {
+      dispatch(
+        Actions.learningPathActions.getAdminStats(
+          "ADMIN_DASHBOARD_STATS_REQUEST"
+        )
+      );
+    } else {
+      dispatch(
+        Actions.learningPathActions.getManagerStats(
+          loginState.roles[0],
+          loginState.user.username
+        )
+      );
+    }
+
     if (loginState.roles[0].roleName !== "ROLE_MANAGER") {
       dispatch(
         Actions.learningPathActions.getMyLearningPath(loginState.user.username)
@@ -133,17 +145,17 @@ raghav's end
           loginState.user.username
         )
       );
+      dispatch(
+        Actions.learningPathActions.getManagerStats(
+          loginState.roles[0],
+          loginState.user.username
+        )
+      );
       setManager(true);
     }
 
     dispatch(Actions.learningPathActions.clearCreateLpFormFields());
-    dispatch(
-      Actions.learningPathActions.getAdminStats(
-        userRole === "ROLE_MANAGER"
-          ? "MANAGER_DASHBOARD_STATS_REQUEST"
-          : "ADMIN_DASHBOARD_STATS_REQUEST"
-      )
-    );
+
     dispatch(Actions.learningPathActions.getAdminLearningPathDetails());
     dispatch(Actions.learningPathActions.getPopularStuff(loginState.user.id));
   }, []);

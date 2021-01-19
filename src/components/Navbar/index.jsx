@@ -152,7 +152,11 @@ const Navbar = (props) => {
         <div className={classes.grow} />
         <ListItem
           button
-          onClick={() => dispatch(Actions.loginActions.logout())}
+          onClick={() => {
+            sessionStorage.clear();
+            dispatch(Actions.loginActions.logout());
+            dispatch(Actions.learningPathActions.logout());
+          }}
           className={classes.navLinks}
         >
           <ListItemIcon className={classes.MuiListItemIcon}>

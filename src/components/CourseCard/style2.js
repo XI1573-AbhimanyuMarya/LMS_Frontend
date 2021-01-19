@@ -58,6 +58,7 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   btn: {
+    cursor: "pointer",
     borderRadius: "8px",
     border: "solid 1px #f07301",
     backgroundColor: "#ffffff",
