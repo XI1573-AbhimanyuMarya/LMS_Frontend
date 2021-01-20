@@ -6,6 +6,7 @@ public enum EmailType {
     LOGIN_USING_OTP("LoginUsingOtp"),
     LEARNING_PATH_DISCARD("CourseDiscardEmail"),
     LEARNING_PATH_APPROVAL_REJECTION("ApprovalRejectionEmail"),
+    LEARNING_PATH_EXPIRED("ExpirationEmail"),
     REVIEW_LEARNING_PATH_APPROVAL_REJECTION_MANAGER("ReviewApprovalRejectionManagerEmail");
     private final String value;
 
