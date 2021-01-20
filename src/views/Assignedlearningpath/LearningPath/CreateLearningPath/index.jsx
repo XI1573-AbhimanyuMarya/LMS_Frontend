@@ -49,7 +49,6 @@ const AssignedCreateLearningPath = (props) => {
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
   const loginState = useSelector(res => res.loginState);
-  const { handleClose, handleClosePath } = props;
   const [activePathStep, setActivePathStep] = useState(0);
   const { learningPathName,learningPathDes , courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
   const { user } = loginState;
@@ -168,7 +167,7 @@ const AssignedCreateLearningPath = (props) => {
                     <Button
                       variant="contained"
                       type="button"
-                      onClick={handleClosePath}
+                      onClick={closeHandler}
                       className={classes.closeButton}
                     >
                       {BUTTONS.CLOSE}
@@ -210,7 +209,6 @@ const AssignedCreateLearningPath = (props) => {
 
 AssignedCreateLearningPath.propTypes = {
   handleClose: PropTypes.func.isRequired,
-  handleClosePath: PropTypes.func.isRequired,
 };
 
 export default WithLoading(AssignedCreateLearningPath);

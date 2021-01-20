@@ -73,45 +73,42 @@ const SignIn = (props) => {
           />
 
           <form className={classes.form} noValidate>
-            {!sendOtp ? (
-              <>
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="username"
-                  autoComplete="email"
-                  autoFocus
-                  onChange={onChangeHandler}
-                  value={username}
-                />
-                {isValidEmail ? null : (
-                  <div className={classes.error}>Please Enter Valid Email.</div>
-                )}
-              </>
-            ) : (
-              <>
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={onChangeHandler}
-                  value={password}
-                />
-                {isValidOtp ? null : (
-                  <div className={classes.error}>Please Enter Valid OTP.</div>
-                )}
-              </>
-            )}
+            {
+              !sendOtp ?
+                <>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="username"
+                    autoComplete="email"
+                    autoFocus
+                    onChange={onChangeHandler}
+                    value={username}
+                  />
+                  {isValidEmail ? null : <div className={classes.error}>Please Enter Valid Email.</div>}
+                </>
+                :
+                <>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Enter OTP"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    onChange={onChangeHandler}
+                    value={password}
+                  />
+                  {isValidOtp ? null : <div className={classes.error}>Please Enter Valid OTP.</div>}
+                </>
+            }
 
             <Button
               type="submit"

@@ -17,7 +17,7 @@ const LearningPathWStatusTable = (props) => {
         overflow: "auto",
         height: "29vh",
         margin: "25px 0px 10px 0px",
-        width: "82vw",
+        width: "100vw",
       }}
     >
       <table className={classes.tbl}>
