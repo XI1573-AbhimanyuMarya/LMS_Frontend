@@ -41,8 +41,6 @@ const Navbar = (props) => {
   const { user, roles } = loginState;
   let extracontent, currentPath;
   currentPath = path;
-
-  console.log(roles, "roless");
   const navLinks = [
     // {
     //   name: "Dashboard",
