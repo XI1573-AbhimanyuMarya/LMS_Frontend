@@ -178,6 +178,10 @@ const getAdminStats = (userRole) => ({
   type: userRole,
 });
 
+const getAdminGraphs = () => ({
+  type: actionTypes.ADMIN_DASHBOARD_GRAPH_REQUEST,
+});
+
 const getAdminLearningPathDetails = () => ({
   type: actionTypes.ADMIN_LEARNING_PATH_DETAILS_REQUEST,
 });
@@ -238,6 +242,7 @@ export default {
 
   getManagerStats,
   getAdminStats,
+  getAdminGraphs,
   getAdminLearningPathDetails,
   getAdminDetails,
   getPopularStuff,

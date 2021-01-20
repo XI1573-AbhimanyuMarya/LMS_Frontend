@@ -33,6 +33,7 @@ export const SERVICE_URLS = {
   FETCH_ADMIN_STATS: `${API_HOST_PATH}/admin/api/v1/dashboard/stats`,
   FETCH_ADMIN_LEARNING_PATH_DETAILS: `${API_HOST_PATH}/admin/api/v1/dashboard/details`,
   FETCH_ADMIN_DETAILS: `${API_HOST_PATH}/admin/api/v1/learningPath/details`,
+  FETCH_ADMIN_GRAPHS: `${API_HOST_PATH}/admin/api/v1/dashboard/graph/data/`,
 
   FETCH_MANAGER_STATS: `${API_HOST_PATH}/manager/api/v1/dashboard/stats`,
   FETCH_MANAGER_POPULAR_STUFF: `${API_HOST_PATH}/manager/api/v1/dashboard/top/trending`,
