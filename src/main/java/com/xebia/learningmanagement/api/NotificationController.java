@@ -1,6 +1,7 @@
 package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.dtos.NotificationContentDTO;
+import com.xebia.learningmanagement.dtos.TotalNotificationDTO;
 import com.xebia.learningmanagement.service.NotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,9 @@ public class NotificationController {
     private NotificationService notificationService;
 
     @GetMapping("/api/v1/employee")
-    public List<NotificationContentDTO> getUserNotifications(@RequestParam @NotBlank Long userId,
-                                                             @RequestParam(defaultValue = "0") Integer pageNo,
-                                                             @RequestParam(defaultValue = "6") Integer pageSize) {
+    public TotalNotificationDTO getUserNotifications(@RequestParam @NotBlank Long userId,
+                                                     @RequestParam(defaultValue = "0") Integer pageNo,
+                                                     @RequestParam(defaultValue = "6") Integer pageSize) {
         return notificationService.getUserNotifications(userId, pageNo, pageSize);
 
     }
