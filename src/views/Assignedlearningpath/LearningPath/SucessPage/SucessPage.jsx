@@ -12,7 +12,6 @@ const SucessPage = () => {
   const classes = useStyles();
   let history = useHistory();
   const handleClosePath = () => {
-    console.log("handleclose");
     history.push("/assigned");
     window.location.reload();
   };
