@@ -12,7 +12,7 @@ public interface AdminService {
 
     AdminDashboardStatisticsDTO dashboardStatistics();
 
-    List<LearningPathAdminDetailsDTO> specificLearningPathDetails(Long learningPathId);
+    LearningPathAdminDetailsDTO specificLearningPathDetails(Long learningPathId);
 
     List<DashboardGraphStatisticsStatusDTO> dashboardGraphStatistics();
 }
