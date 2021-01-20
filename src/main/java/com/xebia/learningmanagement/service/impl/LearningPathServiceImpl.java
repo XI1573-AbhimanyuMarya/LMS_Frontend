@@ -9,7 +9,10 @@ import com.xebia.learningmanagement.dtos.request.ManagerEmailRequest;
 import com.xebia.learningmanagement.entity.*;
 import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.enums.LearningPathApprovalStatus;
-import com.xebia.learningmanagement.exception.*;
+import com.xebia.learningmanagement.exception.LearningPathEmployeesException;
+import com.xebia.learningmanagement.exception.LearningPathException;
+import com.xebia.learningmanagement.exception.UserNotFoundException;
+import com.xebia.learningmanagement.exception.UsernameNotFoundException;
 import com.xebia.learningmanagement.repository.*;
 import com.xebia.learningmanagement.service.LearningPathService;
 import com.xebia.learningmanagement.util.EmailSend;
@@ -371,21 +374,17 @@ public class LearningPathServiceImpl implements LearningPathService {
 
     @Override
     public AdminDashboardStatisticsDTO dashboardStatistics(ManagerEmailRequest managerEmail) {
-
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException(MessageBank.USERNAME_NOT_FOUND));
-
 
         long totalLearningPathMadeBy = learningPathEmployeesRepository.countByLearningPathMadeBy(user);
         long totalLearningPathCompleted = learningPathEmployeesRepository.countByPercentCompletedAndApprovalStatusAndLearningPathMadeBy(100, APPROVED, user);
         long totalLearningPathInprogress = learningPathEmployeesRepository.countByPercentCompletedNotOrApprovalStatusNotAndLearningPathMadeBy(100, APPROVED, user);
         long totalLearningPathExpired = learningPathEmployeesRepository.countByEndDateBeforeAndLearningPathMadeBy(LocalDate.now(), user);
-
         return AdminDashboardStatisticsDTO.builder()
                 .totalLearningPathAssigned(totalLearningPathMadeBy)
-                .totalLearningPathCompleted(totalLearningPathCompleted)
-                .totalLearningPathInProgress(totalLearningPathInprogress)
-                .totalLearningPathExpired(totalLearningPathExpired).build();
-
+                .totalLearningPathCompleted((int) Math.round((double) totalLearningPathCompleted / totalLearningPathMadeBy * 100))
+                .totalLearningPathInProgress((int) Math.round((double) totalLearningPathInprogress / totalLearningPathMadeBy * 100))
+                .totalLearningPathExpired((int) Math.round((double) totalLearningPathExpired / totalLearningPathMadeBy * 100)).build();
     }
 
     @Override
@@ -432,7 +431,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         Map<Month, Long> completedCount = learningPathMadeByManager.stream().filter(a -> a.getApprovalStatus().equals(APPROVED)).collect(Collectors.groupingBy(z -> z.getMonthlyProgressModifiedDate().getMonth(), Collectors.counting()));
         Map<Month, Long> inprogressCount = learningPathMadeByManager.stream().filter(a -> !a.getApprovalStatus().equals(APPROVED)).collect(Collectors.groupingBy(z -> z.getMonthlyProgressModifiedDate().getMonth(), Collectors.counting()));
         Map<Month, Long> overdueCount = learningPathMadeByManager.stream().filter(a -> a.getEndDate().compareTo(LocalDate.now()) < 0).filter(a -> a.getApprovalStatus().equals(YTBD)).collect(Collectors.groupingBy(a -> a.getMonthlyProgressModifiedDate().getMonth(), Collectors.counting()));
-       // TODO YET TO BE DECIDED
+        // TODO YET TO BE DECIDED
         return null;
     }
 }

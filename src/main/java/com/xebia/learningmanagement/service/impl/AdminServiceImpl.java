@@ -10,10 +10,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.text.DateFormatSymbols;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.*;
@@ -78,11 +78,11 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public List<MadeForEmployeeDto> specificLearningPathDetails(Long learningPathId) {
+    public List<LearningPathAdminDetailsDTO> specificLearningPathDetails(Long learningPathId) {
         ModelMapper modelMapper = new ModelMapper();
         // TODO  As per zeplin Level to be added in percent completed "Completed", "Expired to be produced at frontend
         List<LearningPathEmployees> learningPathEmployees = employeesRepository.findByLearningPathId(learningPathId);
-        return learningPathEmployees.stream().map(a -> modelMapper.map(a, MadeForEmployeeDto.class)).collect(Collectors.toList());
+        return learningPathEmployees.stream().map(a -> modelMapper.map(a, LearningPathAdminDetailsDTO.class)).collect(Collectors.toList());
     }
 
 
@@ -90,9 +90,9 @@ public class AdminServiceImpl implements AdminService {
     public List<DashboardGraphStatisticsStatusDTO> dashboardGraphStatistics() {
         List<DashboardGraphStatisticsDTO> graphListForApproved = new ArrayList<>();
         List<DashboardGraphStatisticsDTO> graphListForInProgress = new ArrayList<>();
-        List<DashboardGraphStatisticsDTO> graphListForOverdue= new ArrayList<>();
+        List<DashboardGraphStatisticsDTO> graphListForOverdue = new ArrayList<>();
         List<DashboardGraphStatisticsStatusDTO> statusGraphList = new ArrayList<>();
-        long totalCount= employeesRepository.count();
+        long totalCount = employeesRepository.count();
 
         List<Object> approvedObjectList = employeesRepository.countByApprovalStatusAndPercentCompletedGroupedByYearMonth(APPROVED.toString(), 100);
 
@@ -100,7 +100,7 @@ public class AdminServiceImpl implements AdminService {
             Object[] objectArray = (Object[]) object;
             DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
                     .month(objectArray[0].toString())
-                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount * 100) )
+                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount * 100))
                     .build();
             graphListForApproved.add(graphStatisticsDTO);
         }
@@ -119,7 +119,7 @@ public class AdminServiceImpl implements AdminService {
             Object[] objectArray = (Object[]) object;
             DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
                     .month(objectArray[0].toString())
-                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount* 100))
+                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount * 100))
                     .build();
             graphListForInProgress.add(graphStatisticsDTO);
         }
@@ -138,7 +138,7 @@ public class AdminServiceImpl implements AdminService {
             Object[] objectArray = (Object[]) object;
             DashboardGraphStatisticsDTO graphStatisticsDTO = DashboardGraphStatisticsDTO.builder()
                     .month(objectArray[0].toString())
-                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount* 100))
+                    .count((int) Math.round(new Double(objectArray[1].toString()) / totalCount * 100))
                     .build();
             graphListForOverdue.add(graphStatisticsDTO);
         }
@@ -149,7 +149,6 @@ public class AdminServiceImpl implements AdminService {
                 .build();
 
         statusGraphList.add(employeesOverdueCount);
-
 
 
         return statusGraphList;

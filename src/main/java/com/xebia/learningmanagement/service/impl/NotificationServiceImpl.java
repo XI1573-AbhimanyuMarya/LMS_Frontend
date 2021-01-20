@@ -1,6 +1,7 @@
 package com.xebia.learningmanagement.service.impl;
 
 import com.xebia.learningmanagement.dtos.NotificationContentDTO;
+import com.xebia.learningmanagement.dtos.TotalNotificationDTO;
 import com.xebia.learningmanagement.entity.Notification;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.exception.UserNotFoundException;
@@ -31,14 +32,20 @@ public class NotificationServiceImpl implements NotificationService {
 
 
     @Override
-    public List<NotificationContentDTO> getUserNotifications(Long userId, Integer pageNo, Integer pageSize) {
+    public TotalNotificationDTO getUserNotifications(Long userId, Integer pageNo, Integer pageSize) {
         ModelMapper modelMapper = new ModelMapper();
         Pageable page = PageRequest.of(pageNo, pageSize, Sort.by("createdAt").descending());
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(MessageBank.USERNAME_NOT_FOUND));
         Page<Notification> notifications = notificationRepository.findByNotificationFor(user, page);
         List<Long> readNotificationIds = notifications.stream().map(Notification::getNotificationId).collect(Collectors.toList());
+        List<NotificationContentDTO> latestNotifications = notifications.stream().map(a -> modelMapper.map(a, NotificationContentDTO.class)).collect(Collectors.toList());
         readNotificationIds.forEach(notification -> notificationRepository.notificationIsReadToTrue(notification));
-        return notifications.stream().map(a -> modelMapper.map(a, NotificationContentDTO.class)).collect(Collectors.toList());
+
+        return TotalNotificationDTO.builder()
+                .totalCount(notificationRepository.countByNotificationFor(user))
+                .notifications(latestNotifications)
+                .build();
+
     }
 
     @Override

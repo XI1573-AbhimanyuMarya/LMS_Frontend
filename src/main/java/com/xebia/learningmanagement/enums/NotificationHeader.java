@@ -3,6 +3,7 @@ package com.xebia.learningmanagement.enums;
 public enum NotificationHeader {
     Learning_Path_Assigned("Learning Path Assigned"),
     Learning_Path_Expired("Learning Path Expired"),
+    Learning_Path_Expiring_In_A_Week("Learning Path Expiring in a week"),
     Learning_Path_Modified("Learning Path Modified"),
     Learning_Path_Approval_Required("Learning Path Approval Required"),
     Learning_Path_Deleted("Learning Path Deleted"),
