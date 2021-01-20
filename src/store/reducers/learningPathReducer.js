@@ -32,6 +32,7 @@ const initialState = {
   selectedLp: {},
   Approval: {},
   dashStats: {},
+  dashGraphAdmin: {},
   managerPopularStuff: [],
 };
 
@@ -669,6 +670,26 @@ export const learningPathReducer = (state = initialState, action) => {
         errorMessage: "",
       };
     case actionTypes.POPULAR_STUFF_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: payload,
+      };
+
+    case actionTypes.ADMIN_DASHBOARD_GRAPH_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: "",
+      };
+    case actionTypes.ADMIN_DASHBOARD_GRAPH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        dashGraphAdmin: payload,
+        errorMessage: "",
+      };
+    case actionTypes.ADMIN_DASHBOARD_GRAPH_FAILURE:
       return {
         ...state,
         isLoading: false,

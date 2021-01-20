@@ -1,66 +1,109 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
+import { months } from "moment";
 
-const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
+const LearningPathGraph = ({ learningPathGraphAdmin }) => {
+  console.log(learningPathGraphAdmin, "learningPathGraphAdmin");
 
-const options = {
-  chart: {
-    height: 280,
-    type: "area",
-    toolbar:false
-  },
-  legend:{show:false},
-  dataLabels: {
-    enabled: false
-  },
-  fill: {
-    type: "gradient",
-    gradient: {
-      
-      opacityFrom: 1,
-      opacityTo: 0.1
-    },
-    colors: ['#e76600','#f9b900','#3c8200']
-  },
-  stroke:{
-    colors:['#e76600','#f9b900','#3c8200'],
-    width: 2,
-  },
-  xaxis: {
-    labels: {
-    formatter: function (value, timestamp) {
-      return monthNames[value-1];
-    }, 
+  let months = [];
+  if (learningPathGraphAdmin.length > 0) {
+    for (var i in learningPathGraphAdmin[0].dashboardGraphStatistics) {
+      months.push(learningPathGraphAdmin[0].dashboardGraphStatistics[i].month);
+    }
   }
-  },
-  yaxis:{
-    tickAmount:4,
-    min:0,
-    max:100,
-    labels:{
-      formatter: function(val, index) {
-        return `${val}%`;
+
+  console.log(months, "monthsss");
+  const monthNames = months;
+
+  const options = {
+    chart: {
+      height: 280,
+      type: "area",
+      toolbar: false,
+    },
+    legend: { show: false },
+    dataLabels: {
+      enabled: false,
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        opacityFrom: 1,
+        opacityTo: 0.1,
+      },
+      colors: ["#e76600", "#f9b900", "#3c8200"],
+    },
+    stroke: {
+      colors: ["#e76600", "#f9b900", "#3c8200"],
+      width: 2,
+    },
+    xaxis: {
+      labels: {
+        formatter: function (value, timestamp) {
+          return monthNames[value - 1];
+        },
+      },
+    },
+    yaxis: {
+      tickAmount: 4,
+      min: 0,
+      max: 100,
+      labels: {
+        formatter: function (val, index) {
+          return `${val}%`;
+        },
+      },
+    },
+  };
+  let completed = [];
+  let inprogress = [];
+  let overdue = [];
+  for (let i in learningPathGraphAdmin) {
+    // debugger;
+    if (learningPathGraphAdmin[i].status.toLowerCase() == "completed") {
+      // debugger;
+      for (let j in learningPathGraphAdmin[i].dashboardGraphStatistics) {
+        // debugger;
+        completed.push(
+          learningPathGraphAdmin[i].dashboardGraphStatistics[j]["count"]
+        );
+      }
+    }
+    if (learningPathGraphAdmin[i].status.toLowerCase() == "in-progress") {
+      // debugger;
+      for (let j in learningPathGraphAdmin[i].dashboardGraphStatistics) {
+        // debugger;
+        inprogress.push(
+          learningPathGraphAdmin[i].dashboardGraphStatistics[j]["count"]
+        );
+      }
+    }
+    if (learningPathGraphAdmin[i].status.toLowerCase() == "overdue") {
+      // debugger;
+      for (let j in learningPathGraphAdmin[i].dashboardGraphStatistics) {
+        // debugger;
+        overdue.push(
+          learningPathGraphAdmin[i].dashboardGraphStatistics[j]["count"]
+        );
       }
     }
   }
-};
-const  series= [
-  {
-    name:"Completed",
-    data: [1, 52, 57, 89, 74, 92, 65,1, 52, 57, 89, 74]
-  },
-  {
-    name:"In-Progress",
-    data: [45, 52, 38, 45, 19, 23, 90,45, 52, 38, 45, 19]
-  },
-  {
-    name: "Overdue",
-    data: [11, 32, 45, 32, 34, 52, 41,11, 32, 45, 32, 34]
-  }
-];
-const LearningPathGraph=()=>{
+
+  const series = [
+    {
+      name: "Completed",
+      data: completed,
+    },
+    {
+      name: "In-Progress",
+      data: inprogress,
+    },
+    {
+      name: "Overdue",
+      data: overdue,
+    },
+  ];
+
   return (
     <Chart
       options={options}
@@ -70,6 +113,6 @@ const LearningPathGraph=()=>{
       height="184.3"
     />
   );
-}
+};
 
 export default LearningPathGraph;
