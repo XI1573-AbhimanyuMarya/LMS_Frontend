@@ -3,9 +3,11 @@ package com.xebia.learningmanagement.service.impl;
 import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
+import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
 import com.xebia.learningmanagement.repository.LearningPathRepository;
 import com.xebia.learningmanagement.service.AdminService;
+import com.xebia.learningmanagement.util.MessageBank;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,11 +80,19 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public List<LearningPathAdminDetailsDTO> specificLearningPathDetails(Long learningPathId) {
+    public LearningPathAdminDetailsDTO
+    specificLearningPathDetails(Long learningPathId) {
         ModelMapper modelMapper = new ModelMapper();
         // TODO  As per zeplin Level to be added in percent completed "Completed", "Expired to be produced at frontend
         List<LearningPathEmployees> learningPathEmployees = employeesRepository.findByLearningPathId(learningPathId);
-        return learningPathEmployees.stream().map(a -> modelMapper.map(a, LearningPathAdminDetailsDTO.class)).collect(Collectors.toList());
+        List<MadeForEmployeeDto> details = learningPathEmployees.stream().map(a -> modelMapper.map(a, MadeForEmployeeDto.class)).collect(Collectors.toList());
+        LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_ID_NOT_FOUND));
+
+        return LearningPathAdminDetailsDTO.builder()
+                .learningPath(modelMapper.map(learningPath, LearningPathAdminCard.class))
+                .employeeDetails(details)
+                .build();
+
     }
 
 

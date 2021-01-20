@@ -1,18 +1,17 @@
 package com.xebia.learningmanagement.dtos;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class LearningPathAdminDetailsDTO {
-    private Long learningPathEmployeesId;
-    private int percentCompleted;
-    private EmployeeDto employee;
     private LearningPathAdminCard learningPath;
-    private DurationDto duration;
-    private String startDate;
-    private String endDate;
+    private List<MadeForEmployeeDto> employeeDetails;
 }

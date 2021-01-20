@@ -1,13 +1,14 @@
 package com.xebia.learningmanagement.dtos;
 
-import com.xebia.learningmanagement.dtos.EmployeeDto;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MadeForEmployeeDto {
 
     private Long learningPathEmployeesId;

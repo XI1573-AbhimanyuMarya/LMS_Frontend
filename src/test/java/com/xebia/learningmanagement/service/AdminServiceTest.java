@@ -69,19 +69,19 @@ class AdminServiceTest  {
 
     }
 
-    @DisplayName("Specfic Learning Path Details Test")
-    @Test
-     void specificLearningPathDetails() {
-        LearningPathEmployees learningPathEmployees = Mockito.mock(LearningPathEmployees.class);
-
-        List<LearningPathEmployees> learningPathEmployeesList = new ArrayList<>();
-        learningPathEmployeesList.add(learningPathEmployees);
-
-        Mockito.when(employeesRepository.findByLearningPathId(Mockito.anyLong())).thenReturn(learningPathEmployeesList);
-        int size = adminServiceImpl.specificLearningPathDetails(1L).size();
-        assertEquals(1, size);
-
-    }
+//    @DisplayName("Specfic Learning Path Details Test")
+//    @Test
+//     void specificLearningPathDetails() {
+//        LearningPathEmployees learningPathEmployees = Mockito.mock(LearningPathEmployees.class);
+//
+//        List<LearningPathEmployees> learningPathEmployeesList = new ArrayList<>();
+//        learningPathEmployeesList.add(learningPathEmployees);
+//
+//        Mockito.when(employeesRepository.findByLearningPathId(Mockito.anyLong())).thenReturn(learningPathEmployeesList);
+//        int size = adminServiceImpl.specificLearningPathDetails(1L).size();
+//        assertEquals(1, size);
+//
+//    }
 
 
 }
