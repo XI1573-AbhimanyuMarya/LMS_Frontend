@@ -4,6 +4,7 @@ import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.entity.Notification;
 import com.xebia.learningmanagement.entity.User;
+import com.xebia.learningmanagement.enums.EmailType;
 import com.xebia.learningmanagement.exception.UserNotificationException;
 import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
 import com.xebia.learningmanagement.repository.NotificationRepository;
@@ -15,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.xebia.learningmanagement.enums.LearningPathApprovalStatus.YTBD;
 import static com.xebia.learningmanagement.enums.NotificationDescription.*;
@@ -32,6 +35,8 @@ public class UpdateUserNotification {
     private NotificationRepository notificationRepository;
     @Autowired
     private LearningPathEmployeesRepository employeesRepository;
+    @Autowired
+    private EmailSend emailSend;
 
 
     public void learningPathReviewNotifications(LearningPathEmployees learningPathEmployees, String description, String header) {
@@ -169,6 +174,7 @@ public class UpdateUserNotification {
 
 
     @Scheduled(cron = "0 1 20 * * ?")
+//    @Scheduled(fixedDelay = 10000)
     public void learningPathExpiredNotification() {
         LocalDate weekBefore = LocalDate.now().minusDays(1);
         List<LearningPathEmployees> learningPathsExpired = employeesRepository.findByEndDateAndApprovalStatus(weekBefore, YTBD);
@@ -185,7 +191,8 @@ public class UpdateUserNotification {
                         .build();
 
                 notificationRepository.saveAndFlush(notification);
-                log.info("Notifications for Expired Learning Path updated Successfully");
+                setExpirationMailPropertiesAndSendEmail(pathEmployees);
+                log.info("Notifications for Expired Learning Path updated Successfully & sent email");
             }
 
 
@@ -195,5 +202,17 @@ public class UpdateUserNotification {
         }
 
 
+    }
+
+
+    private void setExpirationMailPropertiesAndSendEmail(LearningPathEmployees learningPathEmployees) throws Exception {
+
+        Map<String, String> model = new HashMap<>();
+
+        model.put("learningPathName", learningPathEmployees.getLearningPath().getName());
+        model.put("Email", learningPathEmployees.getEmployee().getUsername());
+        model.put("employeeName", learningPathEmployees.getEmployee().getFullName());
+        model.put("emailByForCC", learningPathEmployees.getLearningPath().getMadeBy().getUsername());
+        emailSend.sendEmailMethodUsingTemplate(EmailType.LEARNING_PATH_EXPIRED.getValue(), model);
     }
 }

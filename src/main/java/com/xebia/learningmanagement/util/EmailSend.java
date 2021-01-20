@@ -16,6 +16,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 @Slf4j
@@ -60,6 +61,9 @@ public class EmailSend {
             message.setFrom(new InternetAddress(emailFrom));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(modelContent.get("Email")));
+            if (Objects.nonNull(modelContent.get("emailByForCC"))) {
+                message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(modelContent.get("emailByForCC")));
+            }
             message.setSubject(getTemplateValue(value + "-subject.ftl", modelContent));
             message.setSentDate(new Date());
             MimeMultipart multipart = new MimeMultipart("related");
