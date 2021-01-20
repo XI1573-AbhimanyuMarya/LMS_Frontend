@@ -15,7 +15,7 @@ public class LearningPath {
     @ManyToOne
     private User madeBy;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Courses> courses;
     private String description;
     @ManyToOne
