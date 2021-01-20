@@ -27,7 +27,7 @@ public class AdminController {
     }
 
     @GetMapping("/api/v1/learningPath/details")
-    public List<MadeForEmployeeDto> specificLearningPathDetails(@RequestParam @NotBlank Long learningPathId) {
+    public List<LearningPathAdminDetailsDTO> specificLearningPathDetails(@RequestParam @NotBlank Long learningPathId) {
         return adminService.specificLearningPathDetails(learningPathId);
     }
 

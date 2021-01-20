@@ -85,7 +85,7 @@ public class LearningPathController {
     }
 
     @GetMapping("/api/v1/dashboard/graph/data/{uid}")
-    public List<DashboardGraphStatisticsDTO> dashboardGraphStatistics(@PathVariable(name = "uid") long uid ) {
+    public List<DashboardGraphStatisticsDTO> dashboardGraphStatistics(@PathVariable(name = "uid") long uid) {
         return learningPathService.dashboardGraphStatistics(uid);
     }
 
