@@ -13,5 +13,6 @@ public class NotificationContentDTO {
     private String notificationDescription;
     @JsonFormat(pattern = "dd/MM/yyyy'T'hh:mm:ss")
     private LocalDateTime createdAt;
+    private boolean isRead;
 
 }
