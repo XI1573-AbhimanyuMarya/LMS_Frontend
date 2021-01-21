@@ -18,7 +18,14 @@ const NotificationTray = (props) => {
 
   const notificationPathState = useSelector(state => state.notificationState);
   const loginState = useSelector((res) => res.loginState);
+ 
   const { notificationList, count } = notificationPathState;
+  let notifications = []
+
+  notifications = notificationList.notifications || [];
+
+  
+  let pageCount = parseInt((notificationList.totalCount + 6 - 1) / 6) ;
 
   const [state, setState] = React.useState({
     right: false,
@@ -85,16 +92,16 @@ const NotificationTray = (props) => {
                 <span className={classes.notification_tray_header}>Notification</span> 
                 <span className={classes.mark_as_read} onClick={markAsRead} >mark as read</span>
             </div>
-            {notificationList.map((notification, index) => (
+            {notifications.map((notification, index) => (
               <div className={classes.notification_box} key={index}>
                 <NotificationBox notificationInfo={notification}></NotificationBox>
               </div>
             ))}
             {
-              notificationList.length>0 ?
+              notifications.length>0 ?
               <Pagination
                 className={classes.pagination_section}
-                count={10}
+                count={pageCount}
                 page={page}
                 siblingCount={1}
                 boundaryCount={1}
