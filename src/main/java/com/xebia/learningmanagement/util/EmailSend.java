@@ -72,9 +72,9 @@ public class EmailSend {
                     "text/html");
             multipart.addBodyPart(messageBodyPart);
             message.setContent(multipart);
-//            Transport transport = session.getTransport("smtp");
-//            transport.connect();
-//            transport.sendMessage(message, message.getAllRecipients());
+            Transport transport = session.getTransport("smtp");
+            transport.connect();
+            transport.sendMessage(message, message.getAllRecipients());
             log.info("Sent Mail Successfully");
         } catch (Exception e) {
             log.error("Excepton ", e);
