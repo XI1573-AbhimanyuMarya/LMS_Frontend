@@ -376,12 +376,13 @@ public class LearningPathServiceImpl implements LearningPathService {
     public AdminDashboardStatisticsDTO dashboardStatistics(ManagerEmailRequest managerEmail) {
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException(MessageBank.USERNAME_NOT_FOUND));
 
+        long totalLearningPath = learningPathRepository.countByMadeById(user.getId());
         long totalLearningPathMadeBy = learningPathEmployeesRepository.countByLearningPathMadeBy(user);
         long totalLearningPathCompleted = learningPathEmployeesRepository.countByPercentCompletedAndApprovalStatusAndLearningPathMadeBy(100, APPROVED, user);
-        long totalLearningPathInprogress = learningPathEmployeesRepository.countByPercentCompletedNotAndApprovalStatusNotAndLearningPathMadeBy(0, APPROVED, user);
-        long totalLearningPathExpired = learningPathEmployeesRepository.countByEndDateBeforeAndLearningPathMadeBy(LocalDate.now(), user);
+        long totalLearningPathInprogress = learningPathEmployeesRepository.countByApprovalStatusNotAndEndDateAfterAndLearningPathMadeBy(APPROVED,LocalDate.now(), user);
+        long totalLearningPathExpired = learningPathEmployeesRepository.countByEndDateBeforeAndApprovalStatusInAndLearningPathMadeBy(LocalDate.now(), Arrays.asList(YTBD,REJECTED), user);
         return AdminDashboardStatisticsDTO.builder()
-                .totalLearningPathAssigned(totalLearningPathMadeBy)
+                .totalLearningPathAssigned(totalLearningPath)
                 .totalLearningPathCompleted((int) Math.round((double) totalLearningPathCompleted / totalLearningPathMadeBy * 100))
                 .totalLearningPathInProgress((int) Math.round((double) totalLearningPathInprogress / totalLearningPathMadeBy * 100))
                 .totalLearningPathExpired((int) Math.round((double) totalLearningPathExpired / totalLearningPathMadeBy * 100)).build();
