@@ -18,19 +18,13 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
 
     List<LearningPathEmployees> findByEmployee(User user);
 
-    long countByPercentCompleted(int percent);
-
-    long countByPercentCompletedNot(int percent);
-
     List<LearningPathEmployees> findByLearningPathId(Long learningPathId);
 
     LearningPathEmployees findByLearningPathIdAndEmployeeId(long learningPathId, long employeeId);
 
-    long countByEndDateBeforeAndApprovalStatusIn(LocalDate now);
-
     long countByPercentCompletedAndApprovalStatus(int percent, LearningPathApprovalStatus approved);
 
-    long countByPercentCompletedNotAndApprovalStatusNotAndEndDateAfter(int percent, LearningPathApprovalStatus rejected, LocalDate now);
+    long countByApprovalStatusNotAndEndDateAfter(LearningPathApprovalStatus rejected, LocalDate now);
 
     @Query(nativeQuery = true, value = "SELECT approval_status FROM public.learning_path_employees where learning_path_id= ?1 and employee_id = ?2 ")
     LearningPathApprovalStatus findStatusByLearningPathIdAndEmployeeId(Long learningPathId, Long employeeId);
