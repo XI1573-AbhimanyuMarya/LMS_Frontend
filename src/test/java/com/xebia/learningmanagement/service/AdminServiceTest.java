@@ -1,6 +1,5 @@
 package com.xebia.learningmanagement.service;
 
-import com.xebia.learningmanagement.LearningmanagementApplicationTests;
 import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
 import com.xebia.learningmanagement.entity.Duration;
 import com.xebia.learningmanagement.entity.LearningPath;
@@ -61,7 +60,7 @@ class AdminServiceTest  {
         Mockito.when(employeesRepository.count()).thenReturn(1L);
         Mockito.when(employeesRepository.countByPercentCompleted(100)).thenReturn(1L);
         Mockito.when(employeesRepository.countByPercentCompletedNot(100)).thenReturn(10L);
-        Mockito.when(employeesRepository.countByEndDateBefore(LocalDate.now())).thenReturn(1L);
+        Mockito.when(employeesRepository.countByEndDateBeforeAndApprovalStatusIn(LocalDate.now())).thenReturn(1L);
 
         AdminDashboardStatisticsDTO adminDashboardStatisticsDTO = adminServiceImpl.dashboardStatistics();
 
