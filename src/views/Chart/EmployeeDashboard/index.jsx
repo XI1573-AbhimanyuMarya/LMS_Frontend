@@ -148,6 +148,7 @@ const EmployeeDashboardDetail = (props) => {
                 <Grid container direction="row">
                   <TotalCard Total={props.statsData["totalCardDetail"].Total} />
                   <StatusWiseCard
+                    role="employee"
                     Completed={props.statsData.Completed}
                     Inprogress={props.statsData.Inprogress}
                     Overdue={props.statsData.Overdue}

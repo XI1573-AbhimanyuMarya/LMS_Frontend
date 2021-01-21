@@ -6,27 +6,40 @@ import Grid from "@material-ui/core/Grid";
 
 const StatusWiseCard = (props) => {
   const classes = useStyles();
-  const { Completed, Inprogress, Overdue } = props;
+  const { role = "", Completed, Inprogress, Overdue } = props;
   return (
     <>
       <Grid item xs={3}>
         <Card className={classes.ProgressRectangle}>
           <div className={classes.ProgressNum}>{Completed}</div>
-          <div className={classes.ProgressPercent}>{"%"}</div>
+          {role != "employee" ? (
+            <div className={classes.ProgressPercent}>{"%"}</div>
+          ) : (
+            <></>
+          )}
+
           <div className={classes.ProgressText}>{"Completed"}</div>
         </Card>
       </Grid>
       <Grid item xs={3}>
         <Card className={classes.ProgressRectangle}>
           <div className={classes.ProgressNum}>{Inprogress}</div>
-          <div className={classes.ProgressPercent}>{"%"}</div>
+          {role != "employee" ? (
+            <div className={classes.ProgressPercent}>{"%"}</div>
+          ) : (
+            <></>
+          )}
           <div className={classes.ProgressText}>{"In-progress"}</div>
         </Card>
       </Grid>
       <Grid item xs={3}>
         <Card className={classes.ProgressRectangle}>
           <div className={classes.ProgressNum}>{Overdue}</div>
-          <div className={classes.ProgressPercent}>{"%"}</div>
+          {role != "employee" ? (
+            <div className={classes.ProgressPercent}>{"%"}</div>
+          ) : (
+            <></>
+          )}
           <div className={classes.ProgressText}>{"Overdue"}</div>
         </Card>
       </Grid>
