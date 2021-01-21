@@ -74,7 +74,9 @@ const EmployeeDashboardDetail = (props) => {
   let completed;
 
   if (mycourses && mycourses.length > 0) {
-    completed = mycourses.filter((course) => course.percentCompleted === 100);
+    completed = mycourses.filter(
+      (course) => course.approvalStatus.toUpperCase() === "APPROVED"
+    );
   }
 
   const completedCourse = mycourses
@@ -148,6 +150,7 @@ const EmployeeDashboardDetail = (props) => {
                 <Grid container direction="row">
                   <TotalCard Total={props.statsData["totalCardDetail"].Total} />
                   <StatusWiseCard
+                    role="employee"
                     Completed={props.statsData.Completed}
                     Inprogress={props.statsData.Inprogress}
                     Overdue={props.statsData.Overdue}

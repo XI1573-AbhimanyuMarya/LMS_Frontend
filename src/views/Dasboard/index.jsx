@@ -37,7 +37,7 @@ const Dashboard = () => {
     assignedCources,
     pathModelOpen,
     dashStats,
-    dashGraphAdmin ={},
+    dashGraphAdmin = {},
     adminDashStats,
     managerPopularStuff,
     isLoading,

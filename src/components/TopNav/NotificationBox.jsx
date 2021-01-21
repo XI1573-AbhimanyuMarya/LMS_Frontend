@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 
 import { useStyles } from "./style";
@@ -14,10 +15,43 @@ import Certificate_Rejected from '../../images/Certificate_Rejected.png';
 
 const NotificationBox = (props) => {
   const classes = useStyles();
+  let history = useHistory();
   const notificationInfo = props.notificationInfo;
 
   let imgsrc = null;
-  function getImgSrc(param) {
+
+  const takeAction = () => {
+    const param = notificationInfo.notificationHeader;
+    if (param == "Learning Path Assigned" || param == "Learning Path Modified"){
+      history.push("/learningpath")
+    }
+    else if (param == "Learning Path Approval Required"){
+      history.push("/approvals")
+    }  
+  };
+
+  function submitBtnText(){
+    const param = notificationInfo.notificationHeader
+    switch(param) {
+      case 'Learning Path Assigned':
+        return "View Details";
+      case 'Learning Path Approval Required':
+        return "View Details";
+      case 'Learning Path Expired':
+        return "Ask For Extension";
+      case 'Learning Path Modified':
+        return "View Details";
+      case 'Certificate Approved':
+        return "Check Certificate";
+      case 'Certificate Rejected':
+        return "Ask Your Manager"; 
+      default:
+        return '';
+    }
+
+  }
+  function getImgSrc() {
+    const param = notificationInfo.notificationHeader
     switch(param) {
       case 'Learning Path Assigned':
         return Learning_Path_Assigned;
@@ -37,7 +71,7 @@ const NotificationBox = (props) => {
         return '';
     }
   }
-  imgsrc = getImgSrc(notificationInfo.notificationHeader);
+  imgsrc = getImgSrc();
  
   return (
     <tr>
@@ -49,9 +83,10 @@ const NotificationBox = (props) => {
       <td className={classes.notification_info}>
         <div className={classes.notification_header}>{notificationInfo.notificationHeader}</div>
         <h1 className={classes.notification_desc}>{notificationInfo.notificationDescription}</h1>
-        <Button className={classes.notification_view}>
-          <label className={classes.notification_btn_text}>View Details</label>
-        </Button>
+        {notificationInfo.notificationHeader != "Learning Path Deleted" ?
+        <Button className={classes.notification_view} onClick={takeAction}>
+          <label className={classes.notification_btn_text}>{submitBtnText()}</label>
+        </Button> : null }
       </td>
     </tr>
   );
