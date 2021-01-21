@@ -107,8 +107,8 @@ public class UpdateUserNotification {
         try {
 
             Notification notification = Notification.builder().createdAt(LocalDateTime.now())
-                    .notificationFor(learningPathEmployees.getEmployee())
-                    .notificationBy(learningPathEmployees.getLearningPath().getMadeBy())
+                    .notificationFor(learningPathEmployees.getLearningPath().getMadeBy())
+                    .notificationBy(learningPathEmployees.getEmployee())
                     .isRead(false)
                     .learningPath(learningPathEmployees.getLearningPath())
                     .notificationHeader(Learning_Path_Approval_Required.getValue())
