@@ -74,7 +74,9 @@ const EmployeeDashboardDetail = (props) => {
   let completed;
 
   if (mycourses && mycourses.length > 0) {
-    completed = mycourses.filter((course) => course.percentCompleted === 100);
+    completed = mycourses.filter(
+      (course) => course.approvalStatus.toUpperCase() === "APPROVED"
+    );
   }
 
   const completedCourse = mycourses
