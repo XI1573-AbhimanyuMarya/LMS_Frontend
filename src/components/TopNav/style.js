@@ -11,7 +11,6 @@ export const useStyles = makeStyles((theme) => ({
   notification_tray_header:{
     width: "84px",
     height: "21px",
-    margin: "0px 0px 20px 4px",
     fontFamily: "Roboto",
     fontSize: "16px",
     fontWeight: "500",
@@ -25,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
   notification_box:{
     width: "430px",
     height: "115px",
-    margin: "0 0 30px",
+    margin: "0 0 40px",
     padding: "12px 13px 15px 25px",
     borderRadius: "8px",
     boxShadow: "1px 3px 9px 0 rgba(0, 0, 0, 0.1)",
@@ -86,5 +85,22 @@ export const useStyles = makeStyles((theme) => ({
       letterSpacing: "normal",
       textAlign: "center",
       color: "#f07402"
+    },
+    pagination_section:{
+      marginLeft: "40px",
+      '& .Mui-selected': {
+        backgroundColor:'#f07402!important',
+        color:'#ffffff',
+       },
+    },
+    norecords:{
+      textAlign:'center'
+    },
+    mark_as_read:{
+      marginLeft:'10px',
+      color:'blue',
+      cursor: "pointer",
+      textDecoration: 'underline',
+      fontSize: "16px",
     }
 }));

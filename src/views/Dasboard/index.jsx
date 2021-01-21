@@ -305,14 +305,6 @@ raghav's end
     );
   };
 
-  console.log(
-    !showMyDashboard,
-    manager,
-    showDashboard,
-    !pathModelOpen,
-    "result"
-  );
-
   return (
     <div>
       <TopNav>{userRole === "ROLE_MANAGER" ? modalBtn : ""}</TopNav>
