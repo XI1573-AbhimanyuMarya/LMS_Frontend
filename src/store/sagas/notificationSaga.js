@@ -6,7 +6,7 @@ import { authHeader } from '../../modules/authServices';
 
 const fetchAllNotifications = async (postData) => {
   const userId = postData.payload.userId
-  const pageNumber = postData.payload.pageNumber
+  const pageNumber = postData.payload.pageNumber -1
   return await axios.get(SERVICE_URLS.FETCH_NOTIFICATIONS + `/notification/api/v1/employee?userId= `+ userId +`&pageNo=`+ pageNumber +`&pageSize=6`, { headers: authHeader() });
 }
 
