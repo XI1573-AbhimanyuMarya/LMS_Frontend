@@ -75,7 +75,7 @@ public class LearningPathController {
     }
 
     @PostMapping("/api/v1/dashboard/stats")
-    public AdminDashboardStatisticsDTO dashboardStatistics(@Valid @RequestBody ManagerEmailRequest managerEmail) {
+    public DashboardStatisticsDTO dashboardStatistics(@Valid @RequestBody ManagerEmailRequest managerEmail) {
         return learningPathService.dashboardStatistics(managerEmail);
     }
 

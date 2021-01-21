@@ -18,19 +18,13 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
 
     List<LearningPathEmployees> findByEmployee(User user);
 
-    long countByPercentCompleted(int percent);
-
-    long countByPercentCompletedNot(int percent);
-
     List<LearningPathEmployees> findByLearningPathId(Long learningPathId);
 
     LearningPathEmployees findByLearningPathIdAndEmployeeId(long learningPathId, long employeeId);
 
-    long countByEndDateBefore(LocalDate now);
-
     long countByPercentCompletedAndApprovalStatus(int percent, LearningPathApprovalStatus approved);
 
-    long countByPercentCompletedNotOrApprovalStatus(int percent, LearningPathApprovalStatus rejected);
+    long countByApprovalStatusNotAndEndDateAfter(LearningPathApprovalStatus status, LocalDate now);
 
     @Query(nativeQuery = true, value = "SELECT approval_status FROM public.learning_path_employees where learning_path_id= ?1 and employee_id = ?2 ")
     LearningPathApprovalStatus findStatusByLearningPathIdAndEmployeeId(Long learningPathId, Long employeeId);
@@ -39,19 +33,15 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
 
     long countByPercentCompletedAndApprovalStatusAndEmployee(int i, LearningPathApprovalStatus approved, User user);
 
-    long countByEndDateBeforeAndEmployee(LocalDate now, User user);
-
     Long countByLearningPathMadeBy(User user);
 
     long countByPercentCompletedAndApprovalStatusAndLearningPathMadeBy(int i, LearningPathApprovalStatus approved, User user);
 
-    long countByEndDateBeforeAndLearningPathMadeBy(LocalDate now, User user);
+    long countByEndDateBeforeAndApprovalStatusInAndLearningPathMadeBy(LocalDate now, List<LearningPathApprovalStatus> asList, User user);
 
-    long countByPercentCompletedNotOrApprovalStatusNotAndLearningPathMadeBy(int i, LearningPathApprovalStatus rejected, User user);
+    long countByApprovalStatusNotAndEndDateAfterAndLearningPathMadeBy(LearningPathApprovalStatus status, LocalDate now, User user);
 
     Long countByLearningPath(LearningPath learningPath);
-
-    long countByPercentCompletedNotAndApprovalStatusNotAndEmployee(int i, LearningPathApprovalStatus approved, User user);
 
     @Query(value = "select to_char(modification_time,'YYYY-Month') as year_month ,count(id) as total from learning_path_employees where approval_status= ?1 and percent_completed= ?2 group by year_month ", nativeQuery = true)
     List<Object> countByApprovalStatusAndPercentCompletedGroupedByYearMonth(String approved, int percent);
@@ -64,4 +54,10 @@ public interface LearningPathEmployeesRepository extends JpaRepository<LearningP
     List<Object> countByOverdueAndPercentCompletedGroupedByYearMonth(String ytbd);
 
     List<LearningPathEmployees> findByEndDateAndApprovalStatus(LocalDate date, LearningPathApprovalStatus ytbd);
+
+    long countByEndDateBeforeAndApprovalStatusIn(LocalDate now, List<LearningPathApprovalStatus> asList);
+
+    long countByApprovalStatusNotAndEndDateAfterAndEmployee(LearningPathApprovalStatus approved, LocalDate now, User user);
+
+    long countByEndDateBeforeAndApprovalStatusInAndEmployee(LocalDate now, List<LearningPathApprovalStatus> asList, User user);
 }

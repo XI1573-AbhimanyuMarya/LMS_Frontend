@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class AdminDashboardStatisticsDTO {
+public class DashboardStatisticsDTO {
     private long totalLearningPathAssigned;
     private long totalLearningPathCompleted;
     private long totalLearningPathInProgress;

@@ -1,7 +1,6 @@
 package com.xebia.learningmanagement.api;
 
-import com.xebia.learningmanagement.dtos.AdminDashboardDetailsDTO;
-import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
+import com.xebia.learningmanagement.dtos.DashboardStatisticsDTO;
 import com.xebia.learningmanagement.dtos.EmployeeLearningPathStatisticsDto;
 import com.xebia.learningmanagement.dtos.request.CourseCompletedPercentRequest;
 import com.xebia.learningmanagement.dtos.request.EmployeeEmailRequest;
@@ -64,7 +63,7 @@ public class EmployeeLearningPathController {
 
 
     @PostMapping("/api/v1/dashboard/stats")
-    public AdminDashboardStatisticsDTO dashboardStatistics(@Valid @RequestBody EmployeeEmailRequest employeeEmail) {
+    public DashboardStatisticsDTO dashboardStatistics(@Valid @RequestBody EmployeeEmailRequest employeeEmail) {
         return employeelearningservice.dashboardStatistics(employeeEmail);
     }
 
