@@ -5,6 +5,7 @@ import TableRow from "./TableRow";
 import Button from '@material-ui/core/Button';
 import Actions from "../../../store/actions";
 import { BUTTONS } from "../../../modules/constants";
+import LearningPathCardWOAction from "../../../components/Card/LearningPathCardWOAction";
 
 const LearnerTable = (props) => {
   const classes = useStyles();
@@ -13,14 +14,15 @@ const LearnerTable = (props) => {
   const handleBack = () => {
     dispatch(Actions.learningPathActions.openDetails(false, 0));
   };
-  const renderCourseList = learningPathState.adminDetails && learningPathState.adminDetails.map((lp) => {
-    return <TableRow key={lp.learningPathId} lp={lp} />;
+  const cardData = learningPathState.adminDetails?.learningPath;
+  const renderCourseList = learningPathState.adminDetails && learningPathState.adminDetails.employeeDetails.map((lp) => {
+    return <TableRow key={lp.learningPathEmployeesId} lp={lp} />;
   });
   return (
     <div
       style={{
         overflow: "auto",
-        height: "29vh",
+        height: "auto",
         margin: "25px 0px 10px 0px",
         width: "82vw",
       }}
@@ -28,6 +30,12 @@ const LearnerTable = (props) => {
       <Button onClick={handleBack} className={classes.button}>
         {BUTTONS.BACK}
       </Button>
+      <LearningPathCardWOAction
+        heading={cardData?.name}
+        levelId={cardData?.competency.id}
+        levelName={cardData?.competency.name}
+        desc={cardData?.description}
+      />
       <table className={classes.tbl}>
         <thead className={classes.tblheading}>
           <tr>

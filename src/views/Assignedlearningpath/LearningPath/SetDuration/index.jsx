@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -18,13 +18,13 @@ const SetDuration = () => {
   const learningPathState = useSelector(state => state.learningPathState);
  const{courseIdArr,allLearningPath}= learningPathState;
  const[main,setmain]= useState({})
+  useEffect(() => {
+    main[learningPathState.courseIdArr[0]]={"id":3,"name":`3 month`}
+    dispatch(Actions.learningPathActions.getSliderDuration(main));
+  }, []);
 	const onSliderHandler = (event,val) => {
 		if(val !== "") {
-       main[event.currentTarget.id]={"id":val,"name":`${val} month`}
-      //  let tmp;
-      //  tmp=JSON.stringify(main)
-      //  setmain(tmp);
-      
+      main[event.currentTarget.id]={"id":val,"name":`${val} month`}
 			dispatch(Actions.learningPathActions.getSliderDuration(main))
 		}
 	}
@@ -42,18 +42,17 @@ const SetDuration = () => {
                 <img src={SHOW_LEVELS[`${item.competency.id}-${item.competency.name}`]} style={{width:"100px",height: "38px",marginBottom:"-10px"}}/>{item.name}
               </Typography>
               <PrettoSlider
-              defaultValue={ 3 }
-              valueLabelDisplay="auto"
-              id={item.id}
-              step={3}
-              min={3}
-              max={12}
-              aria-labelledby="discrete-slider-custom"
-              marks={marks}
-              ref={React.createRef}
-              onChange={ (id,val) => onSliderHandler(id, val) }
-            /></>:''
-              
+                defaultValue={ 3 }
+                valueLabelDisplay="auto"
+                id={item.id}
+                step={3}
+                min={3}
+                max={12}
+                aria-labelledby="discrete-slider-custom"
+                marks={marks}
+                ref={React.createRef}
+                onChange={ (id,val) => onSliderHandler(id, val) }
+            /></>:''  
             ))}
           </Container>
         </div>	

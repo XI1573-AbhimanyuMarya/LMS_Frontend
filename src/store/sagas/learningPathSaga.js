@@ -75,6 +75,7 @@ export function* learningPathSaga() {
     getManagerStats
   );
   yield takeLatest(actionTypes.ADMIN_DASHBOARD_STATS_REQUEST, getAdminStats);
+  yield takeLatest(actionTypes.ADMIN_DASHBOARD_GRAPH_REQUEST, getAdminGraphs);
   yield takeLatest(
     actionTypes.ADMIN_LEARNING_PATH_DETAILS_REQUEST,
     getAdminLearningPathDetails
@@ -403,6 +404,12 @@ const fetchAdminStats = async () => {
   });
 };
 
+const fetchAdminGraph = async () => {
+  return await axios.get(SERVICE_URLS.FETCH_ADMIN_GRAPHS, {
+    headers: authHeader(),
+  });
+};
+
 const fetchAdminLearningPathDetails = async () => {
   return await axios.get(SERVICE_URLS.FETCH_ADMIN_LEARNING_PATH_DETAILS, {
     headers: authHeader(),
@@ -440,6 +447,19 @@ function* getAdminStats(action) {
     });
   } catch (error) {
     yield put({ type: actionTypes.ADMIN_DASHBOARD_STATS_FAILURE, error });
+  }
+}
+
+function* getAdminGraphs(action) {
+  try {
+    const response = yield call(fetchAdminGraph, action.payload);
+    const { data } = response;
+    yield put({
+      type: actionTypes.ADMIN_DASHBOARD_GRAPH_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    yield put({ type: actionTypes.ADMIN_DASHBOARD_GRAPH_FAILURE, error });
   }
 }
 

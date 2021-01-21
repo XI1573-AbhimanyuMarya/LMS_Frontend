@@ -1,8 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
+  button: {
+    background: "none",
+    color: "#7a7a7a",
+    textTransform: "lowercase",
+    fontSize: 12,
+    marginBottom: '20px'
+  },
   tbl:{
-    minWidth:"100%"
+    minWidth:"100%",
+    marginTop: '20px'
   },
   tblrow:{
     '& td':{

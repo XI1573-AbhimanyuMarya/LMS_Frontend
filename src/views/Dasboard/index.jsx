@@ -37,6 +37,7 @@ const Dashboard = () => {
     assignedCources,
     pathModelOpen,
     dashStats,
+    dashGraphAdmin ={},
     adminDashStats,
     managerPopularStuff,
     isLoading,
@@ -126,6 +127,7 @@ raghav's end
           "ADMIN_DASHBOARD_STATS_REQUEST"
         )
       );
+      dispatch(Actions.learningPathActions.getAdminGraphs());
     } else {
       dispatch(
         Actions.learningPathActions.getManagerStats(
@@ -268,6 +270,7 @@ raghav's end
           heading: "Assigned Learning Path",
           Total: dashStats.totalLearningPathAssigned,
         },
+        learningPathGraphAdmin: dashGraphAdmin,
         Completed: dashStats.totalLearningPathCompleted,
         Inprogress: dashStats.totalLearningPathInProgress,
         Overdue: dashStats.totalLearningPathExpired,
@@ -301,14 +304,6 @@ raghav's end
       </>
     );
   };
-
-  console.log(
-    !showMyDashboard,
-    manager,
-    showDashboard,
-    !pathModelOpen,
-    "result"
-  );
 
   return (
     <div>
