@@ -1,6 +1,5 @@
 package com.xebia.learningmanagement.service;
 
-import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
 import com.xebia.learningmanagement.entity.Duration;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;

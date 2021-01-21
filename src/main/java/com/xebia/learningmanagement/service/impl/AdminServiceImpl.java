@@ -64,14 +64,14 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public AdminDashboardStatisticsDTO dashboardStatistics() {
+    public DashboardStatisticsDTO dashboardStatistics() {
         long totalLearningPathAssigned = learningPathRepository.count();
         long totalEmployeeRecords = employeesRepository.count();
         long totalLearningPathCompleted = employeesRepository.countByPercentCompletedAndApprovalStatus(100, APPROVED);
         long totalLearningPathInprogress = employeesRepository.countByApprovalStatusNotAndEndDateAfter(APPROVED,LocalDate.now());
         long totalLearningPathExpired = employeesRepository.countByEndDateBeforeAndApprovalStatusIn(LocalDate.now(), Arrays.asList(YTBD,REJECTED));
 
-        return AdminDashboardStatisticsDTO.builder()
+        return DashboardStatisticsDTO.builder()
                 .totalLearningPathAssigned(totalLearningPathAssigned)
                 .totalLearningPathCompleted((int) Math.round((double) totalLearningPathCompleted / totalEmployeeRecords * 100))
                 .totalLearningPathInProgress((int) Math.round((double) totalLearningPathInprogress / totalEmployeeRecords * 100))

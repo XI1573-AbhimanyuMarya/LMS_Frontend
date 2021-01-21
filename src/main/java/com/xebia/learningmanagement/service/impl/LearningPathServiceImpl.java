@@ -373,7 +373,7 @@ public class LearningPathServiceImpl implements LearningPathService {
     }
 
     @Override
-    public AdminDashboardStatisticsDTO dashboardStatistics(ManagerEmailRequest managerEmail) {
+    public DashboardStatisticsDTO dashboardStatistics(ManagerEmailRequest managerEmail) {
         User user = userRepository.findByUsername(managerEmail.getManagerEmail()).orElseThrow(() -> new UsernameNotFoundException(MessageBank.USERNAME_NOT_FOUND));
 
         long totalLearningPath = learningPathRepository.countByMadeById(user.getId());
@@ -381,7 +381,7 @@ public class LearningPathServiceImpl implements LearningPathService {
         long totalLearningPathCompleted = learningPathEmployeesRepository.countByPercentCompletedAndApprovalStatusAndLearningPathMadeBy(100, APPROVED, user);
         long totalLearningPathInprogress = learningPathEmployeesRepository.countByApprovalStatusNotAndEndDateAfterAndLearningPathMadeBy(APPROVED,LocalDate.now(), user);
         long totalLearningPathExpired = learningPathEmployeesRepository.countByEndDateBeforeAndApprovalStatusInAndLearningPathMadeBy(LocalDate.now(), Arrays.asList(YTBD,REJECTED), user);
-        return AdminDashboardStatisticsDTO.builder()
+        return DashboardStatisticsDTO.builder()
                 .totalLearningPathAssigned(totalLearningPath)
                 .totalLearningPathCompleted((int) Math.round((double) totalLearningPathCompleted / totalLearningPathMadeBy * 100))
                 .totalLearningPathInProgress((int) Math.round((double) totalLearningPathInprogress / totalLearningPathMadeBy * 100))

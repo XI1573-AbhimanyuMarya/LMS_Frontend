@@ -1,7 +1,7 @@
 package com.xebia.learningmanagement.api;
 
 import com.xebia.learningmanagement.dtos.AdminDashboardDetailsDTO;
-import com.xebia.learningmanagement.dtos.AdminDashboardStatisticsDTO;
+import com.xebia.learningmanagement.dtos.DashboardStatisticsDTO;
 import com.xebia.learningmanagement.dtos.DashboardGraphStatisticsStatusDTO;
 import com.xebia.learningmanagement.dtos.LearningPathAdminDetailsDTO;
 import com.xebia.learningmanagement.service.AdminService;
@@ -25,7 +25,7 @@ public class AdminController {
     }
 
     @GetMapping("/api/v1/dashboard/stats")
-    public AdminDashboardStatisticsDTO dashboardStatistics() {
+    public DashboardStatisticsDTO dashboardStatistics() {
         return adminService.dashboardStatistics();
     }
 

@@ -26,7 +26,7 @@ public interface LearningPathService {
 
     List<LearningPathCourseDetailsDTO> getCourseDetails(Long learningPathId, Long employeeId, Long learningPathEmployeesId);
 
-    AdminDashboardStatisticsDTO dashboardStatistics(ManagerEmailRequest managerEmail);
+    DashboardStatisticsDTO dashboardStatistics(ManagerEmailRequest managerEmail);
 
     List<LearningPath> dashboardTopTrending(Long assigneeId);
 
