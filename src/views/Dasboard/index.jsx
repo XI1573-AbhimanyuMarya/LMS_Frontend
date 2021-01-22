@@ -193,19 +193,6 @@ raghav's end
     }
   };
 
-  const modalBtn = (
-    <Button
-      type="button"
-      fullWidth
-      variant="contained"
-      className={classes.navSubmit}
-      onClick={handleClickOpen}
-      startIcon={<AddCircleOutlineOutlinedIcon style={{ fontSize: 20 }} />}
-    >
-      Create Learning Path
-    </Button>
-  );
-
   const renderWelcome = (
     <Box component="div" m="auto">
       <Container
@@ -307,7 +294,7 @@ raghav's end
 
   return (
     <div>
-      <TopNav>{userRole === "ROLE_MANAGER" ? modalBtn : ""}</TopNav>
+      <TopNav></TopNav>
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
