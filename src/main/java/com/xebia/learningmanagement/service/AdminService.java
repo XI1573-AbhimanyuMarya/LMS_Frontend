@@ -1,9 +1,7 @@
 package com.xebia.learningmanagement.service;
 
-import com.xebia.learningmanagement.dtos.AdminDashboardDetailsDTO;
-import com.xebia.learningmanagement.dtos.DashboardStatisticsDTO;
-import com.xebia.learningmanagement.dtos.DashboardGraphStatisticsStatusDTO;
-import com.xebia.learningmanagement.dtos.LearningPathAdminDetailsDTO;
+import com.xebia.learningmanagement.dtos.*;
+import com.xebia.learningmanagement.dtos.request.AdminDeleteLearningPathDetails;
 
 import java.util.List;
 
@@ -15,4 +13,8 @@ public interface AdminService {
     LearningPathAdminDetailsDTO specificLearningPathDetails(Long learningPathId);
 
     List<DashboardGraphStatisticsStatusDTO> dashboardGraphStatistics();
+
+    List<AdminManageLearningPathsDTO> manageAssignedLearningPaths();
+
+    void deleteCompletePathAndItsDetails(AdminDeleteLearningPathDetails learningPathIds);
 }

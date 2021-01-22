@@ -28,4 +28,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     List<Notification> findByNotificationForAndIsRead(User user, boolean b);
 
     long countByNotificationFor(User user);
+
+    List<Notification> findByLearningPathId(Long id);
 }
