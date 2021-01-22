@@ -123,7 +123,6 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    @Transactional
     public void deleteCompletePathAndItsDetails(AdminDeleteLearningPathDetails learningPathIds) {
         for (Long id : learningPathIds.getLearningPathIds()) {
             employeesRepository.deleteAll(employeesRepository.findByLearningPathId(id));
