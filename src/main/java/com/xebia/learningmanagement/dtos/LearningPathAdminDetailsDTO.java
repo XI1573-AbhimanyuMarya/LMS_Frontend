@@ -13,5 +13,6 @@ import java.util.List;
 @Builder
 public class LearningPathAdminDetailsDTO {
     private LearningPathAdminCard learningPath;
+    private EmployeeDto manager;
     private List<MadeForEmployeeDto> employeeDetails;
 }
