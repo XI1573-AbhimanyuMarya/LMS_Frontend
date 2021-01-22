@@ -39,5 +39,14 @@ public class AdminController {
         return adminService.dashboardGraphStatistics();
     }
 
+    @GetMapping("/api/v1/manage/assigned/learningPaths")
+    public void manageOrganizationsLearningPath(){
+
+                             
+
+
+    }
+
+
 
 }
