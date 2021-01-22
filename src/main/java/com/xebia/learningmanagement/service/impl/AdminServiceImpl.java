@@ -3,6 +3,7 @@ package com.xebia.learningmanagement.service.impl;
 import com.xebia.learningmanagement.dtos.*;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
+import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
 import com.xebia.learningmanagement.repository.LearningPathRepository;
@@ -68,8 +69,8 @@ public class AdminServiceImpl implements AdminService {
         long totalLearningPathAssigned = learningPathRepository.count();
         long totalEmployeeRecords = employeesRepository.count();
         long totalLearningPathCompleted = employeesRepository.countByPercentCompletedAndApprovalStatus(100, APPROVED);
-        long totalLearningPathInprogress = employeesRepository.countByApprovalStatusNotAndEndDateAfter(APPROVED,LocalDate.now());
-        long totalLearningPathExpired = employeesRepository.countByEndDateBeforeAndApprovalStatusIn(LocalDate.now(), Arrays.asList(YTBD,REJECTED));
+        long totalLearningPathInprogress = employeesRepository.countByApprovalStatusNotAndEndDateAfter(APPROVED, LocalDate.now());
+        long totalLearningPathExpired = employeesRepository.countByEndDateBeforeAndApprovalStatusIn(LocalDate.now(), Arrays.asList(YTBD, REJECTED));
 
         return DashboardStatisticsDTO.builder()
                 .totalLearningPathAssigned(totalLearningPathAssigned)
@@ -81,17 +82,18 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public LearningPathAdminDetailsDTO
-    specificLearningPathDetails(Long learningPathId) {
+    public LearningPathAdminDetailsDTO specificLearningPathDetails(Long learningPathId) {
         ModelMapper modelMapper = new ModelMapper();
         // TODO  As per zeplin Level to be added in percent completed "Completed", "Expired to be produced at frontend
         List<LearningPathEmployees> learningPathEmployees = employeesRepository.findByLearningPathId(learningPathId);
         List<MadeForEmployeeDto> details = learningPathEmployees.stream().map(a -> modelMapper.map(a, MadeForEmployeeDto.class)).collect(Collectors.toList());
+        User managerDetail = learningPathEmployees.stream().map(a -> a.getLearningPath().getMadeBy()).findFirst().orElse(null);
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_ID_NOT_FOUND));
 
         return LearningPathAdminDetailsDTO.builder()
                 .learningPath(modelMapper.map(learningPath, LearningPathAdminCard.class))
                 .employeeDetails(details)
+                .manager(modelMapper.map(managerDetail, EmployeeDto.class))
                 .build();
 
     }
