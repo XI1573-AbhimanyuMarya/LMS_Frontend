@@ -87,13 +87,13 @@ public class AdminServiceImpl implements AdminService {
         // TODO  As per zeplin Level to be added in percent completed "Completed", "Expired to be produced at frontend
         List<LearningPathEmployees> learningPathEmployees = employeesRepository.findByLearningPathId(learningPathId);
         List<MadeForEmployeeDto> details = learningPathEmployees.stream().map(a -> modelMapper.map(a, MadeForEmployeeDto.class)).collect(Collectors.toList());
-        User managerDetail = learningPathEmployees.stream().map(a -> a.getLearningPath().getMadeBy()).findFirst().orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_ID_NOT_FOUND));
+        User managerDetail = learningPathEmployees.stream().map(a -> a.getLearningPath().getMadeBy()).findFirst().orElse(null);
         LearningPath learningPath = learningPathRepository.findById(learningPathId).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_ID_NOT_FOUND));
 
         return LearningPathAdminDetailsDTO.builder()
                 .learningPath(modelMapper.map(learningPath, LearningPathAdminCard.class))
                 .employeeDetails(details)
-                .manager(modelMapper.map(managerDetail,EmployeeDto.class))
+                .manager(modelMapper.map(managerDetail, EmployeeDto.class))
                 .build();
 
     }
