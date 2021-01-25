@@ -4,6 +4,8 @@ import Actions from "../../../store/actions";
 import { useStyles } from "./style";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import {
   createMuiTheme,
   withStyles,
@@ -21,6 +23,8 @@ const LowerCaseButton = withStyles({
   },
 })(Button);
 
+
+
 const LearningCoursesTable = (props) => {
   const data = props;
   const classes = useStyles();
@@ -35,6 +39,24 @@ const LearningCoursesTable = (props) => {
     };
     dispatch(Actions.learningPathActions.getLearningPathCourses(reqBody));
   }, []);
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+    const [open, setOpen] = React.useState(false);
+  
+    const handleClick = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
+
   const {
     learningPathCourses,
     selectedLp,
@@ -42,6 +64,7 @@ const LearningCoursesTable = (props) => {
     isLoading,
   } = learningPathState;
   const { withRate, disable } = props;
+ 
   const renderCourseList = learningPathCourses.map((lpcourse) => {
     return (
       <CourseRow
@@ -55,7 +78,8 @@ const LearningCoursesTable = (props) => {
       />
     );
   });
-
+  console.log(selectedLp.approvalStatus,"renderCourseList")
+  const renderCourseList1=renderCourseList.map((lpcourse) => { return (lpcourse.props.course.percentCompleted)})
   const [show, showGallery] = useState(false);
   const location = useLocation();
 
@@ -116,17 +140,29 @@ const LearningCoursesTable = (props) => {
               type="button"
               variant="contained"
               className={classes.navSubmit}
-              onClick={sendForApprovalHandler}
+              onClick={()=>{ sendForApprovalHandler(); handleClick() }}
               disabled={selectedLp.approvalStatus === "PENDING" ? true : false}
             >
               Send for approval
             </LowerCaseButton>
+            
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              
+            {(selectedLp.percentCompleted === 100) ?
+        <Alert onClose={handleClose} severity="success">
+          The learning path has been successfully sent for approval!
+        </Alert> : <Alert onClose={handleClose} severity="error">
+          Complete the courses first
+        </Alert>
+              }
+      </Snackbar>
             <LowerCaseButton
               type="button"
               variant="contained"
               className={classes.navSubmit1}
               startIcon={<VisibilityIcon style={{ fontSize: 20 }} />}
               onClick={viewAttachmentHandler}
+              disabled={selectedLp.approvalStatus === "PENDING" ? true : false}
             >
               View attachments
             </LowerCaseButton>

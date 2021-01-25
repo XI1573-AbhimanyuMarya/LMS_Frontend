@@ -17,7 +17,8 @@ const LearnerTable = (props) => {
   const cardData = learningPathState.adminDetails?.learningPath;
   const managerData = learningPathState.adminDetails?.manager;
   const renderCourseList = learningPathState.adminDetails && learningPathState.adminDetails.employeeDetails.map((lp) => {
-    return <TableRow key={lp.learningPathEmployeesId} lp={lp} />;
+    return <TableRow key={lp.learningPathEmployeesId} lp={lp}    levelId={cardData?.competency.id}
+    levelName={cardData?.competency.name}/>;
   });
   return (
     <div

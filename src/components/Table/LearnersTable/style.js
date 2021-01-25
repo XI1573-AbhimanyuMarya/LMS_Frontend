@@ -32,4 +32,28 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor:"white",
     fontSize:"12px"
   },
+  Beginner: {
+    width: "80px",
+    marginRight: "-5px",
+    marginBottom: "10px",
+    height: "38px",
+  },
+  Intermediate: {
+    width: "100px",
+    marginRight: "-5px",
+    marginBottom: "10px",
+    height: "38px",
+  },
+  Advance: {
+    width: "80px",
+    marginRight: "-5px",
+    marginBottom: "10px",
+    height: "38px",
+  },
+  Expert: {
+    width: "80px",
+    marginRight: "-5px",
+    marginBottom: "10px",
+    height: "38px",
+  },
 }));
