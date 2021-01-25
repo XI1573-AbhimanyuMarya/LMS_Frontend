@@ -1,12 +1,14 @@
 package com.xebia.learningmanagement.service.impl;
 
 import com.xebia.learningmanagement.dtos.*;
+import com.xebia.learningmanagement.dtos.request.AdminDeleteLearningPathDetails;
 import com.xebia.learningmanagement.entity.LearningPath;
 import com.xebia.learningmanagement.entity.LearningPathEmployees;
 import com.xebia.learningmanagement.entity.User;
 import com.xebia.learningmanagement.exception.LearningPathException;
 import com.xebia.learningmanagement.repository.LearningPathEmployeesRepository;
 import com.xebia.learningmanagement.repository.LearningPathRepository;
+import com.xebia.learningmanagement.repository.NotificationRepository;
 import com.xebia.learningmanagement.service.AdminService;
 import com.xebia.learningmanagement.util.MessageBank;
 import org.modelmapper.ModelMapper;
@@ -28,12 +30,14 @@ public class AdminServiceImpl implements AdminService {
 
     private final LearningPathEmployeesRepository employeesRepository;
     private final LearningPathRepository learningPathRepository;
+    private NotificationRepository notificationRepository;
 
 
     @Autowired
-    public AdminServiceImpl(LearningPathEmployeesRepository employeesRepository, LearningPathRepository learningPathRepository) {
+    public AdminServiceImpl(LearningPathEmployeesRepository employeesRepository, LearningPathRepository learningPathRepository, NotificationRepository notificationRepository) {
         this.employeesRepository = employeesRepository;
         this.learningPathRepository = learningPathRepository;
+        this.notificationRepository = notificationRepository;
 
     }
 
@@ -98,6 +102,34 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
+    @Override
+    public List<AdminManageLearningPathsDTO> manageAssignedLearningPaths() {
+        List<LearningPath> learningPaths = learningPathRepository.findAll();
+        List<AdminManageLearningPathsDTO> learningPathDetailsForAdmin = new ArrayList<>();
+        for (LearningPath learningPath : learningPaths) {
+            AdminManageLearningPathsDTO cardDetails = AdminManageLearningPathsDTO.builder()
+                    .learningPathId(learningPath.getId())
+                    .competency(learningPath.getCompetency())
+                    .description(learningPath.getDescription())
+                    .name(learningPath.getName())
+                    .coursesCount(learningPath.getCourses().size())
+                    .employeesCount(employeesRepository.countByLearningPath(learningPath))
+                    .build();
+            learningPathDetailsForAdmin.add(cardDetails);
+        }
+        return learningPathDetailsForAdmin;
+    }
+
+
+    @Override
+    public void deleteCompletePathAndItsDetails(AdminDeleteLearningPathDetails learningPathIds) {
+        for (Long id : learningPathIds.getLearningPathIds()) {
+            employeesRepository.deleteAll(employeesRepository.findByLearningPathId(id));
+            notificationRepository.deleteAll(notificationRepository.findByLearningPathId(id));
+            learningPathRepository.delete(learningPathRepository.findById(id).orElseThrow(() -> new LearningPathException(MessageBank.LEARNING_PATH_ID_NOT_FOUND)));
+        }
+
+    }
 
     @Override
     public List<DashboardGraphStatisticsStatusDTO> dashboardGraphStatistics() {

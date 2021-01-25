@@ -1,13 +1,13 @@
 package com.xebia.learningmanagement.api;
 
-import com.xebia.learningmanagement.dtos.AdminDashboardDetailsDTO;
-import com.xebia.learningmanagement.dtos.DashboardStatisticsDTO;
-import com.xebia.learningmanagement.dtos.DashboardGraphStatisticsStatusDTO;
-import com.xebia.learningmanagement.dtos.LearningPathAdminDetailsDTO;
+import com.xebia.learningmanagement.dtos.*;
+import com.xebia.learningmanagement.dtos.request.AdminDeleteLearningPathDetails;
 import com.xebia.learningmanagement.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -37,6 +37,17 @@ public class AdminController {
     @GetMapping("/api/v1/dashboard/graph/data/")
     public List<DashboardGraphStatisticsStatusDTO> dashboardGraphStatistics() {
         return adminService.dashboardGraphStatistics();
+    }
+
+    @GetMapping("/api/v1/manage/learningPaths/assigned")
+    public List<AdminManageLearningPathsDTO> manageOrganizationsLearningPath() {
+        return adminService.manageAssignedLearningPaths();
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @DeleteMapping("/api/v1/delete/learningPaths")
+    public void deleteCompletePathAndItsDetails(@RequestBody @Valid AdminDeleteLearningPathDetails learningPathIds) {
+        adminService.deleteCompletePathAndItsDetails(learningPathIds);
     }
 
 
