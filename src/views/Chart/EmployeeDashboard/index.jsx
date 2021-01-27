@@ -89,7 +89,7 @@ const EmployeeDashboardDetail = (props) => {
     setDisable(false);
   };
 
-  console.log(selectedProgramToStart, "manananana");
+  console.log(selectedProgramToStart, "manananana", selectedLp);
   const LearningPathDesc = () => {
     console.log("not completed");
     return (
@@ -236,6 +236,7 @@ const EmployeeDashboardDetail = (props) => {
               disable) ||
             selectedProgramToStart ? (
               <LearningCoursesTable
+                selectedLp={selectedProgramToStart || selectedLp}
                 lpId={
                   selectedProgramToStart.learningPath
                     ? selectedProgramToStart.learningPath.learningPathId

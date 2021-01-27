@@ -124,7 +124,7 @@ const SelectCourses = () => {
               <th>Level</th>
               <th>Start Date</th>
               <th>End Date</th>
-              <th>Learning Rate</th>
+              <th>Learning Progress</th>
               <th>Action</th>
             </tr>
           </thead>

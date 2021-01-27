@@ -3,24 +3,37 @@ import LearningRate from "./LearningRate";
 import { SHOW_LEVELS } from "../../../modules/constants";
 import { useStyles } from "./style";
 
-import { CompletedButton,WaitForApprovalButton } from "../../Button";
+import { CompletedButton, WaitForApprovalButton } from "../../Button";
 
 const CourseRow = (props) => {
   const classes = useStyles();
-  const { course, withRate, lpId, learningPathEmployeesId, completed ,selectedLp} = props;
+  const {
+    course,
+    withRate,
+    lpId,
+    learningPathEmployeesId,
+    completed,
+    selectedLp,
+  } = props;
 
-  const showRate=()=>{
-    if(selectedLp.approvalStatus==="APPROVED"){
-      return <CompletedButton/>;
-    }else if(course.percentCompleted===100 && course.documentsUploaded && selectedLp.approvalStatus==="PENDING"){
-      return <WaitForApprovalButton/>;
-    }else{
-      return <LearningRate
-        key={course.id}
-        course={course}
-        lpId={lpId}
-        learningPathEmployeesId={learningPathEmployeesId}
-      />;
+  const showRate = () => {
+    if (selectedLp.approvalStatus === "APPROVED") {
+      return <CompletedButton />;
+    } else if (
+      course.percentCompleted === 100 &&
+      course.documentsUploaded &&
+      selectedLp.approvalStatus === "PENDING"
+    ) {
+      return <WaitForApprovalButton />;
+    } else {
+      return (
+        <LearningRate
+          key={course.id}
+          course={course}
+          lpId={lpId}
+          learningPathEmployeesId={learningPathEmployeesId}
+        />
+      );
     }
   };
   return (
@@ -33,11 +46,7 @@ const CourseRow = (props) => {
           className={classes[course.competency.name]}
         />
       </td>
-      {withRate && (
-        <td>
-          {showRate()}
-        </td>
-      )}
+      {withRate && <td>{showRate()}</td>}
     </tr>
   );
 };

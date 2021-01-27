@@ -22,6 +22,7 @@ const LowerCaseButton = withStyles({
 })(Button);
 
 const LearningCoursesTable = (props) => {
+  const { selectedLp } = props;
   const data = props;
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const LearningCoursesTable = (props) => {
   }, []);
   const {
     learningPathCourses,
-    selectedLp,
+    // selectedLp,
     attachments,
     isLoading,
   } = learningPathState;
@@ -94,7 +95,7 @@ const LearningCoursesTable = (props) => {
               <th style={{ width: "25%" }}>Course Name</th>
               <th style={{ width: "20%" }}>Learning Category</th>
               <th style={{ width: withRate ? "20%" : "50%" }}>Level</th>
-              {withRate && <th style={{ width: "35%" }}>Learning Rate</th>}
+              {withRate && <th style={{ width: "35%" }}>Learning Progress</th>}
             </tr>
           </thead>
           <tbody className={classes.tblbody}>{renderCourseList}</tbody>
@@ -117,7 +118,12 @@ const LearningCoursesTable = (props) => {
               variant="contained"
               className={classes.navSubmit}
               onClick={sendForApprovalHandler}
-              disabled={selectedLp.approvalStatus === "PENDING" ? true : false}
+              disabled={
+                selectedLp.approvalStatus === "PENDING" ||
+                selectedLp.approvalStatus === "APPROVED"
+                  ? true
+                  : false
+              }
             >
               Send for approval
             </LowerCaseButton>
