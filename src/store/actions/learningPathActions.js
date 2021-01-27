@@ -191,6 +191,15 @@ const getAdminDetails = (empId) => ({
   payload: { empId },
 });
 
+const getAdminManagePathDetails = () => ({
+  type: actionTypes.ADMIN_LEARNING_PATH_MANAGE_REQUEST,
+});
+
+const deleteAdminManagePathCards = (cards) => ({
+  type: actionTypes.DELETE_ADMIN_LEARNING_PATH_CARD_REQUEST,
+  payload: { cards },
+});
+
 const getPopularStuff = (assigneeId) => ({
   type: actionTypes.POPULAR_STUFF_REQUEST,
   payload: { assigneeId },
@@ -245,5 +254,7 @@ export default {
   getAdminGraphs,
   getAdminLearningPathDetails,
   getAdminDetails,
+  getAdminManagePathDetails,
+  deleteAdminManagePathCards,
   getPopularStuff,
 };
