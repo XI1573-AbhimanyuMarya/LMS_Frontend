@@ -81,6 +81,8 @@ export function* learningPathSaga() {
     getAdminLearningPathDetails
   );
   yield takeLatest(actionTypes.ADMIN_DETAILS_REQUEST, getAdminDetails);
+  yield takeLatest(actionTypes.ADMIN_LEARNING_PATH_MANAGE_REQUEST, getAdminManagePathDetails);
+  yield takeLatest(actionTypes.DELETE_ADMIN_LEARNING_PATH_CARD_REQUEST, deleteAdminManagePathCards);
   yield takeLatest(actionTypes.POPULAR_STUFF_REQUEST, getManagerPopularStuff);
 }
 
@@ -423,6 +425,19 @@ const fetchAdminDetails = async (id) => {
   );
 };
 
+const fetchAdminManagePathDetails = async () => {
+  return await axios.get(SERVICE_URLS.FETCH_ADMIN_MANAGE_PATH_DETAILS,
+    { headers: authHeader() }
+  );
+};
+
+const fetchDeletedCard = async (items) => {
+  return await axios.delete(SERVICE_URLS.DELETE_ADMIN_PATH_CARDS,
+    { data: {"learningPathIds": items },
+    headers: authHeader() }
+  );
+};
+
 function* getManagerStats(action) {
   try {
     const response = yield call(fetchManagerStats, action.role, action.payload);
@@ -483,6 +498,28 @@ function* getAdminDetails(action) {
     yield put({ type: actionTypes.ADMIN_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     yield put({ type: actionTypes.ADMIN_DETAILS_FAILURE, error });
+  }
+}
+
+function* getAdminManagePathDetails() {
+  try {
+    const response = yield call(fetchAdminManagePathDetails);
+    const { data } = response;
+    yield put({ type: actionTypes.ADMIN_LEARNING_PATH_MANAGE_SUCCESS, payload: data });
+  } catch (error) {
+    yield put({ type: actionTypes.ADMIN_LEARNING_PATH_MANAGE_FAILURE, error });
+  }
+}
+
+function* deleteAdminManagePathCards(action) {
+  console.log("action", action);
+  try {
+    const response = yield call(fetchDeletedCard, action.payload.cards);
+    const { data } = response;
+    yield put({ type: actionTypes.DELETE_ADMIN_LEARNING_PATH_CARD_SUCCESS, payload: data });
+    
+  } catch (error) {
+    yield put({ type: actionTypes.DELETE_ADMIN_LEARNING_PATH_CARD_FAILURE, error });
   }
 }
 
