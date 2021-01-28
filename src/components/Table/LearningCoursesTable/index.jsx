@@ -24,7 +24,7 @@ const LowerCaseButton = withStyles({
 })(Button);
 
 const LearningCoursesTable = (props) => {
-  const { selectedLp } = props;
+  const { selectedLp = {} } = props;
   const data = props;
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -77,7 +77,7 @@ const LearningCoursesTable = (props) => {
       />
     );
   });
-  console.log(selectedLp.approvalStatus, "renderCourseList");
+  // console.log(selectedLp.approvalStatus, "renderCourseList");
   const renderCourseList1 = renderCourseList.map((lpcourse) => {
     return lpcourse.props.course.percentCompleted;
   });

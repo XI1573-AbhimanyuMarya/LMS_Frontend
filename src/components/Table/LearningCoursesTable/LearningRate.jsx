@@ -17,7 +17,6 @@ const LearningRate = (props) => {
   const { percentCompleted } = course;
   const dispatch = useDispatch();
 
-  debugger;
   const focusHandler = () => {
     dispatch(Actions.learningPathActions.openBtn(course));
   };
