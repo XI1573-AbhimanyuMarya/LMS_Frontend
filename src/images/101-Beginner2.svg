@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="178" height="74" viewBox="0 0 178 74">
+    <defs>
+        <linearGradient id="linear-gradient" x1="1.033" x2="0" y1="1.109" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#00aeff"/>
+            <stop offset="1" stop-color="#804bff"/>
+        </linearGradient>
+        <filter id="Rectangle_84" width="178" height="74" x="0" y="0" filterUnits="userSpaceOnUse">
+            <feOffset dy="3"/>
+            <feGaussianBlur result="blur" stdDeviation="3"/>
+            <feFlood flood-color="#9a5b91" flood-opacity=".2"/>
+            <feComposite in2="blur" operator="in"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+        <style>
+            .cls-3{stroke-width:2px}.cls-3,.cls-5{fill:none}.cls-3{stroke:#707070}.cls-4{stroke:none}
+        </style>
+    </defs>
+    <g id="Group_301" transform="translate(-602 -74)">
+        <g filter="url(#Rectangle_84)" transform="translate(602 74)">
+            <g id="Rectangle_84-2" fill="#fff" stroke="rgba(121,36,109,0.4)" stroke-width="2px" transform="translate(9 6)">
+                <rect width="160" height="56" class="cls-4" rx="4"/>
+                <rect width="158" height="54" x="1" y="1" class="cls-5" rx="3"/>
+            </g>
+        </g>
+        <g id="Group_298" transform="translate(640 101)">
+            <path id="Rectangle_76" fill="url(#linear-gradient)" d="M7 0h16v14H7a7 7 0 0 1-7-7 7 7 0 0 1 7-7z"/>
+            <g id="Rectangle_75" class="cls-3">
+                <path d="M0 0H24V14H0z" class="cls-4" transform="translate(26)"/>
+                <path d="M1 1H23V13H1z" class="cls-5" transform="translate(26)"/>
+            </g>
+            <g id="Rectangle_73" class="cls-3">
+                <path d="M0 0H24V14H0z" class="cls-4" transform="translate(53)"/>
+                <path d="M1 1H23V13H1z" class="cls-5" transform="translate(53)"/>
+            </g>
+            <g id="Rectangle_74" class="cls-3">
+                <path d="M0 0h16a7 7 0 0 1 7 7 7 7 0 0 1-7 7H0V0z" class="cls-4" transform="translate(80)"/>
+                <path d="M1.182 1H16a6 6 0 0 1 6 6 6 6 0 0 1-6 6H1.182A.182.182 0 0 1 1 12.818V1.182A.182.182 0 0 1 1.182 1z" class="cls-5" transform="translate(80)"/>
+            </g>
+        </g>
+    </g>
+</svg>
