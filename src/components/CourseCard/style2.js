@@ -28,7 +28,7 @@ export const useStyles = makeStyles((theme) => ({
     height: "38px",
   },
   Intermediate: {
-    width: "100px",
+    width: "80px",
     marginRight: "-5px",
     marginBottom: "10px",
     height: "38px",
