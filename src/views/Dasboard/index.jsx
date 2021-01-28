@@ -208,7 +208,7 @@ const Dashboard = () => {
                 <AddCircleOutlineOutlinedIcon style={{ fontSize: 40 }} />
               }
             >
-              Create Learning Path
+              Create Learning path
             </Button>
           ) : (
             <></>
@@ -247,7 +247,7 @@ const Dashboard = () => {
               {dashStats && <DashboardMatrix data={data} />}
               <div
                 style={{
-                  width: "1060px",
+                  width: "calc((100vw - 26%) - 16px)",
                   height: "180px",
                   margin: "20px",
                 }}
