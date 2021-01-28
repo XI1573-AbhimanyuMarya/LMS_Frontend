@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Divider from "@material-ui/core/Divider";
-import Box from "@material-ui/core/Box";
-import InputLabel from "@material-ui/core/InputLabel";
-import { Grid } from "@material-ui/core";
 import Carosals from "./Carosals/index";
 import Actions from "../../../../store/actions";
-import CourseSkelton from "../../../../components/Skelton/CourseSkelton";
 import { useStyles } from "./style";
+import Box from "@material-ui/core/Box";
 import { LEARNING_PATH_LABELS } from "../../../../modules/constants";
+import LearningPath from "../../../../views/LearningPath/index";
+import DiscardPopup from "../../../../components/DiscardPopup/index";
 
 const SelectAssignedPath = () => {
   const classes = useStyles();
@@ -28,9 +25,7 @@ const SelectAssignedPath = () => {
   const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
   const [touch, setTouch] = useState(false);
   const loginState = useSelector((res) => res.loginState);
-  /**
-   * function to fetch all courses initial time
-   */
+  
   useEffect(() => {
     dispatch(Actions.learningPathActions.getLearningPath(loginState.user.id));
     if (mycourses.length === 0) {
@@ -40,9 +35,6 @@ const SelectAssignedPath = () => {
     }
   }, []);
 
-  /**
-   * function to filter courses
-   */
   let filterCourses = [];
   const changeHandler = (e) => {
     const { value } = e.target;
@@ -58,9 +50,7 @@ const SelectAssignedPath = () => {
       dispatch(Actions.learningPathActions.getFilteredCourses(filterCourses));
     }
   };
-  /**
-   * function to select courses
-   */
+  
   let selectedCourses = [];
   const onCourseClickHandler = (courseId) => {
     if (courseId !== "") {
@@ -88,15 +78,27 @@ const SelectAssignedPath = () => {
       );
     }
   };
-  /**
-   * function to set learning path name
-   */
-  const onChangeHandler = (e) => {
-    const pathName = e.target.value;
-    setTouch(true);
-    dispatch(Actions.learningPathActions.getLearningPathName(pathName));
+  
+  // const onChangeHandler = (e) => {
+  //   const pathName = e.target.value;
+  //   setTouch(true);
+  //   dispatch(Actions.learningPathActions.getLearningPathName(pathName));
+  // };
+
+  const closeHandler = () => {
+    dispatch(Actions.learningPathActions.discardModelOpen(true));
   };
 
+  const handleClosePathHandler = () => {
+    dispatch(Actions.learningPathActions.pathModelOpen(false));
+  };
+
+  const discardHandler = (closeMainModel) => {
+    dispatch(Actions.learningPathActions.discardModelOpen(false));
+    if (closeMainModel) {
+      dispatch(Actions.learningPathActions.pathModelOpen(false));
+    }
+  };
 
   return (
     <React.Fragment>
@@ -109,6 +111,11 @@ const SelectAssignedPath = () => {
         coursesList={allLearningPath}
         handleCourseClick={(id) => onCourseClickHandler(id)}
       />
+      <LearningPath
+        handleClose={closeHandler}
+        handleClosePath={handleClosePathHandler}
+      />
+      <DiscardPopup discardHandler={discardHandler} />
     </React.Fragment>
   );
 };
