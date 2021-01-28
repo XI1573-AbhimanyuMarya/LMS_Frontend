@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="178" height="74" viewBox="0 0 178 74">
+    <defs>
+        <linearGradient id="linear-gradient" x1="1.033" x2="0" y1="1.109" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#00aeff"/>
+            <stop offset="1" stop-color="#804bff"/>
+        </linearGradient>
+        <linearGradient id="linear-gradient-4" x1="-.033" x2="1" y1="1.109" xlink:href="#linear-gradient"/>
+        <filter id="Rectangle_87" width="178" height="74" x="0" y="0" filterUnits="userSpaceOnUse">
+            <feOffset dy="3"/>
+            <feGaussianBlur result="blur" stdDeviation="3"/>
+            <feFlood flood-color="#9a5b91" flood-opacity=".2"/>
+            <feComposite in2="blur" operator="in"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+        <style>
+            .cls-2{fill:url(#linear-gradient)}
+        </style>
+    </defs>
+    <g id="Group_304" transform="translate(-603 -281)">
+        <g filter="url(#Rectangle_87)" transform="translate(603 281)">
+            <g id="Rectangle_87-2" fill="#fff" stroke="rgba(121,36,109,0.4)" stroke-width="2px" transform="translate(9 6)">
+                <rect width="160" height="56" stroke="none" rx="4"/>
+                <rect width="158" height="54" x="1" y="1" fill="none" rx="3"/>
+            </g>
+        </g>
+        <g id="Group_300" transform="translate(641 307.841)">
+            <path id="Rectangle_61" d="M7 0h16v14H7a7 7 0 0 1-7-7 7 7 0 0 1 7-7z" class="cls-2" transform="translate(0 .159)"/>
+            <path id="Rectangle_63" d="M0 0H24V14H0z" class="cls-2" transform="translate(26 .159)"/>
+            <path id="Rectangle_64" d="M0 0H24V14H0z" class="cls-2" transform="translate(53 .159)"/>
+            <path id="Rectangle_62" fill="url(#linear-gradient-4)" d="M0 0h16a7 7 0 0 1 7 7 7 7 0 0 1-7 7H0V0z" transform="translate(80 .159)"/>
+        </g>
+    </g>
+</svg>

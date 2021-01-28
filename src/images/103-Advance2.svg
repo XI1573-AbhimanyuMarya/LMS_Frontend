@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="178" height="74" viewBox="0 0 178 74">
+    <defs>
+        <linearGradient id="linear-gradient" x1="1.033" x2="0" y1="1.109" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#00aeff"/>
+            <stop offset="1" stop-color="#804bff"/>
+        </linearGradient>
+        <filter id="Rectangle_86" width="178" height="74" x="0" y="0" filterUnits="userSpaceOnUse">
+            <feOffset dy="3"/>
+            <feGaussianBlur result="blur" stdDeviation="3"/>
+            <feFlood flood-color="#9a5b91" flood-opacity=".2"/>
+            <feComposite in2="blur" operator="in"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+        <style>
+            .cls-2{fill:url(#linear-gradient)}.cls-5{fill:none}.cls-4{stroke:none}
+        </style>
+    </defs>
+    <g id="Group_303" transform="translate(-603 -216)">
+        <g filter="url(#Rectangle_86)" transform="translate(603 216)">
+            <g id="Rectangle_86-2" fill="#fff" stroke="rgba(121,36,109,0.4)" stroke-width="2px" transform="translate(9 6)">
+                <rect width="160" height="56" class="cls-4" rx="4"/>
+                <rect width="158" height="54" x="1" y="1" class="cls-5" rx="3"/>
+            </g>
+        </g>
+        <g id="Group_299" transform="translate(641 243.5)">
+            <path id="Rectangle_68" d="M6.5 0H23v13H6.5A6.5 6.5 0 0 1 0 6.5 6.5 6.5 0 0 1 6.5 0z" class="cls-2" transform="translate(0 .5)"/>
+            <path id="Rectangle_67" d="M0 0H24V13H0z" class="cls-2" transform="translate(26 .5)"/>
+            <path id="Rectangle_65" d="M0 0H24V13H0z" class="cls-2" transform="translate(53 .5)"/>
+            <g id="Rectangle_66" fill="none" stroke="#707070" stroke-width="2px">
+                <path d="M0 0h16.5A6.5 6.5 0 0 1 23 6.5a6.5 6.5 0 0 1-6.5 6.5H0V0z" class="cls-4" transform="translate(80 .5)"/>
+                <path d="M1.167 1H16.5A5.5 5.5 0 0 1 22 6.5a5.5 5.5 0 0 1-5.5 5.5H1.167A.167.167 0 0 1 1 11.833V1.167A.167.167 0 0 1 1.167 1z" class="cls-5" transform="translate(80 .5)"/>
+            </g>
+        </g>
+    </g>
+</svg>
