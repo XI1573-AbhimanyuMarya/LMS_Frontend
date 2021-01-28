@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import Actions from "../../store/actions/index";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
@@ -12,9 +11,10 @@ import { MESSAGES, LEARNING_PATH_LABELS } from "../../modules/constants";
 import EmployeeCard from "./EmployeeCard";
 import UserSkelton from "../../components/Skelton/UserSkelton";
 import WithLoading from "../../hoc/WithLoading";
-
 import { useStyles } from "./style";
 import TopNav from "../../components/TopNav";
+import LearningPath from "../../views/LearningPath/index";
+import DiscardPopup from "../../components/DiscardPopup/index";
 
 const ManageAssignLearningPath = ({ props }) => {
   const classes = useStyles();
@@ -43,6 +43,21 @@ const ManageAssignLearningPath = ({ props }) => {
   const onDelete = (learningPathId) => {
     dispatch(Actions.learningPathActions.deletePath([learningPathId]))
   }
+
+  const closeHandler = () => {
+    dispatch(Actions.learningPathActions.discardModelOpen(true));
+  };
+
+  const handleClosePathHandler = () => {
+    dispatch(Actions.learningPathActions.pathModelOpen(false));
+  };
+
+  const discardHandler = (closeMainModel) => {
+    dispatch(Actions.learningPathActions.discardModelOpen(false));
+    if (closeMainModel) {
+      dispatch(Actions.learningPathActions.pathModelOpen(false));
+    }
+  };
 
   const isObject=(data)=>{
     return (typeof data === 'object' && data !== null);
@@ -131,6 +146,11 @@ const ManageAssignLearningPath = ({ props }) => {
             </div>
           </Paper>
         </div>
+        <LearningPath
+          handleClose={closeHandler}
+          handleClosePath={handleClosePathHandler}
+        />
+        <DiscardPopup discardHandler={discardHandler} />
       </main>
     </React.Fragment>
   );

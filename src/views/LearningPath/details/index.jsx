@@ -100,7 +100,7 @@ const SelectCourses1 = () => {
     : courses;
   
   const renderLevels=LEVELS.map((level)=>{
-    return ((level.id==learningPathLevel) ? <img src={SHOW_LEVELS[level.id+'-'+level.value]} style={{width:"150px",height:"56px"}} className={level.id} onClick={onClickHandlerLevel}/> : <img src={SHOW_LEVELS[level.id+'-Outlined'+level.value]} style={{width:"150px",height:"56px"}} className={level.id} onClick={onClickHandlerLevel}/>);
+    return ((level.id==learningPathLevel) ? <img src={SHOW_LEVELS[level.id+'-'+level.value+'1']} style={{width:"132px",height:"56px", margin:"0 0 0 12px"}} className={level.id} onClick={onClickHandlerLevel}/> : <img src={SHOW_LEVELS[level.id+'-Outlined'+level.value+'1']} style={{width:"132px",height:"56px",margin:"0 0 0 12px"}} className={level.id} onClick={onClickHandlerLevel}/>);
   });
   
 
@@ -145,7 +145,7 @@ const SelectCourses1 = () => {
 					</Grid>
 				</Grid>
 			</Box>
-      <Box className={classes.catalogContainer} display="flex" justifyContent="center">
+      <Box className={classes.catalogContainer} display="flex" justifyContent="center" margin="0 0 0 0">
         {renderLevels}
       </Box>
 		</React.Fragment>
