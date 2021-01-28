@@ -1,91 +1,116 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
-  gridRoot: {
-    marginTop: 20,
-  },
-  // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   mainContainer: {
     width: "100%",
-    height: "100%",
-    display: "flex",
-    marginTop: '60px',
-    alignItems: "center",
-    justifyContent: "center",
-    margin: "auto",
-  },
-  paper: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+    margin: "80px auto",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+  cardContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    height: '67vh',
+    overflow: 'auto',
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+  root: {
+    width: "300px",
+    height:"183px",
+    borderRadius:"8px",
+    boxShadow:"2px 3px 10px 0 rgba(0, 0, 0, 0.18)"
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-    background: "linear-gradient(180deg, #FFAB39 0%, #F07200 100%)",
-    color: "#FFFFFF",
-    textTransform: "capitalize",
-    lineHeight: "2.4",
-    fontSize: "1.2em",
+  cardheader:{
+    display:"flex",
+    justifyContent:"space-between"
   },
-  navSubmit: {
-    margin: theme.spacing(0, 2, 0),
-    background: "linear-gradient(180deg, #FFAB39 0%, #F07200 100%)",
-    color: "#FFFFFF",
-    textTransform: "capitalize",
-    padding: "0px 16px",
-    fontSize: 12,
+  cardheading:{
+    fontSize:"1rem",
+    margin:"0 0 0 15px"
   },
-
-  employeeViewText: {
-    color: "#858585",
-    textAlign: "-webkit-center",
+  Beginner:{
+    width:"80px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
   },
-  media: {
-    height: 40,
-    width: 38,
+  Intermediate:{
+    width:"100px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
   },
-  logo: {
-    height: 30,
-    width: 91.5,
-    marginLeft: 50,
+  Advance:{
+    width:"80px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
   },
-  error: {
-    color: "#ff0033",
-    textAlign: "center",
+  Expert:{
+    width:"80px",
+    marginRight:"-5px",
+    marginBottom: "10px",
+    height: "38px"
   },
-  dashboardContent: {
-    color: "#858585",
+  carddesc:{
+    textAlign: "justify",
+    fontSize:"11px",
+    minHeight:"55px"
   },
-  button: {
-    marginRight: 20,
-    textTransform: "capitalize",
+  cardfooter:{
+    backgroundColor:"#f5f5f5",
+    padding:"5px 16px",
+    display:"flex",
+    justifyContent:"space-between"
   },
-  dashboardBtn: {
-    marginRight: 20,
-    textTransform: "capitalize",
-    background: "#621D58",
-    color: "#FFFFFF",
+  cardfootertext:{
+    fontSize:"0.70rem"
   },
-  approvalBtn: {
-    textTransform: "capitalize",
-    opacity: 0.3,
+  cardfooterbtn:{
+    backgroundColor:"white",
+    borderRadius:"21px",
+    width:"55px"
   },
-  dashboardIcon: {
-    height: 20,
-    width: 20,
+  checkIcon: {
+    color: "#67B104",
+    float: "right",
   },
-  learningPathIcon: {
-    height: 25,
-    width: 20,
+  spanNumber: {
+    border: 'solid 1px rgba(98, 29, 88, 0.2)',
+    backgroundColor: '#ffffff',
+    borderRadius: '10px',
+    padding: '2px 13px',
+    marginLeft: '7px',
+    color: '#621d58'
   },
+  loader: {
+    position: 'absolute',
+    transform: 'translate(-50%, -50%)',
+    top: '50%',
+    left: '50%',
+    color: 'inherit',
+  },
+  deleteButton: {
+    padding: '18px 20px',
+    border: 'none',
+    borderRadius: '8px',
+    backgroundColor: '#ff7119',
+    color: '#ffffff',
+    fontSize: '14px',
+    height: '-webkit-fill-available',
+    cursor: 'pointer'
+  },
+  deleteIcon: {
+    backgroundColor: "#ffffff",
+    borderRadius: '100%',
+    padding: '3px 6px',
+    color: '#ff7119',
+    marginLeft: '10px',
+  },
+  headerContainer: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+    marginBottom: '25px',
+  }
 }));

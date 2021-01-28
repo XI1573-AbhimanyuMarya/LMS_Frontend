@@ -1,33 +1,71 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import Typography from "@material-ui/core/Typography";
+import React, { useEffect,useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Actions from "../../store/actions";
 import Container from "@material-ui/core/Container";
 import { useStyles } from "./style";
 import WithLoading from "../../hoc/WithLoading";
 import TopNav from "../../components/TopNav";
 import Copyright from "../../components/Copyright";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ManageCard from "./ManageCard";
 
 const ManageLearningPath = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const userRole = JSON.parse(sessionStorage.getItem("USER_INFO")).roles[0].roleName;
+  let [selectedCardsCount, setSelectedCardsCount] = useState(0);
+  const [selectedItems, setSelectedItems] = useState({});
+  const adminManagePathDetails = useSelector((state) => state.learningPathState);
+  
+  useEffect(() => {
+    dispatch(Actions.learningPathActions.getAdminManagePathDetails());
+  }, []);
 
+  const selectedCard = (item) => {
+    if(!selectedItems[item.learningPathId]) {
+      setSelectedCardsCount(++selectedCardsCount);
+      setSelectedItems(prevItems => {
+        return {
+          ...prevItems,
+          [item.learningPathId]: item.learningPathId
+        }
+      });
+      return;
+    }
+    delete selectedItems[item.learningPathId];
+    setSelectedCardsCount(--selectedCardsCount);
+  }
 
-  // const handleClickOpen = () => {
-  //   dispatch(Actions.learningPathActions.pathModelOpen(true));
-  //   dispatch(Actions.learningPathActions.clearCreateLpFormFields());
-  // };
+  const deleteCard = () => {
+    const items = [];
+    for(let item in selectedItems) {
+      items.push(selectedItems[item]);
+    }
+    dispatch(Actions.learningPathActions.deleteAdminManagePathCards(items));
+    dispatch(Actions.learningPathActions.getAdminManagePathDetails());
+    setSelectedCardsCount(0);
+  }
 
   const renderWelcome = (
-    // <Box component="div" m="auto">
-      <Container
-        component="main"
-        className={classes.mainContainer}>
-        <div className={classes.paper}>
-          <h1>Welcome</h1>
-        </div>
-      </Container>
-    // </Box>
+    <Container
+      component="main"
+      className={classes.mainContainer}>
+      <div className={classes.headerContainer}>
+        <h2>All Learning Paths</h2>
+        <button className={classes.deleteButton} onClick={deleteCard}>
+          Delete selected 
+          <span className={classes.deleteIcon}>{selectedCardsCount}</span>
+        </button>
+      </div>
+      <div className={classes.cardContainer}>
+      {adminManagePathDetails.isLoading ? 
+      <CircularProgress className={classes.loader} /> : 
+      adminManagePathDetails && adminManagePathDetails.adminLearningPathManageDetails?.map((item) => (
+          <div key={item.id} onClick={() => selectedCard(item)}>
+            <ManageCard key={item.id} cardDetails={item}/>
+          </div>
+        ))}
+      </div>
+    </Container>
   );
 
   return (

@@ -43,10 +43,6 @@ const Dashboard = () => {
     isLoading,
   } = learningPathState;
 
-  /*
-manan's start
-*/
-
   const isObject = (data) => {
     return typeof data === "object" && data !== null;
   };
@@ -99,27 +95,6 @@ manan's start
     Overdue: dashStats.totalLearningPathExpired,
   };
 
-  /*
-manan's end
-*/
-
-  /*
-raghav's start
-*/
-
-  var showManagerButton = false;
-  // let statsData = {};
-
-  for (var i in adminDashStats) {
-    if (adminDashStats[i] !== 0) {
-      showManagerButton = true;
-      break;
-    }
-  }
-
-  /*
-raghav's end
-*/
   useEffect(() => {
     if (userRole == "ROLE_ADMIN" || userRole == "ROLE_HR") {
       dispatch(
@@ -170,9 +145,7 @@ raghav's end
     mycourses.length
       ? true
       : false;
-  /**
-   * function to open learning path model
-   */
+
   const handleClickOpen = () => {
     dispatch(Actions.learningPathActions.pathModelOpen(true));
     dispatch(Actions.learningPathActions.clearCreateLpFormFields());

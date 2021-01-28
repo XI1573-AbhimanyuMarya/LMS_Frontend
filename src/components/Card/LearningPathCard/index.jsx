@@ -27,7 +27,7 @@ const LearningPathCard = (props) => {
     handleCourseClick(selectedLp.learningPath.id);
     setisChecked(!isChecked);
   }
-  
+
   const { learningPathCourses } = learningPathState;
   return (
     <>
