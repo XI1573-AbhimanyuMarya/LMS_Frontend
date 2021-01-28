@@ -176,6 +176,7 @@ const EmployeeDashboardDetail = (props) => {
               disable) ||
             selectedProgramToStart ? (
               <LearningCoursesTable
+                selectedLp={selectedProgramToStart || selectedLp}
                 lpId={
                   selectedProgramToStart.learningPath
                     ? selectedProgramToStart.learningPath.learningPathId

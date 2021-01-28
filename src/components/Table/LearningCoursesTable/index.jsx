@@ -4,8 +4,8 @@ import Actions from "../../../store/actions";
 import { useStyles } from "./style";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import {
   createMuiTheme,
   withStyles,
@@ -23,9 +23,8 @@ const LowerCaseButton = withStyles({
   },
 })(Button);
 
-
-
 const LearningCoursesTable = (props) => {
+  const { selectedLp } = props;
   const data = props;
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -43,28 +42,28 @@ const LearningCoursesTable = (props) => {
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
-    const [open, setOpen] = React.useState(false);
-  
-    const handleClick = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = (event, reason) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-  
-      setOpen(false);
-    };
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const {
     learningPathCourses,
-    selectedLp,
+    // selectedLp,
     attachments,
     isLoading,
   } = learningPathState;
   const { withRate, disable } = props;
- 
+
   const renderCourseList = learningPathCourses.map((lpcourse) => {
     return (
       <CourseRow
@@ -78,8 +77,10 @@ const LearningCoursesTable = (props) => {
       />
     );
   });
-  console.log(selectedLp.approvalStatus,"renderCourseList")
-  const renderCourseList1=renderCourseList.map((lpcourse) => { return (lpcourse.props.course.percentCompleted)})
+  console.log(selectedLp.approvalStatus, "renderCourseList");
+  const renderCourseList1 = renderCourseList.map((lpcourse) => {
+    return lpcourse.props.course.percentCompleted;
+  });
   const [show, showGallery] = useState(false);
   const location = useLocation();
 
@@ -118,7 +119,7 @@ const LearningCoursesTable = (props) => {
               <th style={{ width: "25%" }}>Course Name</th>
               <th style={{ width: "20%" }}>Learning Category</th>
               <th style={{ width: withRate ? "20%" : "50%" }}>Level</th>
-              {withRate && <th style={{ width: "35%" }}>Learning Rate</th>}
+              {withRate && <th style={{ width: "35%" }}>Learning Progress</th>}
             </tr>
           </thead>
           <tbody className={classes.tblbody}>{renderCourseList}</tbody>
@@ -140,22 +141,28 @@ const LearningCoursesTable = (props) => {
               type="button"
               variant="contained"
               className={classes.navSubmit}
-              onClick={()=>{ sendForApprovalHandler(); handleClick() }}
-              disabled={selectedLp.approvalStatus === "PENDING" ? true : false}
+              onClick={sendForApprovalHandler}
+              disabled={
+                selectedLp.approvalStatus === "PENDING" ||
+                selectedLp.approvalStatus === "APPROVED"
+                  ? true
+                  : false
+              }
             >
               Send for approval
             </LowerCaseButton>
-            
+
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-              
-            {(selectedLp.percentCompleted === 100) ?
-        <Alert onClose={handleClose} severity="success">
-          The learning path has been successfully sent for approval!
-        </Alert> : <Alert onClose={handleClose} severity="error">
-          Complete the courses first
-        </Alert>
-              }
-      </Snackbar>
+              {selectedLp.percentCompleted === 100 ? (
+                <Alert onClose={handleClose} severity="success">
+                  The learning path has been successfully sent for approval!
+                </Alert>
+              ) : (
+                <Alert onClose={handleClose} severity="error">
+                  Complete the courses first
+                </Alert>
+              )}
+            </Snackbar>
             <LowerCaseButton
               type="button"
               variant="contained"
