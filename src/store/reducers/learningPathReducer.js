@@ -643,6 +643,46 @@ export const learningPathReducer = (state = initialState, action) => {
         errorMessage: "",
       };
 
+      case actionTypes.ADMIN_LEARNING_PATH_MANAGE_REQUEST:
+        return {
+          ...state,
+          isLoading: true,
+          errorMessage: "",
+        };
+      case actionTypes. ADMIN_LEARNING_PATH_MANAGE_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          adminLearningPathManageDetails: payload,
+          errorMessage: "",
+        };
+      case actionTypes. ADMIN_LEARNING_PATH_MANAGE_FAILURE:
+        return {
+          ...state,
+          isLoading: false,
+          errorMessage: "",
+        };
+
+    case actionTypes.DELETE_ADMIN_LEARNING_PATH_CARD_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: "",
+      };
+    case actionTypes.DELETE_ADMIN_LEARNING_PATH_CARD_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        deleteAdminPathCards: payload,
+        errorMessage: "",
+      };
+    case actionTypes.DELETE_ADMIN_LEARNING_PATH_CARD_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: "",
+      };
+
     case actionTypes.MANAGER_DASHBOARD_STATS_SUCCESS:
       return {
         ...state,

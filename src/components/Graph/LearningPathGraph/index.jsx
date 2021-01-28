@@ -3,7 +3,6 @@ import Chart from "react-apexcharts";
 import { months } from "moment";
 
 const LearningPathGraph = ({ learningPathGraphAdmin }) => {
-  console.log(learningPathGraphAdmin, "learningPathGraphAdmin");
 
   let months = [];
   if (learningPathGraphAdmin.length > 0) {
@@ -11,8 +10,6 @@ const LearningPathGraph = ({ learningPathGraphAdmin }) => {
       months.push(learningPathGraphAdmin[0].dashboardGraphStatistics[i].month);
     }
   }
-
-  console.log(months, "monthsss");
   const monthNames = months;
 
   const options = {

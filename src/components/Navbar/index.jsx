@@ -42,13 +42,6 @@ const Navbar = (props) => {
   let extracontent, currentPath;
   currentPath = path;
   const navLinks = [
-    // {
-    //   name: "Dashboard",
-    //   iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
-    //   to: user.designation === "HR" || user.designation === "Admin" ? "dashboard" : "dashboard-admin",
-    //   isActive: currentPath === "/dashboard",
-    //   canAccess: true
-    // },
     {
       name: "Dashboard",
       iconPath: currentPath === "/dashboard" ? DashboardActive : DashboardIcon,
@@ -62,8 +55,15 @@ const Navbar = (props) => {
         currentPath === "/learningpath" ? LearningPathActive : LearningPath,
       to: "learningpath",
       isActive: currentPath === "/learningpath",
-      canAccess:
-        roles[0].roleName !== "ROLE_ADMIN" && roles[0].roleName !== "ROLE_HR",
+      canAccess: roles[0].roleName !== "ROLE_ADMIN" && roles[0].roleName !== "ROLE_HR"
+    },
+    {
+      name: "Manage Learning Path",
+      iconPath:
+        currentPath === "/manage-learningpath" ? LearningPathActive : LearningPath,
+      to: "manage-learningpath",
+      isActive: currentPath === "/manage-learningpath",
+      canAccess: roles[0].roleName === "ROLE_ADMIN",
     },
     {
       name: "Assign Learning Path",
