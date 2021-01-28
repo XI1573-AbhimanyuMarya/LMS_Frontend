@@ -146,11 +146,6 @@ const Dashboard = () => {
       ? true
       : false;
 
-  const handleClickOpen = () => {
-    dispatch(Actions.learningPathActions.pathModelOpen(true));
-    dispatch(Actions.learningPathActions.clearCreateLpFormFields());
-  };
-
   const closeHandler = () => {
     dispatch(Actions.learningPathActions.discardModelOpen(true));
   };
@@ -197,22 +192,6 @@ const Dashboard = () => {
               <div>Please assign first learning path to your team</div>
             )}
           </Typography>
-          {loginState.roles[0].roleName == "ROLE_MANAGER" ? (
-            <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              className={classes.submit}
-              onClick={handleClickOpen}
-              startIcon={
-                <AddCircleOutlineOutlinedIcon style={{ fontSize: 40 }} />
-              }
-            >
-              Create Learning path
-            </Button>
-          ) : (
-            <></>
-          )}
         </div>
       </Container>
       <LearningPath

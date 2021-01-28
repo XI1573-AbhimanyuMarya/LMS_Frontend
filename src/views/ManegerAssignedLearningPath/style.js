@@ -34,7 +34,6 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f7f8fc",
   },
   heading: {
-    marginRight: "67%",
     color: "#621d58",
     fontSize: "22px",
     [theme.breakpoints.up('md')]: {

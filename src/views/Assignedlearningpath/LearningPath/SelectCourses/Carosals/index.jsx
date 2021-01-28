@@ -33,7 +33,6 @@ const AssignedCarosals = (props) => {
       }
     )
     );
-    console.log(lpArr, "lp")
     const renderCourses = lpArr.map((lp) => {
       return <LearningPathCard key={lp.learningPath.id} selectedLp={lp} handleCourseClick={handleCourseClick} assignLp={true} onButtonClick={() => dispatch(Actions.learningPathActions.selectLearningPath(lp))} />
     });

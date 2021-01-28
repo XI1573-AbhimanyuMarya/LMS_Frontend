@@ -15,6 +15,8 @@ import Copyright from "../../../components/Copyright";
 import LearningPathCard from "../../../components/Card/LearningPathCard";
 import LearningCoursesTable from "../../../components/Table/LearningCoursesTable";
 import { BackButton } from "../../../components/Button";
+import LearningPath from "../../../views/LearningPath/index";
+import DiscardPopup from "../../../components/DiscardPopup/index";
 
 const SelectCourses = () => {
   const classes = useStyles();
@@ -40,9 +42,7 @@ const SelectCourses = () => {
   const logoutUser = () => {
     dispatch(Actions.loginActions.logout());
   };
-  /**
-   * function to fetch all courses initial time
-   */
+  
   useEffect(() => {
     dispatch(
       Actions.learningPathActions.getMyLearningPath(loginState.user.username)
@@ -54,17 +54,31 @@ const SelectCourses = () => {
     }
     dispatch(Actions.learningPathActions.selectLearningPath({}));
   }, []);
+
   let completed, inprogress;
-  //let selectedLp;
   if (mycourses && mycourses.length > 0) {
     completed = mycourses.filter(
       (course) => course.approvalStatus === "APPROVED"
-    ); //course.percentCompleted === 100)
+    );
     inprogress = mycourses.filter(
       (course) => course.approvalStatus !== "APPROVED"
     );
-    //selectedLp=mycourses.find(course=> course.learningPath.learningPathId==lpId);
   }
+
+  const closeHandler = () => {
+    dispatch(Actions.learningPathActions.discardModelOpen(true));
+  };
+
+  const handleClosePathHandler = () => {
+    dispatch(Actions.learningPathActions.pathModelOpen(false));
+  };
+
+  const discardHandler = (closeMainModel) => {
+    dispatch(Actions.learningPathActions.discardModelOpen(false));
+    if (closeMainModel) {
+      dispatch(Actions.learningPathActions.pathModelOpen(false));
+    }
+  };
 
   const coursesList = filteredCoursesList
     ? filteredCoursesList?.length > 0
@@ -176,6 +190,11 @@ const SelectCourses = () => {
         <div className="copyright" style={{ border: "1px solid #d3d3d3" }}>
           <Copyright />
         </div>
+        <LearningPath
+          handleClose={closeHandler}
+          handleClosePath={handleClosePathHandler}
+        />
+        <DiscardPopup discardHandler={discardHandler} />
       </main>
     </React.Fragment>
   );

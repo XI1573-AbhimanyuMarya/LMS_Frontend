@@ -1,28 +1,15 @@
 import React,{useState} from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import clsx from "clsx";
-import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
-import DiscardPopup from "../../../components/DiscardPopup/index1";
 import Actions from '../../../store/actions';
 import { useSelector, useDispatch } from 'react-redux';
-import Button from '@material-ui/core/Button';
 import Approve from '../../../components/DiscardPopup/approve'
 import Reject from '../../../components/DiscardPopup/Reject'
-
 import {ApproveButton,RejectButton} from '../../../components/Button'
-
 import { useStyles } from "./style";
-
 import Gallery from 'react-grid-gallery';
 
 const theme = createMuiTheme({
@@ -60,9 +47,7 @@ export default function EmployeeCardApproval(props) {
   const learningPathState = useSelector(state => state.learningPathState);
   const { pfApproval,attachments,isLoading } = learningPathState;
   
-  const loginState = useSelector(
-    (state) => state.loginState
-  );
+  const loginState = useSelector((state) => state.loginState);
 
   const onViewClick = () => {
     dispatch(Actions.learningPathActions.RejectModelOpen(true));
@@ -96,7 +81,6 @@ export default function EmployeeCardApproval(props) {
   }
 
   const [show,showGallery]=useState(false);
-  console.log(data,"reqBody")
 
   const viewAttachmentHandler=()=>{
     let reqBody={
@@ -104,10 +88,8 @@ export default function EmployeeCardApproval(props) {
       employeeId:data.employee.id
     };
     dispatch(Actions.learningPathActions.viewAttachment(reqBody));
-    showGallery(true);
-    
+    showGallery(true); 
   }
-
 
   return (
     <>
@@ -122,7 +104,6 @@ export default function EmployeeCardApproval(props) {
           />
         </ThemeProvider>
         <div style={{ minWidth: "50px", maxWidth: "50px" }}>
-          {/* {data.learningPath.map((data, index) => ( */}
           <CardContent className={classes.learningPath} >
             <ThemeProvider theme={theme}>
             <Typography aria-label="share" className={classes.listData} style={{minWidth:"103px"}}>
@@ -131,7 +112,6 @@ export default function EmployeeCardApproval(props) {
               </Typography>
             </ThemeProvider>
           </CardContent>
-        {/* ))} */}
         </div>
         <div className={classes.head}>
           <Typography className={classes.view} onClick={viewAttachmentHandler}>View Attachments</Typography>

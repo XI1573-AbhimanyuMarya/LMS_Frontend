@@ -14,7 +14,6 @@ import NotificationTray from "./NotificationTray";
 import XebiaLogo from "../../images/Logo.svg";
 import { DRAWER_WIDTH } from '../../modules/constants';
 
-
 const drawerWidth = DRAWER_WIDTH;
 
 export const useStyles = makeStyles((theme) => ({
@@ -82,7 +81,6 @@ const TopNav = (props) => {
     dispatch(Actions.learningPathActions.pathModelOpen(true));
     dispatch(Actions.learningPathActions.clearCreateLpFormFields());
   };
-
 
   const modalBtn = (
     <Button

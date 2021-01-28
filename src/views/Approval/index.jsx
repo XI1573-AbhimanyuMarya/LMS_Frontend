@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import Actions from "../../store/actions/index";
-import PropTypes from "prop-types";
-import TextField from "@material-ui/core/TextField";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { Paper } from "@material-ui/core";
 import { MESSAGES, LEARNING_PATH_LABELS } from "../../modules/constants";
 import EmployeeCard from "./EmployeeCard";
-import UserSkelton from "../../components/Skelton/UserSkelton";
 import WithLoading from "../../hoc/WithLoading";
-
 import { useStyles } from "./style";
 import TopNav from "../../components/TopNav";
+import LearningPath from "../../views/LearningPath/index";
+import DiscardPopup from "../../components/DiscardPopup/index";
 
 const ManageAssignLearningPath = ({ props }) => {
   const classes = useStyles();
@@ -28,11 +22,11 @@ const ManageAssignLearningPath = ({ props }) => {
   );
   const { isLoading, assignedCources, deleteStatus, pfApproval } = getAssignedLearningPaths;
   const [selectedUsersArr, setSelectedUsersArr] = useState([]);
-  useEffect(() => {
-    // dispatch(Actions.learningPathActions.getAssignedLearningPath(loginState.user.username));
-    dispatch(Actions.learningPathActions.getPendingForApproval(loginState.user.username));
 
+  useEffect(() => {
+    dispatch(Actions.learningPathActions.getPendingForApproval(loginState.user.username))
   }, []);
+
   const onDeleteAll = (employeeId) => {
     const employeeData = employees.find(emp => (emp.empID === employeeId))
     const ids = employeeData.learningPath.map(path => (path.learningPathEmployeesId))
@@ -40,9 +34,23 @@ const ManageAssignLearningPath = ({ props }) => {
 
   }
   const onDelete = (learningPathId) => {
-    console.log("learningPathId", learningPathId)
     dispatch(Actions.learningPathActions.deletePath([learningPathId]))
   }
+
+  const closeHandler = () => {
+    dispatch(Actions.learningPathActions.discardModelOpen(true));
+  };
+
+  const handleClosePathHandler = () => {
+    dispatch(Actions.learningPathActions.pathModelOpen(false));
+  };
+
+  const discardHandler = (closeMainModel) => {
+    dispatch(Actions.learningPathActions.discardModelOpen(false));
+    if (closeMainModel) {
+      dispatch(Actions.learningPathActions.pathModelOpen(false));
+    }
+  };
 
   const isObject = (data) => {
     return (typeof data === 'object' && data !== null);
@@ -82,7 +90,8 @@ const ManageAssignLearningPath = ({ props }) => {
     }
     return employees;
   }
-  const employees = prepareData(assignedCources);//prepareData(assignedCources.assignedLearningPaths);
+
+  const employees = prepareData(assignedCources);
   let renderUser = "";
   if (pfApproval.length > 0) {
     renderUser = pfApproval.map((data, i) => (
@@ -96,16 +105,8 @@ const ManageAssignLearningPath = ({ props }) => {
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
-          {/* <Box component="div" display="flex" justifyContent="center">
-            <Grid container className={classes.container}>
-              <Grid item xs={2}></Grid>
-              <Grid item xs={8}>
-              </Grid>
-            </Grid>
-          </Box> */}
-          {/* <Paper className={classes.paper} elevation={1}> */}
             <div className={classes.cardData}>
-              {/* {isLoading && employees.length === 0 && <UserSkelton />} */}
+            <h2>Approvals</h2>
               {renderUser !== "" ? (
                 renderUser
               ) : (
@@ -116,8 +117,12 @@ const ManageAssignLearningPath = ({ props }) => {
                   </div>
                 )}
             </div>
-          {/* </Paper> */}
         </div>
+        <LearningPath
+          handleClose={closeHandler}
+          handleClosePath={handleClosePathHandler}
+        />
+        <DiscardPopup discardHandler={discardHandler} />
       </main>
     </React.Fragment>
   );
