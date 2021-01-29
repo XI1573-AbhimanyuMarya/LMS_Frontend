@@ -133,18 +133,21 @@ export const learningPathReducer = (state = initialState, action) => {
         learningPathCourses: state.learningPathCourses.map((elm) => {
           if (elm.id == payload.course.id) {
 
-            elm.showBtn = "Save";
-            if (payload.percentCompleted == 100) {
+
+            if (payload.percentCompleted == 100 || payload.showBtn == "Upload") {
               elm.showBtn = "Upload";
+            } else {
+              elm.showBtn = "Save";
             }
             // if (payload.course.percentCompleted == 100) {
             //   debugger;
             //   elm.showBtn = "Upload";
             // } else if (payload.course.percentCompleted < 100) {
             // }
-          } else {
-            elm.showBtn = "";
           }
+          // else {
+          //   elm.showBtn = "";
+          // }
           return elm;
         }),
         isLoading: false,
