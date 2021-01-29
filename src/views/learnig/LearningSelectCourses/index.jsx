@@ -42,7 +42,7 @@ const SelectCourses = () => {
   const logoutUser = () => {
     dispatch(Actions.loginActions.logout());
   };
-  
+
   useEffect(() => {
     dispatch(
       Actions.learningPathActions.getMyLearningPath(loginState.user.username)
@@ -92,6 +92,9 @@ const SelectCourses = () => {
       : ""
     : courses;
   const backBtnHandler = () => {
+    dispatch(
+      Actions.learningPathActions.getMyLearningPath(loginState.user.username)
+    );
     //setLpId(0);
     dispatch(Actions.learningPathActions.selectLearningPath({}));
     setDisable(false);

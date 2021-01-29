@@ -10,7 +10,7 @@ import {
 import { useStyles } from "./style";
 
 const LearningRate = (props) => {
-  debugger;
+  // debugger;
   const classes = useStyles();
   const learningPathState = useSelector((state) => state.learningPathState);
   const loginState = useSelector((res) => res.loginState);

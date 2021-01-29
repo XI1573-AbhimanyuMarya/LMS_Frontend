@@ -61,6 +61,7 @@ const LearningCoursesTable = (props) => {
     selectedLp,
     attachments,
     isLoading,
+    mycourses,
   } = learningPathState;
   const { withRate, disable } = props;
 
@@ -82,8 +83,24 @@ const LearningCoursesTable = (props) => {
     return lpcourse.props.course.percentCompleted;
   });
   const [show, showGallery] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [uploadDocument, setUploadDocument] = useState("");
+  const [courseCompleted, setCourseCompleted] = useState(false);
+  const [loopExit, setLoopExit] = useState(false);
   const location = useLocation();
 
+  useEffect(() => {
+    if (uploadDocument === true && loopExit === true) {
+      console.log(uploadDocument, "upload document");
+      let reqBody1 = {
+        employeeId: loginState.user.id,
+        learningPathId: props.lpId,
+      };
+      dispatch(Actions.learningPathActions.sendForApproval(reqBody1));
+      setShowSuccess(true);
+      setUploadDocument(true);
+    }
+  }, [uploadDocument, loopExit]);
   const viewAttachmentHandler = () => {
     let reqBody = {
       lpId: props.learningPathEmployeesId,
@@ -95,19 +112,64 @@ const LearningCoursesTable = (props) => {
   };
 
   const sendForApprovalHandler = () => {
-    let reqBody1 = {
-      employeeId: loginState.user.id,
-      learningPathId: props.lpId,
-    };
-    console.log(reqBody1, "1");
-
     if (selectedLp1) {
-      if (selectedLp1.percentCompleted === 100) {
-        dispatch(Actions.learningPathActions.sendForApproval(reqBody1));
+      if (selectedLp1.percentCompleted == 100) {
+        setCourseCompleted(true);
+      }
+      for (var i in mycourses) {
+        if (
+          mycourses[i].learningPath.learningPathId ==
+            selectedLp1.learningPath.learningPathId &&
+          mycourses[i].percentCompleted === 100
+        ) {
+          setCourseCompleted(true);
+          for (var i in learningPathCourses) {
+            if (learningPathCourses[i].documentsUploaded !== true) {
+              setUploadDocument(false);
+              return;
+            } else {
+              setUploadDocument(true);
+            }
+          }
+          setLoopExit(true);
+          // if (uploadDocument === true) {
+          //   dispatch(Actions.learningPathActions.sendForApproval(reqBody1));
+          //   setShowSuccess(true);
+          //   setUploadDocument(true);
+          // }
+          return;
+        } else {
+          setUploadDocument("");
+          setShowSuccess(false);
+          setCourseCompleted(false);
+        }
       }
     } else {
-      if (selectedLp.percentCompleted === 100) {
-        dispatch(Actions.learningPathActions.sendForApproval(reqBody1));
+      if (selectedLp.percentCompleted == 100) {
+        setCourseCompleted(true);
+      }
+      for (var i in mycourses) {
+        if (
+          mycourses[i].learningPath.learningPathId ==
+            selectedLp.learningPath.learningPathId &&
+          mycourses[i].percentCompleted === 100
+        ) {
+          setCourseCompleted(true);
+          for (var i in learningPathCourses) {
+            if (learningPathCourses[i].documentsUploaded !== true) {
+              setUploadDocument(false);
+              return;
+            } else {
+              setUploadDocument(true);
+            }
+          }
+          setLoopExit(true);
+          return;
+        } else {
+          setUploadDocument("");
+          setShowSuccess(false);
+          setCourseCompleted(false);
+        }
       }
     }
   };
@@ -155,30 +217,43 @@ const LearningCoursesTable = (props) => {
                 handleClick();
               }}
               disabled={
-                selectedLp1
+                (selectedLp1
                   ? selectedLp1.approvalStatus === "PENDING" ||
                     selectedLp1.approvalStatus === "APPROVED"
                   : selectedLp.approvalStatus === "PENDING" ||
                     selectedLp.approvalStatus === "APPROVED"
                   ? true
-                  : false
+                  : false) || showSuccess
               }
             >
               Send for approval
             </LowerCaseButton>
 
             <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-              {selectedLp1 ? (
+              {/* {selectedLp1 ? (
                 selectedLp1.percentCompleted
-              ) : selectedLp.percentCompleted === 100 ? (
+              ) : selectedLp.percentCompleted === 100 ? ( */}
+              {showSuccess ? (
                 <Alert onClose={handleClose} severity="success">
                   The learning path has been successfully sent for approval!
                 </Alert>
-              ) : (
+              ) : uploadDocument === false ? (
+                <Alert onClose={handleClose} severity="error">
+                  Upload your documents
+                </Alert>
+              ) : !courseCompleted ? (
                 <Alert onClose={handleClose} severity="error">
                   Complete the courses first
                 </Alert>
+              ) : (
+                <Alert onClose={handleClose} severity="error">
+                  An Error Occured, Please try again
+                </Alert>
               )}
+
+              {/* ) : (
+               
+              )} */}
             </Snackbar>
             <LowerCaseButton
               type="button"
