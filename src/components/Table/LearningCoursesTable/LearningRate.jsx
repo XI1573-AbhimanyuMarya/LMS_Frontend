@@ -10,14 +10,14 @@ import {
 import { useStyles } from "./style";
 
 const LearningRate = (props) => {
+  // debugger;
   const classes = useStyles();
   const learningPathState = useSelector((state) => state.learningPathState);
   const loginState = useSelector((res) => res.loginState);
   const { course, lpId, learningPathEmployeesId } = props;
-  const { percentCompleted } = course;
+  const { percentCompleted, status } = course;
   const dispatch = useDispatch();
 
-  debugger;
   const focusHandler = () => {
     dispatch(Actions.learningPathActions.openBtn(course));
   };
@@ -87,6 +87,7 @@ const LearningRate = (props) => {
   return (
     <>
       <input
+        // disabled={status == "APPROVED"}
         type="text"
         value={percentCompleted}
         onClick={focusHandler}
