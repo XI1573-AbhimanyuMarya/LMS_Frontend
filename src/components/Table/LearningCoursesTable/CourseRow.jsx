@@ -28,6 +28,7 @@ const CourseRow = (props) => {
     } else {
       return (
         <LearningRate
+          status={selectedLp.approvalStatus}
           key={course.id}
           course={course}
           lpId={lpId}

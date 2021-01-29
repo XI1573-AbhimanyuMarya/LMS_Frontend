@@ -24,7 +24,7 @@ const LowerCaseButton = withStyles({
 })(Button);
 
 const LearningCoursesTable = (props) => {
-  const { selectedLp = {} } = props;
+  const { selectedLp1 = "" } = props;
   const data = props;
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const LearningCoursesTable = (props) => {
 
   const {
     learningPathCourses,
-    // selectedLp,
+    selectedLp,
     attachments,
     isLoading,
   } = learningPathState;
@@ -71,7 +71,7 @@ const LearningCoursesTable = (props) => {
         course={lpcourse}
         lpId={props.lpId}
         learningPathEmployeesId={props.learningPathEmployeesId}
-        selectedLp={selectedLp}
+        selectedLp={selectedLp1 || selectedLp}
         withRate={withRate}
         completed={disable}
       />
@@ -100,7 +100,16 @@ const LearningCoursesTable = (props) => {
       learningPathId: props.lpId,
     };
     console.log(reqBody1, "1");
-    dispatch(Actions.learningPathActions.sendForApproval(reqBody1));
+
+    if (selectedLp1) {
+      if (selectedLp1.percentCompleted === 100) {
+        dispatch(Actions.learningPathActions.sendForApproval(reqBody1));
+      }
+    } else {
+      if (selectedLp.percentCompleted === 100) {
+        dispatch(Actions.learningPathActions.sendForApproval(reqBody1));
+      }
+    }
   };
 
   return (
@@ -141,10 +150,16 @@ const LearningCoursesTable = (props) => {
               type="button"
               variant="contained"
               className={classes.navSubmit}
-              onClick={sendForApprovalHandler}
+              onClick={() => {
+                sendForApprovalHandler();
+                handleClick();
+              }}
               disabled={
-                selectedLp.approvalStatus === "PENDING" ||
-                selectedLp.approvalStatus === "APPROVED"
+                selectedLp1
+                  ? selectedLp1.approvalStatus === "PENDING" ||
+                    selectedLp1.approvalStatus === "APPROVED"
+                  : selectedLp.approvalStatus === "PENDING" ||
+                    selectedLp.approvalStatus === "APPROVED"
                   ? true
                   : false
               }
@@ -152,8 +167,10 @@ const LearningCoursesTable = (props) => {
               Send for approval
             </LowerCaseButton>
 
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-              {selectedLp.percentCompleted === 100 ? (
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+              {selectedLp1 ? (
+                selectedLp1.percentCompleted
+              ) : selectedLp.percentCompleted === 100 ? (
                 <Alert onClose={handleClose} severity="success">
                   The learning path has been successfully sent for approval!
                 </Alert>
@@ -169,7 +186,13 @@ const LearningCoursesTable = (props) => {
               className={classes.navSubmit1}
               startIcon={<VisibilityIcon style={{ fontSize: 20 }} />}
               onClick={viewAttachmentHandler}
-              disabled={selectedLp.approvalStatus === "PENDING" ? true : false}
+              // disabled={
+              //   selectedLp1
+              //     ? selectedLp1.approvalStatus
+              //     : selectedLp.approvalStatus === "PENDING"
+              //     ? true
+              //     : false
+              // }
             >
               View attachments
             </LowerCaseButton>
