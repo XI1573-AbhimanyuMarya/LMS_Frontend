@@ -132,11 +132,16 @@ export const learningPathReducer = (state = initialState, action) => {
         ...state,
         learningPathCourses: state.learningPathCourses.map((elm) => {
           if (elm.id == payload.course.id) {
-            if (payload.course.percentCompleted == 100) {
+
+            elm.showBtn = "Save";
+            if (payload.percentCompleted == 100) {
               elm.showBtn = "Upload";
-            } else if (payload.course.percentCompleted < 100) {
-              elm.showBtn = "Save";
             }
+            // if (payload.course.percentCompleted == 100) {
+            //   debugger;
+            //   elm.showBtn = "Upload";
+            // } else if (payload.course.percentCompleted < 100) {
+            // }
           } else {
             elm.showBtn = "";
           }
@@ -643,25 +648,25 @@ export const learningPathReducer = (state = initialState, action) => {
         errorMessage: "",
       };
 
-      case actionTypes.ADMIN_LEARNING_PATH_MANAGE_REQUEST:
-        return {
-          ...state,
-          isLoading: true,
-          errorMessage: "",
-        };
-      case actionTypes. ADMIN_LEARNING_PATH_MANAGE_SUCCESS:
-        return {
-          ...state,
-          isLoading: false,
-          adminLearningPathManageDetails: payload,
-          errorMessage: "",
-        };
-      case actionTypes. ADMIN_LEARNING_PATH_MANAGE_FAILURE:
-        return {
-          ...state,
-          isLoading: false,
-          errorMessage: "",
-        };
+    case actionTypes.ADMIN_LEARNING_PATH_MANAGE_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: "",
+      };
+    case actionTypes.ADMIN_LEARNING_PATH_MANAGE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        adminLearningPathManageDetails: payload,
+        errorMessage: "",
+      };
+    case actionTypes.ADMIN_LEARNING_PATH_MANAGE_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: "",
+      };
 
     case actionTypes.DELETE_ADMIN_LEARNING_PATH_CARD_REQUEST:
       return {

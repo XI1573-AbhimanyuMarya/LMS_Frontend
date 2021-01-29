@@ -19,10 +19,15 @@ const LearningRate = (props) => {
   const dispatch = useDispatch();
 
   const focusHandler = () => {
-    dispatch(Actions.learningPathActions.openBtn(course));
+    dispatch(Actions.learningPathActions.openBtn(course, ""));
   };
   const changeHandler = (e) => {
+
+
     const changeRate = e.target.value;
+    if (changeRate < 100) {
+      dispatch(Actions.learningPathActions.openBtn(course, ""));
+    }
     if (changeRate <= 100 && changeRate >= 0) {
       dispatch(
         Actions.learningPathActions.changeCourseRate(changeRate, course)
@@ -38,7 +43,7 @@ const LearningRate = (props) => {
     };
     dispatch(Actions.learningPathActions.saveCourseRate(reqBody));
     if (parseInt(percentCompleted) === 100) {
-      dispatch(Actions.learningPathActions.openBtn(course));
+      dispatch(Actions.learningPathActions.openBtn(course, "100"));
     }
     dispatch(
       Actions.learningPathActions.getMyLearningPath(loginState.user.username)
