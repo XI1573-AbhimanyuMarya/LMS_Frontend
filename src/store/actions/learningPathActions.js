@@ -37,9 +37,9 @@ const getLearningPathLevel = (pathLevel) => ({
   type: actionTypes.GET_LEARNING_PATH_LEVEL,
   payload: { pathLevel },
 });
-const openBtn = (course) => ({
+const openBtn = (course, percentCompleted) => ({
   type: actionTypes.SHOW_BUTTON_BASED_ON_RATE,
-  payload: { course },
+  payload: { course, percentCompleted },
 });
 const pathModelOpen = (val) => ({
   type: actionTypes.PATH_MODEL_OPEN,

@@ -108,6 +108,7 @@ const CreateLearningPath = (props) => {
     setActivePathStep(activePathStep - 1);
   };
 
+  console.log((activePathStep == 0 && learningPathName == '') || (activePathStep == 0 && learningPathDes == '') || (courseIdArr?.length == 0 && activePathStep > 0) || (userIdArr?.length == 0 && activePathStep > 0))
   const renderFinalPage =
     status && status === "success" ? (
       userIdArr?.length > 0 ? (
@@ -125,18 +126,18 @@ const CreateLearningPath = (props) => {
           </Typography>
         </>
       ) : (
-        <>
-          <CheckCircleIcon className={classes.checkIcon} />
-          <Typography
-            variant="h5"
-            align="center"
-            className={classes.assignedLabel}
-          >
-            {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED}
-          </Typography>
-        </>
-      )
-    ) : (status && status==="failure" ? (
+          <>
+            <CheckCircleIcon className={classes.checkIcon} />
+            <Typography
+              variant="h5"
+              align="center"
+              className={classes.assignedLabel}
+            >
+              {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED}
+            </Typography>
+          </>
+        )
+    ) : (status && status === "failure" ? (
       <>
         <ErrorIcon className={classes.errorIcon} />
         <Typography variant="h5" align="center" className={classes.errorLabel}>
@@ -146,8 +147,8 @@ const CreateLearningPath = (props) => {
           {LEARNING_PATH_LABELS.CLICK_OVER_CLOSE_BUTTON}
         </Typography>
       </>
-      ): ""
-    );
+    ) : ""
+      );
 
   return (
     <React.Fragment>
@@ -175,7 +176,7 @@ const CreateLearningPath = (props) => {
                       : LEARNING_PATH_LABELS.CREATE_LEARNING_PATH}
                   </Typography>
                 </Box>
-                <Typography variant="subtitle2" align="center" style={{color:"#858585", margin:"0 15px 5px 0", textAlign:"end"}}>
+                <Typography variant="subtitle2" align="center" style={{ color: "#858585", margin: "0 15px 5px 0", textAlign: "end" }}>
                   {LEARNING_PATH_LABELS.LEARNING_PATH_DETAILS}
                 </Typography>
                 <Stepper
@@ -232,29 +233,30 @@ const CreateLearningPath = (props) => {
                   </Container>
                 </React.Fragment>
               ) : (
-                <React.Fragment>
-                  {getStepContent(activePathStep)}
-                  <Box component="div" className={classes.buttons}>
-                    {activePathStep !== 0 && (
-                      <Button onClick={handleBack} className={classes.button}>
-                        {BUTTONS.BACK}
+                  <React.Fragment>
+                    {getStepContent(activePathStep)}
+                    <Box component="div" className={classes.buttons}>
+                      {activePathStep !== 0 && (
+                        <Button onClick={handleBack} className={classes.button}>
+                          {BUTTONS.BACK}
+                        </Button>
+                      )}
+                      <Button
+                        disabled={((activePathStep == 0 && learningPathName == '') || (activePathStep == 0 && learningPathDes == '') || (courseIdArr?.length == 0 && activePathStep > 0) || (userIdArr?.length == 0 && activePathStep > 1))}
+                        variant="contained"
+                        type="button"
+                        onClick={handleNext}
+                        className={classes.button}
+                      >
+                        {activePathStep === steps?.length - 1
+                          ? userIdArr?.length > 0
+                            ? BUTTONS.ASSIGN
+                            : BUTTONS.SUBMIT
+                          : BUTTONS.NEXT}
                       </Button>
-                    )}
-                    <Button
-                      variant="contained"
-                      type="button"
-                      onClick={handleNext}
-                      className={classes.button}
-                    >
-                      {activePathStep === steps?.length - 1
-                        ? userIdArr?.length > 0
-                          ? BUTTONS.ASSIGN
-                          : BUTTONS.SUBMIT
-                        : BUTTONS.NEXT}
-                    </Button>
-                  </Box>
-                </React.Fragment>
-              )}
+                    </Box>
+                  </React.Fragment>
+                )}
             </React.Fragment>
           </Box>
         </div>
