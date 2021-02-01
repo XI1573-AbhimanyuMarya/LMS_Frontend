@@ -20,8 +20,6 @@ const initialState = {
   uploadFilePopup: false,
   learningPathIds: 3,
   learningPathCourses: [],
-  uploadFilePopup: false,
-  uploadFilePopup: false,
   rejectPopup: false,
   approvePopup: false,
   pfApproval: [],
@@ -69,7 +67,7 @@ export const learningPathReducer = (state = initialState, action) => {
     case actionTypes.GET_SELECTED_COURSES:
       return {
         ...state,
-        courses: payload.list,
+        // courses: payload.list,
         courseIdArr: payload.courseIdArr,
         isLoading: false,
       };
@@ -649,14 +647,14 @@ export const learningPathReducer = (state = initialState, action) => {
           isLoading: true,
           errorMessage: "",
         };
-      case actionTypes. ADMIN_LEARNING_PATH_MANAGE_SUCCESS:
+      case actionTypes.ADMIN_LEARNING_PATH_MANAGE_SUCCESS:
         return {
           ...state,
           isLoading: false,
           adminLearningPathManageDetails: payload,
           errorMessage: "",
         };
-      case actionTypes. ADMIN_LEARNING_PATH_MANAGE_FAILURE:
+      case actionTypes.ADMIN_LEARNING_PATH_MANAGE_FAILURE:
         return {
           ...state,
           isLoading: false,

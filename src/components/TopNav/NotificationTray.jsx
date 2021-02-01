@@ -31,13 +31,13 @@ const NotificationTray = (props) => {
     right: false,
   });
 
-  useEffect(() => {
-    getCount()
-    const interval = setInterval(() => getCount(), 10000)
-    return () => {
-      clearInterval(interval);
-    }
-  }, [])
+  // useEffect(() => {
+  //   getCount()
+  //   const interval = setInterval(() => getCount(), 10000)
+  //   return () => {
+  //     clearInterval(interval);
+  //   }
+  // }, [])
 
   function markAsRead(){
     dispatch(Actions.notificationActions.markAsRead(loginState.user.id));
