@@ -15,7 +15,14 @@ export const useStyles = makeStyles((theme) => ({
 	buttons: {
 		display: 'flex',
 		justifyContent: 'center',
-	},
+  },
+  loader: {
+    position: "absolute",
+    transform: "translate(-50%, -50%)",
+    top: "50%",
+    left: "50%",
+    color: "inherit",
+  },
 	button: {
 		marginTop: theme.spacing(3),
 		marginLeft: theme.spacing(1),

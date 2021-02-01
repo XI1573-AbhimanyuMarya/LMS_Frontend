@@ -20,8 +20,6 @@ const initialState = {
   uploadFilePopup: false,
   learningPathIds: 3,
   learningPathCourses: [],
-  uploadFilePopup: false,
-  uploadFilePopup: false,
   rejectPopup: false,
   approvePopup: false,
   pfApproval: [],
@@ -69,7 +67,7 @@ export const learningPathReducer = (state = initialState, action) => {
     case actionTypes.GET_SELECTED_COURSES:
       return {
         ...state,
-        courses: payload.list,
+        // courses: payload.list,
         courseIdArr: payload.courseIdArr,
         isLoading: false,
       };

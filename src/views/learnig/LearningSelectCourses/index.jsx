@@ -91,6 +91,7 @@ const SelectCourses = () => {
       ? filteredCoursesList
       : ""
     : courses;
+
   const backBtnHandler = () => {
     dispatch(
       Actions.learningPathActions.getMyLearningPath(loginState.user.username)
@@ -165,9 +166,7 @@ const SelectCourses = () => {
             className={classes.catalogContainer}
             display="flex-inline"
             justifyContent="center"
-            style={{ margin: "15px 20px" }}
-          >
-            {/* {lpId!==0 ? <LearningPathDesc/> : <MyLearningPaths/> } */}
+            style={{ margin: "15px 20px" }}>
             {Object.keys(selectedLp).length !== 0 &&
             selectedLp.constructor === Object ? (
               <LearningPathDesc />
@@ -178,7 +177,6 @@ const SelectCourses = () => {
             )}
           </Box>
         </div>
-        {/* {lpId!==0 ? <LearningCoursesTable lpId={lpId} learningPathEmployeesId={selectedLp.learningPathEmployeesId} withRate={true} disable={disable}/> : <MyLearningPathTable/> } */}
         {Object.keys(selectedLp).length !== 0 &&
         selectedLp.constructor === Object ? (
           <LearningCoursesTable

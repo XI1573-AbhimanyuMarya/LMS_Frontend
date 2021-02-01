@@ -108,7 +108,7 @@ const CreateLearningPath = (props) => {
     setActivePathStep(activePathStep - 1);
   };
 
-  console.log((activePathStep == 0 && learningPathName == '') || (activePathStep == 0 && learningPathDes == '') || (courseIdArr?.length == 0 && activePathStep > 0) || (userIdArr?.length == 0 && activePathStep > 1))
+  console.log((activePathStep == 0 && learningPathName == '') || (activePathStep == 0 && learningPathDes == '') || (courseIdArr?.length == 0 && activePathStep > 0) || (userIdArr?.length == 0 && activePathStep > 0))
   const renderFinalPage =
     status && status === "success" ? (
       userIdArr?.length > 0 ? (

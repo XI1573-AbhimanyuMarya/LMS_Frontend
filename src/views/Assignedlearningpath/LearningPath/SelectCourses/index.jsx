@@ -28,12 +28,12 @@ const SelectAssignedPath = () => {
   
   useEffect(() => {
     dispatch(Actions.learningPathActions.getLearningPath(loginState.user.id));
-    if (mycourses.length === 0) {
-      dispatch(Actions.learningPathActions.fetchAllCourses());
-    } else {
-      setSelectedCoursesArr(mycourses)
-    }
-  }, []);
+    // if (mycourses.length === 0) {
+    //   dispatch(Actions.learningPathActions.fetchAllCourses());
+    // } else {
+    //   setSelectedCoursesArr(mycourses)
+    // }
+  }, [dispatch, loginState.user.id]);
 
   let filterCourses = [];
   const changeHandler = (e) => {

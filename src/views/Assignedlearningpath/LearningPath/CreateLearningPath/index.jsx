@@ -26,6 +26,7 @@ import { STEPS1, MESSAGES, LEARNING_PATH_LABELS, BUTTONS } from '../../../../mod
 import WithLoading from '../../../../hoc/WithLoading';
 import { error } from '../../../../utils/notifications';
 import TopNav from '../../../../components/TopNav';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import AssingedCourses from '../../../../images/assignLPsucess.png'
 
 import SucessPage from '../../LearningPath/SucessPage/SucessPage';
@@ -69,15 +70,9 @@ const AssignedCreateLearningPath = (props) => {
       setActivePathStep(activePathStep + 1);
     } else if (activePathStep === steps?.length - 1) {
       const path = {
-        // name: 'null',
-        // madeById: user.id,
         "employeeIds": userIdArr,
-        // coursesId: courseIdArr,
-        // duration: learningPathDuration,
         "learningPathIds": learningPathDuration
-        // description: 'null',
       }
-      // dispatch(Actions.learningPathActions.createLearningPath(path));
       dispatch(Actions.learningPathActions.createAssignLearningPath(path));
       setTimeout(() => {
         setActivePathStep(activePathStep + 1);
@@ -100,27 +95,28 @@ const AssignedCreateLearningPath = (props) => {
         <Typography variant="subtitle1" align="center">
           {LEARNING_PATH_LABELS.EMAIL_SENT_TO_EMPLOYEE}
         </Typography>
+        <Button
+          variant="contained"
+          type="button"
+          onClick={closeHandler}
+          className={classes.closeButton}>
+          {BUTTONS.CLOSE}
+        </Button>
       </>
       : <>
-        {/* <div>
-        <Icon>
-        <img src={AssingedCourses} className={classes.combinedshape}/>
-        </Icon>
-        </div>
-        <Typography variant="h5" align="center" className={classes.assignedLabel}>
-          {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED}
-        </Typography> */}
         <SucessPage />
       </>
-    : <>
-      <ErrorIcon className={classes.errorIcon} />
-      <Typography variant="h5" align="center" className={classes.errorLabel}>
-        {LEARNING_PATH_LABELS.SOMETHING_WENT_WRONG}
-      </Typography>
-      <Typography variant="subtitle1" align="center">
-        {LEARNING_PATH_LABELS.CLICK_OVER_CLOSE_BUTTON}
-      </Typography>
-    </>;
+    : status && status === 404 ?
+      <>
+        <ErrorIcon className={classes.errorIcon} />
+        <Typography variant="h5" align="center" className={classes.errorLabel}>
+          {LEARNING_PATH_LABELS.SOMETHING_WENT_WRONG}
+        </Typography>
+        <Typography variant="subtitle1" align="center">
+          {LEARNING_PATH_LABELS.CLICK_OVER_CLOSE_BUTTON}
+        </Typography>
+      </> :
+      <CircularProgress className={classes.loader} />;
   const showSteps = () => {
     if (activePathStep !== 0) {
       return (
@@ -161,19 +157,7 @@ const AssignedCreateLearningPath = (props) => {
               {activePathStep === steps?.length ? (
                 <React.Fragment>
                   <Container component="main" maxWidth="xs" className={classes.successContainer}>
-                    {console.log("status", status)}
-                    {console.log("usrIdarr", userIdArr)}
                     {renderFinalPage}
-
-                    <Button
-                      variant="contained"
-                      type="button"
-                      onClick={closeHandler}
-                      className={classes.closeButton}
-                    >
-                      {BUTTONS.CLOSE}
-                    </Button>
-
                   </Container>
                 </React.Fragment>
               ) : (
@@ -190,8 +174,7 @@ const AssignedCreateLearningPath = (props) => {
                         variant="contained"
                         type="button"
                         onClick={handleNext}
-                        className={classes.button}
-                      >
+                        className={classes.button}>
                         {activePathStep === steps?.length - 1
                           ? userIdArr?.length > 0
                             ? BUTTONS.ASSIGN
