@@ -19,11 +19,13 @@ const SetDuration = () => {
  const{courseIdArr,allLearningPath}= learningPathState;
  const[main,setmain]= useState({})
   useEffect(() => {
-    main[learningPathState.courseIdArr[0]]={"id":3,"name":`3 month`}
+    for(let id of learningPathState.courseIdArr) {
+      main[id] = {"id":3,"name":`3 month`}
+    }
     dispatch(Actions.learningPathActions.getSliderDuration(main));
   }, []);
 	const onSliderHandler = (event,val) => {
-		if(val !== "") {
+		if(val && event.currentTarget.id) {
       main[event.currentTarget.id]={"id":val,"name":`${val} month`}
 			dispatch(Actions.learningPathActions.getSliderDuration(main))
 		}
