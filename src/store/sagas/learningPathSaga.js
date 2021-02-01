@@ -3,20 +3,7 @@ import axios from "axios";
 import { actionTypes } from "../types";
 import { SERVICE_URLS } from "../../modules/constants";
 import { authHeader } from "../../modules/authServices";
-// import { useSelector } from "react-redux";
-// const userRole = sessionStorage["USER_INFO"]
-//   ? JSON.parse(sessionStorage.getItem("USER_INFO")).roles[0]
-//   : "";
-// const username = sessionStorage["USER_INFO"]
-//   ? JSON.parse(sessionStorage.getItem("USER_INFO")).user.username
-//   : "";
 
-// const loginState = useSelector((res) => res.loginState);
-// const {
-//   user: { username },
-//   roles,
-// } = loginState;
-// console.log(username, "user role", roles[0]);
 const fetchAllCourses = async () => {
   return await axios.get(SERVICE_URLS.FETCH_COURSES, { headers: authHeader() });
 };

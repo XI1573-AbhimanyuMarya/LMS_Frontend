@@ -27,9 +27,6 @@ const SelectCourses = () => {
   const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
   const [touch, setTouch] = useState(false);
 
-  /**
-   * function to fetch all courses initial time
-   */
   useEffect(() => {
     if (courseIdArr?.length === 0) {
       dispatch(Actions.learningPathActions.fetchAllCourses());
@@ -38,9 +35,6 @@ const SelectCourses = () => {
     }
   }, []);
 
-  /**
-   * function to filter courses
-   */
   let filterCourses = [];
   const changeHandler = (e) => {
     const { value } = e.target;
@@ -86,9 +80,7 @@ const SelectCourses = () => {
       );
     }
   };
-  /**
-   * function to set learning path name
-   */
+  
   const onChangeHandler = (e) => {
     const pathName = e.target.value;
     setTouch(true);
@@ -121,29 +113,6 @@ const SelectCourses = () => {
         display="flex-inline"
         justifyContent="center"
       >
-        {/* <Grid container className={classes.pathName}>
-					<Grid item xs={3}>
-						<InputLabel
-							htmlFor="standard-search"
-							className={classes.courseLabel}>
-							{LEARNING_PATH_LABELS.LEARNING_PATH_NAME}
-							<Box component="span" className={classes.error}>*</Box>
-						</InputLabel>
-					</Grid>
-					<Grid item xs={6}>
-						<TextField error={(!learningPathName && touch) || (!learningPathName && firstNextClicked) ? true : false}
-							fullWidth id="standard-search"
-							label={LEARNING_PATH_LABELS.LEARNING_PATH_NAME}
-							type="search"
-							variant="outlined"
-							onChange={onChangeHandler}
-							className={classes.pathNameField}
-							size="small"
-							value={learningPathName ? learningPathName : ''}
-						/>
-					</Grid>
-				</Grid> */}
-        {/* <Divider variant="middle" /> */}
         <Box alignItems="flex-start" py={2} pl={5}>
           <Typography variant="h6">
             {LEARNING_PATH_LABELS.COURSE_CATALOG}

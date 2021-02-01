@@ -7,6 +7,14 @@ import OutlinedBeginner from "../images/101-OutlinedBeginner.svg";
 import OutlinedIntermediate from "../images/102-OutlinedIntermediate.svg";
 import OutlinedAdvance from "../images/103-OutlinedAdvance.svg";
 import OutlinedExpert from "../images/104-OutlinedExpert.svg";
+import Beginner1 from "../images/101-Beginner2.svg";
+import Intermediate1 from "../images/102-Intermediate2.svg";
+import Advance1 from "../images/103-Advance2.svg";
+import Expert1 from "../images/104-Expert2.svg";
+import OutlinedBeginner1 from "../images/101-OutlinedBeginner2.svg";
+import OutlinedIntermediate1 from "../images/102-OutlinedIntermediate2.svg";
+import OutlinedAdvance1 from "../images/103-OutlinedAdvance2.svg";
+import OutlinedExpert1 from "../images/104-OutlinedExpert2.svg";
 
 // const API_HOST_PATH =  'http://localhost:8085'
 const API_HOST_PATH = "https://xebia-lms.herokuapp.com";
@@ -59,7 +67,7 @@ export const LEARNING_PATH_LABELS = {
   LEARNING_PATH_DETAILS: "Please provide details below to add learning path",
   LEARNING_PATH_CREATED_AND_ASSIGNED:
     "Learning path has created & assigned successfully",
-  LEARNING_PATH_CREATED: "Learning path has created sucessfully",
+  LEARNING_PATH_CREATED: "Learning path created sucessfully",
   EMAIL_SENT_TO_EMPLOYEE: "An email has been sent to the employees",
   SEARCH_COURSE: "Search Course",
   LEARNING_PATH_NAME: "Enter Learning Path Name",
@@ -130,6 +138,14 @@ export const SHOW_LEVELS = {
   "102-OutlinedIntermediate": OutlinedIntermediate,
   "103-OutlinedAdvance": OutlinedAdvance,
   "104-OutlinedExpert": OutlinedExpert,
+  "101-Beginner1": Beginner1,
+  "102-Intermediate1": Intermediate1,
+  "103-Advance1": Advance1,
+  "104-Expert1": Expert1,
+  "101-OutlinedBeginner1": OutlinedBeginner1,
+  "102-OutlinedIntermediate1": OutlinedIntermediate1,
+  "103-OutlinedAdvance1": OutlinedAdvance1,
+  "104-OutlinedExpert1": OutlinedExpert1,
 };
 
 export const LEVELS = [

@@ -17,6 +17,7 @@ const LearningPath = (props) => {
     const learningPathState = useSelector(state => state.learningPathState);
     const { pathModelOpen } = learningPathState;
     const { handleClose, handleClosePath } = props;
+
     return (
         <div>
             <Dialog fullScreen open={pathModelOpen} onClose={handleClose} TransitionComponent={transition}>

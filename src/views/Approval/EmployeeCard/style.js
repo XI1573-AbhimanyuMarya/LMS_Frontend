@@ -13,25 +13,25 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     [theme.breakpoints.up('md')]: {
       //width: "1140px",
-    height: "70px",
-    margin: "0 0 30px",
-    padding: "20px",
-    borderRadius: "8px",
-    boxShadow: "2px 4px 10px 0 rgba(0, 0, 0, 0.1)",
-    backgroundColor: "#ffffff",
-    display: "flex",
-    alignItems: "center",
+      height: "70px",
+      margin: "0 0 30px",
+      padding: "20px",
+      borderRadius: "8px",
+      boxShadow: "2px 4px 10px 0 rgba(0, 0, 0, 0.1)",
+      backgroundColor: "#ffffff",
+      display: "flex",
+      alignItems: "center",
     },
     [theme.breakpoints.up('lg')]: {
       //width: "1040px",
-    height: "80px",
-    margin: "0 0 30px",
-    padding: "20px",
-    borderRadius: "8px",
-    boxShadow: "2px 4px 10px 0 rgba(0, 0, 0, 0.1)",
-    backgroundColor: "#ffffff",
-    display: "flex",
-    alignItems: "center",
+      height: "80px",
+      margin: "0 0 30px",
+      padding: "20px",
+      borderRadius: "8px",
+      boxShadow: "2px 4px 10px 0 rgba(0, 0, 0, 0.1)",
+      backgroundColor: "#ffffff",
+      display: "flex",
+      alignItems: "center",
     },
   },
   head: {
@@ -48,7 +48,7 @@ export const useStyles = makeStyles((theme) => ({
     backgroundImage: "linear-gradient(to bottom, #ffab39, #f07200)",
     display: "flex",
     justifyContent: "center",
-    color:"white"
+    color: "white"
   },
   view: {
     padding: "0 0 0 20px",
@@ -68,7 +68,7 @@ export const useStyles = makeStyles((theme) => ({
     letterSpacing: "normal",
     textAlign: "center",
     color: "#027aff",
-    cursor:"pointer"
+    cursor: "pointer"
   },
   reject: {
     padding: "0 0 0 20px",
@@ -81,7 +81,7 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: "#ffffff",
     display: "flex",
     justifyContent: "center",
-    color:"#ef7200"
+    color: "#ef7200"
   },
   delete: {
     marginTop: "-42px",

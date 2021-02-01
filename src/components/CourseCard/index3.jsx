@@ -7,7 +7,6 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 const CourseCard = (props) => {
-  console.log(props, "propsss");
   const classes = useStyles();
   const { allCourses, course = {}, onButtonClick, showButton } = props;
   // course.progress = "";
