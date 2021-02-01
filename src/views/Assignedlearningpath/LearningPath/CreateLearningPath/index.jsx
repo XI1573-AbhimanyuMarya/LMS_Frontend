@@ -27,6 +27,7 @@ import WithLoading from '../../../../hoc/WithLoading';
 import { error } from '../../../../utils/notifications';
 import TopNav from '../../../../components/TopNav';
 import AssingedCourses from '../../../../images/assignLPsucess.png'
+import DiscardPopup from '../../../../components/DiscardPopup/index';
 
 import SucessPage from '../../LearningPath/SucessPage/SucessPage';
 
@@ -52,10 +53,23 @@ const AssignedCreateLearningPath = (props) => {
   const [activePathStep, setActivePathStep] = useState(0);
   const { learningPathName,learningPathDes , courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
   const { user } = loginState;
+  
 
   const closeHandler=()=>{
+    dispatch(Actions.learningPathActions.discardModelOpen(true));
+    
+  }
+
+  const closeHandler1=()=>{
     setActivePathStep(0);
   }
+
+  const discardHandler = (closeMainModel) => {
+    dispatch(Actions.learningPathActions.discardModelOpen(false));
+    if(closeMainModel) {
+      setActivePathStep(0);
+    }
+  };
 
   const handleNext = () => {
     if (activePathStep === 0 && courseIdArr?.length > 0) {
@@ -127,7 +141,9 @@ const AssignedCreateLearningPath = (props) => {
           <Toolbar className={classes.clrosButton} style={{position:'absolute',right:"0px"}}>
             <IconButton edge="end" color="inherit" onClick={closeHandler} aria-label="close">
               <CloseIcon />
+             
             </IconButton>
+            <DiscardPopup discardHandler={discardHandler} />
           </Toolbar>
           <Stepper activeStep={activePathStep} connector={<QontoConnector />}>
                 {steps.map((label) => (
@@ -167,7 +183,7 @@ const AssignedCreateLearningPath = (props) => {
                     <Button
                       variant="contained"
                       type="button"
-                      onClick={closeHandler}
+                      onClick={closeHandler1}
                       className={classes.closeButton}
                     >
                       {BUTTONS.CLOSE}
