@@ -50,14 +50,15 @@ const AssignedCreateLearningPath = (props) => {
   const learningPathState = useSelector(state => state.learningPathState);
   const loginState = useSelector(res => res.loginState);
   const [activePathStep, setActivePathStep] = useState(0);
-  const { learningPathName,learningPathDes , courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
+  const { learningPathName, learningPathDes, courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
   const { user } = loginState;
 
-  const closeHandler=()=>{
+  const closeHandler = () => {
     setActivePathStep(0);
   }
 
   const handleNext = () => {
+    console.log(activePathStep, "activePathStep")
     if (activePathStep === 0 && courseIdArr?.length > 0) {
       setActivePathStep(activePathStep + 1);
     } else if (activePathStep === 0 && courseIdArr?.length === 0) {
@@ -71,10 +72,10 @@ const AssignedCreateLearningPath = (props) => {
         // name: 'null',
         // madeById: user.id,
         "employeeIds": userIdArr,
-       // coursesId: courseIdArr,
+        // coursesId: courseIdArr,
         // duration: learningPathDuration,
-        "learningPathIds":learningPathDuration
-       // description: 'null',
+        "learningPathIds": learningPathDuration
+        // description: 'null',
       }
       // dispatch(Actions.learningPathActions.createLearningPath(path));
       dispatch(Actions.learningPathActions.createAssignLearningPath(path));
@@ -92,7 +93,7 @@ const AssignedCreateLearningPath = (props) => {
   const renderFinalPage = status && status === 202
     ? userIdArr?.length > 0
       ? <>
-          <CheckCircleIcon className={classes.checkIcon} />
+        <CheckCircleIcon className={classes.checkIcon} />
         <Typography variant="h5" align="center" className={classes.assignedLabel}>
           {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED_AND_ASSIGNED}
         </Typography>
@@ -109,7 +110,7 @@ const AssignedCreateLearningPath = (props) => {
         <Typography variant="h5" align="center" className={classes.assignedLabel}>
           {LEARNING_PATH_LABELS.LEARNING_PATH_CREATED}
         </Typography> */}
-      <SucessPage/>
+        <SucessPage />
       </>
     : <>
       <ErrorIcon className={classes.errorIcon} />
@@ -120,29 +121,29 @@ const AssignedCreateLearningPath = (props) => {
         {LEARNING_PATH_LABELS.CLICK_OVER_CLOSE_BUTTON}
       </Typography>
     </>;
-  const showSteps=()=>{
-    if(activePathStep!==0){
+  const showSteps = () => {
+    if (activePathStep !== 0) {
       return (
-        <Grid container className={classes.stepperContainer} style={{backgroundColor:"white",display:'flex',justifyContent:"center"}}>
-          <Toolbar className={classes.clrosButton} style={{position:'absolute',right:"0px"}}>
+        <Grid container className={classes.stepperContainer} style={{ backgroundColor: "white", display: 'flex', justifyContent: "center" }}>
+          <Toolbar className={classes.clrosButton} style={{ position: 'absolute', right: "0px" }}>
             <IconButton edge="end" color="inherit" onClick={closeHandler} aria-label="close">
               <CloseIcon />
             </IconButton>
           </Toolbar>
           <Stepper activeStep={activePathStep} connector={<QontoConnector />}>
-                {steps.map((label) => (
-                  <Step key={label}>
-                    <StepLabel
-                      StepIconProps={{
-                        classes: {
-                          active: classes.active,
-                          completed: classes.completed
-                        }
-                      }}
-                    >{label}
-                    </StepLabel>
-                  </Step>
-                ))}
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel
+                  StepIconProps={{
+                    classes: {
+                      active: classes.active,
+                      completed: classes.completed
+                    }
+                  }}
+                >{label}
+                </StepLabel>
+              </Step>
+            ))}
           </Stepper>
         </Grid>
       );
@@ -160,8 +161,8 @@ const AssignedCreateLearningPath = (props) => {
               {activePathStep === steps?.length ? (
                 <React.Fragment>
                   <Container component="main" maxWidth="xs" className={classes.successContainer}>
-                  {console.log("status",status)}
-                  {console.log("usrIdarr",userIdArr)}
+                    {console.log("status", status)}
+                    {console.log("usrIdarr", userIdArr)}
                     {renderFinalPage}
 
                     <Button
@@ -185,6 +186,7 @@ const AssignedCreateLearningPath = (props) => {
                         </Button>
                       )}
                       <Button
+                        disabled={(courseIdArr?.length == 0 && activePathStep == 0) || (activePathStep > 0 && userIdArr?.length == 0)}
                         variant="contained"
                         type="button"
                         onClick={handleNext}
