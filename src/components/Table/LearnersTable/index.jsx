@@ -15,34 +15,36 @@ const LearnerTable = (props) => {
     dispatch(Actions.learningPathActions.openDetails(false, 0));
   };
   const cardData = learningPathState.adminDetails?.learningPath;
-  const managerData = learningPathState.adminDetails?.manager;
   const renderCourseList = learningPathState.adminDetails && learningPathState.adminDetails.employeeDetails.map((lp) => {
-    return <TableRow key={lp.learningPathEmployeesId} lp={lp}    levelId={cardData?.competency.id}
-    levelName={cardData?.competency.name}/>;
+    return <TableRow key={lp.learningPathEmployeesId} lp={lp} levelId={cardData?.competency.id} levelName={cardData?.competency.name}/>;
   });
   return (
     <div
       style={{
         overflow: "auto",
         height: "auto",
-        margin: "25px 0px 10px 0px",
+        margin: "25px 0px 10px -10px",
         width: "82vw",
       }}
     >
-      <Button onClick={handleBack} className={classes.button}>
-        {BUTTONS.BACK}
-      </Button>
-      <LearningPathCardWOAction
-        heading={cardData?.name}
-        levelId={cardData?.competency.id}
-        levelName={cardData?.competency.name}
-        desc={cardData?.description}
-      />
-      <h3>Assigned by: {managerData?.fullName}</h3>
+      <div className={classes.outerContainer}>
+        <Button onClick={handleBack} className={classes.button}>
+          {BUTTONS.BACK}
+        </Button>
+        <div className={classes.cardContainer}>
+          <LearningPathCardWOAction
+            heading={cardData?.name}
+            levelId={cardData?.competency.id}
+            levelName={cardData?.competency.name}
+            desc={cardData?.description}
+          />
+        </div>
+      </div>
       <table className={classes.tbl}>
         <thead className={classes.tblheading}>
           <tr>
-            <th style={{ width: "25%" }}>Learner Name</th>
+            <th className={classes.tblheadingFirst}>Learner Name</th>
+            <th>Assigned by</th>
             <th>Level</th>
             <th>Start Date</th>
             <th>End Date</th>

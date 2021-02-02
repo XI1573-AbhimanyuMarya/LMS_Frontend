@@ -43,6 +43,7 @@ const ManageLearningPath = () => {
     dispatch(Actions.learningPathActions.deleteAdminManagePathCards(items));
     dispatch(Actions.learningPathActions.getAdminManagePathDetails());
     setSelectedCardsCount(0);
+    window.location.reload();
   }
 
   const renderWelcome = (
@@ -50,8 +51,8 @@ const ManageLearningPath = () => {
       component="main"
       className={classes.mainContainer}>
       <div className={classes.headerContainer}>
-        <h2>All Learning Paths</h2>
-        <button className={classes.deleteButton} onClick={deleteCard}>
+        <h2 style={{width: '100%'}}>All Learning Paths</h2>
+        <button className={classes.deleteButton} onClick={deleteCard} disabled={selectedCardsCount < 1}>
           Delete selected 
           <span className={classes.deleteIcon}>{selectedCardsCount}</span>
         </button>

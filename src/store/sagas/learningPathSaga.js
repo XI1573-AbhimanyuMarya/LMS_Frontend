@@ -522,7 +522,6 @@ function* getAdminManagePathDetails() {
 }
 
 function* deleteAdminManagePathCards(action) {
-  console.log("action", action);
   try {
     const response = yield call(fetchDeletedCard, action.payload.cards);
     const { data } = response;

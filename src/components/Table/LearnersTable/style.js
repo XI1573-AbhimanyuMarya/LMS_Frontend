@@ -10,11 +10,12 @@ export const useStyles = makeStyles((theme) => ({
   },
   tbl: {
     minWidth: "100%",
-    marginTop: "20px",
+    marginTop: "35px",
+    borderCollapse: 'collapse',
   },
   tblrow: {
     "& td": {
-      padding: "5px 31px",
+      padding: "5px 12px",
     },
   },
   tblbody: {
@@ -23,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
   tblheading: {
     "& tr": {
       "& th": {
-        padding: "20.9px 15px 10px 31px",
+        padding: "15px 10px 7px",
         textAlign: "left",
         fontWeight: "normal",
         opacity: "0.7",
@@ -56,4 +57,14 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: "10px",
     height: "38px",
   },
+  cardContainer: {
+    marginLeft: '10px'
+  },
+  outerContainer: {
+    marginLeft: '20px',
+  },
+  tblheadingFirst: {
+    width: "25%", 
+    paddingLeft: "28px !important"
+  }
 }));

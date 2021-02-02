@@ -84,8 +84,7 @@ const Dashboard = () => {
     return employees;
   };
   const employees = prepareData(assignedCources);
-
-  const showDashboard = employees && employees.length ? true : false; // manan's
+  const showDashboard = employees && employees.length ? true : false;
   const statsData = {
     totalCardDetail: {
       heading: "Assigned Learning Path",
@@ -132,9 +131,7 @@ const Dashboard = () => {
       );
       setManager(true);
     }
-
     dispatch(Actions.learningPathActions.clearCreateLpFormFields());
-
     dispatch(Actions.learningPathActions.getAdminLearningPathDetails());
     dispatch(Actions.learningPathActions.getPopularStuff(loginState.user.id));
   }, []);
@@ -222,26 +219,18 @@ const Dashboard = () => {
       <>
         <Box>
           {learningPathState.openDetailOfEnp &&
-            learningPathState.openDetailOfEnp.empStatus ? (
-              <LearnerTable />
-            ) : (
-              <>
-                {dashStats && <DashboardMatrix data={data} />}
-                <div
-                  style={{
-                    width: "calc((100vw - 26%) - 16px)",
-                    height: "180px",
-                    margin: "20px",
-                  }}
-                >
-                  {userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR" ? (
-                    <PopularStuff managerPopularStuff={managerPopularStuff} />
-                  ) : (
-                      <LearningPathWStatusTable />
-                    )}
-                </div>
-              </>
-            )}
+          learningPathState.openDetailOfEnp.empStatus ? (
+            <LearnerTable />
+          ) : (
+            <>
+              {dashStats && <DashboardMatrix data={data} />}
+                {userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR" ? (
+                  <PopularStuff managerPopularStuff={managerPopularStuff} />
+                ) : (
+                  <LearningPathWStatusTable />
+                )}
+            </>
+          )}
         </Box>
       </>
     );
@@ -253,27 +242,13 @@ const Dashboard = () => {
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
-<<<<<<< HEAD
-          {
-            !showMyDashboard && !pathModelOpen ? (
-              // <DashboardDetail />
-              <DashData />
-            ) : showMyDashboard ? (
-              <EmployeeDashboardDetail statsData={statsData} />
-            ) :
-                (
-                  renderWelcome
-                )}
-=======
           {!showMyDashboard && !pathModelOpen ? (
-            // <DashboardDetail />
             <DashData />
           ) : showMyDashboard ? (
             <EmployeeDashboardDetail statsData={statsData} />
           ) : (
                 renderWelcome
               )}
->>>>>>> 7d30ef7bfc6db2a44419d21907ff6d0a486c721b
         </div>
         <div className="copyright">
           <Copyright />

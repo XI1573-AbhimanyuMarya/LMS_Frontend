@@ -2,15 +2,16 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   tbl:{
-    minWidth:"100%"
+    minWidth:"100%",
+    borderCollapse: 'collapse'
   },
   tblrow:{
     '& td':{
-      padding:"5px 31px",
+      padding:"0 31px",
     }
   },
   tblbody:{
-    fontSize:"12px"//"10px"
+    fontSize:"12px"
   },
   tblheading:{
     '& tr':{
