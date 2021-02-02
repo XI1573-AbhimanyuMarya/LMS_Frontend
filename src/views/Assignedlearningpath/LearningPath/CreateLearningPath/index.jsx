@@ -29,7 +29,6 @@ import TopNav from '../../../../components/TopNav';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AssingedCourses from '../../../../images/assignLPsucess.png'
 import DiscardPopup from '../../../../components/DiscardPopup/index';
-
 import SucessPage from '../../LearningPath/SucessPage/SucessPage';
 
 const steps = STEPS1;
@@ -54,7 +53,6 @@ const AssignedCreateLearningPath = (props) => {
   const [activePathStep, setActivePathStep] = useState(0);
   const { learningPathName, learningPathDes, courseIdArr, userIdArr, learningPathDuration, status } = learningPathState;
   const { user } = loginState;
-  
 
   const closeHandler=()=>{
     dispatch(Actions.learningPathActions.discardModelOpen(true));

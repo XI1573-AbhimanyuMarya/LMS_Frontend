@@ -31,12 +31,12 @@ const ManageCard = (props) => {
 
   return (
     <>
-    <Card className={classes.root} style={inlineStyle}>
+    <Card className={classes.root} style={inlineStyle} onClick={onClickHandler}>
       <CardActionArea>  
         <CardContent style={{minHeight:"143px"}}>
           <div className={classes.cardheader}>
             <div style={{display:"flex"}}>
-            {isChecked && <img src={GreenChecked} style={{width:"26px",height:"24px"}} onClick={onClickHandler} />}
+            {isChecked && <img src={GreenChecked} style={{width:"26px",height:"24px"}}  />}
             {!(isChecked) && <CircleUnchecked onClick={onClickHandler}/>}
             <Typography gutterBottom variant="h6" component="h6" className={classes.cardheading}>
               {cardDetails?.name}
