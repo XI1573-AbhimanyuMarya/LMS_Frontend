@@ -230,6 +230,8 @@ const CreateLearningPath = (props) => {
                     >
                       {BUTTONS.CLOSE}
                     </Button>
+
+
                   </Container>
                 </React.Fragment>
               ) : (
@@ -241,8 +243,17 @@ const CreateLearningPath = (props) => {
                           {BUTTONS.BACK}
                         </Button>
                       )}
+                      {activePathStep === 2 && <Button
+                        variant="contained"
+                        disabled={userIdArr?.length != 0}
+                        type="button"
+                        onClick={handleNext}
+                        className={classes.button}
+                      >
+                        {BUTTONS.SKIP}
+                      </Button>}
                       <Button
-                        disabled={((activePathStep == 0 && learningPathName == '') || (activePathStep == 0 && learningPathDes == '') || (courseIdArr?.length == 0 && activePathStep > 0) || (userIdArr?.length == 0 && activePathStep > 1))}
+                        disabled={((activePathStep == 0 && learningPathName == '') || (activePathStep == 0 && learningPathDes == '') || (courseIdArr?.length == 0 && activePathStep > 0) || (userIdArr?.length == 0 && activePathStep == 2))}
                         variant="contained"
                         type="button"
                         onClick={handleNext}
