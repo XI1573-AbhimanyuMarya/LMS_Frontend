@@ -181,6 +181,9 @@ const getAdminStats = (userRole) => ({
 const getAdminGraphs = () => ({
   type: actionTypes.ADMIN_DASHBOARD_GRAPH_REQUEST,
 });
+const getManagerGraphs = () => ({
+  type: actionTypes.MANAGER_DASHBOARD_GRAPH_REQUEST,
+});
 
 const getAdminLearningPathDetails = () => ({
   type: actionTypes.ADMIN_LEARNING_PATH_DETAILS_REQUEST,
@@ -257,4 +260,5 @@ export default {
   getAdminManagePathDetails,
   deleteAdminManagePathCards,
   getPopularStuff,
+  getManagerGraphs,
 };

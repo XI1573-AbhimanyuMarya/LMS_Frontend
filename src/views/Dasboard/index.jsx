@@ -38,6 +38,7 @@ const Dashboard = () => {
     pathModelOpen,
     dashStats,
     dashGraphAdmin = {},
+    dashGraphManager = {},
     adminDashStats,
     managerPopularStuff,
     isLoading,
@@ -104,6 +105,7 @@ const Dashboard = () => {
       );
       dispatch(Actions.learningPathActions.getAdminGraphs());
     } else {
+      dispatch(Actions.learningPathActions.getManagerGraphs());
       dispatch(
         Actions.learningPathActions.getManagerStats(
           loginState.roles[0],
@@ -209,7 +211,8 @@ const Dashboard = () => {
           heading: "Assigned Learning Path",
           Total: dashStats.totalLearningPathAssigned,
         },
-        learningPathGraphAdmin: dashGraphAdmin,
+        learningPathGraphAdmin: userRole === "ROLE_MANAGER" ? dashGraphManager : dashGraphAdmin,
+
         Completed: dashStats.totalLearningPathCompleted,
         Inprogress: dashStats.totalLearningPathInProgress,
         Overdue: dashStats.totalLearningPathExpired,
@@ -250,6 +253,7 @@ const Dashboard = () => {
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
+<<<<<<< HEAD
           {
             !showMyDashboard && !pathModelOpen ? (
               // <DashboardDetail />
@@ -260,6 +264,16 @@ const Dashboard = () => {
                 (
                   renderWelcome
                 )}
+=======
+          {!showMyDashboard && !pathModelOpen ? (
+            // <DashboardDetail />
+            <DashData />
+          ) : showMyDashboard ? (
+            <EmployeeDashboardDetail statsData={statsData} />
+          ) : (
+                renderWelcome
+              )}
+>>>>>>> 7d30ef7bfc6db2a44419d21907ff6d0a486c721b
         </div>
         <div className="copyright">
           <Copyright />
