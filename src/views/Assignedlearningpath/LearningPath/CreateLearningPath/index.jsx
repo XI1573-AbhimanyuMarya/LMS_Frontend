@@ -138,7 +138,6 @@ const AssignedCreateLearningPath = (props) => {
           <Toolbar className={classes.clrosButton} style={{ position: 'absolute', right: "0px" }}>
             <IconButton edge="end" color="inherit" onClick={closeHandler} aria-label="close">
               <CloseIcon />
-             
             </IconButton>
             <DiscardPopup discardHandler={discardHandler} />
           </Toolbar>
