@@ -49,6 +49,7 @@ export const SERVICE_URLS = {
   FETCH_MANAGER_POPULAR_STUFF: `${API_HOST_PATH}/manager/api/v1/dashboard/top/trending`,
   FETCH_NOTIFICATIONS: `${API_HOST_PATH}`,
   FETCH_EMPLOYEE_STATS: `${API_HOST_PATH}/employee/api/v1/dashboard/stats`,
+  FETCH_MANAGER_GRAPHS: `${API_HOST_PATH}/manager/api/v1/dashboard/graph/data/`,
 };
 
 export const API_STATUS = {
@@ -67,7 +68,7 @@ export const LEARNING_PATH_LABELS = {
   LEARNING_PATH_DETAILS: "Please provide details below to add learning path",
   LEARNING_PATH_CREATED_AND_ASSIGNED:
     "Learning path has created & assigned successfully",
-  LEARNING_PATH_CREATED: "Learning path created sucessfully",
+  LEARNING_PATH_CREATED: "Learning path has been successfully assigned",
   EMAIL_SENT_TO_EMPLOYEE: "An email has been sent to the employees",
   SEARCH_COURSE: "Search Course",
   LEARNING_PATH_NAME: "Enter Learning Path Name",
@@ -98,6 +99,7 @@ export const BUTTONS = {
   ASSIGN: "Assign",
   SUBMIT: "Submit",
   NEXT: "Next",
+  SKIP: "Skip",
 };
 
 export const STEPS = [

@@ -38,6 +38,7 @@ const Dashboard = () => {
     pathModelOpen,
     dashStats,
     dashGraphAdmin = {},
+    dashGraphManager = {},
     adminDashStats,
     managerPopularStuff,
     isLoading,
@@ -83,8 +84,7 @@ const Dashboard = () => {
     return employees;
   };
   const employees = prepareData(assignedCources);
-
-  const showDashboard = employees && employees.length ? true : false; // manan's
+  const showDashboard = employees && employees.length ? true : false;
   const statsData = {
     totalCardDetail: {
       heading: "Assigned Learning Path",
@@ -104,6 +104,7 @@ const Dashboard = () => {
       );
       dispatch(Actions.learningPathActions.getAdminGraphs());
     } else {
+      dispatch(Actions.learningPathActions.getManagerGraphs());
       dispatch(
         Actions.learningPathActions.getManagerStats(
           loginState.roles[0],
@@ -130,19 +131,17 @@ const Dashboard = () => {
       );
       setManager(true);
     }
-
     dispatch(Actions.learningPathActions.clearCreateLpFormFields());
-
     dispatch(Actions.learningPathActions.getAdminLearningPathDetails());
     dispatch(Actions.learningPathActions.getPopularStuff(loginState.user.id));
   }, []);
 
   const showMyDashboard =
     mycourses &&
-    !manager &&
-    userRole !== "ROLE_ADMIN" &&
-    userRole !== "ROLE_HR" &&
-    mycourses.length
+      !manager &&
+      userRole !== "ROLE_ADMIN" &&
+      userRole !== "ROLE_HR" &&
+      mycourses.length
       ? true
       : false;
 
@@ -189,8 +188,8 @@ const Dashboard = () => {
                 further learning.
               </div>
             ) : (
-              <div>Please assign first learning path to your team</div>
-            )}
+                <div>Please assign first learning path to your team</div>
+              )}
           </Typography>
         </div>
       </Container>
@@ -209,7 +208,8 @@ const Dashboard = () => {
           heading: "Assigned Learning Path",
           Total: dashStats.totalLearningPathAssigned,
         },
-        learningPathGraphAdmin: dashGraphAdmin,
+        learningPathGraphAdmin: userRole === "ROLE_MANAGER" ? dashGraphManager : dashGraphAdmin,
+
         Completed: dashStats.totalLearningPathCompleted,
         Inprogress: dashStats.totalLearningPathInProgress,
         Overdue: dashStats.totalLearningPathExpired,
@@ -224,19 +224,11 @@ const Dashboard = () => {
           ) : (
             <>
               {dashStats && <DashboardMatrix data={data} />}
-              <div
-                style={{
-                  width: "calc((100vw - 26%) - 16px)",
-                  height: "180px",
-                  margin: "20px",
-                }}
-              >
                 {userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR" ? (
                   <PopularStuff managerPopularStuff={managerPopularStuff} />
                 ) : (
                   <LearningPathWStatusTable />
                 )}
-              </div>
             </>
           )}
         </Box>
@@ -251,13 +243,12 @@ const Dashboard = () => {
         <div className={classes.toolbar} />
         <div className="container">
           {!showMyDashboard && !pathModelOpen ? (
-            // <DashboardDetail />
             <DashData />
           ) : showMyDashboard ? (
             <EmployeeDashboardDetail statsData={statsData} />
           ) : (
-            renderWelcome
-          )}
+                renderWelcome
+              )}
         </div>
         <div className="copyright">
           <Copyright />

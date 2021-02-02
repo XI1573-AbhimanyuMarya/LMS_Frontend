@@ -13,6 +13,9 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     margin: "auto",
+    position: "absolute",
+    top: "0%",
+    left: "42%",
   },
   paper: {
     display: "flex",

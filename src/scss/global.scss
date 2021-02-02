@@ -28,7 +28,7 @@ body {
 .main-content {
   width: 100%;
   min-height: 100vh;
-  // background-color: #f7f8fc;
+  background-color: #f7f8fc;
 
   .container {
     width: calc((100vw - #{$sidebar-width}) - 16px);
