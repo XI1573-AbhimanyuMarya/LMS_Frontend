@@ -139,10 +139,10 @@ const Dashboard = () => {
 
   const showMyDashboard =
     mycourses &&
-    !manager &&
-    userRole !== "ROLE_ADMIN" &&
-    userRole !== "ROLE_HR" &&
-    mycourses.length
+      !manager &&
+      userRole !== "ROLE_ADMIN" &&
+      userRole !== "ROLE_HR" &&
+      mycourses.length
       ? true
       : false;
 
@@ -189,8 +189,8 @@ const Dashboard = () => {
                 further learning.
               </div>
             ) : (
-              <div>Please assign first learning path to your team</div>
-            )}
+                <div>Please assign first learning path to your team</div>
+              )}
           </Typography>
         </div>
       </Container>
@@ -219,26 +219,26 @@ const Dashboard = () => {
       <>
         <Box>
           {learningPathState.openDetailOfEnp &&
-          learningPathState.openDetailOfEnp.empStatus ? (
-            <LearnerTable />
-          ) : (
-            <>
-              {dashStats && <DashboardMatrix data={data} />}
-              <div
-                style={{
-                  width: "calc((100vw - 26%) - 16px)",
-                  height: "180px",
-                  margin: "20px",
-                }}
-              >
-                {userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR" ? (
-                  <PopularStuff managerPopularStuff={managerPopularStuff} />
-                ) : (
-                  <LearningPathWStatusTable />
-                )}
-              </div>
-            </>
-          )}
+            learningPathState.openDetailOfEnp.empStatus ? (
+              <LearnerTable />
+            ) : (
+              <>
+                {dashStats && <DashboardMatrix data={data} />}
+                <div
+                  style={{
+                    width: "calc((100vw - 26%) - 16px)",
+                    height: "180px",
+                    margin: "20px",
+                  }}
+                >
+                  {userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR" ? (
+                    <PopularStuff managerPopularStuff={managerPopularStuff} />
+                  ) : (
+                      <LearningPathWStatusTable />
+                    )}
+                </div>
+              </>
+            )}
         </Box>
       </>
     );
@@ -250,14 +250,16 @@ const Dashboard = () => {
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
-          {!showMyDashboard && !pathModelOpen ? (
-            // <DashboardDetail />
-            <DashData />
-          ) : showMyDashboard ? (
-            <EmployeeDashboardDetail statsData={statsData} />
-          ) : (
-            renderWelcome
-          )}
+          {
+            !showMyDashboard && !pathModelOpen ? (
+              // <DashboardDetail />
+              <DashData />
+            ) : showMyDashboard ? (
+              <EmployeeDashboardDetail statsData={statsData} />
+            ) :
+                (
+                  renderWelcome
+                )}
         </div>
         <div className="copyright">
           <Copyright />

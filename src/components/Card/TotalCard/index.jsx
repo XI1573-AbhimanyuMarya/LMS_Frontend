@@ -10,7 +10,7 @@ const TotalCard = (props) => {
   return (
     <Grid item xs={3}>
       <Card className={classes.Rectangle}>
-        <div className={classes.TotalLearningPath}>Assign Learning Path</div>
+        <div className={classes.TotalLearningPath}>Total Learning Path</div>
         <div className={classes.TotalLearningPathNum}>{Total}</div>
       </Card>
     </Grid>
