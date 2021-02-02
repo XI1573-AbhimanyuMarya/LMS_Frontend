@@ -98,6 +98,7 @@ export const BUTTONS = {
   ASSIGN: "Assign",
   SUBMIT: "Submit",
   NEXT: "Next",
+  SKIP: "Skip",
 };
 
 export const STEPS = [
