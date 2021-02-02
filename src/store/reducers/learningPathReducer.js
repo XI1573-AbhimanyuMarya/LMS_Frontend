@@ -31,6 +31,7 @@ const initialState = {
   Approval: {},
   dashStats: {},
   dashGraphAdmin: {},
+  dashGraphManager: {},
   managerPopularStuff: [],
 };
 
@@ -738,6 +739,26 @@ export const learningPathReducer = (state = initialState, action) => {
     case actionTypes.ADMIN_DASHBOARD_GRAPH_FAILURE:
       return {
         ...state,
+        isLoading: false,
+        errorMessage: payload,
+      };
+    case actionTypes.MANAGER_DASHBOARD_GRAPH_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: "",
+      };
+    case actionTypes.MANAGER_DASHBOARD_GRAPH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        dashGraphManager: payload,
+        errorMessage: "",
+      };
+    case actionTypes.MANAGER_DASHBOARD_GRAPH_FAILURE:
+      return {
+        ...state,
+        dashGraphManager: '',
         isLoading: false,
         errorMessage: payload,
       };

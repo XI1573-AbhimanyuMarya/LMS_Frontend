@@ -63,6 +63,8 @@ export function* learningPathSaga() {
   );
   yield takeLatest(actionTypes.ADMIN_DASHBOARD_STATS_REQUEST, getAdminStats);
   yield takeLatest(actionTypes.ADMIN_DASHBOARD_GRAPH_REQUEST, getAdminGraphs);
+  yield takeLatest(actionTypes.MANAGER_DASHBOARD_GRAPH_REQUEST, getManagerGraphs);
+
   yield takeLatest(
     actionTypes.ADMIN_LEARNING_PATH_DETAILS_REQUEST,
     getAdminLearningPathDetails
@@ -398,6 +400,12 @@ const fetchAdminGraph = async () => {
     headers: authHeader(),
   });
 };
+const fetchManagerGraph = async () => {
+  return await axios.get(SERVICE_URLS.FETCH_MANAGER_GRAPHS, {
+    headers: authHeader(),
+  });
+};
+
 
 const fetchAdminLearningPathDetails = async () => {
   return await axios.get(SERVICE_URLS.FETCH_ADMIN_LEARNING_PATH_DETAILS, {
@@ -420,8 +428,10 @@ const fetchAdminManagePathDetails = async () => {
 
 const fetchDeletedCard = async (items) => {
   return await axios.delete(SERVICE_URLS.DELETE_ADMIN_PATH_CARDS,
-    { data: {"learningPathIds": items },
-    headers: authHeader() }
+    {
+      data: { "learningPathIds": items },
+      headers: authHeader()
+    }
   );
 };
 
@@ -465,6 +475,19 @@ function* getAdminGraphs(action) {
   }
 }
 
+function* getManagerGraphs(action) {
+  try {
+    const response = yield call(fetchManagerGraph, action.payload);
+    const { data } = response;
+    yield put({
+      type: actionTypes.MANAGER_DASHBOARD_GRAPH_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    yield put({ type: actionTypes.MANAGER_DASHBOARD_GRAPH_FAILURE, error });
+  }
+}
+
 function* getAdminLearningPathDetails(action) {
   try {
     const response = yield call(fetchAdminLearningPathDetails, action.payload);
@@ -504,7 +527,7 @@ function* deleteAdminManagePathCards(action) {
     const response = yield call(fetchDeletedCard, action.payload.cards);
     const { data } = response;
     yield put({ type: actionTypes.DELETE_ADMIN_LEARNING_PATH_CARD_SUCCESS, payload: data });
-    
+
   } catch (error) {
     yield put({ type: actionTypes.DELETE_ADMIN_LEARNING_PATH_CARD_FAILURE, error });
   }

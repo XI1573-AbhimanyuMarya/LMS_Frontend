@@ -49,6 +49,7 @@ export const SERVICE_URLS = {
   FETCH_MANAGER_POPULAR_STUFF: `${API_HOST_PATH}/manager/api/v1/dashboard/top/trending`,
   FETCH_NOTIFICATIONS: `${API_HOST_PATH}`,
   FETCH_EMPLOYEE_STATS: `${API_HOST_PATH}/employee/api/v1/dashboard/stats`,
+  FETCH_MANAGER_GRAPHS: `${API_HOST_PATH}/manager/api/v1/dashboard/graph/data/`,
 };
 
 export const API_STATUS = {
