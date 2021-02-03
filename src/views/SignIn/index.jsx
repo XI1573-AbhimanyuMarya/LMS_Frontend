@@ -123,9 +123,9 @@ const SignIn = (props) => {
             </Button>
           </form>
         </div>
-        <Box mt={8}>
+        <div className={classes.copyRightContainer}>
           <Copyright />
-        </Box>
+        </div>
       </Container>
     </div>
   );

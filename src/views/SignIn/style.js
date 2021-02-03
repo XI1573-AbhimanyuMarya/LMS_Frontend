@@ -37,5 +37,12 @@ export const useStyles = makeStyles((theme) => ({
 	heading: {
 		marginBottom: '0.85em',
 		fontSize: '1.7rem'
-	}
+  },
+  copyRightContainer: {
+    position: "fixed",
+    bottom: "0",
+    textAlign: "center",
+    paddingBottom: "10px",
+    width: "100%"
+  }
 }));
