@@ -253,18 +253,6 @@ const Dashboard = () => {
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
-<<<<<<< HEAD
-          {
-            !showMyDashboard && !pathModelOpen ? (
-              // <DashboardDetail />
-              <DashData />
-            ) : showMyDashboard ? (
-              <EmployeeDashboardDetail statsData={statsData} />
-            ) :
-                (
-                  renderWelcome
-                )}
-=======
           {!showMyDashboard && !pathModelOpen ? (
             // <DashboardDetail />
             <DashData />
@@ -273,7 +261,6 @@ const Dashboard = () => {
           ) : (
                 renderWelcome
               )}
->>>>>>> 7d30ef7bfc6db2a44419d21907ff6d0a486c721b
         </div>
         <div className="copyright">
           <Copyright />

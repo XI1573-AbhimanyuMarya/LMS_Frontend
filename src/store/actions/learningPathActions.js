@@ -100,9 +100,12 @@ const getMyLearningPath = (employeeEmail) => ({
 });
 //get list of created learning path courses
 const getLearningPath = (assigneeId) => ({
-  //by hanifa
   type: actionTypes.GET_LEARNING_PATH_REQUEST,
   payload: { assigneeId },
+});
+const getFilteredLearningPath = (list) => ({
+  type: actionTypes.GET_FILTERED_LEARNING_PATH,
+  payload: { list },
 });
 const deleteAllPaths = (ids) => ({
   type: actionTypes.DELETE_ALL_PATH,
@@ -212,6 +215,7 @@ export default {
   logout,
   fetchAllCourses,
   getFilteredCourses,
+  getFilteredLearningPath,
   getSelectedCourses,
   fetchAllUsers,
   getFilteredUsers,

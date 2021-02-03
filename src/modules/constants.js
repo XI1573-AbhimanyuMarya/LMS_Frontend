@@ -71,6 +71,7 @@ export const LEARNING_PATH_LABELS = {
   LEARNING_PATH_CREATED: "Learning path has been successfully assigned",
   EMAIL_SENT_TO_EMPLOYEE: "An email has been sent to the employees",
   SEARCH_COURSE: "Search Course",
+  SEARCH_LEARNING_PATH: "Search Learning Path",
   LEARNING_PATH_NAME: "Enter Learning Path Name",
   LEARNING_PATH_DESCRIPTION: "Enter Learning Path Description",
   COURSE_CATALOG: "Course Catalog",
