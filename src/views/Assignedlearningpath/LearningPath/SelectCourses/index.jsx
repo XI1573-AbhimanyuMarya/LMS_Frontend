@@ -25,7 +25,7 @@ const SelectAssignedPath = () => {
   const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
   const [touch, setTouch] = useState(false);
   const loginState = useSelector((res) => res.loginState);
-  
+
   useEffect(() => {
     dispatch(Actions.learningPathActions.getLearningPath(loginState.user.id));
     // if (mycourses.length === 0) {
@@ -50,7 +50,7 @@ const SelectAssignedPath = () => {
       dispatch(Actions.learningPathActions.getFilteredCourses(filterCourses));
     }
   };
-  
+
   let selectedCourses = [];
   const onCourseClickHandler = (courseId) => {
     if (courseId !== "") {
@@ -78,7 +78,7 @@ const SelectAssignedPath = () => {
       );
     }
   };
-  
+
   // const onChangeHandler = (e) => {
   //   const pathName = e.target.value;
   //   setTouch(true);
