@@ -35,7 +35,7 @@ export const useStyles = makeStyles((theme) => ({
     width: "40%",
   },
   stepperContainer: {
-    marginTop: 10,
+    // marginTop: 10,
   },
   active: {
     color: "#621D58 !important",
@@ -54,7 +54,7 @@ export const useStyles = makeStyles((theme) => ({
   learningImg: {
     display: "flex",
     alignItems: "center",
-    //marginLeft: 150
+    marginTop: '20px',
   },
   media: {
     height: 28,
