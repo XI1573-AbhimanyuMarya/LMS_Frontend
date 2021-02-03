@@ -7,8 +7,9 @@ const TableRow = (props) => {
   const { lp } = props;
   return (
     <tr className={classes.tblrow}>
-      <td>{lp.employee.fullName}</td>
-      <td> <img src={SHOW_LEVELS[`${props.levelId}-${props.levelName}`]} className={classes[`${props.levelName}`]}/></td>
+      <td style={{paddingLeft: '30px'}}>{lp.employee.fullName}</td>
+      <td>{lp.assignedBy.fullName}</td>
+      <td><img src={SHOW_LEVELS[`${props.levelId}-${props.levelName}`]} className={classes[`${props.levelName}`]}/></td>
       <td>{lp.startDate}</td>
       <td>{lp.endDate}</td>
       <td>{lp.percentCompleted}</td>

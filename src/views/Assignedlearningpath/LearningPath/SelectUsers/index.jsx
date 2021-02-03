@@ -34,9 +34,6 @@ const SelectUsers = () => {
 		}		
 	}, []);
 
-	/**
-	 * function to filter users
-	 */
 	let filterUsers = [];
 	const changeHandler = (e) => {
 		const {value} = e.target;
@@ -51,9 +48,7 @@ const SelectUsers = () => {
 			dispatch(Actions.learningPathActions.getFilteredUsers(filterUsers));	
 		}
 	}
-	/**
-	 * function to select users
-	 */
+
 	let selectedUsers = [];
 	const onUserClickHandler = (userId) => {
 		if(userId !== "") {
@@ -65,7 +60,6 @@ const SelectUsers = () => {
 				idArr.push(userId);
 			}
 			setSelectedUsersArr(idArr);
-
 			selectedUsers = users.map(function (el) {
 				if(el.id === userId) {
 					!el.selected ? el.selected = true : el.selected = false;
@@ -101,20 +95,17 @@ const SelectUsers = () => {
 						? filteredUsersList?.length > 0
 							? filteredUsersList?.slice(0, 16)
 							: ''
-						: users?.slice(0, 16);
+            : users?.slice(0, 16);
+
 	let renderUsers	= "";
 	if (usersList && Array.isArray(usersList)) {
 		renderUsers = usersList.map((user) => {
 			const userClass = user.selected && user.selected === true ? classes.selected : classes.box;
 			const name = user.fullName.split("  ");
 			return (
-				
-				<Box 
-				p={0.5} 
-				key={user.id}
-				>
-					<Card className={userClass}  onClick={() => onUserClickHandler(user.id)} onMouseEnter={(e) => handlePopoverOpen(e, user.id)}
-                onMouseLeave={handlePopoverClose}>
+				<Box p={0.5} key={user.id}>
+          <Card className={userClass} onClick={() => onUserClickHandler(user.id)} onMouseEnter={(e) => handlePopoverOpen(e, user.id)} 
+          onMouseLeave={handlePopoverClose}>
 						<ListItem>
 							<ListItemAvatar>
 								<Avatar className={classes.blueGreyAvtar}>{name[0]?.charAt(0)+name[1]?.charAt(0)}</Avatar>
@@ -122,15 +113,11 @@ const SelectUsers = () => {
 							<ListItemText 
                primary={<Typography style={{fontSize:"14px", display:"flex", padding:"0 0 10px 0"}}>{user.fullName}&#160;&#160;<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}>({user.empID})</Typography></Typography>}
                secondary={<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)"}}>{user.designation}<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}>{user.cOEType}</Typography><Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}> {user.username}</Typography></Typography>}
-              />
-							
+              />	
 						</ListItem>
-            
 						{user.selected && user.selected === true && <CheckCircleIcon className={classes.checkIcon}/>}
 					</Card>
-					{/* <Popover user={user} popoverState={popoverState} />		 */}
 				</Box>
-				
 			)	
 		})
 	}	
@@ -139,7 +126,7 @@ const SelectUsers = () => {
 			<Box component='div' display="flex" justifyContent="center">
 				<TextField 
 					id="standard-search" 
-					label={LEARNING_PATH_LABELS.SEARCH_EMPLOYEE} 
+					label={LEARNING_PATH_LABELS.SEARCH_EMPLOYEE}
 					type="search" 
 					variant="outlined" 
 					className={classes.searchField}  
