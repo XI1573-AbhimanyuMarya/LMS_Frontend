@@ -14,7 +14,7 @@ import WithLoading from "../../hoc/WithLoading";
 import { useStyles } from "./style";
 import TopNav from "../../components/TopNav";
 import LearningPath from "../../views/LearningPath/index";
-import DiscardPopup from "../../components/DiscardPopup/index";
+import DiscardPopup from "../../components/DiscardPopup/index1";
 
 const ManageAssignLearningPath = ({ props }) => {
   const classes = useStyles();
@@ -52,11 +52,18 @@ const ManageAssignLearningPath = ({ props }) => {
     dispatch(Actions.learningPathActions.pathModelOpen(false));
   };
 
+  // const discardHandler = (closeMainModel) => {
+  //   dispatch(Actions.learningPathActions.discardModelOpen(false));
+  //   if (closeMainModel) {
+  //     dispatch(Actions.learningPathActions.pathModelOpen(false));
+  //   }
+  // };
   const discardHandler = (closeMainModel) => {
-    dispatch(Actions.learningPathActions.discardModelOpen(false));
+    debugger
     if (closeMainModel) {
-      dispatch(Actions.learningPathActions.pathModelOpen(false));
+      onDeleteAll(getAssignedLearningPaths.deletedEmpData.empID);
     }
+    dispatch(Actions.learningPathActions.discardModelOpen(false));
   };
 
   const isObject=(data)=>{

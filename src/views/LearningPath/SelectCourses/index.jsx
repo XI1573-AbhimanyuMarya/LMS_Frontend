@@ -12,6 +12,8 @@ import CourseSkelton from "../../../components/Skelton/CourseSkelton";
 import { useStyles } from "./style";
 import { LEARNING_PATH_LABELS } from "../../../modules/constants";
 
+
+
 const SelectCourses = () => {
   const classes = useStyles();
   const dispatch = useDispatch();

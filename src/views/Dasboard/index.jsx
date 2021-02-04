@@ -22,6 +22,10 @@ import PopularStuff from "../../components/Carousel/PopularStuff";
 import LearnerTable from "../../components/Table/LearnersTable";
 import group2 from "../../images/group2.png";
 import EmployeeDashboardDetail from "../Chart/EmployeeDashboard";
+import LearningPathCard from "../../components/Card/LearningPathCard";
+import { BackButton } from "../../components/Button";
+import LearningCoursesTable from "../../components/Table/LearningCoursesTable";
+import LearningPathDesc from "../Assignedlearningpath/LearningPath/LearningPathDesc/index1";
 
 const Dashboard = () => {
   const classes = useStyles();
@@ -32,6 +36,7 @@ const Dashboard = () => {
     .roleName;
   const userName = getOr("User Name", "user.fullName", loginState);
   const [manager, setManager] = useState(false);
+  const [selectedProgramToStart, setSelectedProgramToStart] = useState(false);
   const {
     mycourses,
     assignedCources,
@@ -59,6 +64,43 @@ const Dashboard = () => {
     };
   };
 
+
+  const courseClicked = (val, x) => {
+
+    setSelectedProgramToStart({
+      learningPath:
+      {
+        id: val.id,
+        learningPathId: val.id,
+        name: val.name,
+        competency: { ...val.competency }, description: val.description, courses: [...val.courses]
+      }
+    });
+
+    dispatch(Actions.learningPathActions.selectLearningPath({
+      learningPath:
+      {
+        id: val.id,
+        learningPathId: val.id,
+        name: val.name,
+        competency: { ...val.competency }, description: val.description, courses: [...val.courses]
+      }
+    }));
+  };
+  const backBtnHandler = () => {
+    setSelectedProgramToStart(false);
+  };
+  // const LearningPathDesc = () => {
+
+  //   return (
+  //     <>
+  //       <BackButton backBtnHandler={backBtnHandler} />
+  //       <div style={{ maxWidth: "300px", margin: "10px 0px 0px" }}>
+  //         <LearningPathCard selectedLp={selectedProgramToStart} />
+  //       </div>
+  //     </>
+  //   );
+  // };
   const prepareData = (data) => {
     let employees = [];
     if (isObject(data)) {
@@ -149,6 +191,9 @@ const Dashboard = () => {
     dispatch(Actions.learningPathActions.discardModelOpen(true));
   };
 
+  const backButtonClicked = () => {
+    setSelectedProgramToStart(false)
+  }
   const handleClosePathHandler = () => {
     dispatch(Actions.learningPathActions.pathModelOpen(false));
   };
@@ -217,21 +262,38 @@ const Dashboard = () => {
     }
     return (
       <>
-        <Box>
+        {!selectedProgramToStart ? <Box>
           {learningPathState.openDetailOfEnp &&
-          learningPathState.openDetailOfEnp.empStatus ? (
-            <LearnerTable />
-          ) : (
-            <>
-              {dashStats && <DashboardMatrix data={data} />}
-                {userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR" ? (
-                  <PopularStuff managerPopularStuff={managerPopularStuff} />
-                ) : (
-                  <LearningPathWStatusTable />
-                )}
-            </>
-          )}
-        </Box>
+            learningPathState.openDetailOfEnp.empStatus ? (
+              <LearnerTable />
+            ) : (
+              <>
+                {dashStats && <DashboardMatrix data={data} />}
+                <div
+                  style={{
+                    width: "calc((100vw - 26%) - 16px)",
+                    height: "180px",
+                    margin: "20px",
+                  }}
+                >
+                  {userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR" ? (
+                    <PopularStuff handleCourseClick={courseClicked} managerPopularStuff={managerPopularStuff} />
+                  ) : (
+                      <LearningPathWStatusTable />
+                    )}
+                </div>
+              </>
+            )}
+        </Box> :
+
+
+
+
+
+          <LearningPathDesc backButtonClicked={backButtonClicked} selectedLp={selectedProgramToStart} />
+
+        }
+
       </>
     );
   };

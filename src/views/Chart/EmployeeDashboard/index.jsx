@@ -13,7 +13,7 @@ import StatusWiseCard from "../../../components/Card/StatusWiseCard";
 import { BackButton } from "../../../components/Button";
 import Grid from "@material-ui/core/Grid";
 import MyCarosals from "../../learnig/LearningSelectCourses/MyCarosals/index1";
-import LearningCoursesTable from "../../../components/Table/LearningCoursesTable";
+import LearningCoursesTable from "../../../components/Table/LearningCoursesTable/index";
 
 const DataCard = (props) => {
   const classes = useStyles();
@@ -131,23 +131,23 @@ const EmployeeDashboardDetail = (props) => {
           {(Object.keys(selectedLp).length !== 0 &&
             disable &&
             selectedLp.constructor === Object) ||
-          selectedProgramToStart ? (
-            <></>
-          ) : (
-            <>
-              <div className={classes.root}>
-                <Grid container direction="row">
-                  <TotalCard Total={props.statsData["totalCardDetail"].Total} />
-                  <StatusWiseCard
-                    role="employee"
-                    Completed={props.statsData.Completed}
-                    Inprogress={props.statsData.Inprogress}
-                    Overdue={props.statsData.Overdue}
-                  />
-                </Grid>
-              </div>
-            </>
-          )}
+            selectedProgramToStart ? (
+              <></>
+            ) : (
+              <>
+                <div className={classes.root}>
+                  <Grid container direction="row">
+                    <TotalCard Total={props.statsData["totalCardDetail"].Total} />
+                    <StatusWiseCard
+                      role="employee"
+                      Completed={props.statsData.Completed}
+                      Inprogress={props.statsData.Inprogress}
+                      Overdue={props.statsData.Overdue}
+                    />
+                  </Grid>
+                </div>
+              </>
+            )}
         </div>
       </div>
       <Box display="flex-inline" justifyContent="center">
@@ -163,36 +163,36 @@ const EmployeeDashboardDetail = (props) => {
                 {(Object.keys(selectedLp).length !== 0 &&
                   disable &&
                   selectedLp.constructor === Object) ||
-                selectedProgramToStart ? (
-                  <LearningPathDesc />
-                ) : (
-                  <MyLearningPaths />
-                )}
+                  selectedProgramToStart ? (
+                    <LearningPathDesc />
+                  ) : (
+                    <MyLearningPaths />
+                  )}
               </Box>
             </div>
 
             {(Object.keys(selectedLp).length !== 0 &&
               selectedLp.constructor === Object &&
               disable) ||
-            selectedProgramToStart ? (
-              <LearningCoursesTable
-                selectedLp1={selectedProgramToStart || selectedLp}
-                lpId={
-                  selectedProgramToStart.learningPath
-                    ? selectedProgramToStart.learningPath.learningPathId
-                    : selectedLp.learningPath.learningPathId
-                }
-                learningPathEmployeesId={
-                  selectedProgramToStart.learningPathEmployeesId
-                    ? selectedProgramToStart.learningPathEmployeesId
-                    : selectedLp.learningPathEmployeesId
-                }
-                withRate={true}
-                disable={disable}
-              />
-            ) : (
-              <></>
-            )}
+              selectedProgramToStart ? (
+                <LearningCoursesTable
+                  selectedLp1={selectedProgramToStart || selectedLp}
+                  lpId={
+                    selectedProgramToStart.learningPath
+                      ? selectedProgramToStart.learningPath.learningPathId
+                      : selectedLp.learningPath.learningPathId
+                  }
+                  learningPathEmployeesId={
+                    selectedProgramToStart.learningPathEmployeesId
+                      ? selectedProgramToStart.learningPathEmployeesId
+                      : selectedLp.learningPathEmployeesId
+                  }
+                  withRate={true}
+                  disable={disable}
+                />
+              ) : (
+                <></>
+              )}
           </div>
         )}
         {!selectedProgramToStart && !disable ? (
@@ -220,8 +220,8 @@ const EmployeeDashboardDetail = (props) => {
             </div>
           </div>
         ) : (
-          <></>
-        )}
+            <></>
+          )}
       </Box>
     </div>
   );

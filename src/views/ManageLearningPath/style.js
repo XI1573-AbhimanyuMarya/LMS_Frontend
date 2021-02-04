@@ -57,7 +57,7 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f5f5f5",
     padding: "10px 16px",
     display: "flex",
-    marginTop: '3px',
+    marginTop: "3px",
     justifyContent: "space-between",
   },
   cardfootertext: {
@@ -94,14 +94,14 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: "#ff7119",
     color: "#ffffff",
     fontSize: "14px",
-    width: '216px',
+    width: "216px",
     height: "-webkit-fill-available",
     cursor: "pointer",
 
     "&:disabled": {
-      opacity: '0.8',
-      cursor: 'not-allowed',
-    }
+      opacity: "0.8",
+      cursor: "not-allowed",
+    },
   },
   deleteIcon: {
     backgroundColor: "#ffffff",
@@ -114,6 +114,12 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
-    marginBottom: "25px",
+    // marginBottom: "25px",
+  },
+  searchField: {
+    width: "70%",
+    background: "#FFFFFF",
+    margin: "2px",
+    marginBottom: "15px",
   },
 }));

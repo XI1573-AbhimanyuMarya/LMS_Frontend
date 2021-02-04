@@ -8,6 +8,8 @@ import TopNav from "../../components/TopNav";
 import Copyright from "../../components/Copyright";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ManageCard from "./ManageCard";
+import { LEARNING_PATH_LABELS } from "../../modules/constants";
+import TextField from "@material-ui/core/TextField";
 
 const ManageLearningPath = () => {
   const classes = useStyles();
@@ -15,6 +17,9 @@ const ManageLearningPath = () => {
   let [selectedCardsCount, setSelectedCardsCount] = useState(0);
   const [selectedItems, setSelectedItems] = useState({});
   const adminManagePathDetails = useSelector((state) => state.learningPathState);
+  const {
+    filteredLearningPath,
+  } = adminManagePathDetails;
   
   useEffect(() => {
     dispatch(Actions.learningPathActions.getAdminManagePathDetails());
@@ -46,10 +51,31 @@ const ManageLearningPath = () => {
     window.location.reload();
   }
 
+  let filterLearningPath = [];
+  const changeHandlerLearning = (e) => {
+    const { value } = e.target;
+    const searchValue = value.toLowerCase();
+    if (adminManagePathDetails.adminLearningPathManageDetails?.length > 0) {
+      filterLearningPath = adminManagePathDetails.adminLearningPathManageDetails.filter(function (el) {
+        return (
+          el.name.toLowerCase().includes(searchValue) ||
+          el.description.toLowerCase().includes(searchValue) 
+        );
+      });
+      dispatch(Actions.learningPathActions.getFilteredLearningPath(filterLearningPath));
+    }
+  };
+
+  const LearningPathList = filteredLearningPath
+    ? filteredLearningPath?.length > 0
+      ? filteredLearningPath
+      : ""
+    : adminManagePathDetails.adminLearningPathManageDetails;
+
   const renderWelcome = (
     <Container
       component="main"
-      className={classes.mainContainer}>
+      className={classes.mainContainer} style={{minWidth:"168vh"}}>
       <div className={classes.headerContainer}>
         <h2 style={{width: '100%'}}>All Learning Paths</h2>
         <button className={classes.deleteButton} onClick={deleteCard} disabled={selectedCardsCount < 1}>
@@ -57,10 +83,22 @@ const ManageLearningPath = () => {
           <span className={classes.deleteIcon}>{selectedCardsCount}</span>
         </button>
       </div>
+      <div style={{display:"flex", justifyContent:"center"}}>
+        <TextField
+          id="standard-search"
+          label={LEARNING_PATH_LABELS.SEARCH_LEARNING_PATH}
+          type="search"
+          variant="outlined"
+          className={classes.searchField}
+          name="searchName"
+          size="small"
+          onChange={changeHandlerLearning}
+        />
+        </div>
       <div className={classes.cardContainer}>
       {adminManagePathDetails.isLoading ? 
       <CircularProgress className={classes.loader} /> : 
-      adminManagePathDetails && adminManagePathDetails.adminLearningPathManageDetails?.map((item) => (
+      LearningPathList && LearningPathList?.map((item) => (
           <div key={item.id} onClick={() => selectedCard(item)}>
             <ManageCard key={item.id} cardDetails={item}/>
           </div>
