@@ -8,7 +8,7 @@ import TopNav from '../../../../components/TopNav';
 
 import Copyright from '../../../../components/Copyright';
 import LearningPathCard from '../../../../components/Card/LearningPathCard';
-import LearningCoursesTable from '../../../../components/Table/LearningCoursesTable';
+import LearningCoursesTable from '../../../../components/Table/LearningCoursesTable/index';
 import { BackButton } from '../../../../components/Button';
 
 const LearningPathDesc = (props) => {
