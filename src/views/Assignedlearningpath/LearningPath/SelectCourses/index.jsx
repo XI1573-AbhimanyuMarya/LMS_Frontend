@@ -27,7 +27,7 @@ const SelectAssignedPath = () => {
   const [selectedCoursesArr, setSelectedCoursesArr] = useState([]);
   const [touch, setTouch] = useState(false);
   const loginState = useSelector((res) => res.loginState);
-  
+
   useEffect(() => {
     dispatch(Actions.learningPathActions.getLearningPath(loginState.user.id));
     // if (mycourses.length === 0) {
@@ -52,7 +52,7 @@ const SelectAssignedPath = () => {
   //     dispatch(Actions.learningPathActions.getFilteredCourses(filterCourses));
   //   }
   // };
-  
+
   let selectedCourses = [];
   const onCourseClickHandler = (courseId) => {
     if (courseId !== "") {
@@ -80,7 +80,7 @@ const SelectAssignedPath = () => {
       );
     }
   };
-  
+
   // const onChangeHandler = (e) => {
   //   const pathName = e.target.value;
   //   setTouch(true);
@@ -89,14 +89,14 @@ const SelectAssignedPath = () => {
 
   let filterLearningPath = [];
   const changeHandlerLearning = (e) => {
-   
+
     const { value } = e.target;
     const searchValue = value.toLowerCase();
     if (allLearningPath?.length > 0) {
       filterLearningPath = allLearningPath.filter(function (el) {
         return (
           el.name.toLowerCase().includes(searchValue) ||
-          el.description.toLowerCase().includes(searchValue) 
+          el.description.toLowerCase().includes(searchValue)
         );
       });
       dispatch(Actions.learningPathActions.getFilteredLearningPath(filterLearningPath));
@@ -130,21 +130,21 @@ const SelectAssignedPath = () => {
         <Typography variant="h6" className={classes.head}>
           {LEARNING_PATH_LABELS.COURSE_CATALOG2}
         </Typography>
-        <div style={{display:"flex", justifyContent:"center"}}>
-        <TextField
-          id="standard-search"
-          label={LEARNING_PATH_LABELS.SEARCH_LEARNING_PATH}
-          type="search"
-          variant="outlined"
-          className={classes.searchField}
-          name="searchName"
-          size="small"
-          onChange={changeHandlerLearning}
-        />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <TextField
+            id="standard-search"
+            label={LEARNING_PATH_LABELS.SEARCH_LEARNING_PATH}
+            type="search"
+            variant="outlined"
+            className={classes.searchField}
+            name="searchName"
+            size="small"
+            onChange={changeHandlerLearning}
+          />
         </div>
       </Box>
       <Carosals
-        coursesList={LearningPathList }
+        coursesList={LearningPathList}
         handleCourseClick={(id) => onCourseClickHandler(id)}
       />
       <LearningPath

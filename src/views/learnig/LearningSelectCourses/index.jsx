@@ -13,7 +13,7 @@ import WithLoading from "../../../hoc/WithLoading";
 import TopNav from "../../../components/TopNav";
 import Copyright from "../../../components/Copyright";
 import LearningPathCard from "../../../components/Card/LearningPathCard";
-import LearningCoursesTable from "../../../components/Table/LearningCoursesTable";
+import LearningCoursesTable from "../../../components/Table/LearningCoursesTable/index";
 import { BackButton } from "../../../components/Button";
 import LearningPath from "../../../views/LearningPath/index";
 import DiscardPopup from "../../../components/DiscardPopup/index";
@@ -153,8 +153,8 @@ const SelectCourses = () => {
         </table>
       </div>
     ) : (
-      ""
-    );
+        ""
+      );
   };
   return (
     <React.Fragment>
@@ -168,26 +168,26 @@ const SelectCourses = () => {
             justifyContent="center"
             style={{ margin: "15px 20px" }}>
             {Object.keys(selectedLp).length !== 0 &&
-            selectedLp.constructor === Object ? (
-              <LearningPathDesc />
-            ) : (
-              <div>
-                <MyLearningPaths />
-              </div>
-            )}
+              selectedLp.constructor === Object ? (
+                <LearningPathDesc />
+              ) : (
+                <div>
+                  <MyLearningPaths />
+                </div>
+              )}
           </Box>
         </div>
         {Object.keys(selectedLp).length !== 0 &&
-        selectedLp.constructor === Object ? (
-          <LearningCoursesTable
-            lpId={selectedLp.learningPath.learningPathId}
-            learningPathEmployeesId={selectedLp.learningPathEmployeesId}
-            withRate={true}
-            disable={disable}
-          />
-        ) : (
-          <MyLearningPathTable />
-        )}
+          selectedLp.constructor === Object ? (
+            <LearningCoursesTable
+              lpId={selectedLp.learningPath.learningPathId}
+              learningPathEmployeesId={selectedLp.learningPathEmployeesId}
+              withRate={true}
+              disable={disable}
+            />
+          ) : (
+            <MyLearningPathTable />
+          )}
         <div className="copyright" style={{ border: "1px solid #d3d3d3" }}>
           <Copyright />
         </div>

@@ -13,17 +13,21 @@ import LeftDisableCarousel from "../../../images/LeftDisableCarousel.svg";
 const PopularStuffCarousel = (props) => {
   const classes = useStyles();
   const [activeItemIndex, setActiveItemIndex] = useState(0);
-  const { managerPopularStuff } = props;
+  const { managerPopularStuff, handleCourseClick } = props;
   let renderCards = ``;
   if (managerPopularStuff.length !== 0 && Array.isArray(managerPopularStuff)) {
-    renderCards = managerPopularStuff.map((item) => {
+    renderCards = managerPopularStuff.map((item, index) => {
       return (
         <LearningPathCardWOAction
+          showViewButton={true}
           key={item.id}
           heading={item.name}
           levelId={item.competency.id}
           levelName={item.competency.name}
           desc={item.description}
+          onButtonClick={() => {
+            handleCourseClick(item, index);
+          }}
         />
       );
     });
@@ -62,11 +66,11 @@ const PopularStuffCarousel = (props) => {
               onClick={LeftHandler}
             />
           ) : (
-            <img
-              src={LeftDisableCarousel}
-              style={{ height: "30px", widht: "30px" }}
-            />
-          )}
+              <img
+                src={LeftDisableCarousel}
+                style={{ height: "30px", widht: "30px" }}
+              />
+            )}
           {activeItemIndex < Math.floor(managerPopularStuff.length / 4) ? (
             <img
               src={RightActiveCarousel}
@@ -74,11 +78,11 @@ const PopularStuffCarousel = (props) => {
               onClick={RightHandler}
             />
           ) : (
-            <img
-              src={RightDisableCarousel}
-              style={{ height: "30px", widht: "30px" }}
-            />
-          )}
+              <img
+                src={RightDisableCarousel}
+                style={{ height: "30px", widht: "30px" }}
+              />
+            )}
         </div>
       </div>
       <ItemsCarousel

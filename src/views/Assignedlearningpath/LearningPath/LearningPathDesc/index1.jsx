@@ -8,7 +8,7 @@ import TopNav from '../../../../components/TopNav';
 
 import Copyright from '../../../../components/Copyright';
 import LearningPathCard from '../../../../components/Card/LearningPathCard';
-import LearningCoursesTable from '../../../../components/Table/LearningCoursesTable/index';
+import LearningCoursesTable from '../../../../components/Table/LearningCoursesTable/index1';
 import { BackButton } from '../../../../components/Button';
 
 const LearningPathDesc = (props) => {
@@ -16,16 +16,17 @@ const LearningPathDesc = (props) => {
   const dispatch = useDispatch();
   const learningPathState = useSelector(state => state.learningPathState);
   const loginState = useSelector(res => res.loginState);
-  const { handleClose, handleClosePath, selectedLp } = props;
+  const { handleClose, handleClosePath, selectedLp, backButtonClicked } = props;
 
   const backBtnHandler = () => {
+    backButtonClicked(false);
     dispatch(Actions.learningPathActions.selectLearningPath({}));
   }
   // console.log(selectedLp.learningPath.learningPathId, "length", selectedLp.learningPathEmployeesId)
   return (
     <React.Fragment>
       <TopNav />
-      <main className="main-content">
+      <main className="main-content" style={{ margin: '-2% -20%' }}>
         <div className={classes.toolbar} />
         <div className="container">
           <Box component='div' className={classes.layout} style={{ margin: "10px 0px 10px 25px" }}>
@@ -36,7 +37,7 @@ const LearningPathDesc = (props) => {
           </Box>
         </div>
         <LearningCoursesTable
-          // selectedLp1={selectedLp}
+          selectedLp1={selectedLp}
           lpId={selectedLp.learningPath.learningPathId}
           learningPathEmployeesId={selectedLp.learningPathEmployeesId}
           withRate={false} />

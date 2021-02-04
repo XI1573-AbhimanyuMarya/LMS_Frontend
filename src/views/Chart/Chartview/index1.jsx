@@ -26,6 +26,7 @@ const Carosalschart = (props) => {
 
   if (coursesList && Array.isArray(coursesList)) {
     const renderCourses = coursesList.map((course, index) => {
+
       return (
         <CourseCard
           allCourses={course}
@@ -83,11 +84,11 @@ const Carosalschart = (props) => {
                 onClick={LeftHandler}
               />
             ) : (
-              <img
-                src={LeftDisableCarousel}
-                style={{ height: "30px", widht: "30px" }}
-              />
-            )}
+                <img
+                  src={LeftDisableCarousel}
+                  style={{ height: "30px", widht: "30px" }}
+                />
+              )}
             {activeItemIndex < Math.floor(coursesList.length / 4) ? (
               <img
                 src={RightActiveCarousel}
@@ -95,11 +96,11 @@ const Carosalschart = (props) => {
                 onClick={RightHandler}
               />
             ) : (
-              <img
-                src={RightDisableCarousel}
-                style={{ height: "30px", widht: "30px" }}
-              />
-            )}
+                <img
+                  src={RightDisableCarousel}
+                  style={{ height: "30px", widht: "30px" }}
+                />
+              )}
           </div>
         </div>
 
@@ -176,12 +177,12 @@ const Carosalschart = (props) => {
       {renderCarousel !== "" ? (
         renderCarousel
       ) : (
-        <div>
-          <Typography variant="h6" align="center">
-            {MESSAGES.NO_DATA_FOUND}
-          </Typography>
-        </div>
-      )}
+          <div>
+            <Typography variant="h6" align="center">
+              {MESSAGES.NO_DATA_FOUND}
+            </Typography>
+          </div>
+        )}
     </React.Fragment>
   );
 };

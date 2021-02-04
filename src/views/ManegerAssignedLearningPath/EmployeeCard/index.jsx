@@ -60,6 +60,7 @@ function EmployeeCard(props) {
   const learningPathState = useSelector((state) => state.learningPathState);
 
   const discardHandler = (closeMainModel) => {
+    debugger
     if (closeMainModel) {
       onDeleteAll(learningPathState.deletedEmpData.empID);
     }
