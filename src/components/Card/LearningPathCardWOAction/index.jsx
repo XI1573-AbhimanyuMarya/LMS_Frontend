@@ -10,7 +10,7 @@ const LearningPathCardWOAction = (props) => {
   const classes = useStyles();
   return (
     <>
-      <Card className={classes.CardRoot}>
+      {/* <Card className={classes.CardRoot}>
         <CardContent>
           <div style={{ display: "flex" }}>
             <div className={classes.CardHeading}>
@@ -29,8 +29,35 @@ const LearningPathCardWOAction = (props) => {
         </Box>
           </CardActions> : <></>}
 
-      </Card>
+      </Card> */}
 
+
+      <div>
+        <Card className={classes.CardRoot}>
+          <CardContent className={classes.cardcontent}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div className={classes.cardheader}>{props.heading}</div>
+              <img
+                src={SHOW_LEVELS[`${props.levelId}-${props.levelName}`]}
+                className={classes[`${props.levelName}`]}
+              />
+            </div>
+
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              className={classes.courseDesc}
+            >
+              {props.desc}
+            </Typography>
+          </CardContent>
+
+          <Box className={classes.btn} onClick={props.onButtonClick}>
+            View
+        </Box>
+        </Card>
+      </div>
     </>
   );
 }

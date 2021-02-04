@@ -26,7 +26,7 @@ const LearningPathDesc = (props) => {
   return (
     <React.Fragment>
       <TopNav />
-      <main className="main-content" style={{ margin: '-2% -20%' }}>
+      <main className="main-content" style={{ margin: '-2% -18%' }}>
         <div className={classes.toolbar} />
         <div className="container">
           <Box component='div' className={classes.layout} style={{ margin: "10px 0px 10px 25px" }}>
