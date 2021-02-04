@@ -125,7 +125,6 @@ export const useStyles = makeStyles((theme) => ({
   courseName1: {
     color: " #282828",
     width: "39%",
-    
   },
   courseStatus: {
     color: "#a5a5a5",
@@ -134,7 +133,7 @@ export const useStyles = makeStyles((theme) => ({
   courseStatus1: {
     color: "#a5a5a5",
     width: "100%",
-    backgroundColor:"#f6f8ff"
+    backgroundColor: "#f6f8ff",
   },
   percent: {
     width: "22px",

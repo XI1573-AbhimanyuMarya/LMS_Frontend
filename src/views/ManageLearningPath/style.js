@@ -30,27 +30,23 @@ export const useStyles = makeStyles((theme) => ({
   },
   Beginner: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "25px",
   },
   Intermediate: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "25px",
   },
   Advance: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "25px",
   },
   Expert: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "25px",
   },
   carddesc: {
     textAlign: "justify",
@@ -59,8 +55,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   cardfooter: {
     backgroundColor: "#f5f5f5",
-    padding: "5px 16px",
+    padding: "10px 16px",
     display: "flex",
+    marginTop: '3px',
     justifyContent: "space-between",
   },
   cardfootertext: {
@@ -97,8 +94,14 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: "#ff7119",
     color: "#ffffff",
     fontSize: "14px",
+    width: '216px',
     height: "-webkit-fill-available",
     cursor: "pointer",
+
+    "&:disabled": {
+      opacity: '0.8',
+      cursor: 'not-allowed',
+    }
   },
   deleteIcon: {
     backgroundColor: "#ffffff",

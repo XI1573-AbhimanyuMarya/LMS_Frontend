@@ -57,7 +57,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: "100%",
-    minHeight: 100
+    minHeight: '100px',
+    borderCollapse: 'collapse',
   },
   lptbldiv:{
     overflowX:"auto",

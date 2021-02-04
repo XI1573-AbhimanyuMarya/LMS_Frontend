@@ -126,8 +126,7 @@ const Dashboard = () => {
     return employees;
   };
   const employees = prepareData(assignedCources);
-
-  const showDashboard = employees && employees.length ? true : false; // manan's
+  const showDashboard = employees && employees.length ? true : false;
   const statsData = {
     totalCardDetail: {
       heading: "Assigned Learning Path",
@@ -174,9 +173,7 @@ const Dashboard = () => {
       );
       setManager(true);
     }
-
     dispatch(Actions.learningPathActions.clearCreateLpFormFields());
-
     dispatch(Actions.learningPathActions.getAdminLearningPathDetails());
     dispatch(Actions.learningPathActions.getPopularStuff(loginState.user.id));
   }, []);
@@ -308,7 +305,6 @@ const Dashboard = () => {
         <div className={classes.toolbar} />
         <div className="container">
           {!showMyDashboard && !pathModelOpen ? (
-            // <DashboardDetail />
             <DashData />
           ) : showMyDashboard ? (
             <EmployeeDashboardDetail statsData={statsData} />

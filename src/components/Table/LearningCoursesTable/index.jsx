@@ -78,7 +78,6 @@ const LearningCoursesTable = (props) => {
       />
     );
   });
-  // console.log(selectedLp.approvalStatus, "renderCourseList");
   const renderCourseList1 = renderCourseList.map((lpcourse) => {
     return lpcourse.props.course.percentCompleted;
   });
@@ -262,13 +261,6 @@ const LearningCoursesTable = (props) => {
                   className={classes.navSubmit1}
                   startIcon={<VisibilityIcon style={{ fontSize: 20 }} />}
                   onClick={viewAttachmentHandler}
-                // disabled={
-                //   selectedLp1
-                //     ? selectedLp1.approvalStatus
-                //     : selectedLp.approvalStatus === "PENDING"
-                //     ? true
-                //     : false
-                // }
                 >
                   View attachments
             </LowerCaseButton>

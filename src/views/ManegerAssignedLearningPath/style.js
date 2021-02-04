@@ -4,27 +4,26 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     marginTop: "30px",
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       display: "flex",
-    marginTop: "30px",
+      marginTop: "30px",
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       display: "flex",
-    marginTop: "30px",
+      marginTop: "30px",
     },
-    
   },
   toolbar: theme.mixins.toolbar,
   searchField: {
     width: " 610px",
     marginRight: "235px",
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       width: " 510px",
-    marginRight: "235px",
+      marginRight: "235px",
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       width: " 610px",
-    marginRight: "235px",
+      marginRight: "235px",
     },
   },
   paper: {
@@ -36,15 +35,15 @@ export const useStyles = makeStyles((theme) => ({
   heading: {
     color: "#621d58",
     fontSize: "22px",
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       marginRight: "70%",
-    color: "#621d58",
-    fontSize: "16px",
+      color: "#621d58",
+      fontSize: "16px",
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       marginRight: "67%",
-    color: "#621d58",
-    fontSize: "22px",
+      color: "#621d58",
+      fontSize: "22px",
     },
   },
   cardData: {
@@ -54,7 +53,7 @@ export const useStyles = makeStyles((theme) => ({
     paddingBottom: "24px",
     height: "65vh",
     overflow: "auto",
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       display: "flex",
       flexFlow: "row wrap",
       // paddingTop: "24px",
@@ -62,21 +61,21 @@ export const useStyles = makeStyles((theme) => ({
       height: "42vh",
       overflow: "auto",
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       display: "flex",
-    flexFlow: "row wrap",
-    // paddingTop: "24px",
-    paddingBottom: "24px",
-    height: "65vh",
-    overflow: "auto",
+      flexFlow: "row wrap",
+      // paddingTop: "24px",
+      paddingBottom: "24px",
+      height: "65vh",
+      overflow: "auto",
     },
   },
-  search:{
-    [theme.breakpoints.up('md')]: {
-      padding:"0 !important"
+  search: {
+    [theme.breakpoints.up("md")]: {
+      padding: "0 !important",
     },
-    [theme.breakpoints.up('lg')]: {
-      padding:"0 !important"
+    [theme.breakpoints.up("lg")]: {
+      padding: "0 !important",
     },
-  }
+  },
 }));

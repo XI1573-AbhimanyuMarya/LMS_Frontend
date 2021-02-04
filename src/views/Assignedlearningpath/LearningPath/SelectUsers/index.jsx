@@ -13,7 +13,7 @@ import UserSkelton from '../../../../components/Skelton/UserSkelton';
 import Actions from '../../../../store/actions';
 import { MESSAGES, LEARNING_PATH_LABELS } from '../../../../modules/constants';
 import { useStyles } from './style';
-
+import Divider from '@material-ui/core/Divider';
 import Popover from '../../../../components/Popover';
 
 const SelectUsers = () => {
@@ -21,10 +21,10 @@ const SelectUsers = () => {
 	const dispatch = useDispatch();
 	const learningPathState = useSelector(state => state.learningPathState);
 	const { users, filteredUsersList, isLoading, userIdArr } = learningPathState;
-	const [selectedUsersArr, setSelectedUsersArr] = useState([]);
-	/**
-	 * function to fetch all users initial time
-	 */
+  const [selectedUsersArr, setSelectedUsersArr] = useState([]);
+  const [selectedUsersArrList, setSelectedUsersArrList] = useState([]);
+	let selectedUsers = [];
+
 	useEffect(() => {
 		dispatch(Actions.learningPathActions.getFilteredUsers(undefined));
 		if(userIdArr?.length === 0) {
@@ -34,13 +34,11 @@ const SelectUsers = () => {
 		}		
 	}, []);
 
-	/**
-	 * function to filter users
-	 */
-	let filterUsers = [];
+  let filterUsers = [];
+
 	const changeHandler = (e) => {
 		const {value} = e.target;
-		const searchValue = value.toLowerCase();
+    const searchValue = value.toLowerCase();
 		if(users?.length > 0) {
 			filterUsers = users.filter(function (el) {
 				return el.fullName.toLowerCase().includes(searchValue) ||
@@ -49,32 +47,38 @@ const SelectUsers = () => {
 						el.designation.toLowerCase().includes(searchValue);
 				});
 			dispatch(Actions.learningPathActions.getFilteredUsers(filterUsers));	
-		}
+    }
 	}
-	/**
-	 * function to select users
-	 */
-	let selectedUsers = [];
-	const onUserClickHandler = (userId) => {
-		if(userId !== "") {
+
+	const onUserClickHandler = (user) => {
+		if(user.id !== "") {
 			const idArr = selectedUsersArr;
-			const index = idArr.indexOf(userId);
+			const index = idArr.indexOf(user.id);
 			if(index > -1) {
 				idArr.splice(index, 1);
 			} else {
-				idArr.push(userId);
-			}
-			setSelectedUsersArr(idArr);
-
+				idArr.push(user.id);
+      }
+      setSelectedUsersArr(idArr);
+      setSelectedUsersArrList(state => 
+        {
+          for(let i = 0; i <= state.length - 1; i++) {
+            if(state[i].id === user.id) {
+              state.splice(i,1);
+              return [...state];
+            }
+          }
+        return [...state, user]
+      });
 			selectedUsers = users.map(function (el) {
-				if(el.id === userId) {
+				if(el.id === user.id) {
 					!el.selected ? el.selected = true : el.selected = false;
 				}
 				return el;
-			});	
+      });
 			dispatch(Actions.learningPathActions.getSelectedUsers(selectedUsers, selectedUsersArr));
 		}
-	}
+  }
 
 	const [popoverState, setPopoverState] = useState({
 		openedPopoverId: false,
@@ -95,26 +99,23 @@ const SelectUsers = () => {
 			openedPopoverId: null,
 			anchorEl: null,
 		}));
-	}
+  }
 
 	const usersList = filteredUsersList
 						? filteredUsersList?.length > 0
 							? filteredUsersList?.slice(0, 16)
 							: ''
-						: users?.slice(0, 16);
-	let renderUsers	= "";
-	if (usersList && Array.isArray(usersList)) {
-		renderUsers = usersList.map((user) => {
-			const userClass = user.selected && user.selected === true ? classes.selected : classes.box;
+            : users?.slice(0, 16);
+
+  let renderSelectedUSers = "";
+  if(selectedUsersArrList.length > 0) {
+    renderSelectedUSers = selectedUsersArrList.map((user) => {
+      const userClass = user.selected && user.selected === true ? classes.selected : classes.box;
 			const name = user.fullName.split("  ");
 			return (
-				
-				<Box 
-				p={0.5} 
-				key={user.id}
-				>
-					<Card className={userClass}  onClick={() => onUserClickHandler(user.id)} onMouseEnter={(e) => handlePopoverOpen(e, user.id)}
-                onMouseLeave={handlePopoverClose}>
+				<Box p={0.5} key={user.id}>
+          <Card className={userClass} onClick={() => onUserClickHandler(user)} onMouseEnter={(e) => handlePopoverOpen(e, user.id)} 
+          onMouseLeave={handlePopoverClose}>
 						<ListItem>
 							<ListItemAvatar>
 								<Avatar className={classes.blueGreyAvtar}>{name[0]?.charAt(0)+name[1]?.charAt(0)}</Avatar>
@@ -122,15 +123,36 @@ const SelectUsers = () => {
 							<ListItemText 
                primary={<Typography style={{fontSize:"14px", display:"flex", padding:"0 0 10px 0"}}>{user.fullName}&#160;&#160;<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}>({user.empID})</Typography></Typography>}
                secondary={<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)"}}>{user.designation}<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}>{user.cOEType}</Typography><Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}> {user.username}</Typography></Typography>}
-              />
-							
+              />	
 						</ListItem>
-            
 						{user.selected && user.selected === true && <CheckCircleIcon className={classes.checkIcon}/>}
 					</Card>
-					{/* <Popover user={user} popoverState={popoverState} />		 */}
 				</Box>
-				
+			)	
+		})
+  }
+
+	let renderUsers	= "";
+	if (usersList && Array.isArray(usersList)) {
+		renderUsers = usersList.map((user) => {
+      const userClass = classes.box;
+			const name = user.fullName.split("  ");
+			return (
+				<Box p={0.5} key={user.id}>
+          <Card className={userClass} onClick={() => onUserClickHandler(user)} onMouseEnter={(e) => handlePopoverOpen(e, user.id)} 
+          onMouseLeave={handlePopoverClose}>
+						<ListItem>
+							<ListItemAvatar>
+								<Avatar className={classes.blueGreyAvtar}>{name[0]?.charAt(0)+name[1]?.charAt(0)}</Avatar>
+							</ListItemAvatar>
+							<ListItemText 
+               primary={<Typography style={{fontSize:"14px", display:"flex", padding:"0 0 10px 0"}}>{user.fullName}&#160;&#160;<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}>({user.empID})</Typography></Typography>}
+               secondary={<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)"}}>{user.designation}<Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}>{user.cOEType}</Typography><Typography style={{fontSize:"11px", color:"rgba(0, 0, 0, 0.54)", margin:"2px 0 0 0"}}> {user.username}</Typography></Typography>}
+              />	
+						</ListItem>
+						{user.selected && user.selected === true}
+					</Card>
+				</Box>
 			)	
 		})
 	}	
@@ -139,7 +161,7 @@ const SelectUsers = () => {
 			<Box component='div' display="flex" justifyContent="center">
 				<TextField 
 					id="standard-search" 
-					label={LEARNING_PATH_LABELS.SEARCH_EMPLOYEE} 
+					label={LEARNING_PATH_LABELS.SEARCH_EMPLOYEE}
 					type="search" 
 					variant="outlined" 
 					className={classes.searchField}  
@@ -151,7 +173,13 @@ const SelectUsers = () => {
 			<Box className={classes.usersContainer} display="flex" flexDirection="row" flexWrap="wrap"  justifyContent="center" py={3}>
 				{isLoading && usersList?.length === 0 && <UserSkelton />}
 				{
-					renderUsers !== "" ? renderUsers
+          renderUsers !== "" ? 
+          <div style={{display: 'flex', flexDirection: 'column', margin: '0 auto',
+          width: '96%'}}>
+            <div style={{display: 'flex', flexWrap: 'wrap', marginBottom: '15px'}}>{renderSelectedUSers}</div>
+            {renderSelectedUSers.length > 0 ? <Divider /> : ''}
+            <div style={{display: 'flex', flexWrap: 'wrap', marginTop: '15px'}}>{renderUsers}</div>
+          </div>
 					: 
 					<div>
 						<Typography variant="h6" align="center">

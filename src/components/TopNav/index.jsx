@@ -24,10 +24,14 @@ export const useStyles = makeStyles((theme) => ({
     width: `calc(100% - ${drawerWidth})`,
     marginLeft: drawerWidth,
     backgroundColor: "#ffffff",
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    boxShadow: "none",
   },
   title: {
     display: 'block',
+    fontSize: "12px",
+    borderLeft: "1px solid #d3d3d3",
+    padding: "0px 0 0 20px"
   },
   sectionDesktop: {
     display: 'none',
@@ -103,7 +107,7 @@ const TopNav = (props) => {
           title={title}
         />
         <Typography className={classes.title} variant="h6" noWrap >
-          {title}
+          Learning Management System
         </Typography>
         <div className={classes.grow} />
         <div>

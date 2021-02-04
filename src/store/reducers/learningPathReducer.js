@@ -65,6 +65,12 @@ export const learningPathReducer = (state = initialState, action) => {
         filteredCoursesList: payload.list,
         isLoading: false,
       };
+      case actionTypes.GET_FILTERED_LEARNING_PATH:
+      return {
+        ...state,
+        filteredLearningPath: payload.list,
+        isLoading: false,
+      };
     case actionTypes.GET_SELECTED_COURSES:
       return {
         ...state,

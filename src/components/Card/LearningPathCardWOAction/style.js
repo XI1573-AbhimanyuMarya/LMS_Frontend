@@ -8,6 +8,10 @@ export const useStyles = makeStyles((theme) => ({
     boxShadow: "2px 3px 10px 0 rgba(0, 0, 0, 0.18)",
     padding: "10px 20px",
   },
+  CardInner: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
   cardheader: {
     display: "flex",
     justifyContent: "space-between",
@@ -18,27 +22,23 @@ export const useStyles = makeStyles((theme) => ({
   },
   Beginner: {
     width: "80px",
-    marginRight: "-5px",
-    marginBottom: "10px",
-    height: "38px",
+    margin: '5px 0 10px',
+    height: 'auto'
   },
   Intermediate: {
     width: "80px",
-    marginRight: "-5px",
-    marginBottom: "10px",
-    height: "38px",
+    margin: '5px 0 10px',
+    height: 'auto'
   },
   Advance: {
     width: "80px",
-    marginRight: "-5px",
-    marginBottom: "10px",
-    height: "38px",
+    margin: '5px 0 10px',
+    height: 'auto'
   },
   Expert: {
     width: "80px",
-    marginRight: "-5px",
-    marginBottom: "10px",
-    height: "38px",
+    margin: '5px 0 10px',
+    height: 'auto'
   },
   carddesc: {
     textAlign: "justify",
@@ -64,11 +64,10 @@ export const useStyles = makeStyles((theme) => ({
     float: "right",
   },
   CardHeading: {
-    width: "200.9px",
+    width: 'auto',
+    paddingRight: '15px',
     height: "15px",
-    margin: "2px 4.9px 18.5px 0",
-    //fontFamily: "Roboto",
-    fontSize: "16px", //"18px",
+    fontSize: "16px",
     fontWeight: "normal",
     fontStretch: "normal",
     fontStyle: "normal",
@@ -103,7 +102,7 @@ export const useStyles = makeStyles((theme) => ({
     borderRadius: "8px",
     backgroundColor: "#ffffff",
     border: "none",
-    boxShadow: "none",
+    boxShadow: '0 4px 14px 0 rgba(0, 0, 0, 0.1)',
   },
   PopularStuff: {
     width: "215px",
