@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardActionArea } from '@material-ui/core';
+import { Card, CardContent, CardActionArea, Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { SHOW_LEVELS } from '../../../modules/constants';
 import { useStyles } from './style';
@@ -22,11 +22,12 @@ const LearningPathCardWOAction = (props) => {
             {props.desc}
           </div>
         </CardContent>
-        {props.showViewButton ? <CardActions className={classes.action}>
-          <Button size="large" className={classes.btn} onClick={props.onButtonClick}>
-            View
-          </Button>
-        </CardActions> : <></>}
+        {props.showViewButton ?
+          <CardActions className={classes.action}>
+            <Box className={classes.btn} onClick={props.onButtonClick}>
+              View
+        </Box>
+          </CardActions> : <></>}
 
       </Card>
 

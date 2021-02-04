@@ -97,7 +97,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   CardRoot: {
     width: "calc((20vw) - 16px)", //"255px",//"340px",
-    minHeight: 200,
+    minHeight: 150,
     margin: "8.5px 10px 0 0.5px",
     padding: "10px", //"12px 20px",
     borderRadius: "8px",
