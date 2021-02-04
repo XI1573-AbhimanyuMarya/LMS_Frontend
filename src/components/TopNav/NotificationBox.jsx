@@ -1,6 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
 
 import { useStyles } from "./style";
 
@@ -13,10 +15,37 @@ import Certificate_Rejected from '../../images/Certificate_Rejected.png';
 
 
 
+function SimpleDialog(props) {
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  return (
+    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+      <DialogTitle id="simple-dialog-title">Please contact {selectedValue}</DialogTitle>
+    </Dialog>
+  );
+}
+
+
 const NotificationBox = (props) => {
   const classes = useStyles();
   let history = useHistory();
   const notificationInfo = props.notificationInfo;
+
+  const [open, setOpen] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState(notificationInfo.managerName);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+    setSelectedValue(value);
+  };
 
   let imgsrc = null;
 
@@ -25,7 +54,10 @@ const NotificationBox = (props) => {
     if (param == "Learning Path Assigned" || param == "Learning Path Modified"){
       history.push("/learningpath")
     }
-    else if (param == "Learning Path Approval Required"){
+    else if (param == "Learning Path Expired"|| param == "Certificate Rejected"){
+      handleClickOpen();
+    }  
+    else if (param == "Learning Path Approval Required" || param == "Check Certificate"){
       history.push("/approvals")
     }  
   };
@@ -87,6 +119,7 @@ const NotificationBox = (props) => {
         <Button className={classes.notification_view} onClick={takeAction}>
           <label className={classes.notification_btn_text}>{submitBtnText()}</label>
         </Button> : null }
+        <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
       </td>
     </tr>
   );

@@ -176,10 +176,11 @@ const CreateLearningPath = (props) => {
                       : LEARNING_PATH_LABELS.CREATE_LEARNING_PATH}
                   </Typography>
                 </Box>
-                <Typography variant="subtitle2" align="center" style={{ color: "#858585", margin: "0 15px 5px 0", textAlign: "end" }}>
+                <Typography variant="subtitle2" align="center" style={{ color: "#858585", margin: "0 0 0 152px" }}>
                   {LEARNING_PATH_LABELS.LEARNING_PATH_DETAILS}
                 </Typography>
                 <Stepper
+                  style={{ padding: "24px 0" }}
                   activeStep={activePathStep}
                   connector={<QontoConnector />}
                 >

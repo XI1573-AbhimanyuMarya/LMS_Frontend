@@ -106,7 +106,6 @@ const ManageAssignLearningPath = ({ props }) => {
         <div className={classes.toolbar} />
         <div className="container">
             <div className={classes.cardData}>
-            <h2>Approvals</h2>
               {renderUser !== "" ? (
                 renderUser
               ) : (
