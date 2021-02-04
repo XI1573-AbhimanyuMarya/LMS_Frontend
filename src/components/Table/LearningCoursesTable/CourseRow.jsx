@@ -15,6 +15,7 @@ const CourseRow = (props) => {
     learningPathEmployeesId,
     completed,
     selectedLp,
+    courseId
   } = props;
 
   const showRate = () => {
@@ -28,11 +29,14 @@ const CourseRow = (props) => {
     ) {
       return <WaitForApprovalButton />;
     } else {
+
       return (
         <LearningRate
+          allCourses={props.allCourses}
+          courseId={courseId}
           status={selectedLp.approvalStatus}
-          key={course.id}
-          course={course}
+          key={course.name}
+          course={{ ...course }}
           lpId={lpId}
           learningPathEmployeesId={learningPathEmployeesId}
         />

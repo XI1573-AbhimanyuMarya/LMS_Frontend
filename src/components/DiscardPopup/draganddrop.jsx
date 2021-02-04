@@ -18,7 +18,7 @@ const DiscardPopup = (props) => {
   const classes = useStyles();
   const learningPathState = useSelector(state => state.learningPathState);
   // const { discardModelOpen } = learningPathState;
-  const { discardHandler,changeImgHandler,uploadDocs } = props;
+  const { discardHandler, changeImgHandler, uploadDocs } = props;
   const { uploadFilePopup } = learningPathState;
 
   const theme = createMuiTheme({
@@ -29,7 +29,7 @@ const DiscardPopup = (props) => {
         },
         icon: {
           color: "#0073e6",
-          backgroundImage:"url(../../images/upload.jpg)"
+          backgroundImage: "url(../../images/upload.jpg)"
         },
       }
     }
@@ -57,21 +57,21 @@ const DiscardPopup = (props) => {
         aria-labelledby="responsive-dialog-title"
       >
         <div style={{ margin: "25px" }}>
-        <MuiThemeProvider theme={theme}>
-          <DropzoneArea style={{}}
-            dropzoneText={"Drag or Browse files here "}
-            acceptedFiles={['image/*']}
-            filesLimit={10}
-            maxFileSize={250000}
-            showPreviews={true}
-            showPreviewsInDropzone={false}
-            useChipsForPreview
-            previewGridProps={{ container: { spacing: 1, direction: 'row' } }}
-            previewChipProps={{ classes: { root: classes.previewChip } }}
-            previewText="Selected files"
-            onChange={changeImgHandler}
-            showAlerts={false}
-          />
+          <MuiThemeProvider theme={theme}>
+            <DropzoneArea style={{}}
+              dropzoneText={"Drag or Browse files here "}
+              acceptedFiles={['image/*']}
+              filesLimit={10}
+              maxFileSize={250000}
+              showPreviews={true}
+              showPreviewsInDropzone={false}
+              useChipsForPreview
+              previewGridProps={{ container: { spacing: 1, direction: 'row' } }}
+              previewChipProps={{ classes: { root: classes.previewChip } }}
+              previewText="Selected files"
+              onChange={changeImgHandler}
+              showAlerts={false}
+            />
           </MuiThemeProvider>
           <DialogActions style={{ display: "flex", justifyContent: "center" }}>
             <Button autoFocus onClick={uploadDocs} color="primary" variant="contained" className={classes.discardButtonpop}>

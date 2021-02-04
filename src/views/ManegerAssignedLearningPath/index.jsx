@@ -59,17 +59,16 @@ const ManageAssignLearningPath = ({ props }) => {
   //   }
   // };
   const discardHandler = (closeMainModel) => {
-    debugger
     if (closeMainModel) {
       onDeleteAll(getAssignedLearningPaths.deletedEmpData.empID);
     }
     dispatch(Actions.learningPathActions.discardModelOpen(false));
   };
 
-  const isObject=(data)=>{
+  const isObject = (data) => {
     return (typeof data === 'object' && data !== null);
   }
-  const learningpathPrepareData=(elm)=>{
+  const learningpathPrepareData = (elm) => {
     return {
       name: elm.learningPath.name,
       learningPathId: elm.learningPath.learningPathId,
@@ -82,23 +81,23 @@ const ManageAssignLearningPath = ({ props }) => {
   }
   const prepareData = (data) => {
     let employees = [];
-    if(isObject(data)){
+    if (isObject(data)) {
       let learningDetails;
       let tempEmployee;
       for (var key in data) {
-        learningDetails=[];
+        learningDetails = [];
         if (data.hasOwnProperty(key)) {
-            if(data[key].length>0){
-              data[key].forEach((elm) => {
-                tempEmployee=elm.employee;
-                learningDetails.push(learningpathPrepareData(elm));
-              });
-              employees.push({
-                empID: tempEmployee.id,
-                employee: tempEmployee,
-                learningPath: learningDetails
-              });
-            }
+          if (data[key].length > 0) {
+            data[key].forEach((elm) => {
+              tempEmployee = elm.employee;
+              learningDetails.push(learningpathPrepareData(elm));
+            });
+            employees.push({
+              empID: tempEmployee.id,
+              employee: tempEmployee,
+              learningPath: learningDetails
+            });
+          }
         }
       }
     }
@@ -108,7 +107,7 @@ const ManageAssignLearningPath = ({ props }) => {
   let renderUser = "";
   if (employees.length > 0) {
     renderUser = employees.map((data, i) => (
-      <EmployeeCard key={i} data={data} onDeleteAll={onDeleteAll} onDelete={onDelete}/>
+      <EmployeeCard key={i} data={data} onDeleteAll={onDeleteAll} onDelete={onDelete} />
     ));
   }
 
