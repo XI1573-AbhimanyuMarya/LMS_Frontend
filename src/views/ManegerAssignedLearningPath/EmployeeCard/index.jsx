@@ -60,7 +60,6 @@ function EmployeeCard(props) {
   const learningPathState = useSelector((state) => state.learningPathState);
 
   const discardHandler = (closeMainModel) => {
-    debugger
     if (closeMainModel) {
       onDeleteAll(learningPathState.deletedEmpData.empID);
     }
@@ -104,9 +103,9 @@ function EmployeeCard(props) {
             className={classes.delete}
             action={
               <IconButton aria-label="settings"  >
-                <DeleteIcon className={classes.deleteIcon} onClick={(e) => 
+                <DeleteIcon className={classes.deleteIcon} onClick={(e) =>
                   handleDiscardClick(data)} />
-                <DiscardPopup discardHandler = {discardHandler} />
+                <DiscardPopup discardHandler={discardHandler} />
               </IconButton>
             }
             subheader={data.employee.location}
@@ -125,46 +124,46 @@ function EmployeeCard(props) {
             </IconButton>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <table className={classes.courseStatus1}>
-                    <thead className={classes.listData1}>
-                      <tr>
-                        <th style={{width:"40%",textAlign:"left",padding:"0 0 5px 15px"}}>Learning Path Name</th>
-                        <th style={{width:"19%",textAlign:"left",padding:"0 0 5px 0"}}>Start Date</th>
-                        <th style={{width:"21%",textAlign:"left",padding:"0 0 5px 0"}}>End Date</th>
-                        <th style={{width:"10%"}}></th>
-                      </tr>
-                    </thead>
-                  </table>
-                  {console.log(data.learningPath,"data.learningPath")}
+            <table className={classes.courseStatus1}>
+              <thead className={classes.listData1}>
+                <tr>
+                  <th style={{ width: "40%", textAlign: "left", padding: "0 0 5px 15px" }}>Learning Path Name</th>
+                  <th style={{ width: "19%", textAlign: "left", padding: "0 0 5px 0" }}>Start Date</th>
+                  <th style={{ width: "21%", textAlign: "left", padding: "0 0 5px 0" }}>End Date</th>
+                  <th style={{ width: "10%" }}></th>
+                </tr>
+              </thead>
+            </table>
+            {console.log(data.learningPath, "data.learningPath")}
             {data.learningPath.map((data, index) => (
               <CardContent key={index} className={classes.learningPath}>
                 <ThemeProvider theme={theme}>
                   <Typography aria-label="share" className={classes.listData}>
                     <span className={classes.courseName}>{`${index + 1}. ${data.name
                       }`}</span>
-                    <span className={classes.courseName1} style={{display:"flex", justifyContent:"space-between"}}>
+                    <span className={classes.courseName1} style={{ display: "flex", justifyContent: "space-between" }}>
                       <span>
-                      {" "}
-                      {`${data.startDate == null
-                        ? "course not started"
-                        : data.startDate
-                        }`}
-                        </span>
-                        <span>
-                      {" "}
-                      {`${data.endDate == null
-                        ? "course not started"
-                        : data.endDate
-                        }`}
-                        </span>
+                        {" "}
+                        {`${data.startDate == null
+                          ? "course not started"
+                          : data.startDate
+                          }`}
+                      </span>
+                      <span>
+                        {" "}
+                        {`${data.endDate == null
+                          ? "course not started"
+                          : data.endDate
+                          }`}
+                      </span>
                     </span>
                     <span className={classes.percent}>
-                    {" "}
+                      {" "}
                       {`${data.completed == null
                         ? "course not started"
                         : data.completed
                         }%`}
-                        </span>
+                    </span>
                     {editOption ?
                       <span
                         className={classes.deleteButton}

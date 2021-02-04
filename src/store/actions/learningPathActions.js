@@ -210,7 +210,10 @@ const getPopularStuff = (assigneeId) => ({
   type: actionTypes.POPULAR_STUFF_REQUEST,
   payload: { assigneeId },
 });
-
+const saveCourse = (course) => ({
+  type: actionTypes.SAVE_COURSE,
+  payload: { course },
+});
 export default {
   logout,
   fetchAllCourses,
@@ -265,4 +268,5 @@ export default {
   deleteAdminManagePathCards,
   getPopularStuff,
   getManagerGraphs,
+  saveCourse,
 };
