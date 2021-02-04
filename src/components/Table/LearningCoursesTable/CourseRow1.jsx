@@ -1,5 +1,4 @@
 import React from "react";
-import LearningRate from "./LearningRate";
 import { SHOW_LEVELS } from "../../../modules/constants";
 import { useStyles } from "./style";
 
@@ -17,28 +16,7 @@ const CourseRow = (props) => {
     selectedLp,
   } = props;
 
-  const showRate = () => {
 
-    if (selectedLp.approvalStatus === "APPROVED") {
-      return <CompletedButton />;
-    } else if (
-      course.percentCompleted === 100 &&
-      course.documentsUploaded &&
-      selectedLp.approvalStatus === "PENDING"
-    ) {
-      return <WaitForApprovalButton />;
-    } else {
-      return (
-        <LearningRate
-          status={selectedLp.approvalStatus}
-          key={course.id}
-          course={course}
-          lpId={lpId}
-          learningPathEmployeesId={learningPathEmployeesId}
-        />
-      );
-    }
-  };
   return (
     <tr className={classes.tblrow}>
       <td>{course.name}</td>
@@ -49,7 +27,7 @@ const CourseRow = (props) => {
           className={classes[course.competency.name]}
         />
       </td>
-      {withRate && <td>{showRate()}</td>}
+
     </tr>
   );
 };

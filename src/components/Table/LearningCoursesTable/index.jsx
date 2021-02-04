@@ -87,7 +87,7 @@ const LearningCoursesTable = (props) => {
   const [courseCompleted, setCourseCompleted] = useState(false);
   const [loopExit, setLoopExit] = useState(false);
   const location = useLocation();
-
+  const userRole = JSON.parse(sessionStorage.getItem("USER_INFO")).roles[0].roleName;
   useEffect(() => {
     if (uploadDocument === true && loopExit === true) {
       console.log(uploadDocument, "upload document");
@@ -118,7 +118,7 @@ const LearningCoursesTable = (props) => {
       for (var i in mycourses) {
         if (
           mycourses[i].learningPath.learningPathId ==
-            selectedLp1.learningPath.learningPathId &&
+          selectedLp1.learningPath.learningPathId &&
           mycourses[i].percentCompleted === 100
         ) {
           setCourseCompleted(true);
@@ -150,7 +150,7 @@ const LearningCoursesTable = (props) => {
       for (var i in mycourses) {
         if (
           mycourses[i].learningPath.learningPathId ==
-            selectedLp.learningPath.learningPathId &&
+          selectedLp.learningPath.learningPathId &&
           mycourses[i].percentCompleted === 100
         ) {
           setCourseCompleted(true);
@@ -196,89 +196,91 @@ const LearningCoursesTable = (props) => {
         </table>
       </div>
       {location.pathname === "/learningpath" ||
-      location.pathname === "/dashboard" ||
-      location.pathname === "/" ? (
-        <>
-          <Divider />
-          <span
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              margin: "5px 0 0 0",
-            }}
-          >
-            <LowerCaseButton
-              type="button"
-              variant="contained"
-              className={classes.navSubmit}
-              onClick={() => {
-                sendForApprovalHandler();
-                handleClick();
-              }}
-              disabled={
-                (selectedLp1
-                  ? selectedLp1.approvalStatus === "PENDING" ||
-                    selectedLp1.approvalStatus === "APPROVED"
-                  : selectedLp.approvalStatus === "PENDING" ||
-                    selectedLp.approvalStatus === "APPROVED"
-                  ? true
-                  : false) || showSuccess
-              }
-            >
-              Send for approval
+        (location.pathname === "/dashboard" && userRole != "ROLE_MANAGER") ||
+        location.pathname === "/" ? (
+          <>
+            <Divider />
+            {!props.button &&
+              <span
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "5px 0 0 0",
+                }}
+              >
+                <LowerCaseButton
+                  type="button"
+                  variant="contained"
+                  className={classes.navSubmit}
+                  onClick={() => {
+                    sendForApprovalHandler();
+                    handleClick();
+                  }}
+                  disabled={
+                    (selectedLp1
+                      ? selectedLp1.approvalStatus === "PENDING" ||
+                      selectedLp1.approvalStatus === "APPROVED"
+                      : selectedLp.approvalStatus === "PENDING" ||
+                        selectedLp.approvalStatus === "APPROVED"
+                        ? true
+                        : false) || showSuccess
+                  }
+                >
+                  Send for approval
             </LowerCaseButton>
 
-            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-              {/* {selectedLp1 ? (
+                <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                  {/* {selectedLp1 ? (
                 selectedLp1.percentCompleted
               ) : selectedLp.percentCompleted === 100 ? ( */}
-              {showSuccess ? (
-                <Alert onClose={handleClose} severity="success">
-                  The learning path has been successfully sent for approval!
-                </Alert>
-              ) : uploadDocument === false ? (
-                <Alert onClose={handleClose} severity="error">
-                  Upload your documents
-                </Alert>
-              ) : !courseCompleted ? (
-                <Alert onClose={handleClose} severity="error">
-                  Complete the courses first
-                </Alert>
-              ) : (
-                <Alert onClose={handleClose} severity="error">
-                  An Error Occured, Please try again
-                </Alert>
-              )}
+                  {showSuccess ? (
+                    <Alert onClose={handleClose} severity="success">
+                      The learning path has been successfully sent for approval!
+                    </Alert>
+                  ) : uploadDocument === false ? (
+                    <Alert onClose={handleClose} severity="error">
+                      Upload your documents
+                    </Alert>
+                  ) : !courseCompleted ? (
+                    <Alert onClose={handleClose} severity="error">
+                      Complete the courses first
+                    </Alert>
+                  ) : (
+                          <Alert onClose={handleClose} severity="error">
+                            An Error Occured, Please try again
+                          </Alert>
+                        )}
 
-              {/* ) : (
+                  {/* ) : (
                
               )} */}
-            </Snackbar>
-            <LowerCaseButton
-              type="button"
-              variant="contained"
-              className={classes.navSubmit1}
-              startIcon={<VisibilityIcon style={{ fontSize: 20 }} />}
-              onClick={viewAttachmentHandler}
-            >
-              View attachments
+                </Snackbar>
+                <LowerCaseButton
+                  type="button"
+                  variant="contained"
+                  className={classes.navSubmit1}
+                  startIcon={<VisibilityIcon style={{ fontSize: 20 }} />}
+                  onClick={viewAttachmentHandler}
+                >
+                  View attachments
             </LowerCaseButton>
-            {show && attachments.length !== 0 && !isLoading && (
-              <Gallery
-                images={attachments}
-                showImageCount={false}
-                showLightboxThumbnails={true}
-                lightboxWidth={600}
-                isOpen={true}
-                lightboxWillClose={() => showGallery(false)}
-                rowWidth=""
-              />
-            )}
-          </span>
-        </>
-      ) : (
-        ""
-      )}
+                {show && attachments.length !== 0 && !isLoading && (
+                  <Gallery
+                    images={attachments}
+                    showImageCount={false}
+                    showLightboxThumbnails={true}
+                    lightboxWidth={600}
+                    isOpen={true}
+                    lightboxWillClose={() => showGallery(false)}
+                    rowWidth=""
+                  />
+                )}
+              </span>
+            }
+          </>
+        ) : (
+          ""
+        )}
     </>
   );
 };
