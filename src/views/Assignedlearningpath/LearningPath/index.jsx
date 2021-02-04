@@ -8,7 +8,7 @@ import Container from '@material-ui/core/Container';
 import CreateLearningPath from './CreateLearningPath';
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-import LearningPathDesc from './LearningPathDesc';
+import LearningPathDesc from './LearningPathDesc/index';
 import Actions from '../../../store/actions';
 
 const transition = React.forwardRef(function Transition(props, ref) {

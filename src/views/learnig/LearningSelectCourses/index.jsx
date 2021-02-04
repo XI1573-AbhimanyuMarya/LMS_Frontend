@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Carosals from "./Carosals/index";
-import MyCarosals from "./MyCarosals";
+import MyCarosals from "./MyCarosals/index";
 import Actions from "../../../store/actions";
 import CourseSkelton from "../../../components/Skelton/CourseSkelton";
 import CourseSkelton1 from "../../../components/Skelton/MyCourseSkelton";
