@@ -5,7 +5,7 @@ export const useStyles = makeStyles((theme) => ({
   layout: {
     width: "81.5vw", //'76vw',
     justifyContent: "center",
-    background: "#F1F3F7",
+    //background: "#F1F3F7",
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,

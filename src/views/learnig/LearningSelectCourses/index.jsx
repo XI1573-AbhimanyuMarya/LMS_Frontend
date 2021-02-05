@@ -188,7 +188,7 @@ const SelectCourses = () => {
           ) : (
             <MyLearningPathTable />
           )}
-        <div className="copyright" style={{ border: "1px solid #d3d3d3" }}>
+        <div className="copyright">
           <Copyright />
         </div>
         <LearningPath

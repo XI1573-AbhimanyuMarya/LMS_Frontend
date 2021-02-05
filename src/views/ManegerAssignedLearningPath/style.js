@@ -17,33 +17,41 @@ export const useStyles = makeStyles((theme) => ({
   searchField: {
     width: " 610px",
     marginRight: "235px",
+    backgroundColor: '#ffffff',
     [theme.breakpoints.up("md")]: {
       width: " 510px",
       marginRight: "235px",
+      backgroundColor: '#ffffff',
     },
     [theme.breakpoints.up("lg")]: {
       width: " 610px",
       marginRight: "235px",
+      backgroundColor: '#ffffff',
     },
   },
   paper: {
-    padding: "16px 0 16px 10px",
+    padding: '20px 0',
+    overflow: 'auto',
+    height: '58vh',
     display: "flex",
     flexDirection: "row",
     backgroundColor: "#f7f8fc",
+    boxShadow: 'none !important',
   },
   heading: {
     color: "#621d58",
-    fontSize: "22px",
+    fontSize: "16px",
+    marginTop: '20px',
     [theme.breakpoints.up("md")]: {
-      marginRight: "70%",
       color: "#621d58",
       fontSize: "16px",
+      marginTop: '20px',
     },
     [theme.breakpoints.up("lg")]: {
-      marginRight: "67%",
       color: "#621d58",
-      fontSize: "22px",
+      fontSize: "16px",
+      fontWeight: '500',
+      marginTop: '20px',
     },
   },
   cardData: {
@@ -69,6 +77,9 @@ export const useStyles = makeStyles((theme) => ({
       height: "65vh",
       overflow: "auto",
     },
+  },
+  assignedContainer: {
+    padding: '20px'
   },
   search: {
     [theme.breakpoints.up("md")]: {

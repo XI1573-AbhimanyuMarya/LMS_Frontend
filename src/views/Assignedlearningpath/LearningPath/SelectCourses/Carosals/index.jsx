@@ -37,7 +37,7 @@ const AssignedCarosals = (props) => {
       return <LearningPathCard key={lp.learningPath.id} selectedLp={lp} handleCourseClick={handleCourseClick} assignLp={true} onButtonClick={() => dispatch(Actions.learningPathActions.selectLearningPath(lp))} />
     });
 
-    renderCarousel = <div className={classes.card} style={{ padding: `0px 10px 5px`, display: "flex", flexWrap: "wrap", overflow: "auto" }}>
+    renderCarousel = <div className={classes.card} style={{ padding: `0px 20px`, display: "flex", flexWrap: "wrap", overflow: "auto" }}>
       {
         renderCourses
       }

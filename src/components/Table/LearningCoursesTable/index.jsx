@@ -187,7 +187,7 @@ const LearningCoursesTable = (props) => {
         style={{
           overflowX: "auto",
           overflowY: "auto",
-          height: "35vh",
+          height: "30vh",
           margin: "35px 0px 10px 0px",
         }}
       >
@@ -214,6 +214,7 @@ const LearningCoursesTable = (props) => {
                   display: "flex",
                   justifyContent: "center",
                   margin: "5px 0 0 0",
+                  padding: '15px 0 0',
                 }}
               >
                 <LowerCaseButton

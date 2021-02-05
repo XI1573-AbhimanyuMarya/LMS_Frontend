@@ -8,8 +8,8 @@ const StatusWiseCard = (props) => {
   const classes = useStyles();
   const { role = "", Completed, Inprogress, Overdue } = props;
   return (
-    <>
-      <Grid item xs={3}>
+    <div className={classes.gridContainer}>
+      <Grid item xs={4}>
         <Card className={classes.ProgressRectangle}>
           <div className={classes.ProgressNum}>{Completed}</div>
           {role != "employee" ? (
@@ -21,7 +21,7 @@ const StatusWiseCard = (props) => {
           <div className={classes.ProgressText}>{"Completed"}</div>
         </Card>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <Card className={classes.ProgressRectangle}>
           <div className={classes.ProgressNum}>{Inprogress}</div>
           {role != "employee" ? (
@@ -32,7 +32,7 @@ const StatusWiseCard = (props) => {
           <div className={classes.ProgressText}>{"In-progress"}</div>
         </Card>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <Card className={classes.ProgressRectangle}>
           <div className={classes.ProgressNum}>{Overdue}</div>
           {role != "employee" ? (
@@ -43,20 +43,7 @@ const StatusWiseCard = (props) => {
           <div className={classes.ProgressText}>{"Overdue"}</div>
         </Card>
       </Grid>
-    </>
-    // <Card className={classes.MainRectangle}>
-    //   <div className={classes.CompletedNum}>{Completed}</div>
-    //   <div className={classes.CompletedPercent}>{"%"}</div>
-    //   <div className={classes.CompletedText}>{"Completed"}</div>
-    //   <Card className={classes.ProgressRectangle}>
-    //     <div className={classes.ProgressNum}>{Inprogress}</div>
-    //     <div className={classes.ProgressPercent}>{"%"}</div>
-    //     <div className={classes.ProgressText}>{"In-progress"}</div>
-    //   </Card>
-    //   <div className={classes.OverdueNum}>{Overdue}</div>
-    //   <div className={classes.OverduePercent}>{"%"}</div>
-    //   <div className={classes.OverdueText}>{"Overdue"}</div>
-    // </Card>
+    </div>
   );
 };
 

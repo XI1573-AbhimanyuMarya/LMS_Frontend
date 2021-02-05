@@ -100,7 +100,17 @@ const SelectCourses1 = () => {
     : courses;
   
   const renderLevels=LEVELS.map((level)=>{
-    return ((level.id==learningPathLevel) ? <img src={SHOW_LEVELS[level.id+'-'+level.value+'1']} style={{width:"132px",height:"56px", cursor: "pointer", margin:"0 0 0 12px"}} className={level.id} onClick={onClickHandlerLevel}/> : <img src={SHOW_LEVELS[level.id+'-Outlined'+level.value+'1']} style={{width:"132px",height:"56px", cursor: "pointer", margin:"0 0 0 12px"}} className={level.id} onClick={onClickHandlerLevel}/>);
+    return ((level.id==learningPathLevel) ? 
+    <div className={classes.levelContainer}>
+      <span>{level.value}</span>
+      <img src={SHOW_LEVELS[level.id+'-'+level.value+'1']} style={{width:"132px",height:"56px", cursor: "pointer", margin:"0 0 0 12px"}} className={level.id} onClick={onClickHandlerLevel}/>
+    </div> 
+    : 
+    <div className={classes.levelContainer}>
+      <span>{level.value}</span>
+      <img src={SHOW_LEVELS[level.id+'-Outlined'+level.value+'1']} style={{width:"132px",height:"56px", cursor: "pointer", margin:"0 0 0 12px"}} className={level.id} onClick={onClickHandlerLevel}/>
+    </div>
+    );
   });
   
 

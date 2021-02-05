@@ -15,6 +15,7 @@ import { useStyles } from "./style";
 import TopNav from "../../components/TopNav";
 import LearningPath from "../../views/LearningPath/index";
 import DiscardPopup from "../../components/DiscardPopup/index1";
+import Copyright from "../../components/Copyright";
 
 const ManageAssignLearningPath = ({ props }) => {
   const classes = useStyles();
@@ -117,6 +118,7 @@ const ManageAssignLearningPath = ({ props }) => {
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
+          <div className={classes.assignedContainer}>
           <Box component="div" display="flex" justifyContent="center">
             <Grid container className={classes.container}>
               <Grid item xs={2}></Grid>
@@ -132,8 +134,6 @@ const ManageAssignLearningPath = ({ props }) => {
               </Grid>
             </Grid>
           </Box>
-          <br />
-          <br />
           <Typography variant="h6" className={classes.heading}>
             {LEARNING_PATH_LABELS.ASSIGNED_LEARNING_PATH}
           </Typography>
@@ -151,6 +151,10 @@ const ManageAssignLearningPath = ({ props }) => {
                 )}
             </div>
           </Paper>
+          </div>
+          <div className="copyright">
+            <Copyright />
+        </div>
         </div>
         <LearningPath
           handleClose={closeHandler}

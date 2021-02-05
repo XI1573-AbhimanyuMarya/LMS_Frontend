@@ -10,6 +10,7 @@ import Approve from '../../../components/DiscardPopup/approve'
 import Reject from '../../../components/DiscardPopup/Reject'
 import {ApproveButton,RejectButton} from '../../../components/Button'
 import { useStyles } from "./style";
+import Copyright from "../../../components/Copyright";
 import Gallery from 'react-grid-gallery';
 
 const theme = createMuiTheme({
@@ -119,6 +120,9 @@ export default function EmployeeCardApproval(props) {
           <ApproveButton onViewClickApprove={onViewClickApprove}/><Approve discardHandler={discardHandlerApprove} data={data}></Approve>
           <RejectButton onViewClick={onViewClick}/><Reject discardHandler={discardHandler} rejectHandler={rejectHandler}></Reject>
         </div>
+      </div>
+      <div className="copyright">
+        <Copyright />
       </div>
     </>
   );

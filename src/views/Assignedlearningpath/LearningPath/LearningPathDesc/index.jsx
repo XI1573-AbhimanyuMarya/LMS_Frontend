@@ -40,7 +40,7 @@ const LearningPathDesc = (props) => {
           lpId={selectedLp.learningPath.learningPathId}
           learningPathEmployeesId={selectedLp.learningPathEmployeesId}
           withRate={false} />
-        <div className="copyright" style={{ border: "1px solid #d3d3d3" }}>
+        <div className="copyright">
           <Copyright />
         </div>
       </main>

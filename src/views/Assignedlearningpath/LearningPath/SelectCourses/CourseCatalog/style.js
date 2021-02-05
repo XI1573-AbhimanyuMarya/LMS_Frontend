@@ -17,8 +17,7 @@ export const useStyles = makeStyles((theme) => ({
       // backgroundColor:"yellow"
     },
     [theme.breakpoints.up("lg")]: {
-      height:"62vh",//"50vh",
-      // backgroundColor:"red"
+      height:"52vh",
     },
   },
   courseType: {

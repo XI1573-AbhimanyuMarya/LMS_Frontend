@@ -24,5 +24,10 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	pathNameField: {
 		background: '#FFFFFF',
+  },
+  levelContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   }
 }));

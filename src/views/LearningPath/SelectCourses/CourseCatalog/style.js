@@ -45,26 +45,22 @@ export const useStyles = makeStyles((theme) => ({
   },
   Beginner: {
     width: "70px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "25px",
   },
   Intermediate: {
     width: "70px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "25px",
   },
   Advance: {
     width: "70px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "25px",
   },
   Expert: {
     width: "70px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "25px",
   },
 }));

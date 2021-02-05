@@ -32,11 +32,11 @@ const LearningPathCard = (props) => {
   return (
     <>
       <Card className={classes.root} style={inlineStyle}>
-        <CardActionArea>
+        <CardActionArea onClick={onClickHandler}>
           <CardContent style={{ minHeight: "143px" }}>
             <div className={classes.cardheader}>
               <div style={{ display: "flex" }}>
-                {assignLp && isChecked && <img src={GreenChecked} style={{ width: "26px", height: "24px" }} onClick={onClickHandler} />}
+                {assignLp && isChecked && <img src={GreenChecked} style={{ width: "26px", height: "24px" }} />}
                 {assignLp && !(isChecked) && <CircleUnchecked onClick={onClickHandler} />}
                 <Typography gutterBottom variant="h6" component="h6" className={classes.cardheading}>
                   {selectedLp.learningPath.name}

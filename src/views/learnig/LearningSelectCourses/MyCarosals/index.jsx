@@ -13,9 +13,6 @@ const Carosals1 = (props) => {
   const chevronWidth = 40;
   let renderCarousel = "";
   if (lpList && Array.isArray(lpList)) {
-    // const renderCourses = coursesList.map((course) => {
-    // 	return <CourseCatalog key={course.id} course={course} />
-    // });
     const renderCourses = lpList.map((lp) => {
       return (
         <CourseCatalog
@@ -26,7 +23,6 @@ const Carosals1 = (props) => {
         />
       );
     });
-    //const renderCourses="";
     renderCarousel = (
       <div>
         <ItemsCarousel
@@ -62,7 +58,6 @@ const Carosals1 = (props) => {
 
 Carosals1.propTypes = {
   coursesList1: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  // handleCourseClick: PropTypes.func.isRequired,
 };
 
 export default Carosals1;

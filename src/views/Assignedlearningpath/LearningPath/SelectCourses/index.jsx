@@ -8,6 +8,7 @@ import Box from "@material-ui/core/Box";
 import { LEARNING_PATH_LABELS } from "../../../../modules/constants";
 import LearningPath from "../../../../views/LearningPath/index";
 import DiscardPopup from "../../../../components/DiscardPopup/index";
+import Copyright from "../../../../components/Copyright";
 import TextField from "@material-ui/core/TextField";
 
 const SelectAssignedPath = () => {
@@ -30,28 +31,7 @@ const SelectAssignedPath = () => {
 
   useEffect(() => {
     dispatch(Actions.learningPathActions.getLearningPath(loginState.user.id));
-    // if (mycourses.length === 0) {
-    //   dispatch(Actions.learningPathActions.fetchAllCourses());
-    // } else {
-    //   setSelectedCoursesArr(mycourses)
-    // }
   }, [dispatch, loginState.user.id]);
-
-  // let filterCourses = [];
-  // const changeHandler = (e) => {
-  //   const { value } = e.target;
-  //   const searchValue = value.toLowerCase();
-  //   if (courses?.length > 0) {
-  //     filterCourses = courses.filter(function (el) {
-  //       return (
-  //         el.name.toLowerCase().includes(searchValue) ||
-  //         el.category.name.toLowerCase().includes(searchValue) ||
-  //         el.competency.name.toLowerCase().includes(searchValue)
-  //       );
-  //     });
-  //     dispatch(Actions.learningPathActions.getFilteredCourses(filterCourses));
-  //   }
-  // };
 
   let selectedCourses = [];
   const onCourseClickHandler = (courseId) => {
@@ -80,12 +60,6 @@ const SelectAssignedPath = () => {
       );
     }
   };
-
-  // const onChangeHandler = (e) => {
-  //   const pathName = e.target.value;
-  //   setTouch(true);
-  //   dispatch(Actions.learningPathActions.getLearningPathName(pathName));
-  // };
 
   let filterLearningPath = [];
   const changeHandlerLearning = (e) => {
@@ -126,7 +100,7 @@ const SelectAssignedPath = () => {
 
   return (
     <React.Fragment>
-      <Box alignItems="flex-start" style={{ padding: "5px 10px 10px" }}>
+      <Box alignItems="flex-start" style={{ padding: "15px 20px 30px" }}>
         <Typography variant="h6" className={classes.head}>
           {LEARNING_PATH_LABELS.COURSE_CATALOG2}
         </Typography>
@@ -147,6 +121,9 @@ const SelectAssignedPath = () => {
         coursesList={LearningPathList}
         handleCourseClick={(id) => onCourseClickHandler(id)}
       />
+      <div className="copyright">
+        <Copyright />
+      </div>
       <LearningPath
         handleClose={closeHandler}
         handleClosePath={handleClosePathHandler}
