@@ -187,35 +187,32 @@ export const useStyles = makeStyles((theme) => ({
 
   Beginner: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "20px",
   },
   Intermediate: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "20px",
   },
   Advance: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "20px",
   },
   Expert: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "20px",
   },
   cardheader: {
     display: "flex",
     justifyContent: "space-between",
+    paddingRight: '10px'
   },
 
   cardcontent: {
-    height: "150px",
+    height: "120px",
     overflow: "auto",
     [theme.breakpoints.between("sm", "md")]: {
       height: "150px",

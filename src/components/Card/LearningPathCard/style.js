@@ -13,31 +13,27 @@ export const useStyles = makeStyles((theme) => ({
   },
   cardheading: {
     fontSize: "1rem",
-    margin: "0 0 0 15px",
+    padding: "0 10px",
   },
   Beginner: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "20px",
   },
   Intermediate: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "20px",
   },
   Advance: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "20px",
   },
   Expert: {
     width: "80px",
-    marginRight: "-5px",
     marginBottom: "10px",
-    height: "38px",
+    height: "20px",
   },
   carddesc: {
     textAlign: "justify",

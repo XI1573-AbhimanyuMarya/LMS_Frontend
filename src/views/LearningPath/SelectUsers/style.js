@@ -50,6 +50,9 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	usersContainer: {
 		background: '#F1F3F7',
-		borderRadius: "0.5%"
+    borderRadius: "0.5%",
+    height: '40vh',
+    overflow: 'auto',
+    padding: '20px'
 	},
 }));

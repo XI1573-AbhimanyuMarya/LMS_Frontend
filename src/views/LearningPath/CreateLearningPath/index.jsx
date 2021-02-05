@@ -79,7 +79,6 @@ const CreateLearningPath = (props) => {
       courseIdArr?.length === 0
     ) {
       setActivePathStep(activePathStep + 1);
-      // error(MESSAGES.PLEASE_SELECT_ATLEAST_ONE_COURSE);
     } else if (activePathStep === 0) {
       dispatch(Actions.learningPathActions.getFirstNextClicked(true));
     } else if (activePathStep === 1) {
@@ -153,7 +152,7 @@ const CreateLearningPath = (props) => {
   return (
     <React.Fragment>
       <TopNav />
-      <main className="main-content">
+      <main style={{overflow: 'hidden'}}>
         <div className={classes.toolbar} />
         <div className="container">
           <Box component="div" className={classes.layout}>

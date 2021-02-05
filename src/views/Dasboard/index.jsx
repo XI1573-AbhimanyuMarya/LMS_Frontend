@@ -271,7 +271,7 @@ const Dashboard = () => {
                 {dashStats && <DashboardMatrix data={data} />}
                 <div
                   style={{
-                    width: "calc((100vw - 26%) - 16px)",
+                    width: "calc((100vw - 26%) - 5px)",
                     height: "180px",
                     margin: "20px",
                   }}

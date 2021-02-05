@@ -58,7 +58,7 @@ const PopularStuffCarousel = (props) => {
           Popular Stuff{" "}
           <img src={ArrowForwardIos} className={classes.PopularStuffArrowFwd} />
         </div>
-        <div style={{ marginRight: 10, marginTop: "-10px" }}>
+        <div style={{ marginTop: "-10px" }}>
           {activeItemIndex > 0 ? (
             <img
               src={LeftActiveCarousel}
