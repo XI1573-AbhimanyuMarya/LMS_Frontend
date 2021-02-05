@@ -307,7 +307,10 @@ const Dashboard = () => {
           {!showMyDashboard && !pathModelOpen ? (
             <DashData />
           ) : showMyDashboard ? (
-            <EmployeeDashboardDetail statsData={statsData} />
+            <Box>
+
+              <EmployeeDashboardDetail statsData={statsData} />
+            </Box>
           ) : (
                 renderWelcome
               )}
