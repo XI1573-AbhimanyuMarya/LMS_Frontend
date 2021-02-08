@@ -24,7 +24,9 @@ export const SaveButton = (props) => {
 }
 
 export const UploadButton = (props) => {
-  const { onViewClick, discardHandler, changeImgHandler, uploadDocs } = props;
+
+  const { onViewClick, discardHandler, changeImgHandler, uploadDocs, courseName } = props;
+
   const classes = useStyles();
   return (
     <>

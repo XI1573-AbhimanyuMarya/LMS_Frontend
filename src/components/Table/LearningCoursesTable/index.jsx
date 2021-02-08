@@ -65,22 +65,30 @@ const LearningCoursesTable = (props) => {
   } = learningPathState;
   const { withRate, disable } = props;
 
-  const renderCourseList = learningPathCourses.map((lpcourse) => {
+  const getCourse = (val) => {
+    console.log(val, "valllll")
+  }
+  const renderCourseList = learningPathCourses.map((lpcourse, index) => {
     return (
+      // <div
+      //   onClick={() => getCourse(lpcourse)}>
+
       <CourseRow
+        allCourses={learningPathCourses}
+        // selectedCourseId ={}
+        courseId={lpcourse.id}
         key={lpcourse.id}
-        course={lpcourse}
+        course={{ ...lpcourse, index }}
         lpId={props.lpId}
         learningPathEmployeesId={props.learningPathEmployeesId}
         selectedLp={selectedLp1 || selectedLp}
         withRate={withRate}
         completed={disable}
       />
+      // </div>
     );
   });
-  const renderCourseList1 = renderCourseList.map((lpcourse) => {
-    return lpcourse.props.course.percentCompleted;
-  });
+
   const [show, showGallery] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [uploadDocument, setUploadDocument] = useState("");
@@ -179,7 +187,7 @@ const LearningCoursesTable = (props) => {
         style={{
           overflowX: "auto",
           overflowY: "auto",
-          height: "35vh",
+          height: "30vh",
           margin: "35px 0px 10px 0px",
         }}
       >
@@ -206,6 +214,7 @@ const LearningCoursesTable = (props) => {
                   display: "flex",
                   justifyContent: "center",
                   margin: "5px 0 0 0",
+                  padding: '15px 0 0',
                 }}
               >
                 <LowerCaseButton

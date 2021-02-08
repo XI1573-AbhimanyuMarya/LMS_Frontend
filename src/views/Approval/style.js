@@ -51,24 +51,22 @@ export const useStyles = makeStyles((theme) => ({
   cardData: {
     display: "flex",
     flexDirection:"column",
-    // flexFlow: "row wrap",
     height: "65vh",
     overflow: "auto",
     padding: '2%',
     [theme.breakpoints.up('md')]: {
       display: "flex",
-      // flexFlow: "row wrap",
       flexDirection:"column",
       height: "75vh",
       overflow: "auto",
     },
     [theme.breakpoints.up('lg')]: {
       display: "flex",
-    // flexFlow: "row wrap",
-    flexDirection:"column",
-    height: "75vh",
-    overflow: "auto",
-    overflowX: "hidden"
+      width: '81.7%',
+      flexDirection:"column",
+      height: "80vh",
+      overflow: "auto",
+      overflowX: "hidden"
     },
   },
   search: {

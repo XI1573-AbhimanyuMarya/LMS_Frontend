@@ -15,6 +15,7 @@ import { useStyles } from "./style";
 import TopNav from "../../components/TopNav";
 import LearningPath from "../../views/LearningPath/index";
 import DiscardPopup from "../../components/DiscardPopup/index1";
+import Copyright from "../../components/Copyright";
 
 const ManageAssignLearningPath = ({ props }) => {
   const classes = useStyles();
@@ -59,17 +60,16 @@ const ManageAssignLearningPath = ({ props }) => {
   //   }
   // };
   const discardHandler = (closeMainModel) => {
-    debugger
     if (closeMainModel) {
       onDeleteAll(getAssignedLearningPaths.deletedEmpData.empID);
     }
     dispatch(Actions.learningPathActions.discardModelOpen(false));
   };
 
-  const isObject=(data)=>{
+  const isObject = (data) => {
     return (typeof data === 'object' && data !== null);
   }
-  const learningpathPrepareData=(elm)=>{
+  const learningpathPrepareData = (elm) => {
     return {
       name: elm.learningPath.name,
       learningPathId: elm.learningPath.learningPathId,
@@ -82,23 +82,23 @@ const ManageAssignLearningPath = ({ props }) => {
   }
   const prepareData = (data) => {
     let employees = [];
-    if(isObject(data)){
+    if (isObject(data)) {
       let learningDetails;
       let tempEmployee;
       for (var key in data) {
-        learningDetails=[];
+        learningDetails = [];
         if (data.hasOwnProperty(key)) {
-            if(data[key].length>0){
-              data[key].forEach((elm) => {
-                tempEmployee=elm.employee;
-                learningDetails.push(learningpathPrepareData(elm));
-              });
-              employees.push({
-                empID: tempEmployee.id,
-                employee: tempEmployee,
-                learningPath: learningDetails
-              });
-            }
+          if (data[key].length > 0) {
+            data[key].forEach((elm) => {
+              tempEmployee = elm.employee;
+              learningDetails.push(learningpathPrepareData(elm));
+            });
+            employees.push({
+              empID: tempEmployee.id,
+              employee: tempEmployee,
+              learningPath: learningDetails
+            });
+          }
         }
       }
     }
@@ -108,7 +108,7 @@ const ManageAssignLearningPath = ({ props }) => {
   let renderUser = "";
   if (employees.length > 0) {
     renderUser = employees.map((data, i) => (
-      <EmployeeCard key={i} data={data} onDeleteAll={onDeleteAll} onDelete={onDelete}/>
+      <EmployeeCard key={i} data={data} onDeleteAll={onDeleteAll} onDelete={onDelete} />
     ));
   }
 
@@ -118,6 +118,7 @@ const ManageAssignLearningPath = ({ props }) => {
       <main className="main-content">
         <div className={classes.toolbar} />
         <div className="container">
+          <div className={classes.assignedContainer}>
           <Box component="div" display="flex" justifyContent="center">
             <Grid container className={classes.container}>
               <Grid item xs={2}></Grid>
@@ -133,8 +134,6 @@ const ManageAssignLearningPath = ({ props }) => {
               </Grid>
             </Grid>
           </Box>
-          <br />
-          <br />
           <Typography variant="h6" className={classes.heading}>
             {LEARNING_PATH_LABELS.ASSIGNED_LEARNING_PATH}
           </Typography>
@@ -152,6 +151,10 @@ const ManageAssignLearningPath = ({ props }) => {
                 )}
             </div>
           </Paper>
+          </div>
+          <div className="copyright">
+            <Copyright />
+        </div>
         </div>
         <LearningPath
           handleClose={closeHandler}

@@ -22,9 +22,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     width: `calc(100% - ${drawerWidth})`,
-    marginLeft: drawerWidth,
     backgroundColor: "#ffffff",
-    marginBottom: theme.spacing(1),
     boxShadow: "none",
   },
   title: {

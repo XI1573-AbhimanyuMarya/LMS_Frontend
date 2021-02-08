@@ -3,7 +3,6 @@ import Chart from "react-apexcharts";
 import { months } from "moment";
 
 const LearningPathGraph = ({ learningPathGraphAdmin }) => {
-
   let months = [];
   if (learningPathGraphAdmin.length > 0) {
     for (var i in learningPathGraphAdmin[0].dashboardGraphStatistics) {
@@ -18,7 +17,7 @@ const LearningPathGraph = ({ learningPathGraphAdmin }) => {
       type: "area",
       toolbar: false,
     },
-    legend: { show: false },
+    legend: { show: false},
     dataLabels: {
       enabled: false,
     },
@@ -56,29 +55,22 @@ const LearningPathGraph = ({ learningPathGraphAdmin }) => {
   let inprogress = [];
   let overdue = [];
   for (let i in learningPathGraphAdmin) {
-    // debugger;
     if (learningPathGraphAdmin[i].status.toLowerCase() == "completed") {
-      // debugger;
       for (let j in learningPathGraphAdmin[i].dashboardGraphStatistics) {
-        // debugger;
         completed.push(
           learningPathGraphAdmin[i].dashboardGraphStatistics[j]["count"]
         );
       }
     }
     if (learningPathGraphAdmin[i].status.toLowerCase() == "in-progress") {
-      // debugger;
       for (let j in learningPathGraphAdmin[i].dashboardGraphStatistics) {
-        // debugger;
         inprogress.push(
           learningPathGraphAdmin[i].dashboardGraphStatistics[j]["count"]
         );
       }
     }
     if (learningPathGraphAdmin[i].status.toLowerCase() == "overdue") {
-      // debugger;
       for (let j in learningPathGraphAdmin[i].dashboardGraphStatistics) {
-        // debugger;
         overdue.push(
           learningPathGraphAdmin[i].dashboardGraphStatistics[j]["count"]
         );

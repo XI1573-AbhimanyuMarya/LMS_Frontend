@@ -5,6 +5,7 @@ import TableRow from "./TableRow";
 import Button from '@material-ui/core/Button';
 import Actions from "../../../store/actions";
 import { BUTTONS } from "../../../modules/constants";
+import ArrowBackIos from "../../../images/ArrowBackIos.svg";
 import LearningPathCardWOAction from "../../../components/Card/LearningPathCardWOAction";
 
 const LearnerTable = (props) => {
@@ -29,6 +30,7 @@ const LearnerTable = (props) => {
     >
       <div className={classes.outerContainer}>
         <Button onClick={handleBack} className={classes.button}>
+          <img src={ArrowBackIos} style={{marginRight: '6px'}} />
           {BUTTONS.BACK}
         </Button>
         <div className={classes.cardContainer}>

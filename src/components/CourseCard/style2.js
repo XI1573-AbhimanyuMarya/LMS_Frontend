@@ -51,7 +51,7 @@ export const useStyles = makeStyles((theme) => ({
   },
 
   cardcontent: {
-    height: "150px",
+    height: "140px",
     overflow: "auto",
     [theme.breakpoints.between("sm", "md")]: {
       height: "150px",

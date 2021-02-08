@@ -27,13 +27,14 @@ export const useStyles = makeStyles((theme) => ({
   },
   head: {
     height: "27px",
-    fontSize: "19px",
-    fontWeight: "normal",
+    fontSize: "16px",
+    fontWeight: "500",
     fontStretch: "normal",
     fontStyle: "normal",
     lineHeight: 1.23,
     letterSpacing: "normal",
     textAlign: "left",
     color: "#621d58",
+    marginBottom: '10px'
   },
 }));

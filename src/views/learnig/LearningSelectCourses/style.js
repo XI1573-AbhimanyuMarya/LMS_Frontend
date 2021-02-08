@@ -1,19 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  '@global': {
-    '*::-webkit-scrollbar': {
-      width: '0.6em'
-    },
-    '*::-webkit-scrollbar-track': {
-      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
-      borderRadius: '10px'
-    },
-    '*::-webkit-scrollbar-thumb': {
-      backgroundColor: '#888',
-      borderRadius: '10px'
-    }
-  },
 	pathName: {
 		margin: theme.spacing(2),
 	},

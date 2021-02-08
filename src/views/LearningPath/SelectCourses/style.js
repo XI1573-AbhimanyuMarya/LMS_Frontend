@@ -20,7 +20,9 @@ export const useStyles = makeStyles((theme) => ({
 	catalogContainer: {
 		background: '#F1F3F7',
 		borderRadius: "0.5%",
-		padding: theme.spacing(1)
+    padding: '0 20px 20px',
+    background: '#F1F3F7',
+    marginTop: '20px'
 	},
 	pathNameField: {
 		background: '#FFFFFF',

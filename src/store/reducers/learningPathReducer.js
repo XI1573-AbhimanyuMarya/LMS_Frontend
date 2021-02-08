@@ -33,6 +33,7 @@ const initialState = {
   dashGraphAdmin: {},
   dashGraphManager: {},
   managerPopularStuff: [],
+  courseIdSavedForUpload: "",
 };
 
 export const learningPathReducer = (state = initialState, action) => {
@@ -65,7 +66,7 @@ export const learningPathReducer = (state = initialState, action) => {
         filteredCoursesList: payload.list,
         isLoading: false,
       };
-      case actionTypes.GET_FILTERED_LEARNING_PATH:
+    case actionTypes.GET_FILTERED_LEARNING_PATH:
       return {
         ...state,
         filteredLearningPath: payload.list,
@@ -133,6 +134,7 @@ export const learningPathReducer = (state = initialState, action) => {
         isLoading: false,
       };
     case actionTypes.SHOW_BUTTON_BASED_ON_RATE:
+
       return {
         ...state,
         learningPathCourses: state.learningPathCourses.map((elm) => {
@@ -157,8 +159,13 @@ export const learningPathReducer = (state = initialState, action) => {
         }),
         isLoading: false,
       };
-
+    case actionTypes.SAVE_COURSE:
+      return {
+        ...state,
+        courseIdSavedForUpload: payload.course ? payload.course.id : ''
+      };
     case actionTypes.CHANGE_DOC_UPLOAD_STATUS_FOR_COURSE:
+      debugger;
       return {
         ...state,
         learningPathCourses: state.learningPathCourses.map((elm) => {
