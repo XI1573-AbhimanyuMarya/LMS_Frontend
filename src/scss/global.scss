@@ -31,9 +31,7 @@ body {
   background-color: #f7f8fc;
 
   .container {
-    width: calc((100vw - #{$sidebar-width}) - 3px);
-    // margin: 16px 8px 0px 8px;
-    // background-color: white;
+    width: 100%;
   }
 
   .copyright {
@@ -64,7 +62,7 @@ body {
 }
 
 .apexcharts-canvas {
-  margin-left: -50px;
+  //margin-left: -50px;
   text {
     font-size: 9px !important;
   }

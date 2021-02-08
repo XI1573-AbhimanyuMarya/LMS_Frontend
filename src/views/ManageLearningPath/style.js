@@ -11,8 +11,9 @@ export const useStyles = makeStyles((theme) => ({
   cardContainer: {
     display: "flex",
     flexWrap: "wrap",
-    height: "67vh",
+    height: "60vh",
     overflow: "auto",
+    marginTop: '12px'
   },
   root: {
     width: "300px",
@@ -27,6 +28,12 @@ export const useStyles = makeStyles((theme) => ({
   cardheading: {
     fontSize: "1rem",
     margin: "0 0 0 15px",
+  },
+  learningPathHeading: {
+    width: '100%',
+    fontSize: '16px',
+    fontWeight: '500',
+    color: '#621d58',
   },
   Beginner: {
     width: "80px",
@@ -114,7 +121,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
-    // marginBottom: "25px",
+    marginBottom: "20px",
   },
   searchField: {
     width: "70%",

@@ -166,10 +166,10 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   cardcontent: {
-    height: "150px",
+    height: "120px",
     overflow: "auto",
     [theme.breakpoints.between("sm", "md")]: {
-      height: "150px",
+      height: "120px",
     },
   },
 }));

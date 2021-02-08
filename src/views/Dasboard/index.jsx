@@ -90,17 +90,6 @@ const Dashboard = () => {
   const backBtnHandler = () => {
     setSelectedProgramToStart(false);
   };
-  // const LearningPathDesc = () => {
-
-  //   return (
-  //     <>
-  //       <BackButton backBtnHandler={backBtnHandler} />
-  //       <div style={{ maxWidth: "300px", margin: "10px 0px 0px" }}>
-  //         <LearningPathCard selectedLp={selectedProgramToStart} />
-  //       </div>
-  //     </>
-  //   );
-  // };
   const prepareData = (data) => {
     let employees = [];
     if (isObject(data)) {
@@ -191,6 +180,11 @@ const Dashboard = () => {
     dispatch(Actions.learningPathActions.discardModelOpen(true));
   };
 
+  const handleClickOpen = () => {
+    dispatch(Actions.learningPathActions.pathModelOpen(true));
+    dispatch(Actions.learningPathActions.clearCreateLpFormFields());
+  };
+
   const backButtonClicked = () => {
     setSelectedProgramToStart(false)
   }
@@ -233,7 +227,18 @@ const Dashboard = () => {
                 further learning.
               </div>
             ) : (
+              <div>
                 <div>Please assign first learning path to your team</div>
+                {/* <Button
+                  type="button"
+                  fullWidth
+                  variant="contained"
+                  className={classes.navSubmitButton}
+                  onClick={handleClickOpen}
+                  startIcon={<AddCircleOutlineOutlinedIcon style={{ fontSize: 20 }} />}>
+                  Create Learning Path
+                </Button> */}
+              </div>
               )}
           </Typography>
         </div>
@@ -262,22 +267,26 @@ const Dashboard = () => {
     }
     return (
       <>
-        {!selectedProgramToStart ? <Box>
+        {!selectedProgramToStart ? 
+        <Box>
           {learningPathState.openDetailOfEnp &&
-            learningPathState.openDetailOfEnp.empStatus ? (
+            learningPathState.openDetailOfEnp.empStatus ? 
+            (
               <LearnerTable />
             ) : (
               <>
                 {dashStats && <DashboardMatrix data={data} />}
                 <div
                   style={{
-                    width: "calc((100vw - 26%) - 5px)",
+                    width: "calc((100vw - 23%) - 5px)",
                     height: "180px",
                     margin: "20px",
                   }}
                 >
                   {userRole !== "ROLE_ADMIN" && userRole !== "ROLE_HR" ? (
-                    <PopularStuff handleCourseClick={courseClicked} managerPopularStuff={managerPopularStuff} />
+                    <div style={{width: '97.5%'}}>
+                      <PopularStuff handleCourseClick={courseClicked} managerPopularStuff={managerPopularStuff} />
+                    </div>
                   ) : (
                       <LearningPathWStatusTable />
                     )}
@@ -285,21 +294,14 @@ const Dashboard = () => {
               </>
             )}
         </Box> :
-
-
-
-
-
-          <LearningPathDesc backButtonClicked={backButtonClicked} selectedLp={selectedProgramToStart} />
-
+        <LearningPathDesc backButtonClicked={backButtonClicked} selectedLp={selectedProgramToStart} />
         }
-
       </>
     );
   };
 
   return (
-    <div>
+    <div style={{width: '82%'}}>
       <TopNav></TopNav>
       <main className="main-content">
         <div className={classes.toolbar} />
@@ -308,12 +310,11 @@ const Dashboard = () => {
             <DashData />
           ) : showMyDashboard ? (
             <Box>
-
               <EmployeeDashboardDetail statsData={statsData} />
             </Box>
           ) : (
                 renderWelcome
-              )}
+          )}
         </div>
         <div className="copyright">
           <Copyright />

@@ -77,7 +77,7 @@ const ManageLearningPath = () => {
       component="main"
       className={classes.mainContainer} style={{minWidth:"168vh"}}>
       <div className={classes.headerContainer}>
-        <h2 style={{width: '100%'}}>All Learning Paths</h2>
+        <h2 className={classes.learningPathHeading}>All Learning Paths</h2>
         <button className={classes.deleteButton} onClick={deleteCard} disabled={selectedCardsCount < 1}>
           Delete selected 
           <span className={classes.deleteIcon}>{selectedCardsCount}</span>

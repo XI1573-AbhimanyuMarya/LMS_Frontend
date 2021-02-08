@@ -53,7 +53,7 @@ const Carosals1 = (props) => {
         <div
           style={{
             display: "flex",
-            width: "98%",
+            width: "100%",
             justifyContent: "space-between",
             marginBottom: "-10",
           }}

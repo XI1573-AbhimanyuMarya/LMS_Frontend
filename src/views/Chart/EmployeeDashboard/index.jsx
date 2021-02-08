@@ -101,7 +101,7 @@ const EmployeeDashboardDetail = (props) => {
       <>
         <Box
           alignItems="center"
-          style={{ width: "88%", margin: "10px 50px 0px 0px" }}
+          style={{ width: "100%", margin: "10px 50px 0px 0px" }}
         >
           {isLoading &&
             completedCourse?.length === 0 && <CourseSkelton1 /> &&
@@ -119,13 +119,10 @@ const EmployeeDashboardDetail = (props) => {
 
   return (
     <div className={classes.catalogContainer}>
-      {/* <div> */}
       <div
         style={{
           display: "flex",
-          height: "20%",
-          marginLeft: "30px",
-          // width: coursesList1.length < 4 ? "90%" : "98%",
+          height: "20%"
         }}
       >
         {(Object.keys(selectedLp).length !== 0 &&
@@ -135,7 +132,7 @@ const EmployeeDashboardDetail = (props) => {
             <></>
           ) : (
             <>
-              <div className={classes.root}>
+              <div className={classes.root} style={{padding: '20px 20px 5px'}}>
                 <Grid xs={12} style={{ "flex-wrap": "inherit" }} container direction="row">
                   <TotalCard Total={props.statsData["totalCardDetail"].Total} />
                   <StatusWiseCard
@@ -196,16 +193,16 @@ const EmployeeDashboardDetail = (props) => {
           </div>
         )}
         {!selectedProgramToStart && !disable ? (
-          <div>
+          <div className={classes.container123}>
             <div className={classes.toolbar} />
-            <div style={{ paddingBottom: "10px" }} className="container">
+            <div style={{ paddingBottom: "10px" }}>
               <Box
                 display="flex-inline"
                 justifyContent="center"
                 style={{ margin: "15px 20px" }}
               >
                 <Box
-                  style={{ width: "88%", margin: "10px 50px 0px 0px" }}
+                  style={{ width: "100%", margin: "20px 0 0" }}
                   alignItems="center"
                 >
                   {isLoading && coursesList1?.length === 0 && (

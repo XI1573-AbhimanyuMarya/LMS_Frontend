@@ -17,6 +17,14 @@ export const useStyles = makeStyles((theme) => ({
     top: "0%",
     left: "42%",
   },
+  navSubmitButton: {
+    background: "linear-gradient(180deg, #FFAB39 0%, #F07200 100%)",
+    color: "#FFFFFF",
+    textTransform: "capitalize",
+    padding: "10px 33px",
+    fontSize: 12,
+    marginTop: '20px'
+  },
   paper: {
     display: "flex",
     flexDirection: "column",
