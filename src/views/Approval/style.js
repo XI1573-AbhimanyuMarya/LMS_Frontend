@@ -56,17 +56,17 @@ export const useStyles = makeStyles((theme) => ({
     padding: '2%',
     [theme.breakpoints.up('md')]: {
       display: "flex",
-
       flexDirection:"column",
       height: "75vh",
       overflow: "auto",
     },
     [theme.breakpoints.up('lg')]: {
       display: "flex",
-    flexDirection:"column",
-    height: "80vh",
-    overflow: "auto",
-    overflowX: "hidden"
+      width: '81.7%',
+      flexDirection:"column",
+      height: "80vh",
+      overflow: "auto",
+      overflowX: "hidden"
     },
   },
   search: {

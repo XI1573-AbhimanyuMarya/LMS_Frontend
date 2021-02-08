@@ -65,7 +65,7 @@ export const useStyles = makeStyles((theme) => ({
    notification_view:{
     width: "175px",
     height: "35px",
-    padding: "7px 54.5px 12px",
+    padding: "7px 0 12px",
     borderRadius: "8px",
     boxShadow: "1px 4px 10px 0 rgba(0, 0, 0, 0.08)",
     backgroundColor: "#ffffff"
@@ -74,7 +74,6 @@ export const useStyles = makeStyles((theme) => ({
       verticalAlign: "top"
     },
     notification_btn_text:{
-      width: "66px",
       height: "6px",
       fontFamily: "Roboto",
       fontSize: "10px",

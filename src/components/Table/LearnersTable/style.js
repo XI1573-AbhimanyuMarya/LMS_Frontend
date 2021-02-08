@@ -62,6 +62,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   outerContainer: {
     marginLeft: '20px',
+    width: '270px',
   },
   tblheadingFirst: {
     width: "25%", 

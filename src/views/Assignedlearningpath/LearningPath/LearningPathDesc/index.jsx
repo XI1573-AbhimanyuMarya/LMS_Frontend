@@ -5,7 +5,6 @@ import { useStyles } from '../CreateLearningPath/style';
 import Actions from '../../../../store/actions';
 import WithLoading from '../../../../hoc/WithLoading';
 import TopNav from '../../../../components/TopNav';
-
 import Copyright from '../../../../components/Copyright';
 import LearningPathCard from '../../../../components/Card/LearningPathCard';
 import LearningCoursesTable from '../../../../components/Table/LearningCoursesTable/index';
